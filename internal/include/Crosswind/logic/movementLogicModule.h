@@ -2,7 +2,7 @@
 #pragma once
 
 #include <Crosswind/logic/detail/logicModule.h>
-#include <Crosswind/bits/flagSet.h>
+#include <Crosswind/private/flagset.h>
 
 #include <memory>
 

@@ -99,7 +99,7 @@ namespace cw{
 	            background.draw_image(0, 0, blank);
 
 	            std::for_each(elements.begin(), elements.end(), [this](std::shared_ptr<widget> element){
-	                background.draw_image(element->getX(), element->getY(), element->getSprite());
+	                background.draw_image(element->getX(), element->getY(), *element->getTexture("current")->data());
 	            });
 
 	            display.display(background);
@@ -128,8 +128,5 @@ namespace cw{
 	    std::vector<std::shared_ptr<widget>> elements;
 	    bool run;
 	};
-
-
-
 }
 
