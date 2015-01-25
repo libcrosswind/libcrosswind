@@ -10,7 +10,7 @@ namespace cw{
 
     public:
 
-        void init(FlagSet<InitFlags> flags = FlagSet<InitFlags>()){
+        void init(flag_set<init_flags> flags = flag_set<init_flags>()){
             //TODO assert for each required field.
             textures["blank"] = std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4));
 
@@ -89,8 +89,6 @@ namespace cw{
                      frameCounter = 0.f;
                  }
              */
-
-
 
         }
 

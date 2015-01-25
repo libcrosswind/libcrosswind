@@ -23,8 +23,8 @@ namespace cw{
             window(){
             }
 
-            void init(FlagSet<InitFlags> flags = FlagSet<InitFlags>()){
-                init_flags = flags;
+            void init(flag_set<init_flags> flags = flag_set<init_flags>()){
+                setup_flags = flags;
 
                 textures["blank"] = std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4));
                 textures["render"]= std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4));
@@ -39,7 +39,7 @@ namespace cw{
 
                 on_show();
 
-                if(init_flags.test(IN_NEW_THREAD)){
+                if(setup_flags.test(IN_NEW_THREAD)){
                     widget_thread = std::thread(&widget::loop, this);
                 } else {
                     loop();

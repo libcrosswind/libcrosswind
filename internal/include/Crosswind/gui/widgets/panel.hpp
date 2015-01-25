@@ -9,7 +9,7 @@ namespace cw{
     class panel: public grid, public widget, public gui_element{
 
     public:
-        void init(FlagSet<InitFlags> flags = FlagSet<InitFlags>()){
+        void init(flag_set<init_flags> flags = flag_set<init_flags>()){
             //TODO assert for each required field.
             textures["blank"] = std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4));
             textures["current"] = texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel");

@@ -7,7 +7,7 @@
 #include <Crosswind/input/input_listener.hpp>
 #include <Crosswind/graphics/object_xyz.hpp>
 #include <Crosswind/graphics/texture.hpp>
-#include <Crosswind/private/flagset.hpp>
+#include <Crosswind/private/flag_set.hpp>
 
 namespace cw{
 	
@@ -16,11 +16,11 @@ namespace cw{
 	class widget: public input_listener, public object_xyz{
         
     public:
-        enum InitFlags{
+        enum init_flags{
             IN_NEW_THREAD = 1 << 0
         };
 
-        virtual void init(FlagSet<InitFlags> flags = FlagSet<InitFlags>()) = 0;
+        virtual void init(flag_set<init_flags> flags = flag_set<init_flags>()) = 0;
         virtual void show() = 0;
         virtual void hide() = 0;
 
@@ -78,7 +78,7 @@ public:
         }
 
     protected:
-        FlagSet<InitFlags> init_flags;
+        flag_set<init_flags> setup_flags;
         std::thread widget_thread;
 
         std::mutex texture_mutex;
