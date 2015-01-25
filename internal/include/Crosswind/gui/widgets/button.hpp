@@ -95,11 +95,8 @@ namespace cw{
         }
 
         void render(std::shared_ptr<texture> render_texture){
-
-            texture_mutex.lock();
+            std::lock_guard<std::mutex> lock(texture_mutex);
             textures["current"]->render_to_target(get_x(), get_y(), render_texture);
-            texture_mutex.unlock();
-
         }
 
         void loop(){
