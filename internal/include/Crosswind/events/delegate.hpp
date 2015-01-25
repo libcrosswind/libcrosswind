@@ -12,11 +12,9 @@ namespace cw{
 
 		void operator()(Arguments... args){
 
-			std::for_each(
-			    callbacks.begin(),
-			    callbacks.end(),
-			    [&](std::function<void(Arguments... args)> const& callback) {  callback(args...); }
-			);
+			for(auto& callback : callbacks){
+				callback(args...);
+			}
 		}
 
 
