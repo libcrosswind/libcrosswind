@@ -3,7 +3,8 @@
 #include <string>
 #include <cmath>
 
-//Moving these to a seperate namespace for minimal global namespace cluttering does not work with clang++
+
+//TODO replace with cryptopp
 #include <openssl/evp.h>
 #include <openssl/buffer.h>
 #include <openssl/sha.h>
@@ -136,5 +137,5 @@ namespace cw {
                 SHA512(input, hash);
                 return hash;
             }
-    } //namespace crypto
-} //namespace nana
+    } 
+} 

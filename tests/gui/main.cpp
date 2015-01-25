@@ -1,55 +1,45 @@
 
-#include <Crosswind/gui/window.h>
-#include <Crosswind/gui/widgets/button.h>
-#include <Crosswind/logic/movementLogicModule.h>
-#include <Crosswind/system/settings.h>
+#include <Crosswind/gui/widgets/window.hpp>
+#include <Crosswind/gui/widgets/button.hpp>
+#include <Crosswind/gui/widgets/panel.hpp>
 
-/*#include <Crosswind/textures/Texture.hpp>
-#include <Crosswind/textures/TextureManager.hpp>*/
+
 #include <Crosswind/util/filesystem.hpp>
-
-#include <iostream>
+#include <string>
 
 int main(int argc, char **argv) {
 
-    cw::filesystem::addDirectory("assets", true);
-    if(cw::filesystem::exists("click1.ogg")){std::cout<<"Exists"<<std::endl;};
-    if(!cw::filesystem::exists("shouldNot")){std::cout<<"Does not"<<std::endl;}
+    cw::filesystem::add_directory("assets", true);
 
-    std::cout<<cw::filesystem::get_file_path("click2.ogg")<<std::endl;
-    std::shared_ptr<cw::window> window(new cw::window(640, 480, "GUI test"));
-    std::shared_ptr<cw::button> button(new cw::button(true));
+    std::shared_ptr<cw::window> windowA(new cw::window());
+    std::shared_ptr<cw::window> windowB(new cw::window());
 
-    //button->draggable() = true;
-    std::shared_ptr<cw::widget> button_replica1 = button->replicate<cw::button>();
-    std::shared_ptr<cw::widget> button_replica2 = button_replica1->replicate<cw::button>();
+    std::shared_ptr<cw::button> button(new cw::button());
 
-    button->on_mouse_down += [](){
+    button->set_theme("green");
+    button->set_width(120);
+    button->set_height(30);
+    button->set_depth(1);
+    button->init();
+    button->show();
 
-        class data{
-        public:
-            data():num(10){}
-            int num;
-        };
+    windowA->set_text("A window");
+    windowA->set_width(640);
+    windowA->set_height(480);
+    windowA->set_depth(1);
+    windowA->init();
 
-        std::shared_ptr<data> number_data(new data());
+    windowB->set_text("B window");
+    windowB->set_width(640);
+    windowB->set_height(480);
+    windowB->set_depth(1);
+    windowB->init(FlagSet<cw::widget::InitFlags>(cw::widget::InitFlags::IN_NEW_THREAD));
 
-        return [number_data](int number){       std::cout<<number_data->num<<std::endl; };
+    windowA->attach(button);
+    windowB->attach(button);
 
-    }();
-
-    window->attach(button);
-    window->attach(button_replica1);
-    window->attach(button_replica2);
-    window->on_closed += [&](){
-      std::cout<<"Nice"<<std::endl;
-    };
-
-    window->on_closed += [&](){
-      std::cout<<"Uber nice"<<std::endl;
-    };
-
-    window->show();
+    windowB->show();
+    windowA->show();
 
     return 0;
 

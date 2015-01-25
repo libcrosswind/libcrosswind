@@ -1,20 +1,22 @@
 #pragma once 
 
-#include <CImg/CImg.h>
-
 #include <unordered_map>
 #include <string>
 #include <memory>
 #include <stdexcept>
 
-#include <Crosswind/Textures/Texture.hpp>
+#include <Crosswind/graphics/texture.hpp>
 #include <Crosswind/util/filesystem.hpp>
+
+
 namespace cw {
 
-	class texturemanager{
+	class texture_pool{
 
     public:
-		static std::shared_ptr<texture> loadTexture(std::string name, int width, int height, std::string path = ""){
+		static std::shared_ptr<texture> loadTexture(std::string name,
+                                                    double width, double height,
+                                                    std::string path = ""){
 
             if(textures.find(name) != textures.end()) {
 
@@ -41,11 +43,11 @@ namespace cw {
 
         }
 
-	private:
+	private: //TODO  replace_texture, multithreaded.
 		static std::unordered_map<std::string, std::shared_ptr<texture> > textures;
 
 	};
 
-    std::unordered_map<std::string, std::shared_ptr<texture> > texturemanager::textures;
+    std::unordered_map<std::string, std::shared_ptr<texture> > texture_pool::textures;
 }
 

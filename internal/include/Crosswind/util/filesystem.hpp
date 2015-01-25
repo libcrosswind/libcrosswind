@@ -19,13 +19,9 @@
 
 namespace cw{
 
-    class filepath{
-
-    };
-
 	class filesystem{
     public:
-        static void addDirectory(const std::string& directory, bool recursively = false){
+        static void add_directory(std::string directory, bool recursively = false){
 
             push_directory(directory);
 
@@ -34,7 +30,7 @@ namespace cw{
         }
 
 
-		static bool exists (const std::string& name, const std::string& path = "") {
+		static bool exists (std::string name, const std::string& path = "") {
 
             //TODO test with Visual Studio.
             auto result = std::find_if(directories.begin(), directories.end(),
@@ -54,7 +50,7 @@ namespace cw{
             }
 		}
 
-        static std::string get_file_path(const std::string& file, const std::string& path = ""){
+        static std::string get_file_path(std::string& file, const std::string& path = ""){
 
             //TODO optimize path != ""
             if(exists(file, path)){
