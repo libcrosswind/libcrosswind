@@ -30,9 +30,8 @@ namespace cw{
 
             on_mouse_down += [this](int x, int y, int button){
 
-                if(this->contains_xy(x, y)){
-
-                    if(!this->pressed.load()){
+                if(!this->pressed.load()){
+                    if(this->contains_xy(x, y)){
                         this->pressed.store(true);
                         this->switch_texture("current", textures["on"]);
                     }
@@ -59,6 +58,7 @@ namespace cw{
             on_mouse_up += [this](int x, int y){
 
                 if (pressed.load() && this->contains_xy(x, y)) {
+
                     actions["clicked"]();
                 }
 
