@@ -129,7 +129,7 @@ namespace cw{
                                                     display_window->get_mouse_button());
                         } else {
                             //Send mouse released event to all elements.
-                            element->on_mouse_up();
+                            element->on_mouse_up(display_window->get_mouse_x(), display_window->get_mouse_y());
                         }
 
                 }

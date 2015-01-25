@@ -6,7 +6,7 @@
 
 namespace cw{
 
-    class button: public grid, public widget, public gui_element{
+    class panel: public grid, public widget, public gui_element{
 
     public:
 
@@ -35,10 +35,10 @@ namespace cw{
 
             };
 
-            on_mouse_up += [this]{
+            on_mouse_up += [this](int x, int y){
 
                 for(auto& element : elements){
-                    element->on_mouse_up();
+                    element->on_mouse_up(x, y);
                 }
 
             };

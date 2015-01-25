@@ -19,9 +19,8 @@ namespace cw{
 
         bool is_open()          {   return !window->is_closed();      }
 		void display(cimg_library::CImg<unsigned char>& image){
-            window_mutex.lock();
+            std::lock_guard<std::mutex> lock(window_mutex);
             window->display(image);
-            window_mutex.unlock();
 		}
 
 	private:

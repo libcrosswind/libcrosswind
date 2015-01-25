@@ -1,5 +1,10 @@
 #pragma once
 
+#include <mutex>
+#include <memory>
+
+#include <Crosswind/gui/widgets/detail/widget.hpp>
+
 namespace cw{
 	class grid{
 
