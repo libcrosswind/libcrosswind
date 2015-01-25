@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     cw::filesystem::add_directory("assets", true);
 
     std::shared_ptr<cw::window> windowA(new cw::window());
-    std::shared_ptr<cw::window> windowB(new cw::window());
+    std::shared_ptr<cw::panel> panel(new cw::panel());
 
     std::shared_ptr<cw::button> button(new cw::button());
 
@@ -29,16 +29,17 @@ int main(int argc, char **argv) {
     windowA->set_depth(1);
     windowA->init();
 
-    windowB->set_text("B window");
-    windowB->set_width(640);
-    windowB->set_height(480);
-    windowB->set_depth(1);
-    windowB->init(FlagSet<cw::widget::InitFlags>(cw::widget::InitFlags::IN_NEW_THREAD));
+    panel->set_theme("blue");
+    panel->set_text("Left Panel");
+    panel->set_width(240);
+    panel->set_height(160);
+    panel->set_depth(1);
+    panel->init();
+    panel->show();
 
-    windowA->attach(button);
-    windowB->attach(button);
+    panel->attach(button);
+    windowA->attach(panel);
 
-    windowB->show();
     windowA->show();
 
     return 0;
