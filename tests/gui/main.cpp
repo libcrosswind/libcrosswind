@@ -2,15 +2,37 @@
 #include <Crosswind/gui/widgets/window.hpp>
 #include <Crosswind/gui/widgets/button.hpp>
 #include <Crosswind/gui/widgets/panel.hpp>
-
+#include <Crosswind/util/var.hpp>
 
 #include <Crosswind/util/filesystem.hpp>
 #include <string>
 
+#include <memory>
+
 int main(int argc, char **argv) {
 
-    cw::filesystem::add_directory("assets", true);
+    //cw::filesystem::add_directory("assets", true);
 
+    std::shared_ptr<placeholder> foo;
+    std::shared_ptr<holder<int> > bar;
+
+    bar = std::shared_ptr<holder<int> >(new holder<int>(10));
+
+    foo = std::dynamic_pointer_cast<placeholder>(bar);
+
+    int a = std::dynamic_pointer_cast<holder<int> >(foo)->get<int>();
+
+    var number = 20;
+
+    int test_number = number.get<int>();
+
+    std::cout << a <<std::endl;
+    std::cout << test_number <<std::endl;
+//    var a = 10;
+
+//    std::cout<<a.get<int>()<<std::endl;
+
+    /*
     std::shared_ptr<cw::window> windowA(new cw::window());
     std::shared_ptr<cw::panel> panel(new cw::panel());
 
@@ -45,7 +67,7 @@ int main(int argc, char **argv) {
     windowA->attach(panel);
 
     windowA->show();
-
+*/
     return 0;
 
 }
