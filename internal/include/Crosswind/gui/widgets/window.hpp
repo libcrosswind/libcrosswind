@@ -20,16 +20,24 @@ namespace cw{
     class window: public grid, public widget, public gui_element {
 
         public:
-            window(){
+            enum window_flags{
+                MULTITHREADED = 1 << 0
+            };
+
+            window(): is_multithreaded(false){
             }
 
-            void init(flag_set<init_flags> flags = flag_set<init_flags>()){
-                setup_flags = flags;
+            void init(std::shared_ptr<init_flags> flags = nullptr){
+                //setup_flags = flags;
 
-                textures["blank"] = std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4));
-                textures["render"]= std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4));
+                if(flags){
+                    flags->has(window_flags::MULTITHREADED)? is_multithreaded = true: is_multithreaded = false;
+                }
 
-                previous_time = std::chrono::high_resolution_clock::now();
+
+                switch_texture("render", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
+
+                //previous_time = std::chrono::high_resolution_clock::now();
             }
 
             void show(){
@@ -39,8 +47,8 @@ namespace cw{
 
                 on_show();
 
-                if(setup_flags.test(IN_NEW_THREAD)){
-                    widget_thread = std::thread(&widget::loop, this);
+                if(is_multithreaded){
+                    window_thread = std::thread(&widget::loop, this);
                 } else {
                     loop();
                 }
@@ -69,7 +77,7 @@ namespace cw{
 
             void render(std::shared_ptr<texture> render_texture){
 
-                textures["blank"]->render_to_target(0, 0, render_texture);
+                get_texture("blank")->render_to_target(0, 0, render_texture);
 
                 for(auto& element : elements){
                     element->render(render_texture);
@@ -87,9 +95,7 @@ namespace cw{
 
                     update(get_delta());
 
-                    texture_mutex.lock();
-                    render(textures["render"]);
-                    texture_mutex.unlock();
+                    render(get_texture("render"));
 
                     //draw_text(100,100,"Hello World",purple); // Draw a purple "Hello world" at coordinates (100,100).
 
@@ -154,10 +160,13 @@ namespace cw{
             }
 
         private:
-            std::chrono::high_resolution_clock::time_point previous_time;
-        //    unsigned short max_fps;
-        //    double frame_counter;
 
+            std::chrono::high_resolution_clock::time_point previous_time;
+            //    unsigned short max_fps;
+            //    double frame_counter;
+
+            std::thread window_thread;
+            bool is_multithreaded;
             std::shared_ptr<display_target> display_window;
 
         };

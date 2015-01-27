@@ -10,10 +10,8 @@ namespace cw{
 
     public:
 
-        void init(flag_set<init_flags> flags = flag_set<init_flags>()){
+        void init(std::shared_ptr<init_flags> flags = nullptr){
             //TODO assert for each required field.
-            textures["blank"] = std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4));
-
             textures["on"] =
                     texture_pool::loadTexture("button_on.png", get_width(), get_height(), get_theme() + "/" + "button");
 
@@ -93,8 +91,7 @@ namespace cw{
         }
 
         void render(std::shared_ptr<texture> render_texture){
-            std::lock_guard<std::mutex> lock(texture_mutex);
-            textures["current"]->render_to_target(get_x(), get_y(), render_texture);
+            get_texture("current")->render_to_target(get_x(), get_y(), render_texture);
         }
 
         void loop(){

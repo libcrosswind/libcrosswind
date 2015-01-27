@@ -9,13 +9,23 @@ namespace cw{
     class panel: public grid, public widget, public gui_element{
 
     public:
-        void init(flag_set<init_flags> flags = flag_set<init_flags>()){
+        void init(std::shared_ptr<init_flags> flags = nullptr){
             //TODO assert for each required field.
-            textures["blank"] = std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4));
-            textures["current"] = texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel");
 
-            textures["previous"] = textures["current"];
+            switch_texture("current", texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel"));
+            switch_texture("previous", get_texture("current"));
+            set_x_offset(12.0);
+            set_y_offset(14.0);
 
+            on_attached += [this](){
+                //TODO
+
+                return [this](std::shared_ptr<widget> element){
+                    element->set_x(this->get_x() + get_x_offset());
+                    element->set_y(this->get_y() + get_y_offset());
+                };
+
+            }();
 
             on_mouse_down += [this](int x, int y, int button){
 
@@ -69,12 +79,10 @@ namespace cw{
 
         void render(std::shared_ptr<texture> render_texture){
 
-            texture_mutex.lock();
-            textures["current"]->render_to_target(get_x(), get_y(), render_texture);
+            get_texture("current")->render_to_target(get_x(), get_y(), render_texture);
             for(auto& element : elements){
                 element->render(render_texture);
             }
-            texture_mutex.unlock();
 
         }
 

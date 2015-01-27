@@ -21,17 +21,39 @@ namespace cw {
         }
 
     public:
-        void set_width  (double w) { dimension->width.store(w); }
-        void set_height (double h) { dimension->height.store(h); }
-        void set_depth  (double d) { dimension->depth.store(d); }
+        void set_width  (double w) {
+            dimension->width.store(w);
+            on_dimension_set();
+        }
+
+        void set_height (double h) {
+            dimension->height.store(h);
+            on_dimension_set();
+        }
+
+        void set_depth  (double d) {
+            dimension->depth.store(d);
+            on_dimension_set();
+        }
 
         double get_width   ()  { return dimension->width.load();   }
         double get_height  ()  { return dimension->height.load();  }
         double get_depth   ()  { return dimension->depth.load();   }
 
-        void set_x(double x) { position->x.store(x); }
-        void set_y(double y) { position->y.store(y); }
-        void set_z(double z) { position->z.store(z); }
+        void set_x(double x) {
+            position->x.store(x);
+            on_position_set();
+        }
+
+        void set_y(double y) {
+            position->y.store(y);
+            on_position_set();
+        }
+
+        void set_z(double z) {
+            position->z.store(z);
+            on_position_set();
+        }
 
         double get_x() { return position->x.load(); }
         double get_y() { return position->y.load(); }
@@ -59,6 +81,9 @@ namespace cw {
         std::atomic<bool> is_visible;
         std::shared_ptr<point_xyz> position;
         std::shared_ptr<dimension_xyz> dimension;
+
+        delegate<> on_position_set;
+        delegate<> on_dimension_set;
 
     };
 

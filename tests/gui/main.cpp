@@ -27,7 +27,11 @@ int main(int argc, char **argv) {
     windowA->set_width(640);
     windowA->set_height(480);
     windowA->set_depth(1);
-    windowA->init();
+    windowA->init([](){
+        std::shared_ptr<cw::widget::init_flags> flags(new cw::widget::init_flags());
+      //  flags->set<cw::window::window_flags>(cw::window::window_flags::MULTITHREADED);
+        return flags;
+    }());
 
     panel->set_theme("blue");
     panel->set_text("Left Panel");

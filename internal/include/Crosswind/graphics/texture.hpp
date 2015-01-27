@@ -25,12 +25,11 @@ namespace cw{
             texture_data->resize(width, height);
         }
 
-        //TODO
-/*        void write(std::shared_ptr<texture> source){
+        void resize(double width, double height){
             std::lock_guard<std::mutex> lock(texture_mutex);
-            texture_data;
+            (*texture_data).resize(width, height); //TODO check if guard protects pointer or variable inside.
         }
-*/
+
         void render_to_target(double x, double y, std::shared_ptr<texture> target){
 
             std::lock_guard<std::mutex> lock(texture_mutex);

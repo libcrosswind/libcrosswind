@@ -10,17 +10,60 @@
 #include <Crosswind/private/flag_set.hpp>
 
 namespace cw{
-	
 
 
-	class widget: public input_listener, public object_xyz{
+
+
+	class widget: public input_listener, public virtual object_xyz{
         
     public:
-        enum init_flags{
-            IN_NEW_THREAD = 1 << 0
+        class init_flags{
+        public:
+            init_flags(){
+
+                method = [](){
+                    return [](int test_flags){
+                        return false;
+                    };
+
+                }();
+
+            }
+
+            template<typename T>
+            void set(T flag_pack){
+
+                method = [&flag_pack](){
+                    std::shared_ptr<flag_set<T> > flags(new flag_set<T>(flag_pack));
+
+                    return [flags](int test_flags){
+                        return flags->test((T)test_flags);
+                    };
+
+                }();
+            }
+
+            bool has(int flag_pack){
+                return method(flag_pack);
+            }
+
+        protected:
+            std::function<bool(int)> method;
         };
 
-        virtual void init(flag_set<init_flags> flags = flag_set<init_flags>()) = 0;
+        widget(){
+            set_depth(1.0);
+            switch_texture("blank", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
+            on_dimension_set += [this]{
+                std::lock_guard<std::mutex> lock(texture_mutex);
+                for(auto& texture : textures){
+                    texture.second->resize(this->get_width(), this->get_height());
+                }
+
+            };
+        }
+
+        virtual void init(std::shared_ptr<init_flags> flags = nullptr) = 0;
         virtual void show() = 0;
         virtual void hide() = 0;
 
@@ -77,10 +120,17 @@ public:
             textures[name] = new_texture;
         }
 
-    protected:
-        flag_set<init_flags> setup_flags;
-        std::thread widget_thread;
+        std::shared_ptr<texture> get_texture(std::string name){
+            std::shared_ptr<texture> texture;
 
+            texture_mutex.lock();
+            texture = textures[name];
+            texture_mutex.unlock();
+
+            return texture;
+        }
+
+    protected:
         std::mutex texture_mutex;
         std::map<std::string, std::shared_ptr<texture> > textures;
     
