@@ -126,8 +126,8 @@ namespace cw{
 
         virtual void render(std::shared_ptr<texture> render_texture){
 
-            get_texture("current")->draw_text(get_x() + get_width()/4 ,
-                                              get_y() + get_height()/4,
+            get_texture("current")->draw_text(get_width()/2 ,
+                                              get_height()/2,
                                               get_text(),
                                               get_text_color());
 
@@ -170,7 +170,7 @@ public:
             std::shared_ptr<color_rgb> color = text_color;
             color_mutex.unlock();
 
-            return color;
+            return text_color;
         }
         void set_theme(std::string theme){
 

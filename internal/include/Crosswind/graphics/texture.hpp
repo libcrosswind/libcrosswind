@@ -33,7 +33,7 @@ namespace cw{
 
         void draw_text(double x, double y, std::string text, std::shared_ptr<color_rgb> color){
             std::lock_guard<std::mutex> lock(texture_mutex);
-            (*texture_data).draw_text(x, y, text.c_str(), color->data());
+            (*texture_data).draw_text(x - 5*text.size()/2, y - 4, text.c_str(), color->data()); //Font size is 8x8
 
         }
 
