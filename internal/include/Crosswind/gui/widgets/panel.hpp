@@ -6,23 +6,55 @@
 
 namespace cw{
 
-    class panel: public grid, public widget, public gui_element{
-
+    class horizontal_group: public grid, public widget{
     public:
-        void init(std::shared_ptr<init_flags> flags = nullptr){
-            //TODO assert for each required field.
-
-            switch_texture("current", texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel"));
-            switch_texture("previous", get_texture("current"));
-            set_x_offset(12.0);
-            set_y_offset(14.0);
+        horizontal_group(): major_x(0.0){
 
             on_attached += [this](){
-                //TODO
 
                 return [this](std::shared_ptr<widget> element){
-                    element->set_x(this->get_x() + get_x_offset());
-                    element->set_y(this->get_y() + get_y_offset());
+
+                        element->set_x(get_major_x() + get_grid_offset());
+                        element->set_y(this->get_y() + get_grid_offset());
+
+                };
+
+            }();
+
+        }
+
+        void set_major_x(double x){
+            major_x.store(x);
+        }
+
+        double get_major_x(){
+
+            for(auto& element: elements){
+                if(element->get_x() > major_x.load()){
+                    set_major_x(element->get_x());
+                }
+            }
+
+            return major_x.load();
+        }
+
+        std::atomic<double> major_x;
+    };
+
+    class vertical_group: public grid, public widget{
+
+    public:
+        vertical_group(): major_y(0.0){
+
+            on_attached += [this](){
+
+                return [this](std::shared_ptr<widget> element){
+
+                    for(auto& element : elements){
+                        element->set_x(this->get_x() + get_grid_offset());
+                        element->set_y(this->get_y() + this->get_major_y() + get_grid_offset());
+                    }
+
                 };
 
             }();
@@ -51,6 +83,50 @@ namespace cw{
                 }
 
             };
+        }
+
+
+        void set_major_y(double y){
+            major_y.store(y);
+        }
+
+        double get_major_y(){
+
+            for(auto& element: elements){
+                if(element->get_y() > major_y.load()){
+                    set_major_y(element->get_y());
+                }
+            }
+
+            return major_y.load();
+        }
+
+
+        void init(std::shared_ptr<init_flags> flags = nullptr){
+        }
+
+    private:
+
+        std::atomic<double> major_y;
+    };
+
+    class panel: public grid, public widget, public gui_element{
+
+    public:
+        panel(){
+            switch_texture("current", texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel"));
+            switch_texture("previous", get_texture("current"));
+
+            on_attached += [this](){
+
+                return [this](std::shared_ptr<widget> element){
+
+                        element->set_x(this->get_x());
+                        element->set_y(this->get_y());
+
+                };
+
+            }();
 
         }
 
@@ -66,27 +142,12 @@ namespace cw{
 
         }
 
-        void update(double delta){
+        void update(double delta) override{
 
-            /*     frame_counter += delta;
 
-                 if (frameCounter >= (max_fps)) {
-                     frameCounter = 0.f;
-                 }
-             */
-
-        }
-
-        void render(std::shared_ptr<texture> render_texture){
-
-            get_texture("current")->render_to_target(get_x(), get_y(), render_texture);
             for(auto& element : elements){
-                element->render(render_texture);
+                update(delta);
             }
-
-        }
-
-        void loop(){
 
         }
 

@@ -8,11 +8,9 @@
 #include <Crosswind/graphics/object_xyz.hpp>
 #include <Crosswind/graphics/texture.hpp>
 #include <Crosswind/private/flag_set.hpp>
+#include <Crosswind/events/delegate.hpp>
 
 namespace cw{
-
-
-
 
 	class widget: public input_listener, public virtual object_xyz{
         
@@ -52,24 +50,100 @@ namespace cw{
         };
 
         widget(){
+
+            set_width(10.0);
+            set_height(10.0);
             set_depth(1.0);
+
+            switch_texture("current", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
             switch_texture("blank", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
+            textures["previous"] = textures["current"];
+
+            set_text("");
+            set_theme("blue");
+            set_draggable(false);
+
+            set_text_color(255, 255, 255);
+
             on_dimension_set += [this]{
                 std::lock_guard<std::mutex> lock(texture_mutex);
                 for(auto& texture : textures){
                     texture.second->resize(this->get_width(), this->get_height());
                 }
+            };
+
+            on_mouse_down += [this](int x, int y, int button){
+
+                for(auto& element : elements){
+                    element->on_mouse_down(x, y, button);
+                }
 
             };
+
+            on_mouse_move += [this](int x, int y){
+
+                for(auto& element : elements){
+                    element->on_mouse_move(x, y);
+                }
+
+            };
+
+            on_mouse_up += [this](int x, int y){
+
+                for(auto& element : elements){
+                    element->on_mouse_up(x, y);
+                }
+
+            };
+
         }
 
-        virtual void init(std::shared_ptr<init_flags> flags = nullptr) = 0;
-        virtual void show() = 0;
-        virtual void hide() = 0;
+        virtual void init(std::shared_ptr<init_flags> flags = nullptr){
+        }
 
-        virtual void update(double delta) = 0;
-        virtual void render(std::shared_ptr<texture> render_texture) = 0;
-        virtual void loop() = 0;
+
+        virtual void show(){
+            set_visible(true);
+            switch_texture("current", textures["previous"]);
+            on_show();
+        }
+
+        virtual void hide(){
+            set_visible(false);
+            switch_texture("previous", textures["current"]);
+            switch_texture("current", textures["blank"]);
+            on_hide();
+        }
+
+        virtual void update(double delta){
+            /*     frame_counter += delta;
+
+            if (frameCounter >= (max_fps)) {
+                frameCounter = 0.f;
+            }
+            */
+
+        }
+
+        virtual void render(std::shared_ptr<texture> render_texture){
+
+
+            get_texture("current")->draw_text(get_x() + get_width()/4 ,
+                                              get_y() + get_height()/4,
+                                              get_text(),
+                                              get_text_color());
+
+            get_texture("current")->render_to_target(get_x(), get_y(), render_texture);
+
+
+            for(auto& element : elements){
+                element->render(render_texture);
+            }
+        }
+
+        virtual void loop(){
+
+        }
 
 public:
         void set_text(std::string text){
@@ -80,16 +154,26 @@ public:
         }
 
         std::string get_text(){
-        	std::string text = "";
 
         	text_mutex.lock();
-        	text = text_string;
+            std::string text = text_string;
         	text_mutex.unlock();
 
         	return text;
         }
 
+        void set_text_color(unsigned char r, unsigned char g, unsigned char b){
+            std::lock_guard<std::mutex> lock(color_mutex);
+            text_color = std::shared_ptr<color_rgb>(new color_rgb(r, g, b));
+        }
 
+        std::shared_ptr<color_rgb> get_text_color(){
+            color_mutex.lock();
+            std::shared_ptr<color_rgb> color = text_color;
+            color_mutex.unlock();
+
+            return color;
+        }
         void set_theme(std::string theme){
 
             std::lock_guard<std::mutex> lock(theme_mutex);
@@ -130,16 +214,41 @@ public:
             return texture;
         }
 
+        void attach(std::shared_ptr<widget> element) {
+            std::lock_guard<std::mutex> lock(element_mutex);
+            elements.push_back(element);
+            on_attached(element);
+
+        }
+
+        void detach(std::shared_ptr<widget> element){
+            std::lock_guard<std::mutex> lock(element_mutex);//TODO
+        }
+
     protected:
         std::mutex texture_mutex;
         std::map<std::string, std::shared_ptr<texture> > textures;
-    
+
+        delegate<>          on_show;
+        delegate<>          on_hide;
+
+
+        std::vector<std::shared_ptr<widget>> elements; //Attached elements.
+
+        delegate<std::shared_ptr<widget> > on_attached;
+        delegate<std::shared_ptr<widget> > on_detached;
+
     private:    
         std::mutex text_mutex;
         std::string text_string;
 
+        std::mutex color_mutex;
+        std::shared_ptr<color_rgb> text_color;
+
         std::mutex theme_mutex;
         std::string theme_string;
+
+        std::mutex element_mutex;
 
         std::atomic<bool> draggable;
 

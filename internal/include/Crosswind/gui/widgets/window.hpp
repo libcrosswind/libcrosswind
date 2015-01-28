@@ -25,22 +25,21 @@ namespace cw{
             };
 
             window(): is_multithreaded(false){
+
             }
 
-            void init(std::shared_ptr<init_flags> flags = nullptr){
+            void init(std::shared_ptr<init_flags> flags = nullptr) override {
                 //setup_flags = flags;
 
                 if(flags){
                     flags->has(window_flags::MULTITHREADED)? is_multithreaded = true: is_multithreaded = false;
                 }
 
-
                 switch_texture("render", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
 
-                //previous_time = std::chrono::high_resolution_clock::now();
             }
 
-            void show(){
+            void show() override {
                 set_visible(true);
                 display_window =
                         std::shared_ptr<display_target>(new display_target(get_width(), get_height(), get_text()));
@@ -55,27 +54,24 @@ namespace cw{
 
             }
 
-            void hide(){
+            void hide() override {
                 set_visible(false);
                 on_hide();
             }
 
-            void update(double delta){
+            void update(double delta) override {
 
-           /*     frame_counter += delta;
+                /*     frame_counter += delta;
 
-                if (frameCounter >= (max_fps)) {
-                    frameCounter = 0.f;
-                }
-            */
-
-                for(auto& element : elements)
-                    element->update(delta);
-
+                     if (frameCounter >= (max_fps)) {
+                         frameCounter = 0.f;
+                     }
+                 */
 
             }
 
-            void render(std::shared_ptr<texture> render_texture){
+
+        void render(std::shared_ptr<texture> render_texture) override {
 
                 get_texture("blank")->render_to_target(0, 0, render_texture);
 
@@ -87,7 +83,7 @@ namespace cw{
 
             }
 
-            void loop() {
+            void loop() override {
 
                 while (get_visible() && display_window->is_open() ) {
 
@@ -97,9 +93,7 @@ namespace cw{
 
                     render(get_texture("render"));
 
-                    //draw_text(100,100,"Hello World",purple); // Draw a purple "Hello world" at coordinates (100,100).
 
-                    //display.wait(20);
                 }
             }
 
@@ -160,10 +154,7 @@ namespace cw{
             }
 
         private:
-
             std::chrono::high_resolution_clock::time_point previous_time;
-            //    unsigned short max_fps;
-            //    double frame_counter;
 
             std::thread window_thread;
             bool is_multithreaded;

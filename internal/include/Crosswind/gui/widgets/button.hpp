@@ -9,9 +9,8 @@ namespace cw{
 	class button: public widget, public gui_element{
 
     public:
+        button(){
 
-        void init(std::shared_ptr<init_flags> flags = nullptr){
-            //TODO assert for each required field.
             textures["on"] =
                     texture_pool::loadTexture("button_on.png", get_width(), get_height(), get_theme() + "/" + "button");
 
@@ -24,6 +23,7 @@ namespace cw{
             textures["current"] = textures["off"];
             textures["previous"] = textures["current"];
 
+
             actions["clicked"] = delegate<>();
 
             on_mouse_down += [this](int x, int y, int button){
@@ -34,11 +34,13 @@ namespace cw{
                         this->switch_texture("current", textures["on"]);
                     }
                 }
+
             };
 
             on_mouse_move += [this](int x, int y){
 
                 if(this->pressed.load()){
+
                     if(this->get_draggable()){
                         this->set_x(x);
                         this->set_y(y);
@@ -66,37 +68,6 @@ namespace cw{
             };
         }
 
-        void show(){
-            set_visible(true);
-            switch_texture("current", textures["previous"]);
-            on_show();
-        }
-
-        void hide(){
-            set_visible(false);
-            switch_texture("previous", textures["current"]);
-            switch_texture("current", textures["blank"]);
-            on_hide();
-        }
-
-        void update(double delta){
-
-            /*     frame_counter += delta;
-
-                 if (frameCounter >= (max_fps)) {
-                     frameCounter = 0.f;
-                 }
-             */
-
-        }
-
-        void render(std::shared_ptr<texture> render_texture){
-            get_texture("current")->render_to_target(get_x(), get_y(), render_texture);
-        }
-
-        void loop(){
-
-        }
 
 
     private:

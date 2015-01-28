@@ -12,46 +12,20 @@ namespace cw{
 
     public:
 
-        grid(): x_offset(0.0), y_offset(0.0){
+        grid(): grid_offset(0.0){
 
         }
 
-        void set_x_offset(double offset){
-            x_offset.store(offset);
+        void set_grid_offset(double offset){
+            grid_offset.store(offset);
         }
 
-        double get_x_offset(){
-            return x_offset.load();
-        }
-
-        void set_y_offset(double offset){
-            y_offset.store(offset);
-        }
-
-        double get_y_offset(){
-            return y_offset.load();
-        }
-
-        void attach(std::shared_ptr<widget> element) {
-            std::lock_guard<std::mutex> lock(element_mutex);
-            elements.push_back(element);
-            on_attached(element);
-        }
-
-        void detach(std::shared_ptr<widget> element){
-            std::lock_guard<std::mutex> lock(element_mutex);//TODO
+        double get_grid_offset(){
+            return grid_offset.load();
         }
 
     protected:
-        delegate<std::shared_ptr<widget> > on_attached;
-        delegate<std::shared_ptr<widget> > on_detached;
-
-        std::vector<std::shared_ptr<widget>> elements; //Attached elements.
-
-        std::atomic<double> x_offset;
-        std::atomic<double> y_offset;
-    private:
-        std::mutex element_mutex;
+        std::atomic<double> grid_offset;
 
     };
 }

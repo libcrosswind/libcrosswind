@@ -7,6 +7,7 @@
 #include <mutex>
 
 #include <Crosswind/gui/widgets/detail/display_target.hpp>
+#include <Crosswind/graphics/color_rgb.hpp>
 
 namespace cw{
 
@@ -23,6 +24,12 @@ namespace cw{
                     (new cimg_library::CImg<unsigned char>());
             texture_data->assign(path.c_str());
             texture_data->resize(width, height);
+        }
+
+        void draw_text(double x, double y, std::string text, std::shared_ptr<color_rgb> color){
+            std::lock_guard<std::mutex> lock(texture_mutex);
+            (*texture_data).draw_text(x, y, text.c_str(), color->data()); //TODO check if guard protects pointer or variable inside.
+
         }
 
         void resize(double width, double height){
