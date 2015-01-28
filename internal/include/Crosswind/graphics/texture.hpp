@@ -39,7 +39,7 @@ namespace cw{
 
         void resize(double width, double height){
             std::lock_guard<std::mutex> lock(texture_mutex);
-         //   (*texture_data).resize(-400, -400); //Garbage
+            (*texture_data).resize(width, height, -100, -100, 3); //Linear interpolation works best for PNG
         }
 
         void render_to_target(double x, double y, std::shared_ptr<texture> target){

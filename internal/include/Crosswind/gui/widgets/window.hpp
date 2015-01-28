@@ -93,7 +93,7 @@ namespace cw{
 
                     render(get_texture("render"));
 
-                    display_window->wait(20);
+                    display_window->wait(40);
 
                 }
             }
