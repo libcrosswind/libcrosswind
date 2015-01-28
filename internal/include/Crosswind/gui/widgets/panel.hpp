@@ -10,6 +10,8 @@ namespace cw{
     public:
         horizontal_group(): major_x(0.0){
 
+            textures.clear(); //Removing default textures.
+
             on_attached += [this](){
 
                 return [this](std::shared_ptr<widget> element){
@@ -45,6 +47,8 @@ namespace cw{
 
     public:
         vertical_group(): major_y(0.0){
+
+            textures.clear(); //Removing default textures.
 
             on_attached += [this](){
 
@@ -143,7 +147,6 @@ namespace cw{
         }
 
         void update(double delta) override{
-
 
             for(auto& element : elements){
                 update(delta);

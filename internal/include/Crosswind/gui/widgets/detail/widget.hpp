@@ -126,13 +126,14 @@ namespace cw{
 
         virtual void render(std::shared_ptr<texture> render_texture){
 
-            get_texture("current")->draw_text(get_width()/2 ,
-                                              get_height()/2,
-                                              get_text(),
-                                              get_text_color());
+            if(get_texture("current")){
+                get_texture("current")->draw_text(get_width()/2 ,
+                        get_height()/2,
+                        get_text(),
+                        get_text_color());
 
-            get_texture("current")->render_to_target(get_x(), get_y(), render_texture);
-
+                get_texture("current")->render_to_target(get_x(), get_y(), render_texture);
+            }
 
             for(auto& element : elements){
                 element->render(render_texture);

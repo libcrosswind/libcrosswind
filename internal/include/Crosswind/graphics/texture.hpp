@@ -23,7 +23,7 @@ namespace cw{
             texture_data = std::shared_ptr<cimg_library::CImg<unsigned char> >
                     (new cimg_library::CImg<unsigned char>());
             texture_data->assign(path.c_str());
-//            texture_data->resize(width, height);
+//            texture_data->resize(-100, -100);
         }
 
         void clear(){
@@ -39,7 +39,7 @@ namespace cw{
 
         void resize(double width, double height){
             std::lock_guard<std::mutex> lock(texture_mutex);
-            //(*texture_data).resize(width, height); //Garbage
+         //   (*texture_data).resize(-400, -400); //Garbage
         }
 
         void render_to_target(double x, double y, std::shared_ptr<texture> target){
