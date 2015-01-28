@@ -11,6 +11,10 @@ namespace cw{
 						(new cimg_library::CImgDisplay(width, height, text.c_str()));
 		}
 
+        void wait(int ms){
+            window->wait(ms);
+        }
+
         int get_mouse_button()  {   return window->button();         }
         int get_mouse_x()       {   return window->mouse_x();        }
         int get_mouse_y()       {   return window->mouse_y();        }
