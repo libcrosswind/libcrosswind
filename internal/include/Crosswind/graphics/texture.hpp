@@ -23,18 +23,23 @@ namespace cw{
             texture_data = std::shared_ptr<cimg_library::CImg<unsigned char> >
                     (new cimg_library::CImg<unsigned char>());
             texture_data->assign(path.c_str());
-            texture_data->resize(width, height);
+//            texture_data->resize(width, height);
+        }
+
+        void clear(){
+            std::lock_guard<std::mutex> lock(texture_mutex);
+            (*texture_data).fill(0);
         }
 
         void draw_text(double x, double y, std::string text, std::shared_ptr<color_rgb> color){
             std::lock_guard<std::mutex> lock(texture_mutex);
-            (*texture_data).draw_text(x, y, text.c_str(), color->data()); //TODO check if guard protects pointer or variable inside.
+            (*texture_data).draw_text(x, y, text.c_str(), color->data());
 
         }
 
         void resize(double width, double height){
             std::lock_guard<std::mutex> lock(texture_mutex);
-            (*texture_data).resize(width, height); //TODO check if guard protects pointer or variable inside.
+            //(*texture_data).resize(width, height); //Garbage
         }
 
         void render_to_target(double x, double y, std::shared_ptr<texture> target){

@@ -73,7 +73,7 @@ namespace cw{
 
         void render(std::shared_ptr<texture> render_texture) override {
 
-                get_texture("blank")->render_to_target(0, 0, render_texture);
+                render_texture->clear();
 
                 for(auto& element : elements){
                     element->render(render_texture);

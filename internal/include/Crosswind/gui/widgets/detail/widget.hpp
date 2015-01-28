@@ -56,7 +56,6 @@ namespace cw{
             set_depth(1.0);
 
             switch_texture("current", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
-            switch_texture("blank", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
             textures["previous"] = textures["current"];
 
             set_text("");
@@ -126,7 +125,6 @@ namespace cw{
         }
 
         virtual void render(std::shared_ptr<texture> render_texture){
-
 
             get_texture("current")->draw_text(get_x() + get_width()/4 ,
                                               get_y() + get_height()/4,
