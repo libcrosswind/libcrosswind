@@ -13,21 +13,10 @@ int main(int argc, char **argv) {
 
     cw::filesystem::add_directory("assets", true);
 
-
-    cw::var number = 20;
-
-    int test_number = number.get<int>();
-
-    std::cout << test_number <<std::endl;
-
-
     std::shared_ptr<cw::window> window(new cw::window());
-
     std::shared_ptr<cw::vertical_group> vertical_group(new cw::vertical_group());
     std::shared_ptr<cw::horizontal_group> horizontal_group(new cw::horizontal_group());
-
     std::shared_ptr<cw::button> button(new cw::button());
-
     std::shared_ptr<cw::panel> panel(new cw::panel());
 
     window->set_text("A window");
@@ -64,7 +53,7 @@ int main(int argc, char **argv) {
     vertical_group->attach(button);
 
 
-    panel->attach(button);
+    panel->attach(vertical_group);
     window->attach(panel);
 
     window->show();
