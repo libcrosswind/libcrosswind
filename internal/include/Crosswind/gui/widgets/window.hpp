@@ -59,16 +59,15 @@ namespace cw{
                 on_hide();
             }
 
-            void update(double delta) override {
-
-                /*     frame_counter += delta;
+/*            void update(double delta) override {
+                    frame_counter += delta;
 
                      if (frameCounter >= (max_fps)) {
                          frameCounter = 0.f;
                      }
-                 */
 
-            }
+
+            }*/
 
 
         void render(std::shared_ptr<texture> render_texture) override {

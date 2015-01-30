@@ -32,29 +32,21 @@ int main(int argc, char **argv) {
     horizontal_group->set_grid_offset(30);
 
     button->set_theme("green");
-    button->set_x(0.0);
-    button->set_y(0.0);
-
     button->set_width(90);
     button->set_height(40);
     button->set_text("Hello world");
-    button->show();
 
     panel->set_theme("blue");
-    panel->set_x(0.5);
-    panel->set_y(0.5);
+    panel->set_real_x(0.0);
+    panel->set_real_y(0.0);
 
-    panel->set_width(240);
-    panel->set_height(160);
+    panel->set_width(200);
+    panel->set_height(100);
 
-    panel->set_depth(1);
-    panel->show();
 
     vertical_group->attach(button);
-
     panel->attach(vertical_group);
-    window->attach(button);
-
+    window->attach(panel);
 
     window->show();
 

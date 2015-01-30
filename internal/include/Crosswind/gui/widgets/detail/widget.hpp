@@ -75,10 +75,6 @@ namespace cw{
                 }
             };
 
-            on_position_set += [this](){
-        //        set_x(math::clamp<double>(get_x(), 0.0, 1.0));
-        //        set_y(math::clamp<double>(get_y(), 0.0, 1.0));
-            };
 
             on_mouse_down += [this](int x, int y, int button){
 
@@ -104,22 +100,6 @@ namespace cw{
 
             };
 
-            on_attached +=  [this](std::shared_ptr<widget> element) {
-
-                std::function<double(double, double)> get_coordinate = [](double percent, double dimension){
-
-                    return dimension * percent;
-                };
-
-                double x_cord = get_coordinate(element->get_x(), this->get_width());
-                double y_cord = get_coordinate(element->get_y(), this->get_height());
-
-
-                element->set_x(this->get_x()+x_cord);
-                element->set_y(this->get_y()+y_cord);
-
-            };
-
         }
 
         virtual void init(std::shared_ptr<init_flags> flags = nullptr){
@@ -140,12 +120,24 @@ namespace cw{
         }
 
         virtual void update(double delta){
-            /*     frame_counter += delta;
 
-            if (frameCounter >= (max_fps)) {
-                frameCounter = 0.f;
+            for(auto& element : elements){
+                std::function<double(double, double)> get_coordinate = [](double percent, double dimension){
+
+                    return dimension * percent;
+
+                };
+
+                double x_cord = get_coordinate(element->get_real_x(), this->get_width());
+                double y_cord = get_coordinate(element->get_real_y(), this->get_height());
+
+
+                element->set_x(this->get_x()+x_cord);
+                element->set_y(this->get_y()+y_cord);
+
+                element->update(delta);
             }
-            */
+
 
         }
 
@@ -242,7 +234,7 @@ public:
         void attach(std::shared_ptr<widget> element) {
             std::lock_guard<std::mutex> lock(element_mutex);
             elements.push_back(element);
-            on_attached(element);
+//            on_attached(element);
 
         }
 
@@ -254,14 +246,11 @@ public:
         std::mutex texture_mutex;
         std::map<std::string, std::shared_ptr<texture> > textures;
 
-        delegate<>          on_show;
-        delegate<>          on_hide;
+        delegate<>         on_show;
+        delegate<>         on_hide;
 
 
         std::vector<std::shared_ptr<widget>> elements; //Attached elements.
-
-        delegate<std::shared_ptr<widget> > on_attached;
-        delegate<std::shared_ptr<widget> > on_detached;
 
     private:    
         std::mutex text_mutex;

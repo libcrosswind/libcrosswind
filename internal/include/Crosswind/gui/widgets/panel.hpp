@@ -12,19 +12,7 @@ namespace cw{
 
             textures.clear(); //Removing default textures.
 
-            on_attached += [this](std::shared_ptr<widget> element){
 
-                        element->set_x(this->get_x());
-                        element->set_y(this->get_y());
-
-                        element->set_x(get_major_x() + get_grid_offset());
-                        element->set_y(this->get_y() + get_grid_offset());
-
-                        if(get_auto_resize()){
-
-                        }
-
-            };
 
         }
 
@@ -44,6 +32,24 @@ namespace cw{
             return major_x.load();
         }
 
+        void update(double delta) override{
+
+            for(auto& element : elements){
+                element->set_x(this->get_x());
+                element->set_y(this->get_y());
+
+                element->set_x(get_major_x() + get_grid_offset());
+                element->set_y(this->get_y() + get_grid_offset());
+
+                if(get_auto_resize()){
+
+                }
+
+                element->update(delta);
+            }
+
+        }
+
         std::atomic<double> major_x;
     };
 
@@ -54,10 +60,6 @@ namespace cw{
 
             textures.clear(); //Removing default textures.
 
-            on_attached += [this](std::shared_ptr<widget> element){
-                        element->set_x(this->get_x() + get_grid_offset());
-                        element->set_y(this->get_major_y() + get_grid_offset());
-            };
 
             on_mouse_down += [this](int x, int y, int button){
 
@@ -66,7 +68,6 @@ namespace cw{
                 }
 
             };
-
 
             on_mouse_move += [this](int x, int y){
 
@@ -85,29 +86,48 @@ namespace cw{
             };
         }
 
-
         void set_major_y(double y){
             major_y.store(y);
         }
 
         double get_major_y(){
-            set_major_y(this->get_y());
+            set_major_y(this->get_real_y());
 
             for(auto& element: elements){
-                if(element->get_y() > major_y.load()){
-                    set_major_y(element->get_y());
+                if(element->get_real_y() > major_y.load()){
+                    set_major_y(element->get_real_y());
                 }
             }
 
             return major_y.load();
         }
 
-
         void init(std::shared_ptr<init_flags> flags = nullptr){
         }
 
-    private:
+        void update(double delta) override{
 
+            for(auto& element : elements){
+
+                std::function<double(double, double)> get_coordinate = [](double percent, double dimension){
+
+                    return dimension * percent;
+
+                };
+
+                double x_cord = get_coordinate(element->get_real_x(), this->get_width());
+                double y_cord = get_coordinate(element->get_real_y(), this->get_height());
+
+
+                element->set_x(this->get_x() + get_grid_offset() + x_cord);
+                element->set_y(this->get_y() + get_grid_offset() + this->get_major_y() + y_cord);
+
+                element->update(delta);
+            }
+
+        }
+
+    private:
         std::atomic<double> major_y;
     };
 
@@ -117,7 +137,6 @@ namespace cw{
         panel(){
             switch_texture("current", texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel"));
             switch_texture("previous", get_texture("current"));
-
         }
 
         void show(){
@@ -129,16 +148,8 @@ namespace cw{
             set_visible(false);
             switch_texture("previous", textures["current"]);
             switch_texture("current", textures["blank"]);
-
         }
 
-        void update(double delta) override{
-
-            for(auto& element : elements){
-                update(delta);
-            }
-
-        }
 
     };
 

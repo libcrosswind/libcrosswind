@@ -15,7 +15,8 @@ namespace cw {
 
         object_xyz(){
 
-            position  = std::shared_ptr<point_xyz> (new  point_xyz(0.0, 0.0, 0.0));
+            absolute_position  = std::shared_ptr<point_xyz> (new  point_xyz(0.0, 0.0, 0.0));
+            real_position  = std::shared_ptr<point_xyz> (new  point_xyz(0.0, 0.0, 0.0));
             dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(0.0, 0.0, 0.0));
             set_visible(false);
         }
@@ -41,23 +42,36 @@ namespace cw {
         double get_depth   ()  { return dimension->depth.load();   }
 
         void set_x(double x) {
-            position->x.store(x);
-            on_position_set();
+            absolute_position->x.store(x);
         }
 
         void set_y(double y) {
-            position->y.store(y);
-            on_position_set();
+            absolute_position->y.store(y);
         }
 
         void set_z(double z) {
-            position->z.store(z);
-            on_position_set();
+            absolute_position->z.store(z);
         }
 
-        double get_x() { return position->x.load(); }
-        double get_y() { return position->y.load(); }
-        double get_z() { return position->z.load(); }
+        double get_x() { return absolute_position->x.load(); }
+        double get_y() { return absolute_position->y.load(); }
+        double get_z() { return absolute_position->z.load(); }
+
+        void set_real_x(double x) {
+            real_position->x.store(x);
+        }
+
+        void set_real_y(double y) {
+            real_position->y.store(y);
+        }
+
+        void set_real_z(double z) {
+            real_position->z.store(z);
+        }
+
+        double get_real_x() { return real_position->x.load(); }
+        double get_real_y() { return real_position->y.load(); }
+        double get_real_z() { return real_position->z.load(); }
 
 
         bool contains_x(double x)            { return x >= get_x()    && x <= get_width()  + get_x();        }
@@ -79,10 +93,11 @@ namespace cw {
 
     protected:
         std::atomic<bool> is_visible;
-        std::shared_ptr<point_xyz> position;
+        std::shared_ptr<point_xyz> absolute_position;
+        std::shared_ptr<point_xyz> real_position;
+
         std::shared_ptr<dimension_xyz> dimension;
 
-        delegate<> on_position_set;
         delegate<> on_dimension_set;
 
     };
