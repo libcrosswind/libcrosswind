@@ -12,16 +12,19 @@ namespace cw{
 
             textures.clear(); //Removing default textures.
 
-            on_attached += [this](){
+            on_attached += [this](std::shared_ptr<widget> element){
 
-                return [this](std::shared_ptr<widget> element){
+                        element->set_x(this->get_x());
+                        element->set_y(this->get_y());
 
                         element->set_x(get_major_x() + get_grid_offset());
                         element->set_y(this->get_y() + get_grid_offset());
 
-                };
+                        if(get_auto_resize()){
 
-            }();
+                        }
+
+            };
 
         }
 
@@ -30,6 +33,7 @@ namespace cw{
         }
 
         double get_major_x(){
+            set_major_x(this->get_x());
 
             for(auto& element: elements){
                 if(element->get_x() > major_x.load()){
@@ -50,18 +54,10 @@ namespace cw{
 
             textures.clear(); //Removing default textures.
 
-            on_attached += [this](){
-
-                return [this](std::shared_ptr<widget> element){
-
-                    for(auto& element : elements){
+            on_attached += [this](std::shared_ptr<widget> element){
                         element->set_x(this->get_x() + get_grid_offset());
-                        element->set_y(this->get_y() + this->get_major_y() + get_grid_offset());
-                    }
-
-                };
-
-            }();
+                        element->set_y(this->get_major_y() + get_grid_offset());
+            };
 
             on_mouse_down += [this](int x, int y, int button){
 
@@ -95,6 +91,7 @@ namespace cw{
         }
 
         double get_major_y(){
+            set_major_y(this->get_y());
 
             for(auto& element: elements){
                 if(element->get_y() > major_y.load()){
@@ -120,17 +117,6 @@ namespace cw{
         panel(){
             switch_texture("current", texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel"));
             switch_texture("previous", get_texture("current"));
-
-            on_attached += [this](){
-
-                return [this](std::shared_ptr<widget> element){
-
-                        element->set_x(this->get_x());
-                        element->set_y(this->get_y());
-
-                };
-
-            }();
 
         }
 

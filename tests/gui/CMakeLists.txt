@@ -21,7 +21,6 @@ add_compile_options(-std=c++1y)
 endif()
 
 file(GLOB sources main.cpp)
- 
 
 add_executable(gui ${sources})
 

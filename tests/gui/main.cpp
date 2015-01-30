@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 
     std::shared_ptr<cw::window> window(new cw::window());
     std::shared_ptr<cw::vertical_group> vertical_group(new cw::vertical_group());
-   // std::shared_ptr<cw::horizontal_group> horizontal_group(new cw::horizontal_group());
+    std::shared_ptr<cw::horizontal_group> horizontal_group(new cw::horizontal_group());
     std::shared_ptr<cw::button> button(new cw::button());
     std::shared_ptr<cw::panel> panel(new cw::panel());
 
@@ -29,27 +29,31 @@ int main(int argc, char **argv) {
     }());
 
     vertical_group->set_grid_offset(30);
+    horizontal_group->set_grid_offset(30);
 
     button->set_theme("green");
-    button->set_width(190);
-    button->set_height(45);
+    button->set_x(0.0);
+    button->set_y(0.0);
+
+    button->set_width(90);
+    button->set_height(40);
     button->set_text("Hello world");
     button->show();
 
     panel->set_theme("blue");
-    panel->set_x(120);
-    panel->set_y(120);
+    panel->set_x(0.5);
+    panel->set_y(0.5);
+
     panel->set_width(240);
     panel->set_height(160);
+
     panel->set_depth(1);
     panel->show();
 
-
     vertical_group->attach(button);
 
-
     panel->attach(vertical_group);
-    window->attach(panel);
+    window->attach(button);
 
 
     window->show();
