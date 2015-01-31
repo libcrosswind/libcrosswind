@@ -24,7 +24,7 @@ namespace cw{
             textures["previous"] = textures["current"];
 
 
-            actions["clicked"] = delegate<>();
+            actions["clicked"] = delegate<void>();
 
             on_mouse_down += [this](int x, int y, int button){
 

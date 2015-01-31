@@ -8,7 +8,7 @@ namespace cw{
 	public:
 
 
-        std::map<std::string, delegate<> > actions;
+        std::map<std::string, delegate<void> > actions;
 
 	};
 }

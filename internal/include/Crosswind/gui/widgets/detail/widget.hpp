@@ -9,7 +9,6 @@
 #include <Crosswind/graphics/texture.hpp>
 #include <Crosswind/private/flag_set.hpp>
 #include <Crosswind/events/delegate.hpp>
-#include <Crosswind/util/math.hpp> //TODO clamp values
 
 namespace cw{
 
@@ -52,21 +51,21 @@ namespace cw{
 
         widget(){
 
-            set_x(0.0);
-            set_y(0.0);
-            set_z(0.0);
             set_width(10.0);
             set_height(10.0);
             set_depth(1.0);
 
             switch_texture("current", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
-            textures["previous"] = textures["current"];
+            switch_texture("text", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
+            switch_texture("previous", get_texture("current"));
+
 
             set_text("");
+            set_name("");
             set_theme("blue");
             set_draggable(false);
 
-            set_text_color(255, 255, 255);
+            set_text_color(0, 0, 0);
 
             on_dimension_set += [this](){
                 std::lock_guard<std::mutex> lock(texture_mutex);
@@ -74,7 +73,6 @@ namespace cw{
                     texture.second->resize(this->get_width(), this->get_height());
                 }
             };
-
 
             on_mouse_down += [this](int x, int y, int button){
 
@@ -128,12 +126,11 @@ namespace cw{
 
                 };
 
-                double x_cord = get_coordinate(element->get_real_x(), this->get_width());
-                double y_cord = get_coordinate(element->get_real_y(), this->get_height());
+                double x_cord = get_coordinate(element->get_x(), this->get_width());
+                double y_cord = get_coordinate(element->get_y(), this->get_height());
 
-
-                element->set_x(this->get_x()+x_cord);
-                element->set_y(this->get_y()+y_cord);
+                element->set_absolute_x(this->get_absolute_x()+x_cord);
+                element->set_absolute_y(this->get_absolute_y()+y_cord);
 
                 element->update(delta);
             }
@@ -145,11 +142,15 @@ namespace cw{
 
             if(get_texture("current")){
 
+               // get_texture("text")->clear();
+
                 get_texture("current")->draw_text(get_width()/2 ,
                         get_height()/2,
                         get_text(),
                         get_text_color());
-                get_texture("current")->render_to_target(get_x(), get_y(), render_texture);
+
+             //   get_texture("text")->render_to_target(0, 0, get_texture("current"));
+                get_texture("current")->render_to_target(get_absolute_x(), get_absolute_y(), render_texture);
             }
 
             for(auto& element : elements){
@@ -165,17 +166,33 @@ public:
         void set_text(std::string text){
 
             std::lock_guard<std::mutex> lock(text_mutex);
-        	text_string = text;
+            text_string = text;
 
         }
 
         std::string get_text(){
 
-        	text_mutex.lock();
+            text_mutex.lock();
             std::string text = text_string;
-        	text_mutex.unlock();
+            text_mutex.unlock();
 
-        	return text;
+            return text;
+        }
+
+        void set_name(std::string name){
+
+            std::lock_guard<std::mutex> lock(name_mutex);
+            name_string = name;
+
+        }
+
+        std::string get_name(){
+
+            name_mutex.lock();
+            std::string name = name_string;
+            name_mutex.unlock();
+
+            return name;
         }
 
         void set_text_color(unsigned char r, unsigned char g, unsigned char b){
@@ -234,8 +251,7 @@ public:
         void attach(std::shared_ptr<widget> element) {
             std::lock_guard<std::mutex> lock(element_mutex);
             elements.push_back(element);
-//            on_attached(element);
-
+            on_attached(element);
         }
 
         void detach(std::shared_ptr<widget> element){
@@ -246,15 +262,19 @@ public:
         std::mutex texture_mutex;
         std::map<std::string, std::shared_ptr<texture> > textures;
 
-        delegate<>         on_show;
-        delegate<>         on_hide;
-
+        delegate<void>         on_show;
+        delegate<void>         on_hide;
+        delegate<void, std::shared_ptr<widget> > on_attached;
 
         std::vector<std::shared_ptr<widget>> elements; //Attached elements.
+
 
     private:    
         std::mutex text_mutex;
         std::string text_string;
+
+        std::mutex name_mutex;
+        std::string name_string;
 
         std::mutex color_mutex;
         std::shared_ptr<color_rgb> text_color;

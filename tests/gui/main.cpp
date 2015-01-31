@@ -1,6 +1,8 @@
 
 #include <Crosswind/gui/widgets/window.hpp>
 #include <Crosswind/gui/widgets/button.hpp>
+#include <Crosswind/gui/widgets/textbox.hpp>
+
 #include <Crosswind/gui/widgets/panel.hpp>
 #include <Crosswind/util/var.hpp>
 
@@ -17,6 +19,8 @@ int main(int argc, char **argv) {
     std::shared_ptr<cw::vertical_group> vertical_group(new cw::vertical_group());
     std::shared_ptr<cw::horizontal_group> horizontal_group(new cw::horizontal_group());
     std::shared_ptr<cw::button> button(new cw::button());
+    std::shared_ptr<cw::textbox> textbox(new cw::textbox());
+
     std::shared_ptr<cw::panel> panel(new cw::panel());
 
     window->set_text("A window");
@@ -28,23 +32,36 @@ int main(int argc, char **argv) {
         return flags;
     }());
 
-    vertical_group->set_grid_offset(30);
-    horizontal_group->set_grid_offset(30);
+    vertical_group->set_grid_offset(0.2);
+    horizontal_group->set_grid_offset(0.05);
+
 
     button->set_theme("green");
     button->set_width(90);
     button->set_height(40);
     button->set_text("Hello world");
 
+    textbox->set_width(90);
+    textbox->set_height(40);
+    textbox->set_text("None");
+
     panel->set_theme("blue");
-    panel->set_real_x(0.0);
-    panel->set_real_y(0.0);
+    panel->set_x(0.2);
+    panel->set_y(0.2);
 
-    panel->set_width(200);
-    panel->set_height(100);
+    panel->set_width(400);
+    panel->set_height(200);
 
+    vertical_group->set_width(panel->get_width());
+    vertical_group->set_height(panel->get_height());
 
-    vertical_group->attach(button);
+    horizontal_group->set_width(panel->get_width());
+    horizontal_group->set_height(panel->get_height());
+
+    horizontal_group->attach(button);
+    horizontal_group->attach(textbox);
+
+    vertical_group->attach(horizontal_group);
     panel->attach(vertical_group);
     window->attach(panel);
 

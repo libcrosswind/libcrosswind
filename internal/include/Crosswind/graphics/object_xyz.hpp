@@ -6,6 +6,7 @@
 
 #include <Crosswind/graphics/point_xyz.hpp>
 #include <Crosswind/graphics/dimension_xyz.hpp>
+#include <Crosswind/util/math.hpp>
 
 namespace cw {
 
@@ -42,43 +43,43 @@ namespace cw {
         double get_depth   ()  { return dimension->depth.load();   }
 
         void set_x(double x) {
-            absolute_position->x.store(x);
+            real_position->x.store(math::clamp<double>(x, -1.0, 2.0));
         }
 
         void set_y(double y) {
-            absolute_position->y.store(y);
+            real_position->y.store(math::clamp<double>(y, -1.0, 2.0));
         }
 
         void set_z(double z) {
+            real_position->z.store(math::clamp<double>(z, -1.0, 2.0));
+        }
+
+        double get_x() { return real_position->x.load(); }
+        double get_y() { return real_position->y.load(); }
+        double get_z() { return real_position->z.load(); }
+
+        void set_absolute_x(double x) {
+            absolute_position->x.store(x);
+        }
+
+        void set_absolute_y(double y) {
+            absolute_position->y.store(y);
+        }
+
+        void set_absolute_z(double z) {
             absolute_position->z.store(z);
         }
 
-        double get_x() { return absolute_position->x.load(); }
-        double get_y() { return absolute_position->y.load(); }
-        double get_z() { return absolute_position->z.load(); }
-
-        void set_real_x(double x) {
-            real_position->x.store(x);
-        }
-
-        void set_real_y(double y) {
-            real_position->y.store(y);
-        }
-
-        void set_real_z(double z) {
-            real_position->z.store(z);
-        }
-
-        double get_real_x() { return real_position->x.load(); }
-        double get_real_y() { return real_position->y.load(); }
-        double get_real_z() { return real_position->z.load(); }
+        double get_absolute_x() { return absolute_position->x.load(); }
+        double get_absolute_y() { return absolute_position->y.load(); }
+        double get_absolute_z() { return absolute_position->z.load(); }
 
 
-        bool contains_x(double x)            { return x >= get_x()    && x <= get_width()  + get_x();        }
-        bool contains_y(double y)            { return y >= get_y()    && y <= get_height() + get_y();   }
+        bool contains_x(double x) { return x >= get_absolute_x() && x <= get_width()  + get_absolute_x(); }
+        bool contains_y(double y) { return y >= get_absolute_y() && y <= get_height() + get_absolute_y(); }
 
-        bool collides_x(double x)            { return x == get_x() || x == get_x() + get_width(); }
-        bool collides_y(double y)            { return y == get_y() || y == get_y() + get_height(); }
+        bool collides_x(double x) { return x == get_absolute_x() || x == get_absolute_x() + get_width();  }
+        bool collides_y(double y) { return y == get_absolute_y() || y == get_absolute_y() + get_height(); }
 
         bool intersects_x(double x){ return contains_x(x) || collides_x(x); }
         bool intersects_y(double y){ return contains_y(y) || collides_y(y); }
@@ -87,9 +88,8 @@ namespace cw {
         bool collides_xy(double x, double y)     { return collides_x(x)       && collides_y(y);        }
         bool intersects_xy(double x, double y)   { return contains_xy(x, y)   || collides_xy(x, y);    }
 
-        void    set_visible(bool visible)   { is_visible.store(visible); }
+        void   set_visible(bool visible)    { is_visible.store(visible); }
         bool   get_visible()                { return is_visible.load();  }
-
 
     protected:
         std::atomic<bool> is_visible;
@@ -98,7 +98,7 @@ namespace cw {
 
         std::shared_ptr<dimension_xyz> dimension;
 
-        delegate<> on_dimension_set;
+        delegate<void> on_dimension_set;
 
     };
 
