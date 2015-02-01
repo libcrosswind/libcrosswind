@@ -1,6 +1,7 @@
 #pragma once 
 
-#include <Crosswind/network/crypto.hpp>
+#include <Crosswind/crypto/base64.hpp>
+#include <Crosswind/crypto/sha1.hpp>
 
 #include <asio.hpp>
 
@@ -12,61 +13,52 @@
 
 namespace cw {
    namespace network{
-   		namespace websockets{
+   		namespace ws {
 
-		   	template <class socket_type>
-		    class SocketClient;
+	    	class ws_message {
 
-		    template <class socket_type>
-		    class SocketClientBase {
-		    public:
-		        class Connection {
-		            friend class SocketClientBase<socket_type>;
-		            friend class SocketClient<socket_type>;
+	        public:
+	            std::istream data;
+	            size_t length;
+	            unsigned char fin_rsv_opcode;
 
-		        public:
-		            std::unordered_map<std::string, std::string> header;
-		            asio::ip::address remote_endpoint_address;
-		            unsigned short remote_endpoint_port;
+	        private:
+	            ws_message(): data(&data_buffer) {}
+	            asio::streambuf data_buffer;
+	        };
 
-		            Connection(socket_type* socket): socket(socket), closed(false) {}
-		        private:
-		            std::unique_ptr<socket_type> socket;
 
-		            std::atomic<bool> closed;
+   			class ws_client_base{
 
-		            void read_remote_endpoint_data() {
-		                try {
-		                    remote_endpoint_address=socket->lowest_layer().remote_endpoint().address();
-		                    remote_endpoint_port=socket->lowest_layer().remote_endpoint().port();
-		                }
-		                catch(const std::exception& e) {
-		                    std::cerr << e.what() << std::endl;
-		                }
-		            }
+
+		    protected:
+		        class ws_connection {
+	 
+			        public:
+			            std::unordered_map<std::string, std::string> header;
+			            asio::ip::address remote_endpoint_address;
+			            unsigned short remote_endpoint_port;
+
+			            ws_connection(asio::ip::tcp::socket* socket): socket(socket), closed(false) {}
+
+			            void read_remote_endpoint_data() {
+			                try {
+			                    remote_endpoint_address=socket->lowest_layer().remote_endpoint().address();
+			                    remote_endpoint_port=socket->lowest_layer().remote_endpoint().port();
+			                }
+			                catch(const std::exception& e) {
+			                    std::cerr << e.what() << std::endl;
+			                }
+			            }
+
+			        private:
+			            std::unique_ptr<asio::ip::tcp::socket> socket;
+			            std::atomic<bool> closed;
+
 		        };
-
-		        std::unique_ptr<Connection> connection;
-
-		        class Message {
-		            friend class SocketClientBase<socket_type>;
-
-		        public:
-		            std::istream data;
-		            size_t length;
-		            unsigned char fin_rsv_opcode;
-
-		        private:
-		            Message(): data(&data_buffer) {}
-		            asio::streambuf data_buffer;
-		        };
-
-		        std::function<void(void)> onopen;
-		        std::function<void(std::shared_ptr<Message>)> onmessage;
-		        std::function<void(const asio::error_code&)> onerror;
-		        std::function<void(int, const std::string&)> onclose;
-
-		        void start() {
+			
+			public:
+				void start() {
 		            connect();
 
 		            asio_io_service.run();
@@ -149,39 +141,10 @@ namespace cw {
 		            send(response, [](const asio::error_code& ec){}, 136);
 		        }
 
-		    protected:
-		        const std::string ws_magic_string="258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+		    protected: 
 
-		        asio::io_service asio_io_service;
-		        asio::ip::tcp::endpoint asio_endpoint;
-		        asio::ip::tcp::resolver asio_resolver;
+		    	void handshake() {
 
-		        std::string host;
-		        unsigned short port;
-		        std::string path;
-
-		        SocketClientBase(const std::string& host_port_path, unsigned short default_port) :
-		                asio_resolver(asio_io_service) {
-		            std::regex e("^([^:/]+):?([0-9]*)(.*)$");
-
-		            std::smatch sm;
-
-		            if(std::regex_match(host_port_path, sm, e)) {
-		                host=sm[1];
-		                path=sm[3];
-		                port=default_port;
-		                if(sm[2]!="")
-		                    port=(unsigned short)std::stoul(sm[2]);
-		                asio_endpoint=asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port);
-		            }
-		            else {
-		                throw std::invalid_argument("Error parsing host_port_path");
-		            }
-		        }
-
-		        virtual void connect()=0;
-
-		        void handshake() {
 		            connection->read_remote_endpoint_data();
 
 		            std::shared_ptr<asio::streambuf> write_buffer(new asio::streambuf);
@@ -201,13 +164,14 @@ namespace cw {
 		            for(int c=0;c<16;c++)
 		                nonce[c]=dist(rd);
 
-		            std::string nonce_base64=crypto::Base64::encode(nonce);
+		            std::string nonce_base64=crypto::base64::encode(nonce);
 		            request << "Sec-WebSocket-Key: " << nonce_base64 << "\r\n";
 		            request << "Sec-WebSocket-Version: 13\r\n";
 		            request << "\r\n";
 
 		            //test this to base64::decode(Sec-WebSocket-Accept)
-		            std::shared_ptr<std::string> accept_sha1(new std::string(crypto::SHA1(nonce_base64+ws_magic_string)));
+ 
+		            std::shared_ptr<std::string> accept_sha1(new std::string(crypto::sha1::compress(nonce_base64+ws_magic_string)));
 
 		            asio::async_write(*connection->socket, *write_buffer,
 		                    [this, write_buffer, accept_sha1]
@@ -220,7 +184,7 @@ namespace cw {
 		                            (const asio::error_code& ec, size_t bytes_transferred) {
 		                        if(!ec) {
 		                            parse_handshake(message->data);
-		                            if(crypto::Base64::decode(connection->header["Sec-WebSocket-Accept"])==*accept_sha1) {
+		                            if(crypto::base64::decode(connection->header["Sec-WebSocket-Accept"])==*accept_sha1) {
 		                                if(onopen)
 		                                    onopen();
 		                                read_message(message);
@@ -257,7 +221,7 @@ namespace cw {
 		            } while(matched==true);
 		        }
 
-		        void read_message(std::shared_ptr<Message> message) {
+		        void read_message(std::shared_ptr<ws_message> message) {
 		            asio::async_read(*connection->socket, message->data_buffer, asio::transfer_exactly(2),
 		                    [this, message](const asio::error_code& ec, size_t bytes_transferred) {
 		                if(!ec) {
@@ -372,7 +336,7 @@ namespace cw {
 		                    }
 
 		                    //Next message
-		                    std::shared_ptr<Message> next_message(new Message());
+		                    std::shared_ptr<ws_message> next_message(new ws_message());
 		                    read_message(next_message);
 		                }
 		                else {
@@ -381,41 +345,82 @@ namespace cw {
 		                }
 		            });
 		        }
-		    };
 
-		    template<class socket_type>
-		    class SocketClient : public SocketClientBase<socket_type> {};
+		    protected:
+				ws_client_base(st std::string& host_port_path, unsigned short default_port = 80): asio_resolver(asio_io_service) {
+					std::regex e("^([^:/]+):?([0-9]*)(.*)$");
 
-		    typedef asio::ip::tcp::socket WS;
+					std::smatch sm;
 
-		    template<>
-		    class SocketClient<WS> : public SocketClientBase<WS> {
-		    public:
-		        SocketClient(const std::string& server_port_path) : SocketClientBase<WS>::SocketClientBase(server_port_path, 80) {};
+					if(std::regex_match(host_port_path, sm, e)) {
+						host=sm[1];
+						path=sm[3];
+						port=default_port;
+					if(sm[2]!="")
+						port=(unsigned short)std::stoul(sm[2]);
+						asio_endpoint=asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port);
+					}
+					else {
+						throw std::invalid_argument("Error parsing host_port_path");
+					}
+				}
 
-		    private:
-		        void connect() {
-		            asio::ip::tcp::resolver::query query(host, std::to_string(port));
+				virtual void connect() = 0;
 
-		            asio_resolver.async_resolve(query, [this]
-		                    (const asio::error_code &ec, asio::ip::tcp::resolver::iterator it){
-		                if(!ec) {
-		                    connection=std::unique_ptr<Connection>(new Connection(new WS(asio_io_service)));
+			public: 
+		        delegate<void, void> on_open;
+		        deegate<void, std::shared_ptr<ws_message> > on_message;
+		        delegate<void, const asio::error_code&> on_error;
+		        delegate<void, int, const std::string&> on_close;
+		  
+		    protected:
+		        const std::string ws_magic_string="258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
-		                    asio::async_connect(*connection->socket, it, [this]
-		                            (const asio::error_code &ec, asio::ip::tcp::resolver::iterator it){
-		                        if(!ec) {
-		                            handshake();
-		                        }
-		                        else
-		                            throw std::invalid_argument(ec.message());
-		                    });
-		                }
-		                else
-		                    throw std::invalid_argument(ec.message());
-		            });
-		        }
-		    };
-   		} //namespace websockets
+		        asio::io_service asio_io_service;
+		        asio::ip::tcp::endpoint asio_endpoint;
+		        asio::ip::tcp::resolver asio_resolver;
+
+		        std::string host;
+		        unsigned short port;
+		        std::string path; 
+
+		        std::unique_ptr<ws_connection> connection;
+   			};
+
+
+			class ws_client: ws_client_base{
+				public:
+					ws_client(const std::string& host_port_path, unsigned short default_port = 80) : ws_client_base::ws_client_base(host_port_path, 80)
+					{
+
+						
+					}
+
+		        private:
+			        void connect() {
+			            asio::ip::tcp::resolver::query query(host, std::to_string(port));
+
+			            asio_resolver.async_resolve(query, [this]
+			                    (const asio::error_code &ec, asio::ip::tcp::resolver::iterator it){
+			                if(!ec) {
+			                    connection=std::unique_ptr<Connection>(new ws_connection(new asio::ip::tcp::socket(asio_io_service)));
+
+			                    asio::async_connect(*connection->socket, it, [this]
+			                            (const asio::error_code &ec, asio::ip::tcp::resolver::iterator it){
+			                        if(!ec) {
+			                            handshake();
+			                        }
+			                        else
+			                            throw std::invalid_argument(ec.message());
+			                    });
+			                }
+			                else
+			                    throw std::invalid_argument(ec.message());
+			            });
+			        }
+			};
+ 
+  
+   		} //namespace ws
    } //namespace network
-} //namespace nana
+} //namespace cw

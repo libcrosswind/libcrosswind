@@ -5,9 +5,11 @@
 
 #include <Crosswind/gui/widgets/panel.hpp>
 #include <Crosswind/util/var.hpp>
-
+#include <Crosswind/network/ws/ws_client.hpp>
 #include <Crosswind/util/filesystem.hpp>
 #include <string>
+
+#include <asio/impl/src.hpp> //TODO move this to common network header.
 
 #include <memory>
 
@@ -20,7 +22,6 @@ int main(int argc, char **argv) {
     std::shared_ptr<cw::horizontal_group> horizontal_group(new cw::horizontal_group());
     std::shared_ptr<cw::button> button(new cw::button());
     std::shared_ptr<cw::textbox> textbox(new cw::textbox());
-
     std::shared_ptr<cw::panel> panel(new cw::panel());
 
     window->set_text("A window");
@@ -63,6 +64,8 @@ int main(int argc, char **argv) {
     vertical_group->attach(horizontal_group);
     panel->attach(vertical_group);
     window->attach(panel);
+
+    std::shared_ptr<cw::network::ws::ws_client> ws_client;
 
     window->show();
 

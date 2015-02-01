@@ -12,7 +12,7 @@ include_directories(${INCLUDE_LIBRARY_PATH})
 
 if( CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-add_compile_options(-std=gnu++1y -g)
+add_compile_options(-std=gnu++1y -g -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION)
 
 elseif( CMAKE_BUILD_TYPE STREQUAL "Release")
 
