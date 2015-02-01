@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <array>
 
 
@@ -32,7 +33,7 @@ namespace cw {
 				            char_array_4[3] = char_array_3[2] & 0x3f;
 
 				            for(i = 0; (i <4) ; i++) {
-				                ret += base64_chars[char_array_4[i]];
+				                ret += base64_map[char_array_4[i]];
 				            }
 				            i = 0;
 				        }
@@ -51,7 +52,7 @@ namespace cw {
 				        char_array_4[3] = char_array_3[2] & 0x3f;
 
 				        for (j = 0; (j < i + 1); j++) {
-				            ret += base64_chars[char_array_4[j]];
+				            ret += base64_map[char_array_4[j]];
 				        }
 
 				        while((i++ < 3)) {
@@ -74,7 +75,7 @@ namespace cw {
 					    char_array_4[i++] = input[in_]; in_++;
 					    if (i ==4) {
 					        for (i = 0; i <4; i++) {
-					            char_array_4[i] = static_cast<unsigned char>(base64_chars.find(char_array_4[i]));
+					            char_array_4[i] = static_cast<unsigned char>(base64_map.find(char_array_4[i]));
 					        }
 
 					        char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
@@ -93,7 +94,7 @@ namespace cw {
 					        char_array_4[j] = 0;
 
 					    for (j = 0; j <4; j++)
-					        char_array_4[j] = static_cast<unsigned char>(base64_chars.find(char_array_4[j]));
+					        char_array_4[j] = static_cast<unsigned char>(base64_map.find(char_array_4[j]));
 
 					    char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
 					    char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
@@ -110,11 +111,7 @@ namespace cw {
 			
 
 			private:
-				static const std::array<unsigned char, 64> base64_map = {
-				 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-				 "abcdefghijklmnopqrstuvwxyz"
-				 "0123456789+/"
-				};
+				static std::string base64_map;
 
 				/// Test whether a character is a valid base64 character
 				/**
@@ -130,5 +127,9 @@ namespace cw {
 
 
 			}; // class base64
+
+         std::string base64::base64_map = {
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+        };
 	}// namespace crypto
 }// namespace cw

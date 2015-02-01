@@ -102,6 +102,9 @@ namespace cw{
             }
 
 
+        delegate<void> on_close;
+
+
         private:
             double get_delta() {
                 // Gett current time as a std::chrono::time_point
@@ -190,6 +193,7 @@ namespace cw{
                     }
                 }
             }
+
 
     protected:
         void set_buffering(bool status){

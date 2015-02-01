@@ -65,7 +65,36 @@ int main(int argc, char **argv) {
     panel->attach(vertical_group);
     window->attach(panel);
 
-    std::shared_ptr<cw::network::ws::ws_client> ws_client;
+    std::shared_ptr<cw::network::ws::ws_client> ws_client(new cw::network::ws::ws_client("192.168.1.67:8000/echo"));
+
+    ws_client->on_message += [](auto message) {
+        std::stringstream data_ss;
+        data_ss << message->data.rdbuf();
+        std::cout << "Client: Message received: \"" << data_ss.str() << "\"" << std::endl;
+
+
+        //
+        // client.send(data_ss);
+    };
+
+    ws_client->on_open += []() {
+
+    };
+
+    ws_client->on_close +=[](int status, const std::string& reason) {
+        std::cout << "Client: Closed connection with status code " << status << std::endl;
+
+    };
+
+    ws_client->on_error +=[](const asio::error_code& ec) {
+        std::cout << "Client: Error: " << ec << ", error message: " << ec.message() << std::endl;
+    };
+
+    ws_client->start();
+
+    window->on_close += [ws_client](){
+        ws_client->stop();
+    };
 
     window->show();
 

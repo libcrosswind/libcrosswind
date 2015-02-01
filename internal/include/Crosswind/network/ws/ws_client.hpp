@@ -10,6 +10,7 @@
 #include <regex>
 #include <random>
 #include <atomic>
+#include <string>
 
 namespace cw {
    namespace network{
@@ -18,12 +19,11 @@ namespace cw {
 	    	class ws_message {
 
 	        public:
-	            std::istream data;
+                ws_message(): data(&data_buffer) {}
+
+                std::istream data;
 	            size_t length;
 	            unsigned char fin_rsv_opcode;
-
-	        private:
-	            ws_message(): data(&data_buffer) {}
 	            asio::streambuf data_buffer;
 	        };
 
@@ -51,21 +51,26 @@ namespace cw {
 			                }
 			            }
 
-			        private:
-			            std::unique_ptr<asio::ip::tcp::socket> socket;
-			            std::atomic<bool> closed;
+                    std::unique_ptr<asio::ip::tcp::socket> socket;
+                    std::atomic<bool> closed;
 
 		        };
-			
+            std::thread th_run;
+
 			public:
 				void start() {
-		            connect();
 
-		            asio_io_service.run();
+                    th_run = std::thread([this](){
+                        connect();
+
+                        asio_io_service.run();
+                    });
 		        }
 
 		        void stop() {
 		            asio_io_service.stop();
+
+                    th_run.join();
 		        }
 
 		        void send(std::iostream& stream, const std::function<void(const asio::error_code&)>& callback=nullptr,
@@ -177,7 +182,7 @@ namespace cw {
 		                    [this, write_buffer, accept_sha1]
 		                    (const asio::error_code& ec, size_t bytes_transferred) {
 		                if(!ec) {
-		                    std::shared_ptr<Message> message(new Message());
+		                    std::shared_ptr<ws_message> message(new ws_message());
 
 		                    asio::async_read_until(*connection->socket, message->data_buffer, "\r\n\r\n",
 		                            [this, message, accept_sha1]
@@ -185,8 +190,7 @@ namespace cw {
 		                        if(!ec) {
 		                            parse_handshake(message->data);
 		                            if(crypto::base64::decode(connection->header["Sec-WebSocket-Accept"])==*accept_sha1) {
-		                                if(onopen)
-		                                    onopen();
+                                        on_open();
 		                                read_message(message);
 		                            }
 		                            else
@@ -235,8 +239,7 @@ namespace cw {
 		                    if(first_bytes[1]>=128) {
 		                        const std::string reason="message from server masked";
 		                        send_close(1002, reason);
-		                        if(onclose)
-		                            onclose(1002, reason);
+                                on_close(1002, reason);
 		                        return;
 		                    }
 
@@ -261,8 +264,7 @@ namespace cw {
 		                                read_message_content(message);
 		                            }
 		                            else {
-		                                if(onerror)
-		                                    onerror(ec);
+                                        on_error(ec);
 		                            }
 		                        });
 		                    }
@@ -285,8 +287,8 @@ namespace cw {
 		                                read_message_content(message);
 		                            }
 		                            else {
-		                                if(onerror)
-		                                    onerror(ec);
+
+                                        on_error(ec);
 		                            }
 		                        });
 		                    }
@@ -296,13 +298,12 @@ namespace cw {
 		                    }
 		                }
 		                else {
-		                    if(onerror)
-		                        onerror(ec);
+                           on_error(ec);
 		                }
 		            });
 		        }
 
-		        void read_message_content(std::shared_ptr<Message> message) {
+		        void read_message_content(std::shared_ptr<ws_message> message) {
 		            asio::async_read(*connection->socket, message->data_buffer, asio::transfer_exactly(message->length),
 		                    [this, message]
 		                    (const asio::error_code& ec, size_t bytes_transferred) {
@@ -321,8 +322,7 @@ namespace cw {
 		                        std::string reason=reason_ss.str();
 
 		                        send_close(status, reason);
-		                        if(onclose)
-		                            onclose(status, reason);
+                                on_close(status, reason);
 		                        return;
 		                    }
 		                    //If ping
@@ -331,8 +331,8 @@ namespace cw {
 		                        std::stringstream empty_ss;
 		                        send(empty_ss, nullptr, message->fin_rsv_opcode+1);
 		                    }
-		                    else if(onmessage) {
-		                        onmessage(message);
+		                    else {
+                                on_message(message);
 		                    }
 
 		                    //Next message
@@ -340,14 +340,13 @@ namespace cw {
 		                    read_message(next_message);
 		                }
 		                else {
-		                    if(onerror)
-		                        onerror(ec);
+                            on_error(ec);
 		                }
 		            });
 		        }
 
 		    protected:
-				ws_client_base(st std::string& host_port_path, unsigned short default_port = 80): asio_resolver(asio_io_service) {
+				ws_client_base(std::string host_port_path, unsigned short default_port = 80): asio_resolver(asio_io_service) {
 					std::regex e("^([^:/]+):?([0-9]*)(.*)$");
 
 					std::smatch sm;
@@ -368,8 +367,8 @@ namespace cw {
 				virtual void connect() = 0;
 
 			public: 
-		        delegate<void, void> on_open;
-		        deegate<void, std::shared_ptr<ws_message> > on_message;
+		        delegate<void> on_open;
+                delegate<void, std::shared_ptr<ws_message> > on_message;
 		        delegate<void, const asio::error_code&> on_error;
 		        delegate<void, int, const std::string&> on_close;
 		  
@@ -388,9 +387,10 @@ namespace cw {
    			};
 
 
-			class ws_client: ws_client_base{
+			class ws_client: public ws_client_base{
 				public:
-					ws_client(const std::string& host_port_path, unsigned short default_port = 80) : ws_client_base::ws_client_base(host_port_path, 80)
+					ws_client(const std::string& host_port_path, unsigned short default_port = 80) :
+                            ws_client_base(host_port_path, default_port)
 					{
 
 						
@@ -403,7 +403,7 @@ namespace cw {
 			            asio_resolver.async_resolve(query, [this]
 			                    (const asio::error_code &ec, asio::ip::tcp::resolver::iterator it){
 			                if(!ec) {
-			                    connection=std::unique_ptr<Connection>(new ws_connection(new asio::ip::tcp::socket(asio_io_service)));
+			                    connection=std::unique_ptr<ws_connection>(new ws_connection(new asio::ip::tcp::socket(asio_io_service)));
 
 			                    asio::async_connect(*connection->socket, it, [this]
 			                            (const asio::error_code &ec, asio::ip::tcp::resolver::iterator it){
