@@ -14,4 +14,4 @@ Android, Windows Phone, Blackberry 10
 GUI, Events, WebSockets, Cryptography.
 
 <h2> To be done <h2>
-3D, Audio, SRTP, Video
+3D, Audio, SRTP, Video, DB, Bindings with other languages.

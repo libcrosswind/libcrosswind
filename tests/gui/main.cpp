@@ -35,7 +35,6 @@ int main(int argc, char **argv) {
     vertical_group->set_grid_offset(0.2);
     horizontal_group->set_grid_offset(0.05);
 
-
     button->set_theme("green");
     button->set_width(90);
     button->set_height(40);
