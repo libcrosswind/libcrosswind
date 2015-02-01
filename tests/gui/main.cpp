@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 
     textbox->set_width(90);
     textbox->set_height(40);
-    textbox->set_text("None");
+    textbox->set_text("This textbox");
 
     panel->set_theme("blue");
     panel->set_x(0.2);

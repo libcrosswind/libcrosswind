@@ -65,7 +65,7 @@ namespace cw{
             set_theme("blue");
             set_draggable(false);
 
-            set_text_color(0, 0, 0);
+            set_text_color(255, 255, 255);
 
             on_dimension_set += [this](){
                 std::lock_guard<std::mutex> lock(texture_mutex);
@@ -94,6 +94,14 @@ namespace cw{
 
                 for(auto& element : elements){
                     element->on_mouse_up(x, y);
+                }
+
+            };
+
+            on_key_down += [this](int key){
+
+                for(auto& element : elements){
+                    element->on_key_down(key);
                 }
 
             };

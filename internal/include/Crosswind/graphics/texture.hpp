@@ -16,10 +16,10 @@ namespace cw{
 
         texture(double width, double height, double depth, double bpp){
             texture_data = std::shared_ptr<cimg_library::CImg<unsigned char> >
-                    (new cimg_library::CImg<unsigned char>(width, height, depth, bpp, 0));
+                    (new cimg_library::CImg<unsigned char>(width, height, depth, bpp, 255));
 
             texture_clear_buffer = std::shared_ptr<cimg_library::CImg<unsigned char> >
-                    (new cimg_library::CImg<unsigned char>(width, height, depth, bpp, 0));
+                    (new cimg_library::CImg<unsigned char>(width, height, depth, bpp, 255));
 
         }
 
@@ -45,13 +45,24 @@ namespace cw{
             std::lock_guard<std::mutex> lock(texture_mutex);
             (*texture_data) = (*texture_clear_buffer);
 
-/*            cimg_library::CImg<unsigned char> imgtext; //@TODO draw aligned.
-            unsigned char dcolor = 1;
+//            const unsigned char black[] = { 0, 0, 0};
 
-            imgtext.draw_text(0,0,text.c_str(),&dcolor);
+            cimg_library::CImg<unsigned char> imgtext =
+                    cimg_library::CImg<unsigned char>().draw_text(0,0,text.c_str(), color->data(), NULL).
+                            resize(-100,-100, 1, 4);
 
-            (*texture_data).draw_image(0, 0, imgtext);*/
-            (*texture_data).draw_text(x - 5*text.size()/2, y - 4, text.c_str(), color->data()); //Font size is 8x8
+            //@TODO move this to widget.hpp and implement alignment.
+            (*texture_data).draw_image(x - imgtext.width()/2,
+                                       y - imgtext.height()/2,
+                                       0,
+                                       0,
+                                       imgtext,
+                                       imgtext.get_channel(3),
+                                       1,
+                                       255);
+
+//            (*texture_data).draw_image(0, 0, imgtext);
+       //     (*texture_data).draw_text(x - 5*text.size()/2, y - 4, text.c_str(), color->data()); //Font size is 8x8
 
         }
 

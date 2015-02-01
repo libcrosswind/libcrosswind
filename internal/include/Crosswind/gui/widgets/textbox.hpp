@@ -16,6 +16,8 @@ namespace cw{
             set_pressed(false);
             set_focus(false);
 
+            set_text_color(128, 128, 128);
+
             switch_texture("current", 
                             texture_pool::loadTexture
                                 ("textbox.png", get_width(), get_height(), get_theme() + "/" + "textbox"));
@@ -66,6 +68,34 @@ namespace cw{
 
 
                 this->set_pressed(false);
+            };
+
+            on_key_down += [this](int key){
+                if(get_focus()){
+                    std::string text = "";
+                    std::string animation_character = "";
+
+                    if(get_animated()){
+                        text  = get_text().substr(0, get_text().size() - 1);
+                        animation_character = get_text().substr(get_text().size() - 1, get_text().size());
+                    } else {
+                        text = get_text();
+                    }
+
+                    if(key >= 65 && key <= 90){
+                        text += char(key);
+                    } else if(key == 8){ //Backspace //@TODO create ascii keymap
+
+                        text.size() > 0 ?
+                        text  = text.substr(0, text.size() - 1):
+                        text = "";
+
+                    } else if (key == 13){ //Enter
+                        //@TODO raise action command.
+                    }
+
+                    set_text(text + animation_character);
+                }
             };
         }
 

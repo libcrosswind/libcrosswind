@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <functional>
 #include <memory>
 #include <algorithm>
@@ -14,7 +13,6 @@
 #include <Crosswind/gui/widgets/detail/display_target.hpp>
 
 
-
 namespace cw{
 
     class window: public grid, public widget, public gui_element {
@@ -25,6 +23,12 @@ namespace cw{
             };
 
             window(): is_multithreaded(false){
+
+                set_buffering(false);
+                set_buffer_key(0);
+                set_buffer_counter(0.0);
+                set_buffer_frames(1);
+
 
             }
 
@@ -66,9 +70,7 @@ namespace cw{
                          frameCounter = 0.f;
                      }
 
-
             }*/
-
 
         void render(std::shared_ptr<texture> render_texture) override {
 
@@ -86,13 +88,15 @@ namespace cw{
 
                 while (get_visible() && display_window->is_open() ) {
 
-                    handle_input();
+                    double delta = get_delta();
 
-                    update(get_delta());
+                    handle_input(delta);
+
+                    update(delta);
 
                     render(get_texture("render"));
 
-                    display_window->wait(40);
+                    display_window->wait(10);
 
                 }
             }
@@ -117,7 +121,7 @@ namespace cw{
                 return delta;
             }
 
-            void handle_input() {
+            void handle_input(double delta) {
 
                 //TODO implement z-order.
                 // button clicked. //TODO reduce iterations and implement Z-order.
@@ -140,26 +144,100 @@ namespace cw{
                     }
                 }
 
-                if (display_window->get_keyboard_down()) {  // key down
-                    for (auto &element : elements) {
-                        element->on_key_down(display_window->get_keyboard_down());
+                if (display_window->get_keyboard_down()) {  // key down //@TODO single reads for atomics.
+
+                    if(display_window->get_keyboard_down() != get_buffer_key()){
+                        if(!get_buffering()){  //@TODO implement buffering for keypress
+
+                            for (auto &element : elements) {
+                                element->on_key_down(display_window->get_keyboard_down());
+                            }
+
+                            set_buffer_counter(0.0f);
+                            set_buffering(true);
+                            set_buffer_key(display_window->get_keyboard_down());
+                        }
+
+                    } else {
+
+                        if(get_buffering()){
+                            set_buffer_counter(get_buffer_counter() + delta) ;
+
+                            if(get_buffer_counter() >= (1.0f/ get_buffer_frames())){
+                                set_buffer_counter(0.0f);
+                                set_buffering(false);
+                            }
+
+                        } else {
+                            for (auto &element : elements) {
+                                element->on_key_down(display_window->get_keyboard_down());
+                            }
+                        }
                     }
+
+
+                } else {
+                    set_buffer_key(0);
                 }
 
                 if (display_window->get_keyboard_up()) { // key up
+                    set_buffer_counter(0.0f);
+                    set_buffering(false);
+                    set_buffer_key(0);
+
                     for (auto &element : elements) {
                         element->on_key_up(display_window->get_keyboard_up());
                     }
                 }
             }
 
-        private:
-            std::chrono::high_resolution_clock::time_point previous_time;
+    protected:
+        void set_buffering(bool status){
+            buffering.store(status);
+        }
 
-            std::thread window_thread;
-            bool is_multithreaded;
-            std::shared_ptr<display_target> display_window;
+        bool get_buffering(){
+            return buffering.load();
+        }
 
-        };
+        void set_buffer_key(int key){
+            buffer_key.store(key);
+        }
+
+        int get_buffer_key(){
+            return buffer_key.load();
+        }
+
+        void set_buffer_counter(float counter){
+            buffer_counter.store(counter);
+        }
+
+        int get_buffer_counter(){
+            return buffer_counter.load();
+        }
+
+        void set_buffer_frames(float frames){
+            buffer_frames.store(frames);
+        }
+
+        float get_buffer_frames(){
+            return buffer_frames.load();
+        }
+
+
+
+    private:
+        std::chrono::high_resolution_clock::time_point previous_time;
+
+        std::atomic<bool> buffering;
+        std::atomic<int> buffer_key;
+        std::atomic<float> buffer_counter;
+        std::atomic<float> buffer_frames;
+
+        std::thread window_thread;
+        bool is_multithreaded;
+        std::shared_ptr<display_target> display_window;
+
+    };
 }
 
