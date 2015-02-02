@@ -12,10 +12,10 @@ server.listen(8000);
 var wss = new WebSocketServer({server: server, path: "/echo"});
 
 wss.on("connection", function(ws){
-	console.log("conn");
+	console.log("Got connection");
 
 	ws.on('message', function(message){
-		console.log(message);
+		console.log("Received: " + message);
 		ws.send(message);
 	});
    // ...

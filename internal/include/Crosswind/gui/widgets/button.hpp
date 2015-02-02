@@ -56,7 +56,7 @@ namespace cw{
             on_mouse_up += [this](int x, int y){
 
                 if (pressed.load() && this->contains_xy(x, y)) {
-
+                    on_clicked();
                 }
 
                 pressed.store(false);

@@ -31,10 +31,6 @@ int main(int argc, char **argv) {
         std::stringstream data_ss;
         data_ss << message->data.rdbuf();
         std::cout << "Client: Message received: \"" << data_ss.str() << "\"" << std::endl;
-
-
-        //
-        // client.send(data_ss);
     };
 
     ws_client->on_open += []() {
