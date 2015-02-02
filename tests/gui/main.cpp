@@ -24,48 +24,8 @@ int main(int argc, char **argv) {
     std::shared_ptr<cw::textbox> textbox(new cw::textbox());
     std::shared_ptr<cw::panel> panel(new cw::panel());
 
-    window->set_text("A window");
-    window->set_width(640);
-    window->set_height(480);
-    window->init([](){
-        std::shared_ptr<cw::widget::init_flags> flags(new cw::widget::init_flags());
-        //  flags->set<cw::window::window_flags>(cw::window::window_flags::MULTITHREADED);
-        return flags;
-    }());
-
-    vertical_group->set_grid_offset(0.2);
-    horizontal_group->set_grid_offset(0.05);
-
-    button->set_theme("green");
-    button->set_width(90);
-    button->set_height(40);
-    button->set_text("Hello world");
-
-    textbox->set_width(90);
-    textbox->set_height(40);
-    textbox->set_text("This textbox");
-
-    panel->set_theme("blue");
-    panel->set_x(0.2);
-    panel->set_y(0.2);
-
-    panel->set_width(400);
-    panel->set_height(200);
-
-    vertical_group->set_width(panel->get_width());
-    vertical_group->set_height(panel->get_height());
-
-    horizontal_group->set_width(panel->get_width());
-    horizontal_group->set_height(panel->get_height());
-
-    horizontal_group->attach(button);
-    horizontal_group->attach(textbox);
-
-    vertical_group->attach(horizontal_group);
-    panel->attach(vertical_group);
-    window->attach(panel);
-
     std::shared_ptr<cw::network::ws::ws_client> ws_client(new cw::network::ws::ws_client("192.168.1.67:8000/echo"));
+
 
     ws_client->on_message += [](auto message) {
         std::stringstream data_ss;
@@ -91,6 +51,56 @@ int main(int argc, char **argv) {
     };
 
     ws_client->start();
+
+
+    window->set_text("A window");
+    window->set_width(640);
+    window->set_height(480);
+    window->init([](){
+        std::shared_ptr<cw::widget::init_flags> flags(new cw::widget::init_flags());
+        //  flags->set<cw::window::window_flags>(cw::window::window_flags::MULTITHREADED);
+        return flags;
+    }());
+
+    vertical_group->set_grid_offset(0.2);
+    horizontal_group->set_grid_offset(0.05);
+
+    button->set_theme("green");
+    button->set_width(90);
+    button->set_height(40);
+    button->set_text("Send Message");
+    button->on_clicked += [ws_client, textbox](){
+
+        std::stringstream data_ss;
+        data_ss << textbox->get_text();
+        //
+        ws_client->send(data_ss);
+
+    };
+    textbox->set_width(90);
+    textbox->set_height(40);
+    textbox->set_text("Hello World");
+
+    panel->set_theme("blue");
+    panel->set_x(0.2);
+    panel->set_y(0.2);
+
+    panel->set_width(400);
+    panel->set_height(200);
+
+    vertical_group->set_width(panel->get_width());
+    vertical_group->set_height(panel->get_height());
+
+    horizontal_group->set_width(panel->get_width());
+    horizontal_group->set_height(panel->get_height());
+
+    horizontal_group->attach(button);
+    horizontal_group->attach(textbox);
+
+    vertical_group->attach(horizontal_group);
+    panel->attach(vertical_group);
+    window->attach(panel);
+
 
     window->on_close += [ws_client](){
         ws_client->stop();

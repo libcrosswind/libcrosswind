@@ -25,8 +25,6 @@ namespace cw{
             switch_texture("previous", get_texture("current"));
 
 
-            actions["clicked"] = delegate<void>();
-
             on_mouse_down += [this](int x, int y, int button){
 
                 if(!this->get_pressed()){
@@ -62,7 +60,6 @@ namespace cw{
 
                 if (this->get_pressed() && this->contains_xy(x, y)) {
 
-                    actions["clicked"]();
 
                 }
 

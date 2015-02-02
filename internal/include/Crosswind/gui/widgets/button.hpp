@@ -24,7 +24,6 @@ namespace cw{
             textures["previous"] = textures["current"];
 
 
-            actions["clicked"] = delegate<void>();
 
             on_mouse_down += [this](int x, int y, int button){
 
@@ -47,7 +46,6 @@ namespace cw{
                     }
 
                 } else {
-
                     if (this->contains_xy(x, y)) {
                         //this->switch_texture("hover", textures["on"]); //TODO
                     }
@@ -59,7 +57,6 @@ namespace cw{
 
                 if (pressed.load() && this->contains_xy(x, y)) {
 
-                    actions["clicked"]();
                 }
 
                 pressed.store(false);

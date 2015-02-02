@@ -7,8 +7,8 @@ namespace cw{
 	class gui_element{
 	public:
 
-
-        std::map<std::string, delegate<void> > actions;
-
+ //       delegate<void> //@TODO
+//        std::map<std::string, delegate<void> > actions;
+        delegate<void> on_clicked;
 	};
 }
