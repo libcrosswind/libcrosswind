@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
 
 
 
-    horizontal_group->attach(info_label);
+//    horizontal_group->attach(info_label); //Pending until we can draw as alpha masked.
     horizontal_group->attach(textbox);
     horizontal_group->attach(button);
 
