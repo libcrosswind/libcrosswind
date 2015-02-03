@@ -1,12 +1,10 @@
 #pragma once
 
-#include <mutex>
 #include <memory>
 #include <atomic>
 
 
 #include <Crosswind/gui/widgets/detail/widget.hpp>
-#include <Crosswind/private/flag_set.hpp>
 #include <Crosswind/events/delegate.hpp>
 
 namespace cw{

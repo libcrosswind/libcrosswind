@@ -18,9 +18,9 @@ namespace cw{
     public:
         widget(){
 
-            set_width(10.0);
-            set_height(10.0);
-            set_depth(1.0);
+            set_maximum_absolute_width(10.0);
+            set_maximum_absolute_height(10.0);
+            set_maximum_absolute_depth(10.0);
 
             switch_texture("current", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
             switch_texture("previous", get_texture("current"));
@@ -33,7 +33,7 @@ namespace cw{
 
             set_text_color(255, 255, 255);
 
-            on_dimension_set += [this](){
+            on_dimension_set += [this](std::shared_ptr<util::flag_container> flag_container){
                 std::lock_guard<std::mutex> lock(texture_mutex);
                 for(auto& texture : textures){
                     texture.second->resize(this->get_absolute_width(), this->get_absolute_height());

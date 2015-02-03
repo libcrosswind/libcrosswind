@@ -6,6 +6,7 @@
 
 #include <Crosswind/graphics/point_xyz.hpp>
 #include <Crosswind/graphics/dimension_xyz.hpp>
+#include <Crosswind/util/flag_container.hpp>
 #include <Crosswind/util/math.hpp>
 
 namespace cw {
@@ -13,14 +14,56 @@ namespace cw {
     class object_xyz{
 
     public:
-
+        enum dimension_flags{
+            REAL_DIMENSION,
+            ABSOLUTE_DIMENSION,
+            MAXIMUM_ABSOLUTE_DIMENSION
+        };
         object_xyz(){
 
             real_position  = std::shared_ptr<point_xyz> (new  point_xyz(0.0, 0.0, 0.0));
             absolute_position  = std::shared_ptr<point_xyz> (new  point_xyz(0.0, 0.0, 0.0));
 
-            real_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(0.0, 0.0, 0.0));
-            absolute_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(0.0, 0.0, 0.0));
+            real_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(1.0, 1.0, 1.0));
+            absolute_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(1.0, 1.0, 1.0));
+
+            maximum_absolute_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(1.0, 1.0, 1.0));
+
+            on_dimension_set += [this](std::shared_ptr<util::flag_container> flag_container) {
+
+                if(flag_container){
+                    if(flag_container->contains(dimension_flags::REAL_DIMENSION)){// || MAXIMUM_ABSOLUTE_DIMENSION
+
+                        set_absolute_width(get_maximum_absolute_width()   * get_width());
+                        set_absolute_height(get_maximum_absolute_height() * get_height());
+                        set_absolute_depth(get_maximum_absolute_depth()   * get_depth());
+
+                    } else if(flag_container->contains(dimension_flags::ABSOLUTE_DIMENSION)){
+
+                        set_width(get_absolute_width()   / get_maximum_absolute_width());
+                        set_height(get_absolute_height() / get_maximum_absolute_height());
+                        set_depth(get_absolute_depth()   / get_maximum_absolute_depth());
+
+                    } /* else {
+                                         //(flag_container->has(dimension_flags::MAXIMUM_ABSOLUTE_DIMENSION)) assumed.
+                        set_absolute_width(get_maximum_absolute_width()   * get_width());
+                        set_absolute_height(get_maximum_absolute_height() * get_height());
+                        set_absolute_depth(get_maximum_absolute_depth()   * get_depth());
+
+                        }
+
+                    */
+                } else {
+                     //(flag_container->has(dimension_flags::MAXIMUM_ABSOLUTE_DIMENSION)) assumed.
+                        set_absolute_width(get_maximum_absolute_width()   * get_width());
+                        set_absolute_height(get_maximum_absolute_height() * get_height());
+                        set_absolute_depth(get_maximum_absolute_depth()   * get_depth());
+
+                }
+
+
+
+            };
 
             set_visible(false);
         }
@@ -28,18 +71,32 @@ namespace cw {
     public:
         //////////////////Real dimension///////////////////////
         void set_width  (double w) {
-            real_dimension->width.store(w);
-            on_dimension_set();
+            real_dimension->width.store(w); //@TODO clamp values
+            on_dimension_set([](){ //@TODO implement quick lambda
+                std::shared_ptr<util::flag_container> flag_container(new util::flag_container());
+                flag_container->set<dimension_flags>(dimension_flags::REAL_DIMENSION);
+                return flag_container;
+            }());
+
         }
 
         void set_height (double h) {
             real_dimension->height.store(h);
-            on_dimension_set();
+            on_dimension_set([](){ //@TODO implement quick lambda
+                std::shared_ptr<util::flag_container> flag_container(new util::flag_container());
+                flag_container->set<dimension_flags>(dimension_flags::REAL_DIMENSION);
+                return flag_container;
+            }());
+
         }
 
         void set_depth  (double d) {
             real_dimension->depth.store(d);
-            on_dimension_set();
+            on_dimension_set([](){ //@TODO implement quick lambda
+                std::shared_ptr<util::flag_container> flag_container(new util::flag_container());
+                flag_container->set<dimension_flags>(dimension_flags::REAL_DIMENSION);
+                return flag_container;
+            }());
         }
 
         double get_width   ()  { return real_dimension->width.load();   }
@@ -49,22 +106,55 @@ namespace cw {
         //////////////////Absolute dimension///////////////////////
         void set_absolute_width  (double w) {
             absolute_dimension->width.store(w);
-            on_dimension_set();
+            on_dimension_set([](){ //@TODO implement quick lambda
+                std::shared_ptr<util::flag_container> flag_container(new util::flag_container());
+                flag_container->set<dimension_flags>(dimension_flags::ABSOLUTE_DIMENSION);
+                return flag_container;
+            }());
         }
 
         void set_absolute_height (double h) {
             absolute_dimension->height.store(h);
-            on_dimension_set();
+            on_dimension_set([](){ //@TODO implement quick lambda
+                std::shared_ptr<util::flag_container> flag_container(new util::flag_container());
+                flag_container->set<dimension_flags>(dimension_flags::ABSOLUTE_DIMENSION);
+                return flag_container;
+            }());
+
         }
 
         void set_absolute_depth  (double d) {
             absolute_dimension->depth.store(d);
-            on_dimension_set();
+            on_dimension_set([](){ //@TODO implement quick lambda
+                std::shared_ptr<util::flag_container> flag_container(new util::flag_container());
+                flag_container->set<dimension_flags>(dimension_flags::ABSOLUTE_DIMENSION);
+                return flag_container;
+            }());
         }
 
         double get_absolute_width   ()  { return absolute_dimension->width.load();   }
         double get_absolute_height  ()  { return absolute_dimension->height.load();  }
         double get_absolute_depth   ()  { return absolute_dimension->depth.load();   }
+
+        //////////////////Maximum Absolute dimension///////////////////////
+        void set_maximum_absolute_width  (double w) {
+            maximum_absolute_dimension->width.store(w);
+            on_dimension_set(nullptr);
+        }
+
+        void set_maximum_absolute_height (double h) {
+            maximum_absolute_dimension->height.store(h);
+            on_dimension_set(nullptr);
+        }
+
+        void set_maximum_absolute_depth  (double d) {
+            maximum_absolute_dimension->depth.store(d);
+            on_dimension_set(nullptr);
+        }
+
+        double get_maximum_absolute_width   ()  { return maximum_absolute_dimension->width.load();   }
+        double get_maximum_absolute_height  ()  { return maximum_absolute_dimension->height.load();  }
+        double get_maximum_absolute_depth   ()  { return maximum_absolute_dimension->depth.load();   }
 
         //////////////////Real position///////////////////////
         void set_x(double x) {
@@ -125,8 +215,9 @@ namespace cw {
 
         std::shared_ptr<dimension_xyz> real_dimension;
         std::shared_ptr<dimension_xyz> absolute_dimension;
+        std::shared_ptr<dimension_xyz> maximum_absolute_dimension;
 
-        delegate<void> on_dimension_set;
+        delegate<void, std::shared_ptr<util::flag_container> > on_dimension_set;
 
     };
 

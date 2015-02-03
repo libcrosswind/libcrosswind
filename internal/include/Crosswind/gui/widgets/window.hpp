@@ -10,61 +10,21 @@
 #include <Crosswind/gui/widgets/detail/grid.hpp>
 #include <Crosswind/gui/widgets/detail/widget.hpp>
 #include <Crosswind/gui/widgets/detail/display_target.hpp>
-
-
-#include <Crosswind/private/flag_set.hpp>
+#include <Crosswind/util/flag_container.hpp>
 
 namespace cw{
 
     class window:  public widget{
-
-    public: //TODO move this to window detail flags.
-        class init_flags{
-        public:
-            init_flags(){
-
-                method = [](){
-                    return [](int test_flags){
-                        return false;
-                    };
-
-                }();
-
-            }
-
-            template<typename T>
-            void set(T flag_pack){
-
-                method = [&flag_pack](){
-                    std::shared_ptr<flag_set<T> > flags(new flag_set<T>(flag_pack));
-
-                    return [flags](int test_flags){
-                        return flags->test((T)test_flags);
-                    };
-
-                }();
-            }
-
-            bool has(int flag_pack){
-                return method(flag_pack);
-            }
-
-        protected:
-            std::function<bool(int)> method;
-        };
-
-
-
 
     public:
             enum window_flags{
                 MULTITHREADED = 1 << 0
             };
 
-            window(std::shared_ptr<init_flags> flags = nullptr): is_multithreaded(false){
+            window(std::shared_ptr<util::flag_container> flag_container = nullptr): is_multithreaded(false){
 
-                if(flags){
-                    flags->has(window_flags::MULTITHREADED)? is_multithreaded = true: is_multithreaded = false;
+                if(flag_container){
+                    flag_container->contains(window_flags::MULTITHREADED)? is_multithreaded = true: is_multithreaded = false;
                 }
 
                 switch_texture("render", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
@@ -74,6 +34,13 @@ namespace cw{
                 set_buffer_key(0);
                 set_buffer_counter(0.0);
                 set_buffer_frames(1);
+
+                on_attached += [this](std::shared_ptr<widget> element){
+
+                    element->set_maximum_absolute_width(get_maximum_absolute_width());
+                    element->set_maximum_absolute_height(get_maximum_absolute_height());
+                    element->set_maximum_absolute_depth(get_maximum_absolute_depth());
+                };
 
 
             }

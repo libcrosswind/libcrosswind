@@ -11,6 +11,14 @@ namespace cw{
         horizontal_group(): major_x(0.0){
 
             textures.clear(); //Removing default textures.
+            //TODO move to grid widget
+
+            on_attached += [this](std::shared_ptr<widget> element){
+
+                element->set_maximum_absolute_width(get_maximum_absolute_width());
+                element->set_maximum_absolute_height(get_maximum_absolute_height());
+                element->set_maximum_absolute_depth(get_maximum_absolute_depth());
+            };
 
             on_attached += [this](std::shared_ptr<widget> element){
 
@@ -69,10 +77,18 @@ namespace cw{
 
             on_attached += [this](std::shared_ptr<widget> element){
 
+                element->set_maximum_absolute_width(get_maximum_absolute_width());
+                element->set_maximum_absolute_height(get_maximum_absolute_height());
+                element->set_maximum_absolute_depth(get_maximum_absolute_depth());
+            };
+
+            on_attached += [this](std::shared_ptr<widget> element){
+
                  adjust_size();
                  element->set_y(get_major_y()  + get_grid_offset());
 
             };
+
 
         }
 
@@ -128,6 +144,14 @@ namespace cw{
         panel(){
             switch_texture("current", texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel"));
             switch_texture("previous", get_texture("current"));
+
+            on_attached += [this](std::shared_ptr<widget> element){
+
+                element->set_maximum_absolute_width(get_maximum_absolute_width());
+                element->set_maximum_absolute_height(get_maximum_absolute_height());
+                element->set_maximum_absolute_depth(get_maximum_absolute_depth());
+            };
+
         }
 
         void show(){
