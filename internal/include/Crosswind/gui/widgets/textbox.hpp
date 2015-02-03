@@ -2,11 +2,10 @@
 
 #include <Crosswind/pools/texture_pool.hpp>
 #include <Crosswind/gui/widgets/detail/widget.hpp>
-#include <Crosswind/gui/widgets/detail/gui_element.hpp>
 
 namespace cw{
 
-	class textbox: public widget, public gui_element{
+	class textbox: public widget{
 
     public:
         textbox(){

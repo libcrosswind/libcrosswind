@@ -2,7 +2,7 @@
 
 
 namespace cw{
-    class label: public widget, public gui_element{
+    class label: public widget{
 
     public:
         label(){

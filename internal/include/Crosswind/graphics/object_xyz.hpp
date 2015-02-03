@@ -16,32 +16,57 @@ namespace cw {
 
         object_xyz(){
 
-            absolute_position  = std::shared_ptr<point_xyz> (new  point_xyz(0.0, 0.0, 0.0));
             real_position  = std::shared_ptr<point_xyz> (new  point_xyz(0.0, 0.0, 0.0));
-            dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(0.0, 0.0, 0.0));
+            absolute_position  = std::shared_ptr<point_xyz> (new  point_xyz(0.0, 0.0, 0.0));
+
+            real_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(0.0, 0.0, 0.0));
+            absolute_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(0.0, 0.0, 0.0));
+
             set_visible(false);
         }
 
     public:
+        //////////////////Real dimension///////////////////////
         void set_width  (double w) {
-            dimension->width.store(w);
+            real_dimension->width.store(w);
             on_dimension_set();
         }
 
         void set_height (double h) {
-            dimension->height.store(h);
+            real_dimension->height.store(h);
             on_dimension_set();
         }
 
         void set_depth  (double d) {
-            dimension->depth.store(d);
+            real_dimension->depth.store(d);
             on_dimension_set();
         }
 
-        double get_width   ()  { return dimension->width.load();   }
-        double get_height  ()  { return dimension->height.load();  }
-        double get_depth   ()  { return dimension->depth.load();   }
+        double get_width   ()  { return real_dimension->width.load();   }
+        double get_height  ()  { return real_dimension->height.load();  }
+        double get_depth   ()  { return real_dimension->depth.load();   }
 
+        //////////////////Absolute dimension///////////////////////
+        void set_absolute_width  (double w) {
+            absolute_dimension->width.store(w);
+            on_dimension_set();
+        }
+
+        void set_absolute_height (double h) {
+            absolute_dimension->height.store(h);
+            on_dimension_set();
+        }
+
+        void set_absolute_depth  (double d) {
+            absolute_dimension->depth.store(d);
+            on_dimension_set();
+        }
+
+        double get_absolute_width   ()  { return absolute_dimension->width.load();   }
+        double get_absolute_height  ()  { return absolute_dimension->height.load();  }
+        double get_absolute_depth   ()  { return absolute_dimension->depth.load();   }
+
+        //////////////////Real position///////////////////////
         void set_x(double x) {
             real_position->x.store(math::clamp<double>(x, -1.0, 2.0));
         }
@@ -58,6 +83,7 @@ namespace cw {
         double get_y() { return real_position->y.load(); }
         double get_z() { return real_position->z.load(); }
 
+        //////////////////Absolute position///////////////////////
         void set_absolute_x(double x) {
             absolute_position->x.store(x);
         }
@@ -93,10 +119,12 @@ namespace cw {
 
     protected:
         std::atomic<bool> is_visible;
-        std::shared_ptr<point_xyz> absolute_position;
-        std::shared_ptr<point_xyz> real_position;
 
-        std::shared_ptr<dimension_xyz> dimension;
+        std::shared_ptr<point_xyz> real_position;
+        std::shared_ptr<point_xyz> absolute_position;
+
+        std::shared_ptr<dimension_xyz> real_dimension;
+        std::shared_ptr<dimension_xyz> absolute_dimension;
 
         delegate<void> on_dimension_set;
 

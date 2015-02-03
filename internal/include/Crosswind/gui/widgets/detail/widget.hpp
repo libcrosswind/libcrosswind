@@ -36,7 +36,7 @@ namespace cw{
             on_dimension_set += [this](){
                 std::lock_guard<std::mutex> lock(texture_mutex);
                 for(auto& texture : textures){
-                    texture.second->resize(this->get_width(), this->get_height());
+                    texture.second->resize(this->get_absolute_width(), this->get_absolute_height());
                 }
             };
 
@@ -90,17 +90,23 @@ namespace cw{
         virtual void update(double delta){
 
             for(auto& element : elements){
-                std::function<double(double, double)> get_coordinate = [](double percent, double dimension){
+                std::function<double(double, double)> percent_to_absolute = [](double percent, double dimension){
 
                     return dimension * percent;
 
                 };
 
-                double x_cord = get_coordinate(element->get_x(), this->get_width());
-                double y_cord = get_coordinate(element->get_y(), this->get_height());
+                double x_cord = percent_to_absolute(element->get_x(), this->get_width());
+                double y_cord = percent_to_absolute(element->get_y(), this->get_height());
+
+                double w_size = percent_to_absolute(element->get_width(), this->get_width());
+                double h_size = percent_to_absolute(element->get_height(), this->get_height());
 
                 element->set_absolute_x(this->get_absolute_x()+x_cord);
                 element->set_absolute_y(this->get_absolute_y()+y_cord);
+
+                element->set_absolute_width(w_size);
+                element->set_absolute_height(h_size);
 
                 element->update(delta);
             }
@@ -112,8 +118,8 @@ namespace cw{
 
             if(get_texture("current")){
 
-                get_texture("current")->draw_text(get_width()/2 ,
-                        get_height()/2,
+                get_texture("current")->draw_text(get_absolute_width()/2 ,
+                        get_absolute_height()/2,
                         get_text(),
                         get_text_color());
 

@@ -41,6 +41,7 @@ namespace cw{
             return auto_resize.load();
         }
 
+        virtual void adjust_size() = 0;
 
     protected:
         std::atomic<double> grid_offset;

@@ -9,7 +9,6 @@
 
 #include <Crosswind/gui/widgets/detail/grid.hpp>
 #include <Crosswind/gui/widgets/detail/widget.hpp>
-#include <Crosswind/gui/widgets/detail/gui_element.hpp>
 #include <Crosswind/gui/widgets/detail/display_target.hpp>
 
 
@@ -17,7 +16,7 @@
 
 namespace cw{
 
-    class window: public grid, public widget, public gui_element {
+    class window:  public widget{
 
     public: //TODO move this to window detail flags.
         class init_flags{
