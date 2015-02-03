@@ -7,7 +7,8 @@
 #include <Crosswind/input/input_listener.hpp>
 #include <Crosswind/graphics/object_xyz.hpp>
 #include <Crosswind/graphics/texture.hpp>
-#include <Crosswind/private/flag_set.hpp>
+
+
 #include <Crosswind/events/delegate.hpp>
 
 namespace cw{
@@ -15,40 +16,6 @@ namespace cw{
 	class widget: public input_listener, public virtual object_xyz{
         
     public:
-        class init_flags{
-        public:
-            init_flags(){
-
-                method = [](){
-                    return [](int test_flags){
-                        return false;
-                    };
-
-                }();
-
-            }
-
-            template<typename T>
-            void set(T flag_pack){
-
-                method = [&flag_pack](){
-                    std::shared_ptr<flag_set<T> > flags(new flag_set<T>(flag_pack));
-
-                    return [flags](int test_flags){
-                        return flags->test((T)test_flags);
-                    };
-
-                }();
-            }
-
-            bool has(int flag_pack){
-                return method(flag_pack);
-            }
-
-        protected:
-            std::function<bool(int)> method;
-        };
-
         widget(){
 
             set_width(10.0);
@@ -56,7 +23,6 @@ namespace cw{
             set_depth(1.0);
 
             switch_texture("current", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
-            switch_texture("text", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
             switch_texture("previous", get_texture("current"));
 
 
@@ -108,10 +74,6 @@ namespace cw{
 
         }
 
-        virtual void init(std::shared_ptr<init_flags> flags = nullptr){
-
-        }
-
         virtual void show(){
             set_visible(true);
             switch_texture("current", textures["previous"]);
@@ -150,14 +112,11 @@ namespace cw{
 
             if(get_texture("current")){
 
-               // get_texture("text")->clear();
-
                 get_texture("current")->draw_text(get_width()/2 ,
                         get_height()/2,
                         get_text(),
                         get_text_color());
 
-             //   get_texture("text")->render_to_target(0, 0, get_texture("current"));
                 get_texture("current")->render_to_target(get_absolute_x(), get_absolute_y(), render_texture);
             }
 
@@ -266,12 +225,17 @@ public:
             std::lock_guard<std::mutex> lock(element_mutex);//TODO
         }
 
+
+
+        delegate<void>         on_show;
+        delegate<void>         on_hide;
+
+        delegate<void> on_clicked;
+
     protected:
         std::mutex texture_mutex;
         std::map<std::string, std::shared_ptr<texture> > textures;
 
-        delegate<void>         on_show;
-        delegate<void>         on_hide;
         delegate<void, std::shared_ptr<widget> > on_attached;
 
         std::vector<std::shared_ptr<widget>> elements; //Attached elements.

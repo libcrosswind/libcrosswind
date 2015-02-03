@@ -9,6 +9,5 @@ namespace cw{
 
  //       delegate<void> //@TODO
 //        std::map<std::string, delegate<void> > actions;
-        delegate<void> on_clicked;
 	};
 }

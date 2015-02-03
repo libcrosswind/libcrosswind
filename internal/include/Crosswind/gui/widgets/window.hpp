@@ -13,33 +13,69 @@
 #include <Crosswind/gui/widgets/detail/display_target.hpp>
 
 
+#include <Crosswind/private/flag_set.hpp>
+
 namespace cw{
 
     class window: public grid, public widget, public gui_element {
 
+    public: //TODO move this to window detail flags.
+        class init_flags{
         public:
+            init_flags(){
+
+                method = [](){
+                    return [](int test_flags){
+                        return false;
+                    };
+
+                }();
+
+            }
+
+            template<typename T>
+            void set(T flag_pack){
+
+                method = [&flag_pack](){
+                    std::shared_ptr<flag_set<T> > flags(new flag_set<T>(flag_pack));
+
+                    return [flags](int test_flags){
+                        return flags->test((T)test_flags);
+                    };
+
+                }();
+            }
+
+            bool has(int flag_pack){
+                return method(flag_pack);
+            }
+
+        protected:
+            std::function<bool(int)> method;
+        };
+
+
+
+
+    public:
             enum window_flags{
                 MULTITHREADED = 1 << 0
             };
 
-            window(): is_multithreaded(false){
-
-                set_buffering(false);
-                set_buffer_key(0);
-                set_buffer_counter(0.0);
-                set_buffer_frames(1);
-
-
-            }
-
-            void init(std::shared_ptr<init_flags> flags = nullptr) override {
-                //setup_flags = flags;
+            window(std::shared_ptr<init_flags> flags = nullptr): is_multithreaded(false){
 
                 if(flags){
                     flags->has(window_flags::MULTITHREADED)? is_multithreaded = true: is_multithreaded = false;
                 }
 
                 switch_texture("render", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
+
+
+                set_buffering(false);
+                set_buffer_key(0);
+                set_buffer_counter(0.0);
+                set_buffer_frames(1);
+
 
             }
 
@@ -99,10 +135,11 @@ namespace cw{
                     display_window->wait(10);
 
                 }
+
+                on_hide();
             }
 
 
-        delegate<void> on_close;
 
 
         private:

@@ -61,9 +61,6 @@ namespace cw{
                                        1,
                                        255);
 
-//            (*texture_data).draw_image(0, 0, imgtext);
-       //     (*texture_data).draw_text(x - 5*text.size()/2, y - 4, text.c_str(), color->data()); //Font size is 8x8
-
         }
 
         void resize(double width, double height){
@@ -75,7 +72,7 @@ namespace cw{
         void render_to_target(double x, double y, std::shared_ptr<texture> target){
 
             std::lock_guard<std::mutex> lock(texture_mutex);
-            target->texture_data->draw_image(x, y, *texture_data);
+            target->texture_data->draw_image(x, y, 0, 0, *texture_data);
 
         }
 

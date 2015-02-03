@@ -11,19 +11,13 @@ namespace cw{
     public:
         button(){
 
-            textures["on"] =
-                    texture_pool::loadTexture("button_on.png", get_width(), get_height(), get_theme() + "/" + "button");
+            switch_texture("on", texture_pool::loadTexture("button_on.png", get_width(), get_height(), get_theme() + "/" + "button"));
+            switch_texture("off", texture_pool::loadTexture("button_on.png", get_width(), get_height(), get_theme() + "/" + "button"));
+            switch_texture("current", get_texture("off"));
+            switch_texture("previous", get_texture("current"));
 
             //TODO
             //textures["hover"];
-
-            textures["off"] =
-                    texture_pool::loadTexture("button_off.png", get_width(), get_height(), get_theme()+ "/" + "button");
-
-            textures["current"] = textures["off"];
-            textures["previous"] = textures["current"];
-
-
 
             on_mouse_down += [this](int x, int y, int button){
 
@@ -64,8 +58,6 @@ namespace cw{
 
             };
         }
-
-
 
     private:
         std::atomic<bool> pressed;

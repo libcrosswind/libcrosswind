@@ -65,14 +65,13 @@ namespace cw{
             for(auto& element: elements){
                 if(element->get_y() > major_y.load()){
                     set_major_y(element->get_y() + element->get_height()/this->get_height());
+                    std::cout<<"Relation: "<<element->get_height()<<"/"<<this->get_height()<<std::endl;
+                    std::cout<<this->get_y()<<std::endl;
+                    std::cout<<major_y.load()<<std::endl;
                 }
             }
 
             return major_y.load();
-        }
-
-        void init(std::shared_ptr<init_flags> flags = nullptr){
-
         }
 
      private:
