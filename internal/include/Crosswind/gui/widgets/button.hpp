@@ -11,7 +11,7 @@ namespace cw{
         button(){
 
             switch_texture("on", texture_pool::loadTexture("button_on.png", get_width(), get_height(), get_theme() + "/" + "button"));
-            switch_texture("off", texture_pool::loadTexture("button_on.png", get_width(), get_height(), get_theme() + "/" + "button"));
+            switch_texture("off", texture_pool::loadTexture("button_off.png", get_width(), get_height(), get_theme() + "/" + "button"));
             switch_texture("current", get_texture("off"));
             switch_texture("previous", get_texture("current"));
 
@@ -23,7 +23,7 @@ namespace cw{
                 if(!this->pressed.load()){
                     if(this->contains_xy(x, y)){
                         this->pressed.store(true);
-                        this->switch_texture("current", textures["on"]);
+                        this->switch_texture("current", get_texture("on"));
                     }
                 }
 
@@ -53,7 +53,7 @@ namespace cw{
                 }
 
                 pressed.store(false);
-                switch_texture("current", textures["off"]);
+                switch_texture("current", get_texture("off"));
 
             };
         }

@@ -56,24 +56,18 @@ int main(int argc, char **argv) {
 
 
     window->set_text("Main window");
-    window->set_maximum_absolute_width(640.0);
-    window->set_maximum_absolute_height(480.0);
+    window->set_absolute_width(640.0);
+    window->set_absolute_height(480.0);
 
 
     panel->set_theme("blue");
-    panel->set_x(0.2);
+    panel->set_x(0.3);
     panel->set_y(0.2);
     panel->set_width(0.3);
     panel->set_height(0.3);
 
     vertical_group->set_grid_offset(0.2);
-    vertical_group->set_width(panel->get_width());
-    vertical_group->set_height(panel->get_height());
-
     horizontal_group->set_grid_offset(0.05);
-    horizontal_group->set_width(panel->get_width());
-    horizontal_group->set_height(panel->get_height());
-
 
     info_label->set_width(0.05);
     info_label->set_height(0.025);
@@ -84,8 +78,10 @@ int main(int argc, char **argv) {
     textbox->set_text("Text");
 
     button->set_theme("green");
-    button->set_width(0.05);
-    button->set_height(0.025);
+    button->set_x(0.1);
+    button->set_y(0.2);
+    button->set_width(0.4);
+    button->set_height(0.3);
     button->set_text("Send Message");
     button->on_clicked += [ws_client, textbox](){
 
@@ -98,11 +94,11 @@ int main(int argc, char **argv) {
 
 
 
-//    horizontal_group->attach(info_label); //Pending until we can draw as alpha masked.
-    horizontal_group->attach(textbox);
-    horizontal_group->attach(button);
+    //horizontal_group->attach(info_label); //Pending until we can draw as alpha masked.
+    //horizontal_group->attach(textbox);
+  //  horizontal_group->attach(button);
 
-    vertical_group->attach(horizontal_group);
+    vertical_group->attach(button);
 
     panel->attach(vertical_group);
     window->attach(panel);

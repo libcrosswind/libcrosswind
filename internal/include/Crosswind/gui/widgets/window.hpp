@@ -35,20 +35,12 @@ namespace cw{
                 set_buffer_counter(0.0);
                 set_buffer_frames(1);
 
-                on_attached += [this](std::shared_ptr<widget> element){
-
-                    element->set_maximum_absolute_width(get_maximum_absolute_width());
-                    element->set_maximum_absolute_height(get_maximum_absolute_height());
-                    element->set_maximum_absolute_depth(get_maximum_absolute_depth());
-                };
-
-
             }
 
             void show() override {
                 set_visible(true);
                 display_window =
-                        std::shared_ptr<display_target>(new display_target(get_width(), get_height(), get_text()));
+                        std::shared_ptr<display_target>(new display_target(get_absolute_width(), get_absolute_height(), get_text()));
 
                 on_show();
 

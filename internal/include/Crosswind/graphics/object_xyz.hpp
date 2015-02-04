@@ -27,45 +27,27 @@ namespace cw {
             real_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(1.0, 1.0, 1.0));
             absolute_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(1.0, 1.0, 1.0));
 
-            maximum_absolute_dimension = std::shared_ptr<dimension_xyz>(new dimension_xyz(1.0, 1.0, 1.0));
-
             on_dimension_set += [this](std::shared_ptr<util::flag_container> flag_container) {
 
-                if(flag_container){
-                    if(flag_container->contains(dimension_flags::REAL_DIMENSION)){// || MAXIMUM_ABSOLUTE_DIMENSION
-
-                        set_absolute_width(get_maximum_absolute_width()   * get_width());
-                        set_absolute_height(get_maximum_absolute_height() * get_height());
-                        set_absolute_depth(get_maximum_absolute_depth()   * get_depth());
-
-                    } else if(flag_container->contains(dimension_flags::ABSOLUTE_DIMENSION)){
-
-                        set_width(get_absolute_width()   / get_maximum_absolute_width());
-                        set_height(get_absolute_height() / get_maximum_absolute_height());
-                        set_depth(get_absolute_depth()   / get_maximum_absolute_depth());
-
-                    } /* else {
-                                         //(flag_container->has(dimension_flags::MAXIMUM_ABSOLUTE_DIMENSION)) assumed.
-                        set_absolute_width(get_maximum_absolute_width()   * get_width());
-                        set_absolute_height(get_maximum_absolute_height() * get_height());
-                        set_absolute_depth(get_maximum_absolute_depth()   * get_depth());
-
-                        }
-
-                    */
-                } else {
-                     //(flag_container->has(dimension_flags::MAXIMUM_ABSOLUTE_DIMENSION)) assumed.
-                        set_absolute_width(get_maximum_absolute_width()   * get_width());
-                        set_absolute_height(get_maximum_absolute_height() * get_height());
-                        set_absolute_depth(get_maximum_absolute_depth()   * get_depth());
+                if(flag_container) {
+                    if (flag_container->contains(dimension_flags::REAL_DIMENSION)) {
+/*
+                        absolute_dimension->width.store(get_maximum_absolute_width() * get_width());
+                        absolute_dimension->height.store(get_maximum_absolute_height() * get_height());
+                        absolute_dimension->depth.store(get_maximum_absolute_depth() * get_depth());
+*/
+                    } else if (flag_container->contains(dimension_flags::ABSOLUTE_DIMENSION)) {
+/*
+                        real_dimension->width.store(get_absolute_width() / get_maximum_absolute_width());
+                        real_dimension->height.store(get_absolute_height() / get_maximum_absolute_height());
+                        real_dimension->depth.store(get_absolute_depth() / get_maximum_absolute_depth());
+*/
+                    }
 
                 }
-
-
-
             };
 
-            set_visible(false);
+            set_visible(true);
         }
 
     public:
@@ -136,25 +118,6 @@ namespace cw {
         double get_absolute_height  ()  { return absolute_dimension->height.load();  }
         double get_absolute_depth   ()  { return absolute_dimension->depth.load();   }
 
-        //////////////////Maximum Absolute dimension///////////////////////
-        void set_maximum_absolute_width  (double w) {
-            maximum_absolute_dimension->width.store(w);
-            on_dimension_set(nullptr);
-        }
-
-        void set_maximum_absolute_height (double h) {
-            maximum_absolute_dimension->height.store(h);
-            on_dimension_set(nullptr);
-        }
-
-        void set_maximum_absolute_depth  (double d) {
-            maximum_absolute_dimension->depth.store(d);
-            on_dimension_set(nullptr);
-        }
-
-        double get_maximum_absolute_width   ()  { return maximum_absolute_dimension->width.load();   }
-        double get_maximum_absolute_height  ()  { return maximum_absolute_dimension->height.load();  }
-        double get_maximum_absolute_depth   ()  { return maximum_absolute_dimension->depth.load();   }
 
         //////////////////Real position///////////////////////
         void set_x(double x) {
@@ -191,11 +154,11 @@ namespace cw {
         double get_absolute_z() { return absolute_position->z.load(); }
 
 
-        bool contains_x(double x) { return x >= get_absolute_x() && x <= get_width()  + get_absolute_x(); }
-        bool contains_y(double y) { return y >= get_absolute_y() && y <= get_height() + get_absolute_y(); }
+        bool contains_x(double x) { return x >= get_absolute_x() && x <= get_absolute_width()  + get_absolute_x(); }
+        bool contains_y(double y) { return y >= get_absolute_y() && y <= get_absolute_height() + get_absolute_y(); }
 
-        bool collides_x(double x) { return x == get_absolute_x() || x == get_absolute_x() + get_width();  }
-        bool collides_y(double y) { return y == get_absolute_y() || y == get_absolute_y() + get_height(); }
+        bool collides_x(double x) { return x == get_absolute_x() || x == get_absolute_x() + get_absolute_width();  }
+        bool collides_y(double y) { return y == get_absolute_y() || y == get_absolute_y() + get_absolute_height(); }
 
         bool intersects_x(double x){ return contains_x(x) || collides_x(x); }
         bool intersects_y(double y){ return contains_y(y) || collides_y(y); }
@@ -215,7 +178,6 @@ namespace cw {
 
         std::shared_ptr<dimension_xyz> real_dimension;
         std::shared_ptr<dimension_xyz> absolute_dimension;
-        std::shared_ptr<dimension_xyz> maximum_absolute_dimension;
 
         delegate<void, std::shared_ptr<util::flag_container> > on_dimension_set;
 

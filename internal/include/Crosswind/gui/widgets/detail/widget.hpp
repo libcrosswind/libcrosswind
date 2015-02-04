@@ -18,9 +18,9 @@ namespace cw{
     public:
         widget(){
 
-            set_maximum_absolute_width(10.0);
-            set_maximum_absolute_height(10.0);
-            set_maximum_absolute_depth(10.0);
+            set_absolute_width(10.0);
+            set_absolute_height(10.0);
+            set_absolute_depth(10.0);
 
             switch_texture("current", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
             switch_texture("previous", get_texture("current"));
@@ -32,6 +32,14 @@ namespace cw{
             set_draggable(false);
 
             set_text_color(255, 255, 255);
+
+            on_attached += [this](std::shared_ptr<widget> element){
+
+                element->set_absolute_width(element->get_width() * get_absolute_width());
+                element->set_absolute_height(element->get_height() * get_absolute_height());
+                element->set_absolute_depth(element->get_depth() * get_absolute_depth());
+            };
+
 
             on_dimension_set += [this](std::shared_ptr<util::flag_container> flag_container){
                 std::lock_guard<std::mutex> lock(texture_mutex);
@@ -96,11 +104,11 @@ namespace cw{
 
                 };
 
-                double x_cord = percent_to_absolute(element->get_x(), this->get_width());
-                double y_cord = percent_to_absolute(element->get_y(), this->get_height());
+                double x_cord = percent_to_absolute(element->get_x(), this->get_absolute_width());
+                double y_cord = percent_to_absolute(element->get_y(), this->get_absolute_height());
 
-                double w_size = percent_to_absolute(element->get_width(), this->get_width());
-                double h_size = percent_to_absolute(element->get_height(), this->get_height());
+                double w_size = percent_to_absolute(element->get_width(), this->get_absolute_width());
+                double h_size = percent_to_absolute(element->get_height(), this->get_absolute_height());
 
                 element->set_absolute_x(this->get_absolute_x()+x_cord);
                 element->set_absolute_y(this->get_absolute_y()+y_cord);

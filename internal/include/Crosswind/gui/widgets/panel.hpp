@@ -11,14 +11,7 @@ namespace cw{
         horizontal_group(): major_x(0.0){
 
             textures.clear(); //Removing default textures.
-            //TODO move to grid widget
 
-            on_attached += [this](std::shared_ptr<widget> element){
-
-                element->set_maximum_absolute_width(get_maximum_absolute_width());
-                element->set_maximum_absolute_height(get_maximum_absolute_height());
-                element->set_maximum_absolute_depth(get_maximum_absolute_depth());
-            };
 
             on_attached += [this](std::shared_ptr<widget> element){
 
@@ -46,7 +39,7 @@ namespace cw{
 
         void adjust_size(){
 
-            int major_height =  this->get_height();
+            int major_height =  0;
             int total_width = 0;
 
             for(auto& element: elements){
@@ -77,15 +70,8 @@ namespace cw{
 
             on_attached += [this](std::shared_ptr<widget> element){
 
-                element->set_maximum_absolute_width(get_maximum_absolute_width());
-                element->set_maximum_absolute_height(get_maximum_absolute_height());
-                element->set_maximum_absolute_depth(get_maximum_absolute_depth());
-            };
-
-            on_attached += [this](std::shared_ptr<widget> element){
-
                  adjust_size();
-                 element->set_y(get_major_y()  + get_grid_offset());
+                 //element->set_absolute_y(get_major_y()  + get_grid_offset()); //Change to relative.
 
             };
 
@@ -98,39 +84,38 @@ namespace cw{
 
         double get_major_y(){
 
-            set_major_y(this->get_y());
+/*            set_major_y(this->get_absolute_y());
 
             for(auto& element: elements){
                 if(element->get_y() > major_y.load()){
-                    set_major_y(element->get_y() + element->get_height());
-                    std::cout<<"Relation: "<<element->get_height()<<"/"<<this->get_height()<<std::endl;
-                    std::cout<<this->get_y()<<std::endl;
-                    std::cout<<major_y.load()<<std::endl;
+                    set_major_y(element->get_absolute_y() + element->get_absolute_height());
+
                 }
             }
 
-            return major_y.load();
+            return major_y.load();*/
+            return 0.0;
         }
 
 
         void adjust_size(){
 
-            int major_width =  this->get_width();
+            int major_width =  0;
             int total_height = 0;
 
             for(auto& element: elements){
-                if(element->get_width() >= major_width){
-                    major_width = element->get_width();
+                if(element->get_absolute_width() >= major_width){
+                    major_width = element->get_absolute_width();
                     major_width += get_grid_offset();
                 }
 
                 total_height += get_grid_offset();
-                total_height = element->get_height();
+                total_height = element->get_absolute_height();
             }
 
 
-            this->set_width(major_width);
-            this->set_height(total_height);
+            this->set_absolute_width(major_width);
+            this->set_absolute_height(total_height);
 
         }
 
@@ -145,24 +130,17 @@ namespace cw{
             switch_texture("current", texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel"));
             switch_texture("previous", get_texture("current"));
 
-            on_attached += [this](std::shared_ptr<widget> element){
-
-                element->set_maximum_absolute_width(get_maximum_absolute_width());
-                element->set_maximum_absolute_height(get_maximum_absolute_height());
-                element->set_maximum_absolute_depth(get_maximum_absolute_depth());
-            };
-
         }
 
         void show(){
             set_visible(true);
-            switch_texture("current", textures["previous"]);
+            switch_texture("current", get_texture("previous"));
         }
 
         void hide(){
             set_visible(false);
-            switch_texture("previous", textures["current"]);
-            switch_texture("current", textures["blank"]);
+            switch_texture("previous", get_texture("current"));
+            switch_texture("current", get_texture("blank"));
         }
 
         void adjust_size(){
