@@ -12,7 +12,9 @@ namespace cw{
             set_text_color(128, 128, 128);
 
             switch_texture("text",
-                    texture_pool::loadTexture("label.png", get_width(), get_height(), get_theme() + "/" + "label"));
+                    texture_pool::loadTexture("label",
+                                              get_width(), get_height(),
+                                              get_theme() + "/" + "label", "label.png"), true);
 
             switch_texture("current", get_texture("text"));
             on_mouse_down += [this](int x, int y, int button){

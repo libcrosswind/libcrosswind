@@ -25,8 +25,6 @@ int main(int argc, char **argv) {
     }()));
 
 
-    std::shared_ptr<cw::vertical_group> vertical_group(new cw::vertical_group());
-    std::shared_ptr<cw::horizontal_group> horizontal_group(new cw::horizontal_group());
     std::shared_ptr<cw::widget> panel(new cw::panel());
     std::shared_ptr<cw::widget> button(new cw::button());
     std::shared_ptr<cw::widget> info_label(new cw::label());
@@ -66,9 +64,6 @@ int main(int argc, char **argv) {
     panel->set_width(0.3);
     panel->set_height(0.3);
 
-    vertical_group->set_grid_offset(0.2);
-    horizontal_group->set_grid_offset(0.05);
-
     info_label->set_width(0.05);
     info_label->set_height(0.025);
     info_label->set_text("Text to send");
@@ -83,6 +78,7 @@ int main(int argc, char **argv) {
     button->set_width(0.4);
     button->set_height(0.3);
     button->set_text("Send Message");
+
     button->on_clicked += [ws_client, textbox](){
 
         std::stringstream data_ss;
@@ -93,14 +89,10 @@ int main(int argc, char **argv) {
     };
 
 
+    panel->attach(info_label);
+    panel->attach(textbox);
+    panel->attach(button);
 
-    //horizontal_group->attach(info_label); //Pending until we can draw as alpha masked.
-    //horizontal_group->attach(textbox);
-  //  horizontal_group->attach(button);
-
-    vertical_group->attach(button);
-
-    panel->attach(vertical_group);
     window->attach(panel);
 
 

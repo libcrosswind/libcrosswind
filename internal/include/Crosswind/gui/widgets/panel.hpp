@@ -6,122 +6,6 @@
 
 namespace cw{
 
-    class horizontal_group: public grid, public widget{
-    public:
-        horizontal_group(): major_x(0.0){
-
-            textures.clear(); //Removing default textures.
-
-
-            on_attached += [this](std::shared_ptr<widget> element){
-
-                adjust_size();
-                element->set_x(get_major_x()  + get_grid_offset());
-
-            };
-        }
-
-        void set_major_x(double x){
-            major_x.store(x);
-        }
-
-        double get_major_x(){
-            set_major_x(this->get_x());
-
-            for(auto& element: elements){
-                if(element->get_x() > major_x.load()){
-                    set_major_x(element->get_x() + element->get_width()/this->get_width());
-                }
-            }
-
-            return major_x.load();
-        }
-
-        void adjust_size(){
-
-            int major_height =  0;
-            int total_width = 0;
-
-            for(auto& element: elements){
-                if(element->get_height() >= major_height){
-                    major_height = element->get_width();
-                    major_height += get_grid_offset();
-                }
-
-                total_width += get_grid_offset();
-                total_width = element->get_height();
-            }
-
-
-            this->set_width(major_height);
-            this->set_height(total_width);
-
-        }
-    private:
-        std::atomic<double> major_x;
-    };
-
-    class vertical_group: public grid, public widget{
-
-    public:
-        vertical_group(): major_y(0.0){
-
-            textures.clear(); //Removing default textures.
-
-            on_attached += [this](std::shared_ptr<widget> element){
-
-                 adjust_size();
-                 //element->set_absolute_y(get_major_y()  + get_grid_offset()); //Change to relative.
-
-            };
-
-
-        }
-
-        void set_major_y(double y){
-            major_y.store(y);
-        }
-
-        double get_major_y(){
-
-/*            set_major_y(this->get_absolute_y());
-
-            for(auto& element: elements){
-                if(element->get_y() > major_y.load()){
-                    set_major_y(element->get_absolute_y() + element->get_absolute_height());
-
-                }
-            }
-
-            return major_y.load();*/
-            return 0.0;
-        }
-
-
-        void adjust_size(){
-
-            int major_width =  0;
-            int total_height = 0;
-
-            for(auto& element: elements){
-                if(element->get_absolute_width() >= major_width){
-                    major_width = element->get_absolute_width();
-                    major_width += get_grid_offset();
-                }
-
-                total_height += get_grid_offset();
-                total_height = element->get_absolute_height();
-            }
-
-
-            this->set_absolute_width(major_width);
-            this->set_absolute_height(total_height);
-
-        }
-
-     private:
-        std::atomic<double> major_y;
-    };
 
     class panel: public grid, public widget{
 
@@ -142,6 +26,7 @@ namespace cw{
             switch_texture("previous", get_texture("current"));
             switch_texture("current", get_texture("blank"));
         }
+
 
         void adjust_size(){
 

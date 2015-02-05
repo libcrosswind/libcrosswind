@@ -16,9 +16,18 @@ namespace cw {
     public:
 		static std::shared_ptr<texture> loadTexture(std::string name,
                                                     double width, double height,
-                                                    std::string path = ""){
+                                                    std::string path = "",
+                                                    std::string filename = "", bool create_copy = false){
 
             if(textures.find(name) != textures.end()) {
+
+                if(create_copy){
+                    for(auto& texture : textures){
+
+                    }
+                } else {
+
+                }
 
                 return textures[name];
 

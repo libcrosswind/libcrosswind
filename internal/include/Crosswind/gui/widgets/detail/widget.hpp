@@ -119,7 +119,6 @@ namespace cw{
                 element->update(delta);
             }
 
-
         }
 
         virtual void render(std::shared_ptr<texture> render_texture){
