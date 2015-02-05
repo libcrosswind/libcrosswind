@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
+#include <mutex>
 #include <stdexcept>
 
 #include <Crosswind/graphics/texture.hpp>
@@ -19,17 +20,33 @@ namespace cw {
                                                     std::string path = "",
                                                     std::string filename = "", bool create_copy = false){
 
+            std::lock_guard<std::mutex> lock(pool_texture_mutex);
+
             if(textures.find(name) != textures.end()) {
 
                 if(create_copy){
+                    bool texture_already_exists = false;
+
                     for(auto& texture : textures){
+                        if(texture.first() == name){
+                            texture_already_exists = true;
+                        }
+                    }
+
+                    if(texture_already_exists){ //We'll check how many replications exist.
+                        //TODO regex for names
+                        for(auto& texture : textures){
+
+                        }
+
+                    } else {
 
                     }
+
+
                 } else {
-
+                    return textures[name];
                 }
-
-                return textures[name];
 
             } else {
 
@@ -40,7 +57,10 @@ namespace cw {
             }
         }
 
+
+
         static std::shared_ptr<texture> getTexture(std::string name){
+            std::lock_guard<std::mutex> lock(pool_texture_mutex);
 
             if(textures.find(name) != textures.end()) {
 
@@ -52,11 +72,13 @@ namespace cw {
 
         }
 
-	private: //TODO  replace_texture, multithreaded.
+	private:
 		static std::unordered_map<std::string, std::shared_ptr<texture> > textures;
+        static std::mutex pool_texture_mutex;
 
 	};
 
     std::unordered_map<std::string, std::shared_ptr<texture> > texture_pool::textures;
+    std::mutex texture_pool::pool_texture_mutex;
 }
 
