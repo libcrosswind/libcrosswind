@@ -1,7 +1,7 @@
 # Crosswind
 A modern C++11 Multipurpose library
 
-Crosswind is a toolset that aims to integrate high level C++11 functions for different purposes such as fast GUI creation, Networking and Video Games.
+Crosswind is a toolset that aims to integrate high level C++11/14 functions for fast app development.
 
 The current supported platforms are Windows, Linux and Mac. Soon to come: Android, Windows Phone and Blackberry.
 
