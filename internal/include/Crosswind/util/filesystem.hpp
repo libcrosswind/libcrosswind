@@ -25,12 +25,21 @@ namespace cw{
 
             push_directory(directory);
 
-            if(recursively){ addDirectoryRecursively(directory); }
+            if(recursively){ add_recursively(directory); }
 
         }
 
+		static bool exists (std::string file) {
 
-		static bool exists (std::string name, const std::string& path = "") {
+            const std::regex regex("^.+/(.+)?$");
+
+            if(target.substr(target.size() - 1, target.size()).compare("/") == 0){
+                target  = target.substr(0, target.size() - 1);
+                std::cout<< "trailing" <<std::endl;
+            }
+
+
+            const std::string target = "data/b/whate ver/one.point/ok_01";
 
             //TODO test with Visual Studio.
             auto result = std::find_if(directories.begin(), directories.end(),
@@ -50,9 +59,8 @@ namespace cw{
             }
 		}
 
-        static std::string get_file_path(std::string& file, const std::string& path = ""){
+        static std::string get_file_path(std::string& file){
 
-            //TODO optimize path != ""
             if(exists(file, path)){
                 auto result = std::find_if(directories.begin(), directories.end(),
                         [&](std::string const& directory)  {
@@ -99,7 +107,7 @@ namespace cw{
         }
 
 
-        static void addDirectoryRecursively(std::string parent) {
+        static void add_recursively(std::string parent) {
 
             if(is_dir(parent)){
 
@@ -109,7 +117,7 @@ namespace cw{
                 {
                     while (struct dirent *ep = readdir(dp))
                         if (ep->d_name[0] != '.')
-                            addDirectoryRecursively(parent + "/" + ep->d_name);
+                            add_recursively(parent + "/" + ep->d_name);
                     closedir(dp);
                 }
                 else
@@ -123,6 +131,6 @@ namespace cw{
         static std::forward_list<std::string> directories;
 	};
 
-
+    //TODO make multithreaded
     std::forward_list<std::string> filesystem::directories;
 }
