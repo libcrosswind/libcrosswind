@@ -22,30 +22,33 @@ namespace cw {
 
             std::lock_guard<std::mutex> lock(pool_texture_mutex);
 
+            std::shared_ptr<texture> texture;
+
             if(textures.find(name) != textures.end()) {
 
                 if(create_copy){
-                    bool texture_already_exists = false;
+                    bool match = false;
+                    int replica_num = 0;
+
+                    std::regex regex("^("+filename+"+)_([0-9]*)$");
 
                     for(auto& texture : textures){
-                        if(texture.first() == name){
-                            texture_already_exists = true;
+
+                        std::smatch sm;
+                        if(std::regex_match(texture.first(), sm, regex)){
+                            replica_num = std::stoul(sm[2]);
+                            ++replica_num;
                         }
                     }
 
-                    if(texture_already_exists){ //We'll check how many replications exist.
-                        //TODO regex for names
-                        for(auto& texture : textures){
+                    textures[name] = std::shared_ptr<texture>
+                            (new texture(filesystem::get_file_path(name, path), width, height));
 
-                        }
-
-                    } else {
-
-                    }
+                    texture = textures[name];
 
 
                 } else {
-                    return textures[name];
+                    texture = textures[name];
                 }
 
             } else {
@@ -53,8 +56,10 @@ namespace cw {
                 textures[name] = std::shared_ptr<texture>
                                 (new texture(filesystem::get_file_path(name, path), width, height));
 
-                return textures[name];
+                texture = textures[name];
             }
+
+            return texture;
         }
 
 
