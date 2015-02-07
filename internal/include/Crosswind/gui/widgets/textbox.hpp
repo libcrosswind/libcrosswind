@@ -1,6 +1,5 @@
 #pragma once 
 
-#include <Crosswind/pools/texture_pool.hpp>
 #include <Crosswind/gui/widgets/detail/widget.hpp>
 
 namespace cw{
@@ -16,13 +15,6 @@ namespace cw{
             set_focus(false);
 
             set_text_color(128, 128, 128);
-
-            switch_texture("current", 
-                            texture_pool::loadTexture
-                                ("textbox.png", get_width(), get_height(), get_theme() + "/" + "textbox"));
-
-            switch_texture("previous", get_texture("current"));
-
 
             on_mouse_down += [this](int x, int y, int button){
 

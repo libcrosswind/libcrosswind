@@ -1,5 +1,7 @@
 #pragma once 
 
+#include <Crosswind/network/non_public/detail/asio_impl.hpp>//TODO move this to common header with ws, wss, for client and server. 
+
 #include <Crosswind/crypto/base64.hpp>
 #include <Crosswind/crypto/sha1.hpp>
 

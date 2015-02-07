@@ -1,36 +1,38 @@
 
-#include <Crosswind/gui/widgets/window.hpp>
-#include <Crosswind/gui/widgets/button.hpp>
-#include <Crosswind/gui/widgets/textbox.hpp>
-#include <Crosswind/gui/widgets/label.hpp>
 
-#include <Crosswind/gui/widgets/panel.hpp>
-#include <Crosswind/util/var.hpp>
-#include <Crosswind/network/ws/ws_client.hpp>
 #include <Crosswind/util/filesystem.hpp>
-#include <string>
-
-#include <asio/impl/src.hpp> //TODO move this to common network header.
+#include <Crosswind/pools/widget_pool.hpp>
+#include <Crosswind/network/ws/ws_client.hpp>
 
 #include <memory>
+#include <string>
+
 
 int main(int argc, char **argv) {
 
     cw::filesystem::add_directory("assets", true);
 
-    std::shared_ptr<cw::widget> window(new cw::window([](){
-        std::shared_ptr<cw::util::flag_container> flags(new cw::util::flag_container());
-        //  flags->set<cw::window::window_flags>(cw::window::window_flags::MULTITHREADED);
-        return flags;
-    }()));
-
-
-    std::shared_ptr<cw::widget> panel(new cw::panel());
-    std::shared_ptr<cw::widget> button(new cw::button());
-    std::shared_ptr<cw::widget> info_label(new cw::label());
-    std::shared_ptr<cw::widget> textbox(new cw::textbox());
-
+    std::shared_ptr<cw::widget> window      = cw::widget_pool::create<cw::window> (0.0, 0.0, 640, 480, "blue");
+    std::shared_ptr<cw::widget> panel       = cw::widget_pool::create<cw::panel>  (0.3, 0.2, 0.3, 0.3, "blue");
+    std::shared_ptr<cw::widget> button      = cw::widget_pool::create<cw::button> (0.1, 0.2, 0.4, 0.3, "blue");
+    std::shared_ptr<cw::widget> info_label  = cw::widget_pool::create<cw::label>  (0.0, 0.0, 0.05, 0.025, "blue");
+    std::shared_ptr<cw::widget> textbox     = cw::widget_pool::create<cw::textbox>(0.0, 0.0, 0.05, 0.025, "blue");
     std::shared_ptr<cw::network::ws::ws_client> ws_client(new cw::network::ws::ws_client("192.168.1.67:8000/echo"));
+
+    window->set_text("Main window");
+    button->set_theme("green");
+    button->set_text("Send Message");
+    info_label->set_text("Text to send");
+    textbox->set_text("Text");
+
+    button->on_clicked += [ws_client, textbox](){
+
+        std::stringstream data_ss;
+        data_ss << textbox->get_text();
+
+        ws_client->send(data_ss);
+
+    };
 
     ws_client->on_message += [](auto message) {
         std::stringstream data_ss;
@@ -51,42 +53,6 @@ int main(int argc, char **argv) {
     };
 
     ws_client->start();
-
-
-    window->set_text("Main window");
-    window->set_absolute_width(640.0);
-    window->set_absolute_height(480.0);
-
-
-    panel->set_theme("blue");
-    panel->set_x(0.3);
-    panel->set_y(0.2);
-    panel->set_width(0.3);
-    panel->set_height(0.3);
-
-    info_label->set_width(0.05);
-    info_label->set_height(0.025);
-    info_label->set_text("Text to send");
-
-    textbox->set_width(0.05);
-    textbox->set_height(0.025);
-    textbox->set_text("Text");
-
-    button->set_theme("green");
-    button->set_x(0.1);
-    button->set_y(0.2);
-    button->set_width(0.4);
-    button->set_height(0.3);
-    button->set_text("Send Message");
-
-    button->on_clicked += [ws_client, textbox](){
-
-        std::stringstream data_ss;
-        data_ss << textbox->get_text();
-
-        ws_client->send(data_ss);
-
-    };
 
 
     panel->attach(info_label);

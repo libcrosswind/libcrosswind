@@ -7,14 +7,12 @@
 #include <Crosswind/input/input_listener.hpp>
 #include <Crosswind/graphics/object_xyz.hpp>
 #include <Crosswind/graphics/texture.hpp>
-
-
+#include <Crosswind/pools/texture_pool.hpp>
 #include <Crosswind/events/delegate.hpp>
 
 namespace cw{
 
 	class widget: public input_listener, public virtual object_xyz{
-        
     public:
         widget(){
 
@@ -27,11 +25,24 @@ namespace cw{
 
 
             set_text("");
-            set_name("");
-            set_theme("blue");
+            set_name("default");
             set_draggable(false);
 
             set_text_color(255, 255, 255);
+
+            on_theme_set += [this](std::string theme){
+
+
+                switch_texture("current",
+                        texture_pool::loadTexture
+                                (get_name(), get_width(), get_height(), theme + "/" + "textbox", true));
+
+                switch_texture("previous", get_texture("current"));
+
+
+            };
+
+            set_theme("blue");
 
             on_attached += [this](std::shared_ptr<widget> element){
 
@@ -159,22 +170,6 @@ public:
             return text;
         }
 
-        void set_name(std::string name){
-
-            std::lock_guard<std::mutex> lock(name_mutex);
-            name_string = name;
-
-        }
-
-        std::string get_name(){
-
-            name_mutex.lock();
-            std::string name = name_string;
-            name_mutex.unlock();
-
-            return name;
-        }
-
         void set_text_color(unsigned char r, unsigned char g, unsigned char b){
             std::lock_guard<std::mutex> lock(color_mutex);
             text_color = std::shared_ptr<color_rgb>(new color_rgb(r, g, b));
@@ -192,7 +187,7 @@ public:
 
             std::lock_guard<std::mutex> lock(theme_mutex);
         	theme_string = theme;
-
+            on_theme_set(theme);
         }
 
         std::string get_theme(){
@@ -244,6 +239,26 @@ public:
         delegate<void>         on_hide;
 
         delegate<void> on_clicked;
+        delegate<void, std::string> on_theme_set;
+
+    protected:
+
+        void set_name(std::string name){
+
+            std::lock_guard<std::mutex> lock(name_mutex);
+            name_string = name;
+
+        }
+
+        std::string get_name(){
+
+            name_mutex.lock();
+            std::string name = name_string;
+            name_mutex.unlock();
+
+            return name;
+        }
+
 
     protected:
         std::mutex texture_mutex;
@@ -273,5 +288,6 @@ public:
 
 
     };
+
 
 }

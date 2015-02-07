@@ -1,14 +1,15 @@
 #pragma once 
 
+
+#include <Crosswind/graphics/texture.hpp>
+#include <Crosswind/util/filesystem.hpp>
+
 #include <unordered_map>
 #include <string>
 #include <memory>
 #include <mutex>
 #include <stdexcept>
-
-#include <Crosswind/graphics/texture.hpp>
-#include <Crosswind/util/filesystem.hpp>
-
+#include <regex>
 
 namespace cw {
 
@@ -23,8 +24,9 @@ namespace cw {
             std::lock_guard<std::mutex> lock(pool_texture_mutex);
 
             std::shared_ptr<texture> texture;
+            std::string index = "_0";
 
-            if(textures.find(name) != textures.end()) {
+            if(textures.find(name+index) != textures.end()) {
 
                 if(create_copy){
                     bool match = false;
@@ -35,16 +37,17 @@ namespace cw {
                     for(auto& texture : textures){
 
                         std::smatch sm;
-                        if(std::regex_match(texture.first(), sm, regex)){
+                        if(std::regex_match(texture->first(), sm, regex)){
                             replica_num = std::stoul(sm[2]);
                             ++replica_num;
                         }
                     }
 
-                    textures[name] = std::shared_ptr<texture>
-                            (new texture(filesystem::get_file_path(name, path), width, height));
+                    texture = std::shared_ptr<texture>
+                            (new texture(filesystem::get_file_path(path), width, height));
 
-                    texture = textures[name];
+                    name += "_" + replica_num;
+                    textures[name] = texture;
 
 
                 } else {
@@ -52,11 +55,12 @@ namespace cw {
                 }
 
             } else {
+                name += "_0";
 
-                textures[name] = std::shared_ptr<texture>
+                texture = std::shared_ptr<texture>
                                 (new texture(filesystem::get_file_path(name, path), width, height));
 
-                texture = textures[name];
+                textures[name] = texture;
             }
 
             return texture;

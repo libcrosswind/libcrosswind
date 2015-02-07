@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <unordered_set>
 #include <stdexcept>
+#include <forward_list>
+#include <regex>
 
 #if defined (WIN32) //TODO implement std::filesystem whenever the commitee releases it.
     #if _MSC_VER >= 1600
@@ -54,9 +56,10 @@ namespace cw{
 
         static std::string get_file_path(std::string& filepath){
 
+            std::vector<std::string> path = split(filepath);
+
             if(exists(filepath)){
 
-                std::vector<std::string> path = split(filepath);
 
                 auto result = std::find_if(directories.begin(), directories.end(),
                         [&](std::string const& directory)  {
@@ -71,10 +74,10 @@ namespace cw{
                 if(result != std::end(directories)){
                     return path[0] != "" ? *result + "/" + path[0] + "/" + path[1] : *result + "/" + path[1];
                 } else {
-                    throw std::runtime_error(file + std::string(": Not a file."));
+                    throw std::runtime_error(path[1] + std::string(": Not a file."));
                 }
             } else {
-                throw std::runtime_error(file + std::string(": Does not exist."));
+                throw std::runtime_error(path[1] + std::string(": Does not exist."));
             }
         }
 
@@ -106,7 +109,7 @@ namespace cw{
             result[0] = "";
             result[1] = filepath;
 
-            if (std::regex_match(target, sm, path_regex))
+            if (std::regex_match(filepath, sm, path_regex))
             {
                 result[0] = sm[1];
                 result[1] = sm[2];
