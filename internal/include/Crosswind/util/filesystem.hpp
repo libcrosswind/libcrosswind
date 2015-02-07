@@ -29,27 +29,20 @@ namespace cw{
 
         }
 
-		static bool exists (std::string file) {
-
-            const std::regex regex("^.+/(.+)?$");
-
-            if(target.substr(target.size() - 1, target.size()).compare("/") == 0){
-                target  = target.substr(0, target.size() - 1);
-                std::cout<< "trailing" <<std::endl;
-            }
+		static bool exists (std::string filepath) {
 
 
-            const std::string target = "data/b/whate ver/one.point/ok_01";
+            std::vector<std::string> path = split(filepath);
 
             //TODO test with Visual Studio.
             auto result = std::find_if(directories.begin(), directories.end(),
                     [&](std::string const& directory)  {
-                        return path != "" ?
-                                is_file(directory + "/" + path + "/" + name) ||
-                                is_dir(directory + "/" + path + "/" + name)
+                        return path[0] != "" ?
+                                is_file(directory + "/" + path[0] + "/" + path[1]) ||
+                                is_dir(directory + "/" + path[0] + "/" + path[1])
                                 :
-                                is_file(directory + "/" + name) ||
-                                is_dir(directory + "/" + name);
+                                is_file(directory + "/" + path[1]) ||
+                                is_dir(directory + "/" + path[1]);
                     });
 
             if(result != std::end(directories)){
@@ -59,21 +52,24 @@ namespace cw{
             }
 		}
 
-        static std::string get_file_path(std::string& file){
+        static std::string get_file_path(std::string& filepath){
 
-            if(exists(file, path)){
+            if(exists(filepath)){
+
+                std::vector<std::string> path = split(filepath);
+
                 auto result = std::find_if(directories.begin(), directories.end(),
                         [&](std::string const& directory)  {
                             //TODO test with Visual Studio.
-                            if(path != ""){
-                                return is_file(directory + "/" + path + "/" + file);
+                            if(path[0] != ""){
+                                return is_file(directory + "/" + path[0] + "/" + path[1]);
                             } else {
-                                return is_file(directory + "/" + file);
+                                return is_file(directory + "/" + path[1]);
                             }
                         });
 
                 if(result != std::end(directories)){
-                    return path != "" ? *result + "/" + path + "/" + file : *result + "/" + file;
+                    return path[0] != "" ? *result + "/" + path[0] + "/" + path[1] : *result + "/" + path[1];
                 } else {
                     throw std::runtime_error(file + std::string(": Not a file."));
                 }
@@ -84,7 +80,6 @@ namespace cw{
 
 
     private:
-
         static bool is_file(const std::string& file){
             struct stat s;
             stat(file.c_str(), &s);
@@ -97,6 +92,28 @@ namespace cw{
             return (s.st_mode & S_IFDIR)!=0;
         }
 
+        static std::vector<std::string> split(std::string filepath){ //TODO change to forward_list or faster impl.
+
+            if(filepath.substr(filepath.size() - 1, filepath.size()).compare("/") == 0){
+                filepath  = filepath.substr(0, filepath.size() - 1);
+            }
+
+            std::regex path_regex("^(.+/)(.+)$");
+            std::smatch sm;
+
+            std::vector<std::string> result(2);
+
+            result[0] = "";
+            result[1] = filepath;
+
+            if (std::regex_match(target, sm, path_regex))
+            {
+                result[0] = sm[1];
+                result[1] = sm[2];
+            }
+
+            return result;
+        }
 
     private:
         static void push_directory(const std::string& directory){

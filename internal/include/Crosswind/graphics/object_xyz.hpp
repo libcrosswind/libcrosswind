@@ -8,6 +8,7 @@
 #include <Crosswind/graphics/dimension_xyz.hpp>
 #include <Crosswind/util/flag_container.hpp>
 #include <Crosswind/util/math.hpp>
+#include <Crosswind/events/delegate.hpp>
 
 namespace cw {
 
