@@ -11,20 +11,7 @@ namespace cw{
 
     public:
         panel(){
-            switch_texture("current", texture_pool::loadTexture("panel.png", get_width(), get_height(), get_theme() + "/" + "panel"));
-            switch_texture("previous", get_texture("current"));
 
-        }
-
-        void show(){
-            set_visible(true);
-            switch_texture("current", get_texture("previous"));
-        }
-
-        void hide(){
-            set_visible(false);
-            switch_texture("previous", get_texture("current"));
-            switch_texture("current", get_texture("blank"));
         }
 
 

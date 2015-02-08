@@ -18,12 +18,11 @@ namespace cw {
     public:
 		static std::shared_ptr<texture> loadTexture(std::string name,
                                                     double width, double height,
-                                                    std::string path = "",
-                                                    std::string filename = "", bool create_copy = false){
+                                                    std::string path = "", bool create_copy = false){
 
             std::lock_guard<std::mutex> lock(pool_texture_mutex);
 
-            std::shared_ptr<texture> texture;
+            std::shared_ptr<texture> rexture_result;
             std::string index = "_0";
 
             if(textures.find(name+index) != textures.end()) {
@@ -32,38 +31,38 @@ namespace cw {
                     bool match = false;
                     int replica_num = 0;
 
-                    std::regex regex("^("+filename+"+)_([0-9]*)$");
+                    std::regex regex("^("+path+"+)_([0-9]*)$");
 
-                    for(auto& texture : textures){
+                    for(auto& t : textures){
 
                         std::smatch sm;
-                        if(std::regex_match(texture->first(), sm, regex)){
+                        if(std::regex_match(t.first, sm, regex)){
                             replica_num = std::stoul(sm[2]);
                             ++replica_num;
                         }
                     }
 
-                    texture = std::shared_ptr<texture>
+                    rexture_result = std::shared_ptr<texture>
                             (new texture(filesystem::get_file_path(path), width, height));
 
                     name += "_" + replica_num;
-                    textures[name] = texture;
+                    textures[name] = rexture_result;
 
 
                 } else {
-                    texture = textures[name];
+                    rexture_result = textures[name];
                 }
 
             } else {
                 name += "_0";
 
-                texture = std::shared_ptr<texture>
-                                (new texture(filesystem::get_file_path(name, path), width, height));
+                rexture_result = std::shared_ptr<texture>
+                                (new texture(filesystem::get_file_path(path), width, height));
 
-                textures[name] = texture;
+                textures[name] = rexture_result;
             }
 
-            return texture;
+            return rexture_result;
         }
 
 

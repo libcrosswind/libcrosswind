@@ -349,7 +349,8 @@ namespace cw {
 
 		    protected:
 				ws_client_base(std::string host_port_path, unsigned short default_port = 80): asio_resolver(asio_io_service) {
-                    const std::string pattern("^(ws)://([^:/]+):?([0-9]*)(.*)$");
+
+                    std::regex e("^(ws)://([^:/]+):?([0-9]*)(.*)$");
 
 					std::smatch sm;
 

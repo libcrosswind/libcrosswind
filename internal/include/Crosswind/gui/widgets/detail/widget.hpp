@@ -23,7 +23,6 @@ namespace cw{
             switch_texture("current", std::shared_ptr<texture>(new texture(get_width(), get_height(), get_depth(), 4)));
             switch_texture("previous", get_texture("current"));
 
-
             set_text("");
             set_name("default");
             set_draggable(false);
@@ -38,7 +37,6 @@ namespace cw{
                                 (get_name(), get_width(), get_height(), theme + "/" + "textbox", true));
 
                 switch_texture("previous", get_texture("current"));
-
 
             };
 
@@ -57,6 +55,43 @@ namespace cw{
                 for(auto& texture : textures){
                     texture.second->resize(this->get_absolute_width(), this->get_absolute_height());
                 }
+            };
+
+            on_mouse_down += [this](int x, int y, int button){
+
+                if(!this->pressed.load()){
+                    if(this->contains_xy(x, y)){
+                        this->pressed.store(true);
+                    }
+                }
+
+            };
+
+            on_mouse_move += [this](int x, int y){
+
+                if(this->pressed.load()){
+
+                    if(this->get_draggable()){
+                        this->set_x(x);
+                        this->set_y(y);
+                    }
+
+                } else {
+                    if (this->contains_xy(x, y)) {
+                        //this->switch_texture("hover", textures["on"]); //TODO
+                    }
+                }
+
+            };
+
+            on_mouse_up += [this](int x, int y){
+
+                if (pressed.load() && this->contains_xy(x, y)) {
+                    on_clicked();
+                }
+
+                pressed.store(false);
+
             };
 
             on_mouse_down += [this](int x, int y, int button){
@@ -109,6 +144,7 @@ namespace cw{
         virtual void update(double delta){
 
             for(auto& element : elements){
+
                 std::function<double(double, double)> percent_to_absolute = [](double percent, double dimension){
 
                     return dimension * percent;
@@ -147,10 +183,6 @@ namespace cw{
             for(auto& element : elements){
                 element->render(render_texture);
             }
-        }
-
-        virtual void loop(){
-
         }
 
 public:
@@ -286,6 +318,7 @@ public:
 
         std::atomic<bool> draggable;
 
+        std::atomic<bool> pressed;
 
     };
 
