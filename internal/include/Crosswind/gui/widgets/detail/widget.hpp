@@ -12,6 +12,27 @@
 
 namespace cw{
 
+    //TODO clear cache on reached delta.
+
+    template<typename T>
+    class cacheable{
+
+        void store(std::string, T data){
+
+        }
+
+        T load(std::string data, delegate<T, string> non_cached_callback){ //Provide callback on non-found //TODO throw
+
+        }
+
+        bool is_cached(std::string data){
+
+        }
+
+        std::map<std::string, T> cache;
+        T current_data;
+    };
+
 	class widget: public input_listener, public virtual object_xyz{
     public:
         widget(){
@@ -47,6 +68,7 @@ namespace cw{
                 element->set_absolute_width(element->get_width() * get_absolute_width());
                 element->set_absolute_height(element->get_height() * get_absolute_height());
                 element->set_absolute_depth(element->get_depth() * get_absolute_depth());
+
             };
 
 
@@ -145,7 +167,7 @@ namespace cw{
 
             for(auto& element : elements){
 
-                std::function<double(double, double)> percent_to_absolute = [](double percent, double dimension){
+                auto percent_to_absolute = [](double percent, double dimension){
 
                     return dimension * percent;
 
