@@ -81,10 +81,29 @@ namespace cw{
             target->display(*texture_data);
         }
 
+        void set_name(std::string name){
+
+            std::lock_guard<std::mutex> lock(name_mutex);
+            name_string = name;
+
+        }
+
+        std::string get_name(){
+
+            name_mutex.lock();
+            std::string name = name_string;
+            name_mutex.unlock();
+
+            return name;
+        }
+
 	private:
         std::mutex texture_mutex;
         std::shared_ptr<cimg_library::CImg<unsigned char> > texture_data;
         std::shared_ptr<cimg_library::CImg<unsigned char> > texture_clear_buffer; //Exact copy without modifications.
+
+        std::mutex name_mutex;
+        std::string name_string;
 
     };
 

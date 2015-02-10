@@ -16,56 +16,18 @@ namespace cw {
 	class texture_pool{
 
     public:
-		static std::shared_ptr<texture> loadTexture(std::string name,
+		static std::shared_ptr<texture> create_texture(std::string path,
                                                     double width, double height,
-                                                    std::string path = "", bool create_copy = false){
+                                                    bool create_copy = false, bool store = true){
 
-            std::lock_guard<std::mutex> lock(pool_texture_mutex);
+//            std::lock_guard<std::mutex> lock(pool_texture_mutex);
 
-            std::shared_ptr<texture> rexture_result;
-            std::string index = "_0";
+           auto result_texture =  std::shared_ptr<texture>(new texture(filesystem::get_file_path(path), width, height));
 
-            if(textures.find(name+index) != textures.end()) {
+           texture->set_name(name);
 
-                if(create_copy){
-                    bool match = false;
-                    int replica_num = 0;
-
-                    std::regex regex("^("+path+"+)_([0-9]*)$");
-
-                    for(auto& t : textures){
-
-                        std::smatch sm;
-                        if(std::regex_match(t.first, sm, regex)){
-                            replica_num = std::stoul(sm[2]);
-                            ++replica_num;
-                        }
-                    }
-
-                    rexture_result = std::shared_ptr<texture>
-                            (new texture(filesystem::get_file_path(path), width, height));
-
-                    name += "_" + replica_num;
-                    textures[name] = rexture_result;
-
-
-                } else {
-                    rexture_result = textures[name];
-                }
-
-            } else {
-                name += "_0";
-
-                rexture_result = std::shared_ptr<texture>
-                                (new texture(filesystem::get_file_path(path), width, height));
-
-                textures[name] = rexture_result;
-            }
-
-            return rexture_result;
+           return result_texture;
         }
-
-
 
         static std::shared_ptr<texture> getTexture(std::string name){
             std::lock_guard<std::mutex> lock(pool_texture_mutex);
@@ -81,12 +43,12 @@ namespace cw {
         }
 
 	private:
-		static std::unordered_map<std::string, std::shared_ptr<texture> > textures;
-        static std::mutex pool_texture_mutex;
+         static std::forward_list<std::shared_ptr<texture> > textures;
+         static std::mutex pool_texture_mutex;
 
 	};
 
-    std::unordered_map<std::string, std::shared_ptr<texture> > texture_pool::textures;
+    std::forward_list<std::shared_ptr<texture> > texture_pool::textures;
     std::mutex texture_pool::pool_texture_mutex;
 }
 

@@ -16,21 +16,33 @@ namespace cw{
 
     template<typename T>
     class cacheable{
+    public:
 
-        void store(std::string, T data){
+        T load(std::string data){ //Provide callback on non-found //TODO throw
+
+            if(cache.find(data) != textures.end()) {
+
+                return textures[name];
+
+            } else {
+                cache[data] = storage_callback(data);
+                raturn cache[data];
+            }
 
         }
 
-        T load(std::string data, delegate<T, string> non_cached_callback){ //Provide callback on non-found //TODO throw
+        void clear(){ //Will delete everything but current_data.
 
         }
 
-        bool is_cached(std::string data){
-
-        }
-
+        std::mutex cache_mutex;
         std::map<std::string, T> cache;
-        T current_data;
+        std::map<std::string, T> current_data;
+        delegate<T, string> storage_callback; //TODO create with var args.
+
+    private:
+
+
     };
 
 	class widget: public input_listener, public virtual object_xyz{
@@ -50,12 +62,17 @@ namespace cw{
 
             set_text_color(255, 255, 255);
 
+            textures.storage_callback += [this](std::string theme){
+
+                return texture_pool::loadTexture
+                        (theme + "/" + this->get_name(), this->get_width(), this->get_height());
+
+            };
+
             on_theme_set += [this](std::string theme){
 
 
                 switch_texture("current",
-                        texture_pool::loadTexture
-                                (get_name(), get_width(), get_height(), theme + "/" + "textbox", true));
 
                 switch_texture("previous", get_texture("current"));
 
@@ -315,8 +332,7 @@ public:
 
 
     protected:
-        std::mutex texture_mutex;
-        std::map<std::string, std::shared_ptr<texture> > textures;
+        cacheable<std::shared_ptr<texture> > textures;
 
         delegate<void, std::shared_ptr<widget> > on_attached;
 
