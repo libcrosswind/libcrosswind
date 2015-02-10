@@ -4,3 +4,6 @@
 [submodule "external/StandardRTC"]
 	path = external/StandardRTC
 	url = https://github.com/VictorJL/StandardRTC.git
+[submodule "external/messagepack"]
+	path = external/messagepack
+	url = https://github.com/msgpack/msgpack-c
