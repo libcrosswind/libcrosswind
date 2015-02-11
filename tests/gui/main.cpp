@@ -1,8 +1,7 @@
 
 
 #include <Crosswind/util/filesystem.hpp>
-#include <Crosswind/datatypes/msgpack.hpp>
-#include <Crosswind/datatypes/var.hpp>
+//#include <Crosswind/datatypes/msgpack.hpp>
 
 #include <iostream>
 //#include <Crosswind/pools/widget_pool.hpp>
@@ -10,19 +9,20 @@
 
 #include <memory>
 #include <string>
-#include <functional>
+
+#include <msgpack.hpp>
+
+
 
 
 int main(int argc, char **argv) {
 
-    cw::filesystem::add_directory("assets", true);
+  /*  cw::filesystem::add_directory("assets", true);
     cw::filesystem::add_directory("tests/gui", true);
 
     std::cout << cw::datatypes::messagepack::encode("Hello world") << std::endl;
 
-    std::shared_ptr<std::function<> > func;
 
-/*
     auto window      = cw::widget_pool::create<cw::window> (0.0, 0.0, 640, 480, "blue");
     auto panel       = cw::widget_pool::create<cw::panel>  (0.3, 0.2, 0.3, 0.3, "blue");
     auto button      = cw::widget_pool::create<cw::button> (0.1, 0.2, 0.4, 0.3, "blue");
