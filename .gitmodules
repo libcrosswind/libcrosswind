@@ -7,3 +7,6 @@
 [submodule "external/messagepack"]
 	path = external/messagepack
 	url = https://github.com/msgpack/msgpack-c
+[submodule "external/jeayeson"]
+	path = external/jeayeson
+	url = https://github.com/jeaye/jeayeson.git
