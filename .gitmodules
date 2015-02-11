@@ -16,3 +16,6 @@
 [submodule "external/boost_modules/algorithm"]
 	path = external/boost_modules/algorithm
 	url = https://github.com/boostorg/algorithm.git
+[submodule "external/boost_modules/locale"]
+	path = external/boost_modules/locale
+	url = https://github.com/boostorg/locale.git
