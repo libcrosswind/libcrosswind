@@ -1,9 +1,16 @@
 # Crosswind
-A modern C++11 Multipurpose library
+A modern C++11/14 Multipurpose library
 
 Crosswind is a toolset that aims to integrate high level C++11/14 functions for fast app development.
 
-The current supported platforms are Windows, Linux and Mac. Soon to come: Android, Windows Phone and Blackberry.
+Supported platforms:
+- [x] Windows
+- [x] Linux
+- [x] Mac
+- [ ] Android
+- [ ] Tizen
+- [ ] Windows Phone 
+- [ ] Blackberry
 
 The current library status:
 
