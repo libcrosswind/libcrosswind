@@ -13,3 +13,6 @@
 [submodule "external/boost"]
 	path = external/boost
 	url = https://github.com/boostorg/boost.git
+[submodule "external/jsoncons"]
+	path = external/jsoncons
+	url = https://github.com/danielaparker/jsoncons.git

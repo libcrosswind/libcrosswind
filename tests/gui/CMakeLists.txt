@@ -5,6 +5,7 @@ project(gui)
 set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}/../../internal/include"
                             "${PROJECT_SOURCE_DIR}/../../external/CImg-1.6.0/include"
                             "${PROJECT_SOURCE_DIR}/../../external/asio_standalone/asio/include"
+                            "${PROJECT_SOURCE_DIR}/../../external/jsoncons/src"
                             "${PROJECT_SOURCE_DIR}/../../external/messagepack/include")
 
 set(PROJECT_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/../../output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
