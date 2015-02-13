@@ -10,6 +10,7 @@ Crosswind is a toolset that aims to integrate high level C++11/14 functions for 
 Intended to be header-only with minimal dependencies. Expected non-header-only dependency will be OpenCV. 
 
 Current supported platforms:
+
 - [x] Windows
 - [x] Linux
 - [x] Mac
