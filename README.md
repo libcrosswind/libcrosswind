@@ -34,5 +34,5 @@ The current library modules:
 - [ ] DB
 - [ ] Bindings with other languages.
 
-The API documentation will be ready once multithreading gets achieved for all previous modules. Don't worry, it will be pretty simple.
+The API documentation will be ready once we reach stable.
 
