@@ -7,13 +7,13 @@
 #include <mutex>
 
 #include <Crosswind/gui/widgets/detail/display_target.hpp>
-#include <Crosswind/graphics/color_rgb.hpp>
+#include <Crosswind/graphics/color/rgb.hpp>
+#include <Crosswind/concurrency/mutexed_property.hpp>
 
 namespace cw{
 
 	class texture{
     public:
-
         texture(double width, double height, double depth, double bpp){
             texture_data = std::shared_ptr<cimg_library::CImg<unsigned char> >
                     (new cimg_library::CImg<unsigned char>(width, height, depth, bpp, 255));
@@ -34,6 +34,7 @@ namespace cw{
         }
 
         void clear(){
+
             std::lock_guard<std::mutex> lock(texture_mutex);
             (*texture_data).fill(0);
             (*texture_clear_buffer).fill(0);
@@ -81,29 +82,13 @@ namespace cw{
             target->display(*texture_data);
         }
 
-        void set_name(std::string name){
+        mutexed_property<std::string> name;
 
-            std::lock_guard<std::mutex> lock(name_mutex);
-            name_string = name;
-
-        }
-
-        std::string get_name(){
-
-            name_mutex.lock();
-            std::string name = name_string;
-            name_mutex.unlock();
-
-            return name;
-        }
-
-	private:
+    private:
         std::mutex texture_mutex;
         std::shared_ptr<cimg_library::CImg<unsigned char> > texture_data;
         std::shared_ptr<cimg_library::CImg<unsigned char> > texture_clear_buffer; //Exact copy without modifications.
 
-        std::mutex name_mutex;
-        std::string name_string;
 
     };
 

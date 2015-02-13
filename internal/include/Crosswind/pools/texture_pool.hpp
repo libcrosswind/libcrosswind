@@ -16,11 +16,9 @@ namespace cw {
 	class texture_pool{
 
     public:
-		static std::shared_ptr<texture> create_texture(std::string path,
-                                                    double width, double height,
-                                                    bool create_copy = false, bool store = true){
-
-//            std::lock_guard<std::mutex> lock(pool_texture_mutex);
+		static auto create_texture(std::string path,
+                                    double width, double height,
+                                    std::string name = ""){
 
            auto result_texture =  std::shared_ptr<texture>(new texture(filesystem::get_file_path(path), width, height));
 
@@ -29,7 +27,7 @@ namespace cw {
            return result_texture;
         }
 
-        static std::shared_ptr<texture> getTexture(std::string name){
+        static auto getTexture(std::string name){
             std::lock_guard<std::mutex> lock(pool_texture_mutex);
 
             if(textures.find(name) != textures.end()) {

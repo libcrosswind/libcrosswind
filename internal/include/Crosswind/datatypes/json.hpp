@@ -12,12 +12,12 @@ namespace cw{
 				        raw_json = std::shared_ptr<jsoncons::json>(new jsoncons::json());
 				    }
 
-				    json& from_file(std::string filename){
+				    auto& from_file(std::string filename){
 				        raw_json = std::shared_ptr<jsoncons::json>(new jsoncons::json(jsoncons::json::parse_file(filename)));
 				        return *this;
 				    }
 
-				    json& from_string(std::string json_string){
+				    auto& from_string(std::string json_string){
 				        raw_json = std::shared_ptr<jsoncons::json>(new jsoncons::json(jsoncons::json::parse_string(json_string)));
 				        return *this;
 				    }
@@ -28,7 +28,7 @@ namespace cw{
 				    }
 
 
-				    jsoncons::json& operator[](std::string key){
+				    auto& operator[](std::string key){
 
 				        if(!this->has(key)){
 				            (*raw_json)[key] = jsoncons::json();
@@ -42,7 +42,7 @@ namespace cw{
 				        return (*raw_json).has_member(key);
 				    }
 
-				    jsoncons::json& data() //TODO multithraeding will require to return a copy, not a reference, unless, stated. 
+				    auto& data() //TODO multithraeding will require to return a copy, not a reference, unless, stated.
 				    {
 				        return (*raw_json);
 				    }
