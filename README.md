@@ -12,7 +12,7 @@ Current modules:
 - [ ] standard (almost finished)
 - [ ] trivial  (needs to be rearranged)
 
-Expected time for 0.1: <= 1 week
+Expected time for 0.1: <= 1 week (2/21/15)
 
 Crosswind is a toolset that aims to integrate high level C++14 functions for fast app development.
 Intended to be header-only with minimal dependencies. Expected non-header-only dependencies will be OpenCV and the video codecs. 
