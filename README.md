@@ -6,11 +6,11 @@ Current status:
 - [x] Unstable
 - [ ] Stable
 
-Modules required for release 0.1:
-
-- [x] GUI
-- [x] Core
-
+Current modules:
+- [x] core (lacks javascript interpreter)
+- [ ] platform (needs work with gui and widgets)
+- [ ] standard (almost finished)
+- [ ] trivial  (needs to be rearranged)
 
 Expected time for 0.1: <= 1 week
 
@@ -29,13 +29,13 @@ Current supported platforms:
 
 Current library capabilities:
 
-- [ ] GUI 
-- [x] Events
-- [x] Websockets (WS only)
-- [x] Cryptography
-- [x] Filesystem
-- [x] JSON
-- [ ] Concurrency
+- [x] GUI 
+- [x] Delegates	
+- [ ] Websockets   (ws will be ready soon)
+- [x] Cryptography (base64 and sha1)
+- [ ] Filesystem   (about to be ready)
+- [x] JSON		   (fully concurrent for internal raw json)
+- [x] Concurrency  (concurrent datatypes working)
 - [ ] Javascript
 - [ ] 3D
 - [ ] Audio

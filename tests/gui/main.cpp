@@ -18,8 +18,6 @@
 #include <crosswind/platform/generic/application.hpp>
 
 int main(int argc, char **argv) {
-
-
     cw::core::concurrent::atomical_property<bool> the_bool;
     cw::core::concurrent::mutexed_property<std::string> the_string;
     cw::core::concurrent::mutexed_container<std::map<std::string, std::string> > the_map;
@@ -74,7 +72,11 @@ int main(int argc, char **argv) {
 
     json.from_string(json_string);
 
-    std::cout << json.data()["value"] << std::endl;
+    auto& raw_json = json.data.acquire();
+
+    std::cout << raw_json["value"] << std::endl;
+
+    json.data.release();
 
     std::cout << rect1.contains_xy(2.0, 5.0) << std::endl;
 
