@@ -22,8 +22,8 @@ public:
 		a = 255;
 	}
 
-	auto array(){
-		return std::array<unsigned char, 4>(r, g, b, a);
+	std::array<unsigned char, 4> array(){
+		return {r, g, b, a};
 	}
 
 	void store(unsigned char r_component, 
