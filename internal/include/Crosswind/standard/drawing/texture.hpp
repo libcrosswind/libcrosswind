@@ -13,55 +13,62 @@
 namespace cw{
 namespace standard{
 namespace drawing{
-
+    template<class T>
     class texture;
 
 }// namespace drawing
 }// namespace standard
 }// namespace cw
 
+template<class T>
 class cw::standard::drawing::texture{
 public:
     texture(double width, double height, double depth, double bpp){
-        texture_data = std::shared_ptr<cimg_library::CImg<unsigned char> >
-                (new cimg_library::CImg<unsigned char>(width, height, depth, bpp, 255));
-
-        texture_clear_buffer = std::shared_ptr<cimg_library::CImg<unsigned char> >
-                (new cimg_library::CImg<unsigned char>(width, height, depth, bpp, 255));
+        
+        data = cimg_library::CImg<T>(width, height, depth, bpp, 255);
+        clear_buffer = cimg_library::CImg<T>(width, height, depth, bpp, 255);
 
     }
 
     texture(std::string path, double width, double height){
-        texture_data = std::shared_ptr<cimg_library::CImg<unsigned char> >
-                (new cimg_library::CImg<unsigned char>());
-        texture_clear_buffer = std::shared_ptr<cimg_library::CImg<unsigned char> >
-                (new cimg_library::CImg<unsigned char>());
+        data = cimg_library::CImg<T>();
+        clear_buffer = cimg_library::CImg<T>();
 
-        texture_data->assign(path.c_str());
-        texture_clear_buffer->assign(path.c_str());
+        data.acquire().assign(path.c_str());
+        clear_buffer.acquire().assign(path.c_str());
+        
+        data.release();
+        clear_buffer.release();
     }
+ 
 
     void clear(){
 
-        std::lock_guard<std::mutex> lock(texture_mutex);
-        (*texture_data).fill(0);
-        (*texture_clear_buffer).fill(0);
+        auto& local_texture = data.acquire();
+        auto& buffer = clear_buffer.acquire();
+
+        local_texture.fill(0);
+        buffer.fill(0);
+
+        data.release();
+        clear_buffer.release();
 
     }
 
 
     void draw_text(double x, double y, std::string text, std::shared_ptr<color_rgb> color){
-        std::lock_guard<std::mutex> lock(texture_mutex);
-        (*texture_data) = (*texture_clear_buffer);
 
-//            const unsigned char black[] = { 0, 0, 0};
+        auto& local_texture = data.acquire();
+        auto& buffer = clear_buffer.acquire();
 
-        cimg_library::CImg<unsigned char> imgtext =
-                cimg_library::CImg<unsigned char>().draw_text(0,0,text.c_str(), color->data(), NULL).
+        local_texture = buffer;
+
+        auto imgtext =
+                cimg_library::CImg<T>().draw_text(0,0,text.c_str(), color->data(), NULL).
                         resize(-100,-100, 1, 4);
 
-        //@TODO move this to widget.hpp and implement alignment.
-        (*texture_data).draw_image(x - imgtext.width()/2,
+        //@TODO implement alignment.
+        local_texture.draw_image  (x - imgtext.width()/2,
                                    y - imgtext.height()/2,
                                    0,
                                    0,
@@ -70,31 +77,41 @@ public:
                                    1,
                                    255);
 
+        data.release();
+        clear_buffer.release();
+
     }
 
     void resize(double width, double height){
-        std::lock_guard<std::mutex> lock(texture_mutex);
-        (*texture_data).resize(width, height, -100, -100, 3); //Linear interpolation works best for PNG
-        (*texture_clear_buffer).resize(width, height, -100, -100, 3);
+
+        auto& local_texture = data.acquire();
+        auto& buffer  = clear_buffer.acquire();
+
+        local_texture.resize(width, height, -100, -100, 3); //Linear interpolation works best for PNG
+        buffer.resize(width, height, -100, -100, 3);
+
+        data.release();
+        clear_buffer.release();
+
     }
 
-    void render_to_target(double x, double y, std::shared_ptr<texture> target){
+    void render_to_target(double x, double y, texture& target){
 
-        std::lock_guard<std::mutex> lock(texture_mutex);
-        target->texture_data->draw_image(x, y, 0, 0, *texture_data);
+        auto& target_texture = target.data.acquire();
+        auto& local_texture = data.acquire();
+
+        target_texture.draw_image(x, y, 0, 0, local_texture);
+
+        data.release();
+        target.data.release();
 
     }
 
-    void render_to_display(std::shared_ptr<display_target> target){
-        std::lock_guard<std::mutex> lock(texture_mutex);
-        target->display(*texture_data);
-    }
 
     core::concurrent::mutexed_property<std::string> name;
+    core::concurrent::mutexed_property<cimg_library::CImg<T> > data;
 
 private:
-    std::mutex texture_mutex;
-    std::shared_ptr<cimg_library::CImg<unsigned char> > texture_data;
-    std::shared_ptr<cimg_library::CImg<unsigned char> > texture_clear_buffer; //Exact copy without modifications.
+    core::concurrent::mutexed_property<cimg_library::CImg<T> > clear_buffer;
 
 };// class texture

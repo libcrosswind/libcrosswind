@@ -1,5 +1,7 @@
 #pragma once
 
+#include <crosswind/standard/geometry/rectangle.hpp>
+
 namespace cw{
 namespace platform{
 namespace generic{
@@ -12,7 +14,6 @@ namespace generic{
 
 class cw::platform::generic::application{
 public:
-
     application(){
         buffering = false;
         buffer_key = 0;
@@ -83,36 +84,36 @@ public:
         //TODO implement z-order.
         // button clicked. //TODO reduce iterations and implement Z-order.
         for (auto &element:elements) {
-            if (display_window->get_mouse_button()) {
+            if (window->get_mouse_button()) {
                 //Send mouse down event to all elements;
-                element->on_mouse_down( display_window->get_mouse_x(),
-                        display_window->get_mouse_y(),
-                        display_window->get_mouse_button());
+                element->on_mouse_down( window->get_mouse_x(),
+                        window->get_mouse_y(),
+                        window->get_mouse_button());
             } else {
                 //Send mouse released event to all elements.
-                element->on_mouse_up(display_window->get_mouse_x(), display_window->get_mouse_y());
+                element->on_mouse_up(window->get_mouse_x(), window->get_mouse_y());
             }
 
         }
 
-        if (display_window->get_mouse_x() || display_window->get_mouse_y()) { // mouse moved
+        if (window->get_mouse_x() || window->get_mouse_y()) { // mouse moved
             for (auto &element : elements) {
-                element->on_mouse_move(display_window->get_mouse_x(), display_window->get_mouse_y());
+                element->on_mouse_move(window->get_mouse_x(), window->get_mouse_y());
             }
         }
 
-        if (display_window->get_keyboard_down()) {  // key down //@TODO single reads for atomics.
+        if (window->get_keyboard_down()) {  // key down //@TODO single reads for atomics.
 
-            if(display_window->get_keyboard_down() != get_buffer_key()){
+            if(window->get_keyboard_down() != get_buffer_key()){
                 if(!get_buffering()){  //@TODO implement buffering for keypress
 
                     for (auto &element : elements) {
-                        element->on_key_down(display_window->get_keyboard_down());
+                        element->on_key_down(window->get_keyboard_down());
                     }
 
                     set_buffer_counter(0.0f);
                     set_buffering(true);
-                    set_buffer_key(display_window->get_keyboard_down());
+                    set_buffer_key(window->get_keyboard_down());
                 }
 
             } else {
@@ -127,7 +128,7 @@ public:
 
                 } else {
                     for (auto &element : elements) {
-                        element->on_key_down(display_window->get_keyboard_down());
+                        element->on_key_down(window->get_keyboard_down());
                     }
                 }
             }
@@ -137,24 +138,25 @@ public:
             set_buffer_key(0);
         }
 
-        if (display_window->get_keyboard_up()) { // key up
+        if (window->get_keyboard_up()) { // key up
             set_buffer_counter(0.0f);
             set_buffering(false);
             set_buffer_key(0);
 
             for (auto &element : elements) {
-                element->on_key_up(display_window->get_keyboard_up());
+                element->on_key_up(window->get_keyboard_up());
             }
         }
     }
 
-    std::shared_ptr<display_target> display_window;
-    std::shared_ptr<texture> render_texture;
+    display_window window;
+    standard::drawing::texture render_texture;
+
     std::chrono::high_resolution_clock::time_point previous_time;
-    atomical_property<bool> buffering;
-    atomical_property<int> buffer_key;
-    atomical_property<float> buffer_counter;
-    atomical_property<float> buffer_frames;
+    core::concurrent::atomical_property<bool> buffering;
+    core::concurrent::atomical_property<int> buffer_key;
+    core::concurrent::atomical_property<float> buffer_counter;
+    core::concurrent::atomical_property<float> buffer_frames;
 
 };// class application
 
