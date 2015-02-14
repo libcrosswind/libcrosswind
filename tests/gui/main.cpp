@@ -14,7 +14,6 @@
 #include <crosswind/core/crypto/sha1.hpp>
 
 #include <crosswind/standard/geometry/rectangle.hpp>
-
 #include <crosswind/platform/generic/application.hpp>
 
 int main(int argc, char **argv) {

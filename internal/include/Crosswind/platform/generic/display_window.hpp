@@ -66,7 +66,6 @@ public:
     }
 
 private:
-
     double get_delta() {
 
         auto current_time = std::chrono::high_resolution_clock::now();

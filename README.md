@@ -1,5 +1,5 @@
 # Crosswind
-A modern C++11/14 Multipurpose library
+A modern C++14 Multipurpose library
 
 Current status: 
 
@@ -15,7 +15,7 @@ Current modules:
 Expected time for 0.1: <= 1 week
 
 Crosswind is a toolset that aims to integrate high level C++11/14 functions for fast app development.
-Intended to be header-only with minimal dependencies. Expected non-header-only dependency will be OpenCV. 
+Intended to be header-only with minimal dependencies. Expected non-header-only dependency will be OpenCV and the VPX codec. 
 
 Current supported platforms:
 
