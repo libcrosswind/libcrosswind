@@ -4,7 +4,7 @@
 #include <map> 
 #include <string>
 
-#include <crosswind/core/concurrent/mutexed_map.hpp>
+#include <crosswind/core/concurrent/mutexed_container.hpp>
 
 namespace cw{
 namespace core{
@@ -50,11 +50,10 @@ public:
         cache.apply(manipulations(name));
     }
 
-
     std::function<T(std::string)> source;
 private:
-    concurrent::mutexed_map<std::string, T> cache;
-    concurrent::mutexed_map<std::string, cache_manipulation> manipulations;    
+    concurrent::mutexed_container<std::map<std::string, T> > cache;
+    concurrent::mutexed_container<std::map<std::string, cache_manipulation> > manipulations;
 
 };
 

@@ -6,7 +6,7 @@
 
 #include <crosswind/core/concurrent/atomical_property.hpp>
 #include <crosswind/core/concurrent/mutexed_property.hpp>
-#include <crosswind/core/concurrent/mutexed_map.hpp>
+#include <crosswind/core/concurrent/mutexed_container.hpp>
 #include <crosswind/core/container/cacheable.hpp>
 #include <crosswind/core/javascript/json.hpp>
 
@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 
     cw::core::concurrent::atomical_property<bool> the_bool;
     cw::core::concurrent::mutexed_property<std::string> the_string;
-    cw::core::concurrent::mutexed_map<std::string, std::string> the_map;
+    cw::core::concurrent::mutexed_container<std::map<std::string, std::string> > the_map;
     cw::core::container::cacheable<bool> cache;
     cw::core::javascript::json json;
 
