@@ -6,7 +6,7 @@ namespace cw{
 namespace core{
 namespace crypto{
 
-	class rsa;
+	class rsa_key;
 
 }// namespace crypto
 }// namespace core
