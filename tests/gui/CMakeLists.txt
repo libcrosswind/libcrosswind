@@ -36,5 +36,5 @@ set_target_properties(gui
 
 target_link_libraries (gui LINK_PUBLIC wsock32 ws2_32)
 
-file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin/assets)
-file(COPY ${PROJECT_SOURCE_DIR}/../../resources/tests DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin/tests)
+file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+file(COPY ${PROJECT_SOURCE_DIR}/../../resources/tests DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)

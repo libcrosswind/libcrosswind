@@ -1,4 +1,3 @@
-//#include <Crosswind/util/filesystem.hpp>
 
 //#include <Crosswind/pools/widget_pool.hpp>
 #include <iostream>
@@ -15,6 +14,8 @@
 
 #include <crosswind/standard/geometry/rectangle.hpp>
 #include <crosswind/platform/generic/application.hpp>
+
+#include <crosswind/platform/generic/filesystem.hpp>
 
 int main(int argc, char **argv) {
     cw::core::concurrent::atomical_property<bool> the_bool;
@@ -71,27 +72,38 @@ int main(int argc, char **argv) {
 
     json.from_string(json_string);
 
-    auto& raw_json = json.data.acquire();
+    {
+        auto &raw_json = json.data.acquire();
 
-    std::cout << raw_json["value"] << std::endl;
+        std::cout << raw_json["value"] << std::endl;
 
-    json.data.release();
-
+        json.data.release();
+    }
     std::cout << rect1.contains_xy(2.0, 5.0) << std::endl;
 
     std::cout << rect1.contains(rect2) << std::endl;
 
 
     cw::platform::generic::application application;
+    cw::platform::generic::filesystem::add_directory("assets", true);
+    cw::platform::generic::filesystem::add_directory("tests/gui", true);
+
+    if(cw::platform::generic::filesystem::exists("data.json")){
+        json.from_file(cw::platform::generic::filesystem::get_file_path("data.json"));
+
+        auto& raw_json = json.data.acquire();
+        std::cout << raw_json["compact"] << std::endl;
+        std::cout << raw_json["schema"] << std::endl;
+        json.data.release();
+
+    }
 
     application.title = std::string("The window");
     application.run();
 
 
-/*
-    cw::filesystem::add_directory("assets", true);
-    cw::filesystem::add_directory("tests/gui", true);
 
+/*
     auto button      = cw::widget_pool::create(0.1, 0.2, 0.4, 0.3, "blue");
 */
     return 0;

@@ -4,10 +4,11 @@
 #include <algorithm>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <unordered_set>
 #include <stdexcept>
 #include <forward_list>
 #include <regex>
+
+#include <crosswind/core/concurrent/mutexed_property.hpp>
 
 #if defined (WIN32) //TODO implement std::filesystem whenever the commitee releases it.
     #if _MSC_VER >= 1600
@@ -22,10 +23,14 @@
 namespace cw{
 namespace platform{
 namespace generic{
+
     class filesystem;
-}
-}
-}
+
+}// namespace generic
+}// namespace platform
+}// namespace cw
+
+
 class cw::platform::generic::filesystem{
 public:
     static void add_directory(std::string directory, bool recursively = false){
@@ -38,12 +43,17 @@ public:
 
 	static bool exists (std::string filepath) {
 
-
         std::vector<std::string> path = split(filepath);
 
+        std::cout << path[0] <<std::endl;
+        std::cout << path[1] <<std::endl;
+
+        auto& local_directories = directories.acquire();
+
         //TODO test with Visual Studio.
-        auto result = std::find_if(directories.begin(), directories.end(),
+        auto result = std::find_if(local_directories.begin(), local_directories.end(),
                 [&](std::string const& directory)  {
+                    std::cout << directory << std::endl;
                     return path[0] != "" ?
                             is_file(directory + "/" + path[0] + "/" + path[1]) ||
                             is_dir(directory + "/" + path[0] + "/" + path[1])
@@ -52,21 +62,23 @@ public:
                             is_dir(directory + "/" + path[1]);
                 });
 
-        if(result != std::end(directories)){
+        if(result != std::end(local_directories)){
+            directories.release();
+
             return true;
         } else {
             return false;
         }
 	}
 
-    static std::string get_file_path(std::string& filepath){
+    static std::string get_file_path(std::string filepath){
 
         std::vector<std::string> path = split(filepath);
 
         if(exists(filepath)){
 
-
-            auto result = std::find_if(directories.begin(), directories.end(),
+            auto& local_directories = directories.acquire();
+            auto result = std::find_if(local_directories.begin(), local_directories.end(),
                     [&](std::string const& directory)  {
                         //TODO test with Visual Studio.
                         if(path[0] != ""){
@@ -76,7 +88,9 @@ public:
                         }
                     });
 
-            if(result != std::end(directories)){
+            if(result != std::end(local_directories)){
+                directories.release();
+
                 return path[0] != "" ? *result + "/" + path[0] + "/" + path[1] : *result + "/" + path[1];
             } else {
                 throw std::runtime_error(path[1] + std::string(": Not a file."));
@@ -100,7 +114,7 @@ private:
         return (s.st_mode & S_IFDIR)!=0;
     }
 
-    static std::vector<std::string> split(std::string filepath){ //TODO change to forward_list or faster impl.
+    static std::vector<std::string> split(std::string filepath){
 
         if(filepath.substr(filepath.size() - 1, filepath.size()).compare("/") == 0){
             filepath  = filepath.substr(0, filepath.size() - 1);
@@ -125,10 +139,13 @@ private:
 
 private:
     static void push_directory(const std::string& directory){
-        if(std::find(directories.begin(), directories.end(), directory) == directories.end())
+        auto& local_directories = directories.acquire();
+        if(std::find(local_directories.begin(), local_directories.end(), directory) == local_directories.end())
         {
-            directories.push_front(directory);
+            local_directories.push_front(directory);
         }
+
+        directories.release();
     }
 
 
@@ -153,9 +170,9 @@ private:
 
 
 private:
-    static std::forward_list<std::string> directories;
+    static core::concurrent::mutexed_property<std::forward_list<std::string> > directories;
 };
 
-std::forward_list<std::string> cw::platform::generic::filesystem::directories; //TODO make multithreaded
+cw::core::concurrent::mutexed_property<std::forward_list<std::string> > cw::platform::generic::filesystem::directories;
 
 
