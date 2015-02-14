@@ -20,8 +20,9 @@ namespace generic{
 class cw::platform::generic::display_window{
 
 public:
-    display_window(double width, double height, std::string text): render_texture(width, height){
-        window_wrapper = cimg_library::CImgDisplay(width, height, text.c_str());
+    display_window(double width, double height, std::string text): 
+    render_texture(width, height),
+    window_wrapper(width, height, text.c_str()){
 
         buffering_key = false;
         buffered_key = 0;
