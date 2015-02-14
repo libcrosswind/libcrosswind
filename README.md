@@ -9,7 +9,7 @@ Current status:
 Modules required for release 0.1:
 
 - [x] GUI
-- [x] Concurrency
+- [x] Core
 
 
 Expected time for 0.1: <= 1 week
@@ -27,7 +27,7 @@ Current supported platforms:
 - [ ] Windows Phone 
 - [ ] Blackberry
 
-Current library modules:
+Current library capabilities:
 
 - [ ] GUI 
 - [x] Events

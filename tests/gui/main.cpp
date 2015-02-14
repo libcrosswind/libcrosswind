@@ -1,79 +1,90 @@
-#include <Crosswind/util/filesystem.hpp>
+//#include <Crosswind/util/filesystem.hpp>
 
 //#include <Crosswind/pools/widget_pool.hpp>
-//#include <Crosswind/network/ws/ws_client.hpp>
-#include <Crosswind/datatypes/json.hpp>
-
-
-#include <memory>
-#include <string>
 #include <iostream>
-#include <atomic>
+#include <string>
 
+#include <crosswind/core/concurrent/atomical_property.hpp>
+#include <crosswind/core/concurrent/mutexed_property.hpp>
+#include <crosswind/core/concurrent/mutexed_map.hpp>
+#include <crosswind/core/container/cacheable.hpp>
+#include <crosswind/core/javascript/json.hpp>
 
+#include <crosswind/core/crypto/base64.hpp>
+#include <crosswind/core/crypto/sha1.hpp>
+
+#include <crosswind/standard/geometry/rectangle.hpp>
 
 int main(int argc, char **argv) {
 
-    cw::filesystem::add_directory("assets", true);
-    cw::filesystem::add_directory("tests/gui", true);
 
-    cw::datatypes::json json;
-    //json.from_file("themes/blue/button.json");
+    cw::core::concurrent::atomical_property<bool> the_bool;
+    cw::core::concurrent::mutexed_property<std::string> the_string;
+    cw::core::concurrent::mutexed_map<std::string, std::string> the_map;
+    cw::core::container::cacheable<bool> cache;
+    cw::core::javascript::json json;
+
+    cw::standard::geometry::rectangle<double> rect1(0, 0, 10, 10);
+    cw::standard::geometry::rectangle<double> rect2(0, 0, 5, 10);
+
+    the_map("K", "R");
+
+    the_bool = true;
+    bool boolean;
+    boolean = the_bool;
+
+    std::string str;
+    str = the_map("K");
+    std::cout << str <<std::endl;
+
+    cache.store("boolean", false);
+
+    cache.add_manipulation("true_manipulation", [](auto& map){
+        for(auto& item : map){
+            item.second = true;
+        }
+    });
+
+    cache.apply_manipulation("true_manipulation");
+
+    std::cout<< cache.load("boolean") << std::endl;
+
+    cache.add_manipulation("false_manipulation", [](auto& map){
+        for(auto& item: map){
+            item.second = false;
+        }
+    });
+
+    cache.apply_manipulation("false_manipulation");
+
+    std::cout<< cache.load("boolean") << std::endl;
+
+    std::string encoded = cw::core::crypto::base64::encode("THE STRING");
+    std::string decoded = cw::core::crypto::base64::decode(encoded);
+
+    std::cout<< encoded << std::endl;
+    std::cout<< decoded << std::endl;
+
+    std::cout<< "SHA1:" << cw::core::crypto::sha1::compress(decoded) << std::endl;
+
+
+    std::string json_string = "{\"value\":1}";
+
+    json.from_string(json_string);
+
+    std::cout << json.data()["value"] << std::endl;
+
+    std::cout << rect1.contains_xy(2.0, 5.0) << std::endl;
+
+    std::cout << rect1.contains(rect2) << std::endl;
+
 
 
 /*
-    auto window      = cw::widget_pool::create<cw::window> (0.0, 0.0, 640, 480, "blue");
-    auto panel       = cw::widget_pool::create<cw::panel>  (0.3, 0.2, 0.3, 0.3, "blue");
-    auto button      = cw::widget_pool::create<cw::button> (0.1, 0.2, 0.4, 0.3, "blue");
-/*    auto info_label  = cw::widget_pool::create<cw::label>  (0.0, 0.0, 0.05, 0.025, "blue");
-    auto textbox     = cw::widget_pool::create<cw::textbox>(0.0, 0.0, 0.05, 0.025, "blue");*/
-//    std::shared_ptr<cw::network::ws::ws_client> ws_client(new cw::network::ws::ws_client("192.168.1.67:8000/echo"));
+    cw::filesystem::add_directory("assets", true);
+    cw::filesystem::add_directory("tests/gui", true);
 
-   /* window->set_text("Main window");
-    button->set_theme("green");
-    button->set_text("Send Message");
-
-//    info_label->set_text("Text to send");
-//    textbox->set_text("Text");
-
-    button->on_clicked += [ws_client, textbox](){
-
-        std::stringstream data_ss;
-        data_ss << textbox->get_text();
-        ws_client->send(data_ss);
-
-    };
-
-    ws_client->on_message += [](auto message) {
-        std::stringstream data_ss;
-        data_ss << message->data.rdbuf();
-        std::cout << "Client: Message received: \"" << data_ss.str() << "\"" << std::endl;
-    };
-
-    ws_client->on_open += []() {
-
-    };
-
-    ws_client->on_close +=[](int status, const std::string& reason) {
-        std::cout << "Client: Closed connection with status code " << status << std::endl;
-    };
-
-    ws_client->on_error +=[](const asio::error_code& ec) {
-        std::cout << "Client: Error: " << ec << ", error message: " << ec.message() << std::endl;
-    };
-
-    ws_client->start();
-
-//    panel->attach(info_label);
-//    panel->attach(textbox);
-    panel->attach(button);
-    window->attach(panel);
-
-    window->on_hide += [ws_client](){
-        ws_client->stop();
-    };
-
-    window->show();
+    auto button      = cw::widget_pool::create(0.1, 0.2, 0.4, 0.3, "blue");
 */
     return 0;
 
