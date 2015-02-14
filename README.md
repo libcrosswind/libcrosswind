@@ -41,7 +41,7 @@ Current library capabilities:
 - [ ] Audio
 - [ ] Video
 - [ ] SRTP
-- [ ] DB
+- [ ] DB (SQLite will be provided soon)
 - [ ] Bindings with other languages.
 
 The API documentation will be ready once we reach stable.
