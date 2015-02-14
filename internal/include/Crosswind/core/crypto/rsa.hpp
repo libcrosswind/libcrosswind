@@ -13,11 +13,13 @@ namespace crypto{
 }// namespace cw
 
 
-class cw::core::crypto::rsa{
+class cw::core::crypto::rsa_key{
 public:
+	
+	rsa_key(){
 
-	static std::pair<rsa> create_pair(){
-		
 	}
 
-};// class rsa
+
+
+};// class rsa_key
