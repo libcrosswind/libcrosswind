@@ -19,6 +19,10 @@ public:
     mutexed_property(){
         property_value = T();
     }
+    template<typename ... Args>
+    mutexed_property(Args... args){
+        property_value = T(args...);
+    }
 
     T& acquire(){
         property_mutex.lock();
@@ -29,17 +33,20 @@ public:
         property_mutex.unlock();
     }
 
-/*    operator T(){
-        property_mutex.lock();
-        T property_value = property_value;
-        property_mutex.unlock();
+    operator T(){
+    	auto& value = this->acquire();
+    	T result = value;
+    	this->release();
 
-        return property_value;
-    }*/
+    	return result;
+    }
 
-    void operator=(T& other){
-        std::lock_guard<std::mutex> lock(property_mutex);
-        property_value = other;
+    void operator=(const T& other){
+    	auto& value = this->acquire();
+
+        value = other;
+
+        this->release();
     }
 
 private:

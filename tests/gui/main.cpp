@@ -15,6 +15,8 @@
 
 #include <crosswind/standard/geometry/rectangle.hpp>
 
+#include <crosswind/platform/generic/application.hpp>
+
 int main(int argc, char **argv) {
 
 
@@ -78,6 +80,11 @@ int main(int argc, char **argv) {
 
     std::cout << rect1.contains(rect2) << std::endl;
 
+
+    cw::platform::generic::application application;
+
+    application.title = std::string("The window");
+    application.run();
 
 
 /*

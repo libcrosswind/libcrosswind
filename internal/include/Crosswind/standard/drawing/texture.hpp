@@ -6,7 +6,6 @@
 #include <memory>
 #include <mutex>
 
-#include <Crosswind/gui/widgets/detail/display_target.hpp>
 #include <crosswind/core/concurrent/mutexed_property.hpp>
 #include <Crosswind/standard/drawing/rgb.hpp>
 
@@ -23,7 +22,7 @@ namespace drawing{
 template<class T>
 class cw::standard::drawing::texture{
 public:
-    texture(double width, double height, double depth, double bpp){
+    texture(double width, double height, double depth = 1, double bpp = 4){
         
         data = cimg_library::CImg<T>(width, height, depth, bpp, 255);
         clear_buffer = cimg_library::CImg<T>(width, height, depth, bpp, 255);
@@ -56,7 +55,7 @@ public:
     }
 
 
-    void draw_text(double x, double y, std::string text, std::shared_ptr<color_rgb> color){
+    void draw_text(double x, double y, std::string text, std::shared_ptr<rgb> color){
 
         auto& local_texture = data.acquire();
         auto& buffer = clear_buffer.acquire();
@@ -64,7 +63,7 @@ public:
         local_texture = buffer;
 
         auto imgtext =
-                cimg_library::CImg<T>().draw_text(0,0,text.c_str(), color->data(), NULL).
+                cimg_library::CImg<T>().draw_text(0,0,text.c_str(), color->array().data(), NULL).
                         resize(-100,-100, 1, 4);
 
         //@TODO implement alignment.

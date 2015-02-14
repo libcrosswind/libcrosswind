@@ -20,7 +20,6 @@ namespace concurrent{
 template<class T>
 class cw::core::concurrent::mutexed_container{
 public:
-
     template<typename U>
 	auto operator()(U key){
 
