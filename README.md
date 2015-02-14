@@ -29,7 +29,7 @@ Current supported platforms:
 
 Current library capabilities:
 
-- [x] GUI 
+- [x] GUI 		   (widget loading via json will be ready soon)
 - [x] Delegates	
 - [ ] Websockets   (ws will be ready soon)
 - [x] Cryptography (base64 and sha1)
