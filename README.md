@@ -15,7 +15,7 @@ Current modules:
 Expected time for 0.1: <= 1 week
 
 Crosswind is a toolset that aims to integrate high level C++14 functions for fast app development.
-Intended to be header-only with minimal dependencies. Expected non-header-only dependencies will be OpenCV and the VPX codec. 
+Intended to be header-only with minimal dependencies. Expected non-header-only dependencies will be OpenCV and the h264 codec. 
 
 Current supported platforms:
 
