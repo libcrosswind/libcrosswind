@@ -24,7 +24,7 @@ Current supported platforms:
 - [x] Mac
 - [ ] Android
 - [ ] Tizen
-- [ ] Windows Phone 
+- [ ] Windows Phone
 - [ ] Blackberry
 
 Current library capabilities:
@@ -33,7 +33,7 @@ Current library capabilities:
 - [x] Delegates	
 - [ ] Websockets   (ws will be ready soon)
 - [x] Cryptography (base64 and sha1)
-- [ ] Filesystem   (about to be ready)
+- [x] Filesystem   (concurrent filesystem utility)
 - [x] JSON		   (fully concurrent for internal raw json)
 - [x] Concurrency  (concurrent datatypes working)
 - [ ] Javascript
