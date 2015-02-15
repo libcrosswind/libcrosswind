@@ -24,9 +24,9 @@ int main(int argc, char **argv) {
 
     cw::standard::simulation::actor actor1;
     cw::standard::simulation::actor actor2;
-    cw::standard::simulation::actor* actor3 = new renderable_actor();
+    cw::standard::simulation::actor* actor3 = new cw::standard::simulation::renderable_actor();
 
-    std::cout << std::is_same<renderable_actor, decltype(actor3)>::value << '\n';   // true
+    std::cout << std::is_convertible<cw::standard::simulation::renderable_actor*, decltype(actor3)>::value << '\n';   // true
 
 
 

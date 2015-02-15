@@ -13,7 +13,7 @@ namespace standard{
 namespace simulation{
 
     class actor;
-
+    class renderable_actor;
 }
 }
 }
@@ -53,7 +53,7 @@ public:
 
         // Guard against add() during previous on_child_remove callback
         if (!child.parent){
-            auto& container = children.acquire();
+            auto container = children.acquire();
             // This first, since to callbacks from within set_parent() may remove child
             if (index < container.size() && insert){
                 auto it = container.begin();
@@ -86,7 +86,7 @@ public:
 
         // Find the child in children, and unparent it
         auto& container = children.acquire();
-
+            container.push_back(NULL);
         for(auto iter = container.begin(); iter != container.end(); ++iter){
             if(*iter == &child){
               // Keep handle for OnChildRemove notification
@@ -111,7 +111,7 @@ public:
     }
 
 
-    unsigned int child_count() const{
+    unsigned int child_count(){
         auto& container = children.acquire();
         unsigned int count = container.size();
         children.release();
@@ -130,7 +130,7 @@ public:
 private:
     void set_parent(actor* new_parent, int index = -1){
         if(new_parent){
-            std::assert(!parent); //Actor cannot have 2 parents
+            assert(!parent); //Actor cannot have 2 parents
 
             parent = new_parent;
 /*
@@ -141,7 +141,7 @@ private:
               ConnectToStage( index );
             }*/
         }   else    { // parent being set to NULL
-                std::assert(parent != NULL);// Actor should have a parent
+                assert(parent != NULL);// Actor should have a parent
 
                 parent = NULL;
                 /*
@@ -165,9 +165,11 @@ private:
     actor* parent;
 };
 
-    class renderable_actor: public actor{
+class cw::standard::simulation::renderable_actor: 
+        public cw::standard::simulation::actor{
 
-    };
+};
+
 
   /*  class renderable {
 
@@ -368,4 +370,3 @@ public:
     };
 */
 
-}
