@@ -44,7 +44,6 @@ public:
     bool is_open()          {   return !window_wrapper.is_closed();      }
 
     void refresh(){
-
         double delta = get_delta();
         //handle_input(delta);
 

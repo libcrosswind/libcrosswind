@@ -1,8 +1,6 @@
 
-//#include <Crosswind/pools/widget_pool.hpp>
 #include <iostream>
-#include <string>
-
+/*
 #include <crosswind/core/concurrent/atomical_property.hpp>
 #include <crosswind/core/concurrent/mutexed_property.hpp>
 #include <crosswind/core/concurrent/mutexed_container.hpp>
@@ -16,8 +14,23 @@
 #include <crosswind/platform/generic/application.hpp>
 
 #include <crosswind/platform/generic/filesystem.hpp>
+#include <crosswind/platform/gui/components/widget.hpp>*/
+
+#include <crosswind/standard/simulation/actor.hpp>
+
+#include <type_traits>
 
 int main(int argc, char **argv) {
+
+    cw::standard::simulation::actor actor1;
+    cw::standard::simulation::actor actor2;
+    cw::standard::simulation::actor* actor3 = new renderable_actor();
+
+    std::cout << std::is_same<renderable_actor, decltype(actor3)>::value << '\n';   // true
+
+
+
+/*
     cw::core::concurrent::atomical_property<bool> the_bool;
     cw::core::concurrent::mutexed_property<std::string> the_string;
     cw::core::concurrent::mutexed_container<std::map<std::string, std::string> > the_map;
@@ -98,10 +111,12 @@ int main(int argc, char **argv) {
 
     }
 
+
+
     application.title = std::string("The window");
     application.run();
 
-
+*/
 
 /*
     auto button      = cw::widget_pool::create(0.1, 0.2, 0.4, 0.3, "blue");
