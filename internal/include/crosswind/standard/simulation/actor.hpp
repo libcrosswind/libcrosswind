@@ -14,6 +14,7 @@ namespace simulation{
 
     class actor;
     class renderable_actor;
+    class logic_actor;
 }
 }
 }
@@ -22,6 +23,10 @@ class cw::standard::simulation::actor{
 
 public:
     actor(){
+
+    }
+
+    virtual ~actor(){
 
     }
 
@@ -169,6 +174,13 @@ class cw::standard::simulation::renderable_actor:
         public cw::standard::simulation::actor{
 
 };
+
+class cw::standard::simulation::logic_actor: 
+        public cw::standard::simulation::actor{
+
+};
+
+
 
 
   /*  class renderable {

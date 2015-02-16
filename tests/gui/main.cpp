@@ -25,10 +25,16 @@ int main(int argc, char **argv) {
     cw::standard::simulation::actor actor1;
     cw::standard::simulation::actor actor2;
     cw::standard::simulation::actor* actor3 = new cw::standard::simulation::renderable_actor();
+    cw::standard::simulation::actor* actor4 = new cw::standard::simulation::logic_actor();
 
-    std::cout << std::is_convertible<cw::standard::simulation::renderable_actor*, decltype(actor3)>::value << '\n';   // true
+    // true
+    dynamic_cast<cw::standard::simulation::renderable_actor*>(actor3) ?
+            std::cout << "Cast ok " <<std::endl :
+            std::cout << "Cast not ok " << std::endl;
 
-
+    dynamic_cast<cw::standard::simulation::renderable_actor*>(actor4) ?
+            std::cout << "Cast ok " <<std::endl :
+            std::cout << "Cast not ok " <<std::endl;
 
 /*
     cw::core::concurrent::atomical_property<bool> the_bool;
