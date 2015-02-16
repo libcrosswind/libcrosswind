@@ -18,7 +18,7 @@ Crosswind is a toolset that aims to integrate high level C++14 functions for fas
 Intended to be header-only with minimal dependencies. Expected non-header-only dependencies will be OpenCV and the video codecs. 
 
 Current dependencies:
-- [x] SDL2
+- [x] SDL2 (don't worry, it is pretty easy to build)
 
 Current supported platforms:
 
