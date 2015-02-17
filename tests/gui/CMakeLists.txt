@@ -6,10 +6,10 @@ set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}/../../internal/include"
                             "${PROJECT_SOURCE_DIR}/../../external/CImg-1.6.0/include"
                             "${PROJECT_SOURCE_DIR}/../../external/asio_standalone/asio/include"
                             "${PROJECT_SOURCE_DIR}/../../external/jsoncons/src"
-                            "${PROJECT_SOURCE_DIR}/../../platform/windows/include/SDL2")
+                            "${PROJECT_SOURCE_DIR}/../../platform/windows/build/include/SDL2")
 
 
-LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../platform/windows/lib)
+LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib)
 
 set(PROJECT_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/../../output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
 
@@ -37,7 +37,7 @@ set_target_properties(gui
     RUNTIME_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/bin"
 )
 
-target_link_libraries (gui LINK_PUBLIC mingw32 wsock32 ws2_32 SDL2main SDL2  winmm imm32 version)
+target_link_libraries (gui LINK_PUBLIC mingw32 SDL2main SDL2 winmm imm32 version)
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/tests DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
