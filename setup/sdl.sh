@@ -9,18 +9,11 @@ SDL_INSTALL_DIR=$PWD/../platform/windows/build
 echo $SDL_DIR
 mkdir -p $SDL_TEMP_DIR
 
-
-
 pushd $SDL_TEMP_DIR
-
 sh $SDL_DIR/configure --disable-shared --prefix=$SDL_INSTALL_DIR 
 make clean
 make
 make install
-
 popd
-
-
-
 
 popd

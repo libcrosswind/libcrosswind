@@ -47,11 +47,46 @@ Current library capabilities:
 - [x] Concurrency  (concurrent datatypes working)
 - [ ] Javascript
 - [ ] 3D
-- [ ] Audio
+- [ ] Audio (Audio will be provided soon)
 - [ ] Video
 - [ ] SRTP
 - [ ] DB (SQLite will be provided soon)
 - [ ] Bindings with other languages.
+
+
+Deliverables for 0.1
+- [x] Delegates	
+- [x] Cryptography 
+- [x] Filesystem   
+- [x] JSON		   
+- [x] Concurrency  
+
+Deliverables for 0.2
+- [x] GUI
+
+Deliverables for 0.3
+- [x] Websockets  (ws only)
+- [x] Audio (Audio will be provided soon)
+
+Deliverables for 0.4
+- [x] DB (SQLite)
+- [x] 3D
+
+Deliverables for 0.5
+- [x] Video
+
+Deliverables for 0.6
+- [x] Websockets (wss)
+- [x] SRTP
+
+Deliverables for 0.7
+- [x] Javascript (interpreter)
+
+Deliverables for 0.8
+- [x] Bindings with other languages.
+
+The development will be done in that order. Further revisions will extend the support for each capability. Take in consideration that some modules could come before and that the version layout may change.
+
 
 The API documentation will be ready once we reach stable.
 
