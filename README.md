@@ -23,7 +23,7 @@ Current dependencies:
 - [x] SDL2
 - [ ] OpenCV
 
-Run the build scripts from inside the setup folder. 
+Run the build scripts from inside the setup folder via sh {script}.sh. 
 
 Current supported platforms:
 
