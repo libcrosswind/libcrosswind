@@ -20,7 +20,19 @@
 
 #include <type_traits>
 
+#include <SDL.h>
+
+
 int main(int argc, char **argv) {
+
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
+        std::cerr << "SDL_Init error: " << SDL_GetError() << std::endl;
+        return 1;
+    }
+    std::cout << "Resource path is: " << getResourcePath() << std::endl;
+
+    SDL_Quit();
+    return 0;
 
     cw::standard::simulation::actor actor1;
     cw::standard::simulation::actor actor2;
@@ -47,6 +59,7 @@ int main(int argc, char **argv) {
     cw::standard::geometry::rectangle<double> rect2(0, 0, 5, 10);
 
     the_map("K", "R");
+
 
     the_bool = true;
     bool boolean;
