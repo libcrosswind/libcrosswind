@@ -24,6 +24,7 @@ Current dependencies:
 - [ ] OpenCV
 
 Run the build scripts from inside the setup folder via sh {script}.sh. 
+SDL2 has not haptic support for mingw32, as it seems, you need to build with mingw64 for haptics to be enabled.
 
 Current supported platforms:
 

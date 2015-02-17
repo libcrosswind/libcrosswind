@@ -1,2 +1,1 @@
-These are UNIX-like directory for your libraries.
-
+Place your platform-specific tools here.
