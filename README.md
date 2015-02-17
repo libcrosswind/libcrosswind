@@ -88,6 +88,6 @@ Deliverables for 0.8
 The development will be done in that order. Further revisions will extend the support for each capability. Take in consideration that some modules could come before and that the version layout may change.
 
 
-The API documentation will be ready once we reach stable.
+The API documentation will be ready once we reach stable (~0.6). 
 
 Feel free to use the working modules. 
