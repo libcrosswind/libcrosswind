@@ -1,116 +1,220 @@
-#pragma once
-
-#include <CImg/CImg.h>
+#pragma once 
 
 #include <string>
-#include <memory>
-#include <mutex>
+#include <utility>
 
-#include <crosswind/core/concurrent/mutexed_property.hpp>
-#include <Crosswind/standard/drawing/rgb.hpp>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_stdinc.h>
+#include <SDL2/SDL_blendmode.h>
+
+#include <crosswind/platform/generic/sdl_exception.hpp>
+#include <crosswind/standard/geometry/rectangle.hpp>
+
+
 
 namespace cw{
 namespace standard{
 namespace drawing{
-    template<class T>
-    class texture;
+
+	class texture;
 
 }// namespace drawing
 }// namespace standard
 }// namespace cw
 
-template<class T>
+
 class cw::standard::drawing::texture{
+public: 
+	class lock_handle;
+
 public:
-    texture(double width, double height, double depth = 1, double bpp = 4){
-        
-        data = cimg_library::CImg<T>(width, height, depth, bpp, 255);
-        clear_buffer = cimg_library::CImg<T>(width, height, depth, bpp, 255);
+	texture(SDL_Texture* texture) : texture_(texture) {
+	}
 
-    }
+	texture(Renderer& renderer, Uint32 format, int access, int w, int h) {
+		if ((texture_ = SDL_CreateTexture(renderer.Get(), format, access, w, h)) == nullptr)
+			throw sdl_exception("SDL_CreateTexture");
+	}
 
-    texture(std::string path, double width, double height){
-        data = cimg_library::CImg<T>();
-        clear_buffer = cimg_library::CImg<T>();
+	texture(Renderer& renderer, const Surface& surface) {
+		if ((texture_ = SDL_CreateTextureFromSurface(renderer.Get(), surface.Get())) == nullptr)
+			throw sdl_exception("SDL_CreateTextureFromSurface");
+	}
 
-        data.acquire().assign(path.c_str());
-        clear_buffer.acquire().assign(path.c_str());
-        
-        data.release();
-        clear_buffer.release();
-    }
- 
+	~texture() {
+		if (texture_ != nullptr)
+			SDL_DestroyTexture(texture_);
+	}
 
-    void clear(){
+	texture(texture&& other) noexcept : texture_(other.texture_) {
+		other.texture_ = nullptr;
+	}
 
-        auto& local_texture = data.acquire();
-        auto& buffer = clear_buffer.acquire();
+	texture& operator=(texture&& other) noexcept {
+		if (&other == this)
+			return *this;
+		if (texture_ != nullptr)
+			SDL_DestroyTexture(texture_);
+		texture_ = other.texture_;
+		other.texture_ = nullptr;
+		return *this;
+	}
 
-        local_texture.fill(0);
-        buffer.fill(0);
+	SDL_Texture* get() const {
+		return texture_;
+	}
 
-        data.release();
-        clear_buffer.release();
+	template<typename T>
+	texture& update(const rectangle<T>& rect, const void* pixels, int pitch) {
+		if (SDL_UpdateTexture(texture_, rect ? &*rect : nullptr, pixels, pitch) != 0)
+			throw sdl_exception("SDL_UpdateTexture");
+		return *this;
+	}
 
-    }
+	template<typename T>
+	texture& update_yuv(const rectangle<T>& rect, const Uint8* yplane, int ypitch, const Uint8* uplane, int upitch, const Uint8* vplane, int vpitch) {
+		if (SDL_UpdateYUVTexture(texture_, rect ? &*rect : nullptr, yplane, ypitch, uplane, upitch, vplane, vpitch) != 0)
+			throw sdl_exception("SDL_UpdateYUVTexture");
+		return *this;
+	}
 
+	texture& set_blend_mode(SDL_BlendMode blendMode) {
+		if (SDL_SetTextureBlendMode(texture_, blendMode) != 0)
+			throw sdl_exception("SDL_SetTextureBlendMode");
+		return *this;
+	}
 
-    void draw_text(double x, double y, std::string text, std::shared_ptr<rgb> color){
+	texture& Texture::SetAlphaMod(Uint8 alpha) {
+		if (SDL_SetTextureAlphaMod(texture_, alpha) != 0)
+			throw sdl_exception("SDL_SetTextureAlphaMod");
+		return *this;
+	}
 
-        auto& local_texture = data.acquire();
-        auto& buffer = clear_buffer.acquire();
+	texture& set_color_mod(Uint8 r, Uint8 g, Uint8 b) {
+		if (SDL_SetTextureColorMod(texture_, r, g, b) != 0)
+			throw sdl_exception("SDL_SetTextureColorMod");
+		return *this;
+	}
 
-        local_texture = buffer;
+	template<typename T>
+	lock_handle lock(const rectangle<T>& rect) {
+		return lock_handle(this, rect);
+	}
 
-        auto imgtext =
-                cimg_library::CImg<T>().draw_text(0,0,text.c_str(), color->array().data(), NULL).
-                        resize(-100,-100, 1, 4);
+	Uint32 get_format() const {
+		Uint32 format;
+		if (SDL_QueryTexture(texture_, &format, nullptr, nullptr, nullptr) != 0)
+			throw sdl_exception("SDL_QueryTexture");
+		return format;
+	}
 
-        //@TODO implement alignment.
-        local_texture.draw_image  (x - imgtext.width()/2,
-                                   y - imgtext.height()/2,
-                                   0,
-                                   0,
-                                   imgtext,
-                                   imgtext.get_channel(3),
-                                   1,
-                                   255);
+	int get_access() const {
+		int access;
+		if (SDL_QueryTexture(texture_, nullptr, &access, nullptr, nullptr) != 0)
+			throw sdl_exception("SDL_QueryTexture");
+		return access;
+	}
 
-        data.release();
-        clear_buffer.release();
+	int get_width() const {
+		int w;
+		if (SDL_QueryTexture(texture_, nullptr, nullptr, &w, nullptr) != 0)
+			throw sdl_exception("SDL_QueryTexture");
+		return w;
+	}
 
-    }
+	int get_height() const {
+		int h;
+		if (SDL_QueryTexture(texture_, nullptr, nullptr, nullptr, &h) != 0)
+			throw sdl_exception("SDL_QueryTexture");
+		return h;
+	}
 
-    void resize(double width, double height){
+	point get_size() const {
+		int w, h;
+		if (SDL_QueryTexture(texture_, nullptr, nullptr, &w, &h) != 0)
+			throw sdl_exception("SDL_QueryTexture");
+		return point(w, h);
+	}
 
-        auto& local_texture = data.acquire();
-        auto& buffer  = clear_buffer.acquire();
+	Uint8 get_alpha_mod() const {
+		Uint8 alpha;
+		if (SDL_GetTextureAlphaMod(texture_, &alpha) != 0)
+			throw sdl_exception("SDL_GetTextureAlphaMod");
+		return alpha;
+	}
 
-        local_texture.resize(width, height, -100, -100, 3); //Linear interpolation works best for PNG
-        buffer.resize(width, height, -100, -100, 3);
+	SDL_BlendMode get_blend_mode() const {
+		SDL_BlendMode mode;
+		if (SDL_GetTextureBlendMode(texture_, &mode) != 0)
+			throw sdl_exception("SDL_GetTextureBlendMode");
+		return mode;
+	}
 
-        data.release();
-        clear_buffer.release();
-
-    }
-
-    void render_to_target(double x, double y, texture& target){
-
-        auto& target_texture = target.data.acquire();
-        auto& local_texture = data.acquire();
-
-        target_texture.draw_image(x, y, 0, 0, local_texture);
-
-        data.release();
-        target.data.release();
-
-    }
-
-
-    core::concurrent::mutexed_property<std::string> name;
-    core::concurrent::mutexed_property<cimg_library::CImg<T> > data;
+	void get_color_mod(Uint8& r, Uint8& g, Uint8& b) const {
+		if (SDL_GetTextureColorMod(texture_, &r, &g, &b) != 0)
+			throw sdl_exception("SDL_GetTextureColorMod");
+	}
 
 private:
-    core::concurrent::mutexed_property<cimg_library::CImg<T> > clear_buffer;
+	SDL_Texture* texture_; 
 
-};// class texture
+};
+
+
+class cw::standard::drawing::texture::lock_handle {
+		friend class texture;
+private:
+		Texture* texture_; 
+		void* pixels_;   
+		int pitch_;      
+
+private:
+	template<typename T>
+	lock_handle(texture* texture, const rectangle<T>& rect) : texture_(texture) {
+		if (SDL_LockTexture(texture_->Get(), rect ? &*rect : nullptr, &pixels_, &pitch_) != 0)
+			throw sdl_exception("SDL_LockTexture");
+	}
+
+
+public:
+	lock_handle() : texture_(nullptr), pixels_(nullptr), pitch_(0) {
+	}
+
+	lock_handle(lock_handle&& other) noexcept : texture_(other.texture_), pixels_(other.pixels_), pitch_(other.pitch_) {
+		other.texture_ = nullptr;
+		other.pixels_ = nullptr;
+		other.pitch_ = 0;
+	}
+
+	lock_handle& operator=(lock_handle&& other) noexcept {
+		if (&other == this)
+			return *this;
+
+		if (texture_ != nullptr)
+			SDL_UnlockTexture(texture_->Get());
+
+		texture_ = other.texture_;
+		pixels_ = other.pixels_;
+		pitch_ = other.pitch_;
+
+		other.texture_ = nullptr;
+		other.pixels_ = nullptr;
+		other.pitch_ = 0;
+
+		return *this;
+	}
+
+	~lock_handle() {
+		if (texture_ != nullptr)
+			SDL_UnlockTexture(texture_->Get());
+	}
+
+	void* get_pixels() const {
+		return pixels_;
+	}
+
+	int get_pitch() const {
+		return pitch_;
+	}
+};

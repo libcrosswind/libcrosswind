@@ -14,12 +14,20 @@ namespace concurrent{
 }// namespace cw
 
 template<class T>
-class cw::core::concurrent::atomical_property{
+class cw::core::concurrent::atomical_property: public detail::property<T>{
 public:
     atomical_property(){
         property_value.store(0);
     }
+/*
+    void assign(T value){
+        property_value.store(value);
+    }
 
+    T retrieve(){
+        property_value.load();
+    }
+*/
     operator T(){
         return property_value.load();
     }
