@@ -38,19 +38,19 @@ Current supported platforms:
 
 Current library capabilities:
 
-- [x] GUI 		   (widget loading via json will be ready soon)
+- [x] GUI (minimal) 		  
 - [x] Delegates	
-- [ ] Websockets   (ws will be ready soon)
+- [ ] Websockets   
 - [x] Cryptography (base64 and sha1)
 - [x] Filesystem   (concurrent filesystem utility)
 - [x] JSON		   (fully concurrent for internal raw json)
 - [x] Concurrency  (concurrent datatypes working)
 - [ ] Javascript
 - [ ] 3D
-- [ ] Audio (Audio will be provided soon)
+- [ ] Audio
 - [ ] Video
 - [ ] SRTP
-- [ ] DB (SQLite will be provided soon)
+- [ ] DB 
 - [ ] Bindings with other languages.
 
 
@@ -66,7 +66,7 @@ Deliverables for 0.2
 
 Deliverables for 0.3
 - [x] Websockets  (ws only)
-- [x] Audio (Audio will be provided soon)
+- [x] Audio 
 
 Deliverables for 0.4
 - [x] DB (SQLite)
