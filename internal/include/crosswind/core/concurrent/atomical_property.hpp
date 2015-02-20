@@ -2,6 +2,8 @@
 
 #include <atomic>
 
+#include <crosswind/core/concurrent/detail/property.hpp>
+
 namespace cw{
 namespace core{
 namespace concurrent{
@@ -14,36 +16,47 @@ namespace concurrent{
 }// namespace cw
 
 template<class T>
-class cw::core::concurrent::atomical_property: public detail::property<T>{
+class cw::core::concurrent::atomical_property{
 public:
     atomical_property(){
         property_value.store(0);
     }
-/*
-    void assign(T value){
+
+    atomical_property(const T& value){
         property_value.store(value);
     }
 
-    T retrieve(){
-        property_value.load();
-    }
-*/
     operator T(){
-        return property_value.load();
-    }
-
-    operator +(const T& other){
-        return property_value.load() + other;
-    }
-
-    operator -(const T& other){
-        return property_value.load() - other;
+        return this->get();
     }
 
     void operator=(T other){
-        property_value.store(other);
+        this->set(other);
     }
 
-private:
+    operator +(const T& other){
+        return this->get() + other;
+    }
+
+    operator -(const T& other){
+        return this->get() - other;
+    }
+
+    std::function<void(const T&)> set;
+    std::function<T(void)> get;
+
+protected:
+    void init() override{
+        
+        set = [this](const T& value){
+            this->property_value.store(value);
+        };
+
+        get = [this](){
+            return this->property_value.load();
+        };
+
+    }
+
     std::atomic<T> property_value;
 };//class atomical_property

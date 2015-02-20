@@ -22,17 +22,24 @@ public:
         bounds.width  = 640;
         bounds.height = 480;
         title = std::string("Main window");
+
     }
 
     virtual void run(){
 
-        window =
-                std::shared_ptr<display_window>(new display_window(bounds.width, bounds.height, title));
+        auto& dim = bounds.size.acquire();
 
+        window =
+                std::shared_ptr<display_window>(new display_window(dim.x, dim.y, title));
+
+        bounds.size.release();
+        
         while (window->is_open() ) {
             window->refresh();
             window->wait(10);
         }
+
+
 
 //        on_exit();
 

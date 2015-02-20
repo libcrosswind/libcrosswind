@@ -19,6 +19,7 @@ public:
     mutexed_property(){
         property_value = T();
     }
+
     template<typename ... Args>
     mutexed_property(Args... args){
         property_value = T(args...);
@@ -28,25 +29,39 @@ public:
         property_mutex.lock();
         return property_value;
     }
-    
+
     void release(){
         property_mutex.unlock();
     }
 
     operator T(){
-    	auto& value = this->acquire();
-    	T result = value;
-    	this->release();
-
-    	return result;
+        return this->get();
     }
 
     void operator=(const T& other){
-    	auto& value = this->acquire();
+        this->set(other);
+    }
 
-        value = other;
+    std::function<void(const T&)> set;
+    std::function<T(void)> get;
 
-        this->release();
+protected:
+    void init(){
+
+        set = [this](const T& value){
+            auto& local_value = this->acquire();
+            local_value = value;
+            this->release();
+        };
+
+        get = [this](){
+            auto& local_value = this->acquire();
+            T value = local_value;
+            this->release();
+
+            return value;
+        };
+
     }
 
 private:

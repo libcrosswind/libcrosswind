@@ -1,57 +1,162 @@
 #pragma once
 
-#include <crosswind/core/concurrent/atomical_property.hpp>
+#include <algorithm>
+#include <SDL2/SDL_rect.h>
 
-namespace cw{
+#include <crosswind/standard/geometry/point.hpp>
+
+namespace cw {
 namespace standard{
 namespace geometry{
 
 	template<class T>
-	class rectangle;
+	rectangle;
 
 }// namespace geometry
 }// namespace standard
 }// namespace cw
 
 template<class T>
-class cw::standard::geometry::rectangle{
-public:
-	rectangle(T x_value = 0, T y_value = 0, T w_value = 1, T h_value = 1){
-		x 		= x_value;
-		y		= y_value;
-		width  	= w_value;
-		height  = h_value;
+class cw::standard::geometry::rectangle: public SDL_Rect{
+public:	
+	rectangle(auto nx, auto ny, auto nw, auto nh): 		
+		position(nx, ny), size(nw, nh){
+
+		right_bound.set = [](const auto& value){
+			auto& pos = position.acquire();
+			auto& dim = size.acquire();
+
+			dim.x = value - pos.x + 1;
+
+			position.release();
+			size.release();
+		};
+
+		right_bound.get = [](){
+			T result;
+			auto& pos = position.acquire();
+			auto& dim = size.acquire();
+
+			result = value - pos.x + dim.x - 1;
+
+			position.release();
+			size.release();
+
+			return result;
+		};
+
+		bottom_bound.set = [](const auto& value){
+			auto& pos = position.acquire();
+			auto& dim = size.acquire();
+
+			dim.y = value - pos.y + 1;
+
+			position.release();
+			size.release();
+
+		};
+
+		bottom_bound.get = [](){
+			T result;
+			auto& pos = position.acquire();
+			auto& dim = size.acquire();
+
+			result = value - pos.y + dim.y - 1;
+
+			position.release();
+			size.release();
+
+			return result;
+		};
+ 
 	}
 
-	//Positioning
-	auto contains_x(T x_value) { return x_value >= this->x && x_value <= this->width  + this->x; }
+	auto operator==(const auto& other) const {
+		bool result;
 
-	auto contains_y(T y_value) { return y_value >= this->y && y_value <= this->height + this->y; }
+		auto& this_pos = position.acquire();
+		auto& this_dim = size.acquire();
 
-	auto collides_x(T x_value) { return x_value == this->x || x_value == this->x + this->width;  }
-	auto collides_y(T y_value) { return y_value == this->y || y_value == this->y + this->get_height; }
+		auto& other_pos = other.position.acquire();
+		auto& other_dim = other.size.acquire();
 
-	auto intersects_x(T x_value){ return contains_x(x) || collides_x(x); }
-	auto intersects_y(T y_value){ return contains_y(y) || collides_y(y); }
+		result = 	this_pos.x == other_pos.x &&
+					this_pos.y == other_pos.y &&
+					this_dim.x == other_dim.x &&
+					this_dim.y == other_dim.y;
 
-	auto contains_xy  (T x_value, T y_value){ return contains_x(x_value)	&& contains_y(y_value);        }
-	auto collides_xy  (T x_value, T y_value){ return collides_x(x_value) 	&& collides_y(y_value);        }
-	auto intersects_xy(T x_value, T y_value){ return contains_xy(x_value, y_value) || collides_xy(x_value, y_value);    }
+		other.position.release();
+		other.size.release();
 
-	auto contains(rectangle<T>& rect){
-		/*
-			T other_x = rect.x;
-			T other_y = rect.y;
-			T other_w = rect.width;
-			T other_h = rect.height;
-		*/
-		return contains_xy(rect.x, rect.y) && contains_xy(rect.x + rect.width, rect.y + rect.height);
+		size.release();
+		position.release();
+
+		return result;
 	}
 
-    core::concurrent::atomical_property<T> x;
-	core::concurrent::atomical_property<T> y;
-    core::concurrent::atomical_property<T> width;
-	core::concurrent::atomical_property<T> height;
-};// class rectangle
+	auto operator!=(const auto& other) const {
+		return !(*this == other);
+	}
 
 
+	auto operator+(const auto& offset) const {
+		auto& pos = position.acquire();
+		auto& dim = size.acquire();
+
+	    rectangle<T> result(pos.x + offset.x, pos.y + offset.y, dim.x, dim.y);
+
+	    size.release();
+	    position.release();
+
+	    return result;
+	}
+
+	auto operator+=(const auto& offset) {
+		auto& pos = position.acquire();
+
+		pos += offset;
+
+		position.release();
+
+		return *this;
+	}
+
+	auto operator-(const auto& offset) const {
+		auto& pos = position.acquire();
+		auto& dim = size.acquire();
+
+	    rectangle<T> result(pos.x - offset.x, pos.y - offset.y, dim.x, dim.y);
+
+	    size.release();
+	    position.release();
+
+	    return result;
+	}
+
+	auto& operator-=(const auto& offset) {
+		auto& pos = position.acquire();
+		pos -= offset;
+		position.release();
+
+		return *this;
+	}
+	
+	core::concurrent::mutexed_property<point<T> > position;
+	core::concurrent::mutexed_property<point<T> > size;
+	core::concurrent::hollow_property<T> right_bound;
+	core::concurrent::hollow_property<T> bottom_bound;
+};
+
+template<typename T>
+std::ostream& operator<<(std::ostream& stream, const cw::standard::geometry::rectangle<T>& rect) {
+	auto& pos = rect.position.acquire();
+	auto& dim = rect.size.acquire();
+
+
+	stream << "[x:" << pos.x << ",y:" << pos.y << ",w:" << dim.w << ",h:" << dim.h << "]";
+
+	rect.size.release();
+	rect.position.release();
+
+	return stream;
+}

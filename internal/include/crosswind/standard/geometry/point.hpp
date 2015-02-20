@@ -3,8 +3,7 @@
 #include <iostream>
 #include <SDL2/SDL_point.h>
 
-#include <crosswind/standard/geometry/rectangle.hpp>
-#include <crosswind/core/concurrent/atomical_property.hpp>
+//#include <crosswind/core/concurrent/atomical_property.hpp>
 
 namespace cw {
 namespace standard{
@@ -25,76 +24,69 @@ public:
 		y = 0;
 	}
 
-	point(const SDL_Point& point) {
-		x = point.x;
-		y = point.y;
-	}
-
 	point(T nx, T ny) {
 		x = nx;
 		y = ny;
 	}
 
-	template<typename U>
-	bool operator==(const point<T>& other) const {
+	bool operator==(const auto& other) const {
 		return x == other.x && y == other.y;
 	}
 
-	template<typename U>
-	bool operator!=(const point<T>& other) const {
+	bool operator!=(const auto& other) const {
 		return !(*this == other);
 	}
 
-	template<typename U>
-	point<T> operator+(const point<U>& other) const {
+	auto operator+(const auto& other) const {
 		return point<T>(x + other.x, y + other.y);
 	}
 
-	template<typename U>
-	point<T> operator-(const point<U>& other) const {
-		return point(x - other.x, y - other.y);
-	}
+	auto& operator+=(const auto& other) {
 
-	point<T> operator/(auto value) const {
-		return point(x / value, y / value);
-	}
-
-	point<T> operator*(auto value) const {
-		return point(x * value, y * value);
-	}
-
-	template<typename U>
-	point<T>& operator+=(const point<U>& other) {
 		x += other.x;
 		y += other.y;
 
 		return *this;
 	}
 
-	template<typename U>
-	point<T>& operator-=(const point<U>& other) {
+	auto operator-(const auto& other) const {
+		return point(x - other.x, y - other.y);
+	}
+
+	auto& operator-=(const auto& other) {
 		x -= other.x;
 		y -= other.y;
 
 		return *this;
-	}
+	}	
 
-	point<T>& operator/=(auto value) {
+	auto operator/(auto value) const {
+		return point(x / value, y / value);
+	}
+	
+	auto& operator/=(auto value) {
 		x /= value;
 		y /= value;
 
 		return *this;
+	}	
+
+	auto operator*(auto value) const {
+		return point(x * value, y * value);
 	}
 
-	point<T>& operator*=(auto value) {
+	auto& operator*=(auto value) {
 		x *= value;
 		y *= value;
 
 		return *this;
 	}
 
-	core::concurrent::atomical_property<T> x;
-	core::concurrent::atomical_property<T> y;
+	T x;
+	T y;
+
+//	core::concurrent::atomical_property<T> x;
+//	core::concurrent::atomical_property<T> y;
 };
 
 std::ostream& operator<<(std::ostream& stream, const cw::standard::geometry::point& p) {
