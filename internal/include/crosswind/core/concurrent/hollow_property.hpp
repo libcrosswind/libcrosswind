@@ -7,7 +7,7 @@ namespace core{
 namespace concurrent{
 	
 	template<class T>
-	hollow_property;
+	class hollow_property;
 
 }// namespace concurrent
 }// namespace core

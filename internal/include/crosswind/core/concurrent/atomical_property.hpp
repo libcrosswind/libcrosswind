@@ -1,8 +1,7 @@
 #pragma once
 
 #include <atomic>
-
-#include <crosswind/core/concurrent/detail/property.hpp>
+#include <functional>
 
 namespace cw{
 namespace core{
@@ -20,6 +19,7 @@ class cw::core::concurrent::atomical_property{
 public:
     atomical_property(){
         property_value.store(0);
+        init();
     }
 
     atomical_property(const T& value){
@@ -46,7 +46,7 @@ public:
     std::function<T(void)> get;
 
 protected:
-    void init() override{
+    void init() {
         
         set = [this](const T& value){
             this->property_value.store(value);

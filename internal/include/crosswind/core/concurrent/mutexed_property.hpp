@@ -18,11 +18,13 @@ class cw::core::concurrent::mutexed_property{
 public:
     mutexed_property(){
         property_value = T();
+        init();
     }
 
     template<typename ... Args>
     mutexed_property(Args... args){
         property_value = T(args...);
+        init();
     }
 
     T& acquire(){

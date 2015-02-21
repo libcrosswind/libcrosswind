@@ -12,7 +12,7 @@ namespace platform{
 namespace generic{
     
     class display_window;
-
+    
 }// namespace generic 
 }// namespace platform
 }// namespace cw
