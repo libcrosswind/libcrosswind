@@ -6,7 +6,7 @@
 #include <crosswind/core/concurrent/hollow_property.hpp>
 #include <crosswind/core/concurrent/resource_property.hpp>
 #include <crosswind/standard/geometry/point.hpp>
-#include <crosswind/platform/generic/sdl_exception.hpp>
+#include <crosswind/platform/generic/detail/sdl/sdl_exception.hpp>
 namespace cw{
 namespace platform{
 namespace generic{

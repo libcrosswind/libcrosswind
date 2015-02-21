@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
-#include <crosswind/platform/generic/sdl_exception.hpp>
+#include <crosswind/platform/generic/detail/sdl/sdl_exception.hpp>
 
 namespace cw{
 namespace platform{

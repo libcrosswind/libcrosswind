@@ -26,7 +26,7 @@ public:
         auto& dim = bounds.size.acquire();
 
         window =
-                std::shared_ptr<sdl_window>
+                std::shared_ptr<detail::sdl::sdl_window>
                 (new detail::sdl::sdl_window(title.get().c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dim.x, dim.y, SDL_WINDOW_RESIZABLE));
 
         bounds.size.release();
