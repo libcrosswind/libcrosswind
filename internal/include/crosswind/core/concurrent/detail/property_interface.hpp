@@ -29,7 +29,7 @@ public:
     }
 
 
-    virtual operator T(){
+/*    virtual operator T(){//Won't implement yet, SFINAE not ready
         return this->get();
     }
 
@@ -37,7 +37,7 @@ public:
         this->set(other);
     }
 
-/*    virtual operator +(const T& other){ //Won't implement, SFINAE not ready
+    virtual operator +(const T& other){
 
         if(has_plus<T>::value){
             return this->get() + other;
