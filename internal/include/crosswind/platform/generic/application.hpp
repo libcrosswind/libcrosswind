@@ -31,11 +31,10 @@ public:
 
         bounds.size.release();
         
-/*        while (true) {
-            window->refresh();
-            window->wait(10);
+       while (true) {
+
         }
-*/
+
 
 
 //        on_exit();

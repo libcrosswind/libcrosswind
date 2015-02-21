@@ -1,4 +1,4 @@
-# Crosswind
+# libcrosswind 0.1
 A modern C++14 Multipurpose library
 
 Current status: 
@@ -11,8 +11,6 @@ Current modules:
 - [ ] platform (needs work with gui and widgets)
 - [ ] standard (almost finished)
 - [ ] trivial  (needs to be rearranged)
-
-Expected time for 0.1: <= 1 week (2/21/15)
 
 Crosswind is a toolset that aims to integrate high level C++14 functions for fast app development.
 Intended to be header-only with minimal dependencies. 
@@ -36,15 +34,14 @@ Current supported platforms:
 - [ ] Windows Phone
 - [ ] Blackberry
 
-Current library capabilities:
-
-- [x] GUI (minimal) 		  
+Roadmap:
+- [ ] GUI 		  
 - [x] Delegates	
 - [ ] Websockets   
-- [x] Cryptography (base64 and sha1)
-- [x] Filesystem   (concurrent filesystem utility)
-- [x] JSON		   (fully concurrent for internal raw json)
-- [x] Concurrency  (concurrent datatypes working)
+- [x] Cryptography 
+- [x] Filesystem   
+- [x] JSON		   
+- [x] Concurrency  
 - [ ] Javascript
 - [ ] 3D
 - [ ] Audio
@@ -54,40 +51,33 @@ Current library capabilities:
 - [ ] Bindings with other languages.
 
 
-Deliverables for 0.1
-- [x] Delegates	
-- [x] Cryptography 
-- [x] Filesystem   
-- [x] JSON		   
-- [x] Concurrency  
+Future releases:
 
-Deliverables for 0.2
+0.2:
 - [x] GUI
 
-Deliverables for 0.3
+0.3: 
 - [x] Websockets  (ws only)
 - [x] Audio 
 
-Deliverables for 0.4
+0.4:
 - [x] DB (SQLite)
 - [x] 3D
 
-Deliverables for 0.5
+0.5:
 - [x] Video
 
-Deliverables for 0.6
+0.6:
 - [x] Websockets (wss)
 - [x] SRTP
 
-Deliverables for 0.7
+0.7:
 - [x] Javascript (interpreter)
 
-Deliverables for 0.8
+0.8:
 - [x] Bindings with other languages.
 
-The development will be done in that order. Further revisions will extend the support for each capability. Take in consideration that some modules could come before and that the version layout may change.
 
-
-The API documentation will be ready once we reach stable (~0.6). 
+The API documentation will be ready once we reach a stable version (~0.6). 
 
 Feel free to use the working modules. 
