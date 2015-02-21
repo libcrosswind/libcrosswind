@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mutex>
+#include <crosswind/core/concurrent/detail/property_interface.hpp>
 
 namespace cw{
 namespace core{
@@ -14,17 +15,14 @@ namespace concurrent{
 }// namespace cw
 
 template<class T>
-class cw::core::concurrent::mutexed_property{
+class cw::core::concurrent::mutexed_property: public detail::property_interface<T>{
 public:
     mutexed_property(){
         property_value = T();
-        init();
     }
 
-    template<typename ... Args>
-    mutexed_property(Args... args){
-        property_value = T(args...);
-        init();
+    mutexed_property(const T& value){
+        property_value = value;
     }
 
     T& acquire(){
@@ -36,27 +34,16 @@ public:
         property_mutex.unlock();
     }
 
-    operator T(){
-        return this->get();
-    }
-
-    void operator=(const T& other){
-        this->set(other);
-    }
-
-    std::function<void(const T&)> set;
-    std::function<T(void)> get;
-
 protected:
-    void init(){
+    void init() override{
 
-        set = [this](const T& value){
+        this->set = [this](const T& value){
             auto& local_value = this->acquire();
             local_value = value;
             this->release();
         };
 
-        get = [this](){
+        this->get = [this](){
             auto& local_value = this->acquire();
             T value = local_value;
             this->release();

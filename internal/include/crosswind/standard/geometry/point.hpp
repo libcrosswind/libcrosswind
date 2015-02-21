@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <SDL2/SDL_point.h>
 
 //#include <crosswind/core/concurrent/atomical_property.hpp>
 
@@ -17,14 +16,14 @@ namespace geometry{
 }// namespace cw
 
 template<class T>
-class cw::standard::geometry::point : public SDL_Point {
+class cw::standard::geometry::point {
 public:
 	point() {
 		x = 0;
 		y = 0;
 	}
 
-	point(T nx, T ny) {
+	point(const T& nx, const T& ny) {
 		x = nx;
 		y = ny;
 	}
@@ -89,7 +88,8 @@ public:
 //	core::concurrent::atomical_property<T> y;
 };
 
-std::ostream& operator<<(std::ostream& stream, const cw::standard::geometry::point& p) {
+template<typename T>
+std::ostream& operator<<(std::ostream& stream, const cw::standard::geometry::point<T>& p) {
 	stream << "[x:" << p.x << ",y:" << p.y << "]";
 	return stream;
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 
 namespace cw{
 namespace core{
@@ -20,21 +21,29 @@ class cw::core::concurrent::resource_property{
 
 public:
 	template<class Creator, class Destructor, class... Arguments>
-	resource_property(Creator c, Destructor d, Arguments&&... args){
-	    auto r = c(std::forward<Arguments>(args)...);
-	    if (!r) { throw std::runtime_error {"Unable to create resource"}; }
-	    typedef typename std::decay<decltype(*r)>::type ResourceType;
-	    resource = std::unique_ptr<ResourceType, void(*)(ResourceType*)>(r, d);
+	resource_property(Creator c, Destructor d, Arguments&&... args): resource(make_resource(c, d, args...)){
 	}
 
-    T& acquire(){
+
+
+	Resource* acquire(){
         property_mutex.lock();
-        return resource;
+        return resource.get();
     }
 
     void release(){
         property_mutex.unlock();
     }
+
+protected:
+	template<typename Creator, typename Destructor, typename... Arguments>
+	auto make_resource(Creator c, Destructor d, Arguments&&... args)
+	{
+		auto r = c(std::forward<Arguments>(args)...);
+		if (!r) { throw std::runtime_error {"Unable to create resource"}; }
+		typedef typename std::decay<decltype(*r)>::type ResourceType;
+		return std::unique_ptr<ResourceType, void(*)(ResourceType*)>(r, d);
+	}
 
 
 private:

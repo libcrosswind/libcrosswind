@@ -8,14 +8,18 @@
 namespace cw {
 namespace platform{
 namespace generic{
+namespace detail{
+namespace sdl{
 
 	class sdl_exception;
 
+}// namespace sdl
+}// namespace detail
 }// namespace generic
 }// namespace platform
 }// namespace cw
 
-class cw::platform::generic::sdl_exception{
+class cw::platform::generic::detail::sdl::sdl_exception{
 public:
 	sdl_exception(const char* function)
 		: sdl_function_(function),
@@ -39,8 +43,8 @@ public:
 	}
 
 private:
-	std::string sdl_function;
-	std::string sdl_error;   
+	std::string sdl_function_;
+	std::string sdl_error_;
 	std::string what_string;    
 };
 

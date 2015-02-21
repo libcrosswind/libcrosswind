@@ -1,8 +1,6 @@
 #pragma once
 
 #include <algorithm>
-#include <SDL2/SDL_rect.h>
-
 #include <crosswind/standard/geometry/point.hpp>
 
 namespace cw {
@@ -10,61 +8,61 @@ namespace standard{
 namespace geometry{
 
 	template<class T>
-	rectangle;
+	class rectangle;
 
 }// namespace geometry
 }// namespace standard
 }// namespace cw
 
 template<class T>
-class cw::standard::geometry::rectangle: public SDL_Rect{
+class cw::standard::geometry::rectangle{
 public:	
-	rectangle(auto nx, auto ny, auto nw, auto nh): 		
-		position(nx, ny), size(nw, nh){
+	rectangle(const auto& nx, const auto& ny, const auto& nw, const auto& nh):
+		position(point<T>(nx, ny)), size(point<T>(nw, nh)){
 
-		right_bound.set = [](const auto& value){
-			auto& pos = position.acquire();
-			auto& dim = size.acquire();
+		right_bound.set = [this](const auto& value){
+			auto& pos = this->position.acquire();
+			auto& dim = this->size.acquire();
 
 			dim.x = value - pos.x + 1;
 
-			position.release();
-			size.release();
+			this->position.release();
+			this->size.release();
 		};
 
-		right_bound.get = [](){
+		right_bound.get = [this](){
 			T result;
-			auto& pos = position.acquire();
-			auto& dim = size.acquire();
+			auto& pos = this->position.acquire();
+			auto& dim = this->size.acquire();
 
-			result = value - pos.x + dim.x - 1;
+			result = pos.x + dim.x - 1;
 
-			position.release();
-			size.release();
+			this->position.release();
+			this->size.release();
 
 			return result;
 		};
 
-		bottom_bound.set = [](const auto& value){
-			auto& pos = position.acquire();
-			auto& dim = size.acquire();
+		bottom_bound.set = [this](const auto& value){
+			auto& pos = this->position.acquire();
+			auto& dim = this->size.acquire();
 
 			dim.y = value - pos.y + 1;
 
-			position.release();
-			size.release();
+			this->position.release();
+			this->size.release();
 
 		};
 
-		bottom_bound.get = [](){
+		bottom_bound.get = [this](){
 			T result;
-			auto& pos = position.acquire();
-			auto& dim = size.acquire();
+			auto& pos = this->position.acquire();
+			auto& dim = this->size.acquire();
 
-			result = value - pos.y + dim.y - 1;
+			result = pos.y + dim.y - 1;
 
-			position.release();
-			size.release();
+			this->position.release();
+			this->size.release();
 
 			return result;
 		};

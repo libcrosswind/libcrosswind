@@ -22,36 +22,22 @@ public:
     }
 
     json& from_file(std::string filename){
-        data = jsoncons::json::parse_file(filename);
+        auto& raw_json = data.acquire();
+        raw_json = jsoncons::json::parse_file(filename);
+        data.release();
         return *this;
     }
 
     json& from_string(std::string json_string){
-        data = jsoncons::json::parse_string(json_string);
+        auto& raw_json = data.acquire();
+        raw_json = jsoncons::json::parse_string(json_string);
+        data.release();
         return *this;
     }
 
-/*    template<typename Type>
-    void set(std::string key, Type value){ //TODO, in order to make this multithreaded we will need to restrict some functions.
-
-    }
-*/
-
-/*    jsoncons::json& operator[](std::string key){
-
-        if(!this->has(key)){
-            data.acquire()[key] = jsoncons::json();
-            data.release();
-        }
-
-
-        return (*raw_json)[key];
-    }*/
-
-
-    bool has(std::string member){
+    bool has(std::string member) {
         bool has_member = data.acquire().has_member(member);
-        
+
         data.release();
         return has_member;
     }
