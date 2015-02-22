@@ -46,6 +46,7 @@ mkdir -p $PNG_TEMP
 #mkdir -p $WEBP_TEMP
 
 ###########################BUILD####################################
+
 pushd $SDL2_TEMP
 sh $SDL2/configure --disable-shared --prefix=$INSTALL_DIR 
 make clean
@@ -61,6 +62,7 @@ popd
 popd
 
 
+
 pushd $JPG_TEMP
 sh $JPG/configure  --disable-shared --prefix=$INSTALL_DIR 
 make clean
@@ -68,17 +70,17 @@ make
 make install
 popd
 
-pushd $PNG_TEMP
+#pushd $PNG_TEMP
 cp -rp $PNG .
-
 pushd $PNG_DIR_NAME
 make -f scripts/makefile.msys clean
 make -f scripts/makefile.msys prefix="" DESTDIR=$INSTALL_DIR ZLIBINC=$INSTALL_DIR/include ZLIBLIB=$INSTALL_DIR/lib install-static
 popd
 popd
 
+
 pushd $SDL_IMAGE_TEMP
-sh $SDL_IMAGE/configure  --disable-sdltest --disable-shared --prefix=$INSTALL_DIR 
+sh $SDL_IMAGE/configure   --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
 make clean
 make
 make install
