@@ -17,7 +17,7 @@ class cw::standard::drawing::image{
 public:
   image(int flags) {
     if ((IMG_Init(flags) & flags) != flags)
-      throw Exception("IMG_Init");
+      throw platform::generic::detail::sdl::sdl_exception("IMG_Init");
   }
 
   // non-copyable
@@ -36,7 +36,7 @@ public:
   int init_more(int flags) {
     int ret;
     if (((ret = IMG_Init(flags)) & flags) != flags)
-      throw Exception("IMG_Init");
+      throw platform::generic::detail::sdl::sdl_exception("IMG_Init");
     return ret;
   }
 

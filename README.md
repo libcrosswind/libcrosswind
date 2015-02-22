@@ -44,6 +44,8 @@ Roadmap:
 - [x] Concurrency  
 - [ ] Javascript
 - [ ] 3D
+- [ ] Peripherals
+- [ ] Serial, I2C, GPIO, UART, SPI
 - [ ] Audio
 - [ ] Video
 - [ ] SRTP
