@@ -51,6 +51,8 @@ FREETYPE_TEMP=$TEMP_DIR/freetype_build
 INSTALL_DIR=$PWD/../platform/windows/build
 
 ############################SETUP###################################
+rm -rf $TEMP_DIR
+
 mkdir -p $TEMP_DIR
 mkdir -p $SDL2_TEMP
 mkdir -p $SDL_IMAGE_TEMP
@@ -85,6 +87,7 @@ mv $INSTALL_DIR/bin/sdl2-config.new $INSTALL_DIR/bin/sdl2-config
 pushd $ZLIB_TEMP
 cp -rp $ZLIB .
 pushd $ZLIB_DIR_NAME
+make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib clean
 make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib install
 popd
 popd
@@ -123,6 +126,7 @@ pushd $FREETYPE_TEMP
 cp -rp $FREETYPE .
 pushd $FREETYPE_DIR_NAME
 sh ./configure  --disable-shared --prefix=$INSTALL_DIR
+make clean
 make 
 make install
 popd
@@ -139,6 +143,6 @@ make install
 popd
 popd
 
-
+rm -rf $TEMP_DIR
 
 popd
