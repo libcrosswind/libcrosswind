@@ -13,12 +13,20 @@ SDL2_TEMP=$TEMP_DIR/sdl2_build
 SDL_IMAGE=$PWD/../external/sdl2/SDL_image-2
 SDL_IMAGE_TEMP=$TEMP_DIR/sdlimage_build
 
+
+###########################SDL_TTF#################################
+SDL_TTF=$PWD/../external/sdl2/SDL_ttf-2
+SDL_TTF_TEMP=$TEMP_DIR/sdlttf_build
+
+
+
 ###########################Aditional###############################
 ZLIB_DIR_NAME=zlib-1.2.8
 ZLIB=$SDL_IMAGE/external/$ZLIB_DIR_NAME
 ZLIB_TEMP=$TEMP_DIR/zlib_build
 
-JPG=$SDL_IMAGE/external/jpeg-9
+JPG_DIR_NAME=jpeg-9
+JPG=$SDL_IMAGE/external/$JPG_DIR_NAME
 JPG_TEMP=$TEMP_DIR/jpg_build
 
 PNG_DIR_NAME=libpng-1.6.2
@@ -31,6 +39,10 @@ PNG_TEMP=$TEMP_DIR/phg_build
 #WEBP=$SDL_IMAGE/external/libwebp-0.3.0
 #WEBP_TEMP=$TEMP_DIR/webp_build
 
+FREETYPE_DIR_NAME=freetype-2.4.12
+FREETYPE=$SDL_TTF/external/$FREETYPE_DIR_NAME
+FREETYPE_TEMP=$TEMP_DIR/freetype_build
+
 
 ###########################Default##################################
 INSTALL_DIR=$PWD/../platform/windows/build
@@ -39,11 +51,14 @@ INSTALL_DIR=$PWD/../platform/windows/build
 mkdir -p $TEMP_DIR
 mkdir -p $SDL2_TEMP
 mkdir -p $SDL_IMAGE_TEMP
+mkdir -p $SDL_TTF_TEMP
 mkdir -p $ZLIB_TEMP
 mkdir -p $JPG_TEMP
 mkdir -p $PNG_TEMP
 #mkdir -p $TIF_TEMP
 #mkdir -p $WEBP_TEMP
+mkdir -p $FREETYPE_TEMP
+
 
 ###########################BUILD####################################
 
@@ -62,15 +77,17 @@ popd
 popd
 
 
-
 pushd $JPG_TEMP
-sh $JPG/configure  --disable-shared --prefix=$INSTALL_DIR 
+cp -rp $JPG .
+pushd $JPG_DIR_NAME
+sh ./configure  --disable-shared --prefix=$INSTALL_DIR 
 make clean
 make
 make install
 popd
+popd
 
-#pushd $PNG_TEMP
+pushd $PNG_TEMP
 cp -rp $PNG .
 pushd $PNG_DIR_NAME
 make -f scripts/makefile.msys clean
@@ -85,5 +102,26 @@ make clean
 make
 make install
 popd
+
+
+pushd $FREETYPE_TEMP
+cp -rp $FREETYPE .
+pushd $FREETYPE_DIR_NAME/builds/unix
+sh ./configure  --disable-shared --prefix=$INSTALL_DIR
+make clean
+make
+make install
+popd
+popd
+
+pushd $SDL_TTF_TEMP
+sh $SDL_TTF/configure   --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
+make clean
+make
+make install
+popd
+
+
+
 
 popd

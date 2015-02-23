@@ -102,4 +102,3 @@ private:
 
     std::shared_ptr<standard::simulation::sdl_renderer> sdl_renderer;
 };// class application
-
