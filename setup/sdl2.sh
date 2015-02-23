@@ -5,17 +5,20 @@ pushd $( dirname "$0" )
 TEMP_DIR=$PWD/../temp/sdl2
 
 ###########################SDL2####################################
-SDL2=$PWD/../external/sdl2/SDL-2.0.4-9304
+SDL2_DIR_NAME=SDL-2.0.4-9304
+SDL2=$PWD/../external/sdl2/$SDL2_DIR_NAME
 SDL2_TEMP=$TEMP_DIR/sdl2_build
 
 
 ###########################SDL_IMAGE###############################
-SDL_IMAGE=$PWD/../external/sdl2/SDL_image-2
+SDL2_IMAGE_DIR_NAME=SDL_image-2
+SDL_IMAGE=$PWD/../external/sdl2/$SDL2_IMAGE_DIR_NAME
 SDL_IMAGE_TEMP=$TEMP_DIR/sdlimage_build
 
 
 ###########################SDL_TTF#################################
-SDL_TTF=$PWD/../external/sdl2/SDL_ttf-2
+SDL_TTF_DIR_NAME=SDL_ttf-2
+SDL_TTF=$PWD/../external/sdl2/$SDL_TTF_DIR_NAME
 SDL_TTF_TEMP=$TEMP_DIR/sdlttf_build
 
 
@@ -39,7 +42,7 @@ PNG_TEMP=$TEMP_DIR/phg_build
 #WEBP=$SDL_IMAGE/external/libwebp-0.3.0
 #WEBP_TEMP=$TEMP_DIR/webp_build
 
-FREETYPE_DIR_NAME=freetype-2.4.12
+FREETYPE_DIR_NAME=freetype-2.5.5
 FREETYPE=$SDL_TTF/external/$FREETYPE_DIR_NAME
 FREETYPE_TEMP=$TEMP_DIR/freetype_build
 
@@ -62,11 +65,15 @@ mkdir -p $FREETYPE_TEMP
 
 ###########################BUILD####################################
 
+:'
 pushd $SDL2_TEMP
-sh $SDL2/configure --disable-shared --prefix=$INSTALL_DIR 
+cp -rp $SDL2 .
+pushd $SDL2_DIR_NAME
+sh ./configure --disable-shared --prefix=$INSTALL_DIR 
 make clean
 make
 make install
+popd
 popd
 
 #Removing -XCClinker
@@ -74,8 +81,7 @@ sed 's/-XCClinker//g' $INSTALL_DIR/bin/sdl2-config > $INSTALL_DIR/bin/sdl2-confi
 
 rm $INSTALL_DIR/bin/sdl2-config 
 mv $INSTALL_DIR/bin/sdl2-config.new $INSTALL_DIR/bin/sdl2-config 
-
-
+####################
 
 pushd $ZLIB_TEMP
 cp -rp $ZLIB .
@@ -105,30 +111,34 @@ popd
 
 
 pushd $SDL_IMAGE_TEMP
-sh $SDL_IMAGE/configure   --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
+cp -rp $SDL_IMAGE .
+pushd $SDL2_IMAGE_DIR_NAME
+sh ./configure   --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
 make clean
 make
 make install
 popd
+popd
 
-:'
 pushd $FREETYPE_TEMP
 cp -rp $FREETYPE .
-pushd $FREETYPE_DIR_NAME/builds/unix
+pushd $FREETYPE_DIR_NAME
 sh ./configure  --disable-shared --prefix=$INSTALL_DIR
-make clean
-make
+make 
 make install
 popd
-popd
-
-pushd $SDL_TTF_TEMP
-sh $SDL_TTF/configure   --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
-make clean
-make
-make install
 popd
 '
+
+pushd $SDL_TTF_TEMP
+cp -rp $SDL_TTF .
+pushd $SDL_TTF_DIR_NAME
+sh ./configure   --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
+make clean
+make
+make install
+popd
+popd
 
 
 
