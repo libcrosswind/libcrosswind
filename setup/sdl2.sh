@@ -65,7 +65,6 @@ mkdir -p $FREETYPE_TEMP
 
 ###########################BUILD####################################
 
-:'
 pushd $SDL2_TEMP
 cp -rp $SDL2 .
 pushd $SDL2_DIR_NAME
@@ -128,12 +127,12 @@ make
 make install
 popd
 popd
-'
+
 
 pushd $SDL_TTF_TEMP
 cp -rp $SDL_TTF .
 pushd $SDL_TTF_DIR_NAME
-sh ./configure   --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
+sh ./configure  --disable-sdltest --disable-shared FREETYPE_CONFIG=$INSTALL_DIR/bin/freetype-config --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
 make clean
 make
 make install
