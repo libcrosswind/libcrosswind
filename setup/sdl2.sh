@@ -61,13 +61,14 @@ mkdir -p $FREETYPE_TEMP
 
 
 ###########################BUILD####################################
-
 pushd $SDL2_TEMP
 sh $SDL2/configure --disable-shared --prefix=$INSTALL_DIR 
 make clean
 make
 make install
 popd
+
+sed 's/-XCClinker//g' $INSTALL_DIR/bin/sdl2-config > $INSTALL_DIR/bin/sdl2-config #Removing -XCClinker
 
 pushd $ZLIB_TEMP
 cp -rp $ZLIB .
@@ -103,7 +104,7 @@ make
 make install
 popd
 
-
+:'
 pushd $FREETYPE_TEMP
 cp -rp $FREETYPE .
 pushd $FREETYPE_DIR_NAME/builds/unix
@@ -121,7 +122,7 @@ make
 make install
 popd
 
-
+'
 
 
 popd
