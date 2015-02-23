@@ -61,6 +61,7 @@ mkdir -p $FREETYPE_TEMP
 
 
 ###########################BUILD####################################
+
 pushd $SDL2_TEMP
 sh $SDL2/configure --disable-shared --prefix=$INSTALL_DIR 
 make clean
@@ -68,7 +69,13 @@ make
 make install
 popd
 
-sed 's/-XCClinker//g' $INSTALL_DIR/bin/sdl2-config > $INSTALL_DIR/bin/sdl2-config #Removing -XCClinker
+#Removing -XCClinker
+sed 's/-XCClinker//g' $INSTALL_DIR/bin/sdl2-config > $INSTALL_DIR/bin/sdl2-config.new 
+
+rm $INSTALL_DIR/bin/sdl2-config 
+mv $INSTALL_DIR/bin/sdl2-config.new $INSTALL_DIR/bin/sdl2-config 
+
+
 
 pushd $ZLIB_TEMP
 cp -rp $ZLIB .
@@ -121,8 +128,8 @@ make clean
 make
 make install
 popd
-
 '
+
 
 
 popd
