@@ -33,7 +33,7 @@ public:
 		return SDL_WasInit(flags);
 	}
 
-	void init_subsistem(auto flags) {
+	void init_subsystem(auto flags) {
 		if (SDL_InitSubSystem(flags) != 0)
 			throw sdl_exception("SDL_InitSubsystem");
 	}
@@ -41,5 +41,7 @@ public:
 	void quit_subsystem(auto flags) {
 		SDL_QuitSubSystem(flags);
 	}
+
+
 
 };// class sdl
