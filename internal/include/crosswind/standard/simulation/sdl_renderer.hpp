@@ -64,6 +64,36 @@ public:
 		renderer.release();
 	}
 
+	template<typename T>
+	void copy_ex(drawing::sdl_texture& sdl_texture, 
+				 geometry::rectangle<T>& quad, SDL_Rect* clip = nullptr, 
+				 double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE ){
+		//Set rendering space and render to screen
+		auto& q_pos = quad.position.acquire();
+		auto& q_dim = quad.size.acquire();
+
+		SDL_Rect render_quad = { q_pos->x, q_pos->y, q_dim->x, q_dim->y };
+
+		quad.size.release();
+		quad.position.release();
+
+		//Set clip rendering dimensions
+		if(clip)
+		{
+			render_quad.w = clip->w;
+			render_quad.h = clip->h;
+		}
+
+		auto renderer_ptr = renderer.acquire();
+		auto texture_ptr = sdl_texture.texture.acquire();
+
+		//Render to screen
+		if (SDL_RenderCopyEx(renderer_ptr, texture_ptr, clip, &render_quad, angle, center, flip) != 0)
+			throw cw::platform::generic::detail::sdl::sdl_exception("SDL_RenderCopy");
+
+		sdl_texture.texture.release();
+		renderer.release();
+	}
 
 
 };// class sdl_renderer

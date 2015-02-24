@@ -28,7 +28,7 @@ public:
     title("Main window"), 
     sdl_system(new detail::sdl::sdl_system(SDL_INIT_VIDEO)),
     sdl_image_system(new detail::sdl::sdl_image_system(IMG_INIT_PNG)){
-    
+
 
     }
 
@@ -53,24 +53,34 @@ public:
                                             cw::platform::generic::filesystem::get_file_path("background-blue.png").c_str());
         sdl_renderer->renderer.release();
  
-        bool running = true;
 
-        while (running) {
-                    // Process input
-            SDL_Event event;
-            while (SDL_PollEvent(&event))
-                if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_ESCAPE || event.key.keysym.sym == SDLK_q)))
-                    running = false;
+        running.set(true);
 
-            // Clear screen
+        previous_time = std::chrono::high_resolution_clock::now();
+
+
+        while (running.get()) {
+
+            
+             while(SDL_PollEvent(&event)){
+            //User requests quit
+                if(event.type == SDL_QUIT){
+                    running.set(false);
+                }
+
+                stages("current")->handle_event(&event);
+
+            }
+
+            stages("current")->update(get_delta());
+
             sdl_renderer->set_draw_color(128, 32, 200);
             sdl_renderer->clear();
 
-            sdl_renderer->copy(sprite1);
+            stages("current")->render(sdl_renderer);
 
             sdl_renderer->present();
 
-            // Frame limiter
             SDL_Delay(1);
         }
 
@@ -96,9 +106,15 @@ private:
 
     standard::geometry::rectangle<int> bounds;
     core::concurrent::mutexed_property<std::string> title;
+    core::concurrent::atomical_property<bool> running;
+
     std::shared_ptr<detail::sdl::sdl_window> display_window;
     std::shared_ptr<detail::sdl::sdl_system> sdl_system;
     std::shared_ptr<detail::sdl::sdl_image_system> sdl_image_system;
-
     std::shared_ptr<standard::simulation::sdl_renderer> sdl_renderer;
+    SDL_Event event;
+
+    core::concurrent::mutexed_container
+    <std::map<std::string, std::shared_ptr<standard::simulation::stage> > > stages;
+
 };// class application

@@ -69,6 +69,11 @@ public:
  
 	}
 
+	auto contains_x (const T& x_value) { return x_value >= position.get().x && x_value <= position.get().x + size.get().x; 	}
+	auto contains_y (const T& y_value) { return y_value >= position.get().y && y_value <= position.get().y + size.get().y; }
+	auto contains_xy(const T& x_value, const T& y_value){ return contains_x(x_value) && contains_y(y_value); }
+
+
 	auto operator==(const auto& other) const {
 		bool result;
 

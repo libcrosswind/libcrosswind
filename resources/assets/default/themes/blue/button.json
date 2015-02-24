@@ -2,11 +2,15 @@
     "default-size": [32, 16, 0],
     "draggable": false,
     "text-color": [255, 255, 255],
-    
+    "spritesheet": false,
+    "animated": false,
+
     "textures":
     {
       "mouse_up":["textures/button/blue_button_off.png"],
-      "mouse_down":["textures/button/blue_button_on.png"]
+      "mouse_down":["textures/button/blue_button_on.png"],
+      "mouse_over":["textures/button/blue_button_on.png"],
+      "mouse_out":["textures/button/blue_button_on.png"]
     },
 
     "events":

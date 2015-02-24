@@ -37,7 +37,7 @@ set_target_properties(gui
     RUNTIME_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/bin"
 )
 
-target_link_libraries (gui LINK_PUBLIC mingw32 SDL2main SDL2 SDL2_image jpeg png z winmm imm32 version)
+target_link_libraries (gui LINK_PUBLIC mingw32 SDL2main SDL2 SDL2_image SDL2_ttf freetype jpeg png z winmm imm32 version)
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/tests DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
