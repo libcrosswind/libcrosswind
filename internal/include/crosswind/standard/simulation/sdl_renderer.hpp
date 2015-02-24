@@ -72,7 +72,7 @@ public:
 		auto& q_pos = quad.position.acquire();
 		auto& q_dim = quad.size.acquire();
 
-		SDL_Rect render_quad = { q_pos->x, q_pos->y, q_dim->x, q_dim->y };
+		SDL_Rect render_quad = { q_pos.x, q_pos.y, q_dim.x, q_dim.y };
 
 		quad.size.release();
 		quad.position.release();

@@ -84,9 +84,6 @@ int main(int argc, char **argv) {
 
     cw::platform::generic::application app;
 
-
-
-
     app.run();
 
     return 0;

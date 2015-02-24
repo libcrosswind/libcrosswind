@@ -1,5 +1,12 @@
 #pragma once
 
+#include <SDL2/SDL_events.h>
+
+#include <crosswind/standard/drawing/texture.hpp>
+#include <crosswind/standard/geometry/point.hpp>
+#include <crosswind/standard/geometry/rectangle.hpp>
+
+
 namespace cw{
 namespace standard{
 namespace simulation{
@@ -13,22 +20,20 @@ namespace simulation{
 class cw::standard::simulation::image_actor{
 public:
 
-	image_actor(const drawing::point<int> position, std::string template_file){
+	image_actor(const geometry::point<int> position, std::string template_file): 
+	bounds(0, 0, 0, 0){
 
 	}
 
 	void handle_event(SDL_Event* e){
 
 		//If mouse event happened
-		if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
-		{
+		if(e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP ){
 			//Get mouse position
 			int x, y;
 			SDL_GetMouseState( &x, &y );
 
-			auto& rect = bounds.acquire();
-
-			rect.contains(x, y) ? //Mouse is inside button
+			if(bounds.contains_xy(x, y)){ //Mouse is inside button
 				//Set mouse over sprite
 				switch(e->type)
 				{
@@ -44,10 +49,10 @@ public:
 						swap_texture("current", "mouse_up");
 					break;
 				}
-			://Mouse is outside button
+			} else {//Mouse is outside button
 				swap_texture("current", "mouse_out");			
+			}
 
-			bounds.release();
 		}
 	}
 
@@ -56,26 +61,24 @@ public:
 	}
 
 	void render(auto sdl_renderer){
-		auto& rect = bounds.acquire();
+		
+		auto& m = textures.data.acquire();
 
-		auto& m = textures.acquire();
+		sdl_renderer->copy_ex(*m["current"], bounds);
 
-		sdl_renderer->copy_ex(m["current"], rect);
-
-		textures.release();
-		bounds.release();
+		textures.data.release();
 	}
 
 	void swap_texture(const std::string previous_texture, const std::string new_texture){
-		auto& m = textures.acquire();
+		auto& m = textures.data.acquire();
 
-		if(&m[previous_texture] != &m[new_texture]){
+		if(m[previous_texture] != m[new_texture]){
 			m[previous_texture] = m[new_texture];			
 		}
 
-		textures.release();
+		textures.data.release();
 	}
 
-	core::concurrent::mutexed_property<geometry::rectangle<int> > bounds;
-	core::concurrent::mutexed_container<std::map<std::string, drawing::texture> > textures;
+	geometry::rectangle<int> bounds;
+	core::concurrent::mutexed_map<std::string, std::shared_ptr<drawing::sdl_texture> > textures;
 };// class image_actor

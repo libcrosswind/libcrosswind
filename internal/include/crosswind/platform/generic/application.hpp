@@ -10,6 +10,8 @@
 #include <crosswind/platform/generic/detail/sdl/sdl_window.hpp>
 #include <crosswind/standard/geometry/rectangle.hpp>
 #include <crosswind/standard/simulation/sdl_renderer.hpp>
+#include <crosswind/standard/simulation/stage.hpp>
+
 
 namespace cw{
 namespace platform{
@@ -55,37 +57,53 @@ public:
  
 
         running.set(true);
-
         previous_time = std::chrono::high_resolution_clock::now();
 
 
         while (running.get()) {
 
-            
-             while(SDL_PollEvent(&event)){
-            //User requests quit
-                if(event.type == SDL_QUIT){
-                    running.set(false);
-                }
-
-                stages("current")->handle_event(&event);
-
-            }
-
-            stages("current")->update(get_delta());
-
-            sdl_renderer->set_draw_color(128, 32, 200);
-            sdl_renderer->clear();
-
-            stages("current")->render(sdl_renderer);
-
-            sdl_renderer->present();
+            handle_application_events();
+            handle_input_events();
+            handle_update();
+            handle_rendering();
 
             SDL_Delay(1);
         }
-
 //        on_exit();
+    }
 
+    void handle_application_events(){
+/*        events.iterator([](auto& element){
+            if(element.first.first == "stage-swap"){
+                element.first.second
+            }
+        });*/
+    }
+
+    void handle_input_events(){
+        while(SDL_PollEvent(&event)){
+            //User requests quit
+            if(event.type == SDL_QUIT){
+                running.set(false);
+            }
+
+            stages("current")->handle_input(&event);
+
+        }
+    }
+
+    void handle_update(){
+        stages("current")->update(get_delta());
+    }
+
+    void handle_rendering(){
+
+        sdl_renderer->set_draw_color(128, 32, 200);
+        sdl_renderer->clear();
+
+        stages("current")->render(sdl_renderer);
+
+        sdl_renderer->present();
     }
 
 private:
@@ -114,7 +132,7 @@ private:
     std::shared_ptr<standard::simulation::sdl_renderer> sdl_renderer;
     SDL_Event event;
 
-    core::concurrent::mutexed_container
-    <std::map<std::string, std::shared_ptr<standard::simulation::stage> > > stages;
+//    core::concurrent::mutexed_map<std::pair<std::string, std::string>, > events;
+    core::concurrent::mutexed_map<std::string, std::shared_ptr<standard::simulation::stage> > stages;
 
 };// class application
