@@ -100,7 +100,7 @@ public:
 
     void handle_rendering(){
 
-        sdl_renderer->set_draw_color(128, 32, 200);
+        sdl_renderer->set_draw_color(0, 0, 0);
         sdl_renderer->clear();
 
         stages("current")->render();

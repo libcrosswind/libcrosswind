@@ -47,7 +47,7 @@ public:
 
         std::cout << path[0] <<std::endl;
         std::cout << path[1] <<std::endl;
-
+        bool search_result  = false;
         auto& local_directories = directories.acquire();
 
         //TODO test with Visual Studio.
@@ -63,21 +63,26 @@ public:
                 });
 
         if(result != std::end(local_directories)){
-            directories.release();
-
-            return true;
+            search_result = true;
         } else {
-            return false;
+            search_result = false;
         }
-	}
+
+        directories.release();
+
+        return search_result;
+
+    }
 
     static std::string get_file_path(const std::string& filepath){
 
         std::vector<std::string> path = split(filepath);
+        std::string path_string = "";
 
         if(exists(filepath)){
 
             auto& local_directories = directories.acquire();
+
             auto result = std::find_if(local_directories.begin(), local_directories.end(),
                     [&](std::string const& directory)  {
                         //TODO test with Visual Studio.
@@ -89,15 +94,18 @@ public:
                     });
 
             if(result != std::end(local_directories)){
-                directories.release();
-
-                return path[0] != "" ? *result + "/" + path[0] + "/" + path[1] : *result + "/" + path[1];
+                path_string = path[0] != "" ? *result + "/" + path[0] + "/" + path[1] : *result + "/" + path[1];
             } else {
-                throw std::runtime_error(path[1] + std::string(": Not a file."));
+                path_string = filepath + ": Is not a file";
             }
+
+            directories.release();
+
         } else {
-            throw std::runtime_error(path[1] + std::string(": Does not exist."));
+            path_string = filepath + ": Does not exist";
         }
+
+        return path_string;
     }
 
 

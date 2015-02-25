@@ -19,6 +19,9 @@ namespace simulation{
 }// namespace cw
 
 class cw::standard::simulation::image_actor{
+    typedef std::shared_ptr<drawing::sdl_texture> texture;
+    typedef std::pair<std::string, std::shared_ptr<geometry::rectangle<int> > > sprite;
+    typedef std::pair<int, std::vector<std::string> > animation;
 public:
 
 	image_actor(const geometry::point<int>& position,
@@ -33,21 +36,56 @@ public:
 
         auto& raw_json = json.data.acquire();
 
-        std::string paths[4] = {
-                raw_json["textures"]["mouse_up"].as<std::string>(),
-                raw_json["textures"]["mouse_down"].as<std::string>(),
-                raw_json["textures"]["mouse_over"].as<std::string>(),
-                raw_json["textures"]["mouse_out"].as<std::string>()
-        };
+        for (auto t = raw_json["textures"].begin_members(); t != raw_json["textures"].end_members(); ++t)
+        {
+            std::string path = t->value().as<std::string>();
+            texture tex(new drawing::sdl_texture(renderer, path.c_str()));
+            load_texture(t->name(), tex);
+        }
 
-        load_texture("mouse_up", std::shared_ptr<drawing::sdl_texture>(new drawing::sdl_texture(renderer, paths[0].c_str())));
-        load_texture("mouse_down",std::shared_ptr<drawing::sdl_texture>(new drawing::sdl_texture(renderer, paths[1].c_str())));
-        load_texture("mouse_over",std::shared_ptr<drawing::sdl_texture>(new drawing::sdl_texture(renderer, paths[2].c_str())));
-        load_texture("mouse_out", std::shared_ptr<drawing::sdl_texture>(new drawing::sdl_texture(renderer, paths[3].c_str())));
+        for (auto s = raw_json["sprites"].begin_members(); s != raw_json["sprites"].end_members(); ++s)
+        {
+            for(auto cord = s->value().begin_members(); cord != s->value().end_members(); ++cord){
+
+                int nx = cord->value()[0].as<int>();
+                int ny = cord->value()[1].as<int>();
+                int nw = cord->value()[2].as<int>();
+                int nh = cord->value()[3].as<int>();
+
+                std::shared_ptr<geometry::rectangle<int> > rect(new geometry::rectangle<int>(nx, ny, nw, nh));
+
+                load_sprite(s->name(), sprite(cord->name(), rect));
+
+            }
+
+        }
+
+		for (auto a = raw_json["animations"].begin_members(); a != raw_json["animations"].end_members(); ++a)
+		{
+            std::vector<std::string> frames;
+
+			for(auto f = a->value()["frames"].begin_elements(); f != a->value()["frames"].end_elements();  ++f){
+
+                frames.push_back(f->as<std::string>());
+			}
+
+
+            load_animation(a->name(), animation(a->value()["time"].as<int>(), frames));
+        }
+
+        for (auto e = raw_json["events"].begin_members(); e != raw_json["events"].end_members(); ++e)
+        {
+            std::cout << e->name() << std::endl;
+            for(auto p = e->value().begin_members(); p != e->value().end_members();  ++p){
+
+                std::cout << p->name() << " " << p->value() << std::endl;
+
+            }
+        }
 
         json.data.release();
 
-        swap_texture("current", "mouse_up");
+        //swap_texture("current", "mouse_up");
 	}
 
 	void handle_event(SDL_Event* e){
@@ -90,9 +128,11 @@ public:
 	void render(auto sdl_renderer){
 
 		auto& m = textures.data.acquire();
+		auto& s = sprites.data.acquire();
 
-		sdl_renderer->copy_ex(*m["current"], bounds);
+		sdl_renderer->copy_ex(*m["current"], bounds, s["current"].second.get());
 
+		sprites.data.release();
 		textures.data.release();
 	}
 
@@ -114,6 +154,47 @@ public:
 		textures.data.release();
 	}
 
+    void load_sprite(const std::string& name, sprite new_sprite){
+        auto& s = sprites.data.acquire();
+
+        s[name] = new_sprite;
+
+        sprites.data.release();
+    }
+
+    void swap_sprite(const std::string& previous_sprite, const std::string& new_sprite){
+        auto& s = sprites.data.acquire();
+
+        if(s[previous_sprite] != s[new_sprite]){
+            s[previous_sprite] = s[new_sprite];
+        }
+
+        sprites.data.release();
+    }
+
+    void load_animation(const std::string& name, animation new_animation){
+        auto& a = animations.data.acquire();
+
+        a[name] = new_animation;
+
+        animations.data.release();
+    }
+
+    void swap_animation(const std::string& previous_animation, const std::string& new_animation){
+        auto& a = animations.data.acquire();
+
+        if(a[previous_animation] != a[new_animation]){
+            a[previous_animation] = a[new_animation];
+        }
+
+        animations.data.release();
+    }
+
 	geometry::rectangle<int> bounds;
-	core::concurrent::mutexed_map<std::string, std::shared_ptr<drawing::sdl_texture> > textures;
+
+private:
+    core::concurrent::mutexed_map<std::string, std::shared_ptr<drawing::sdl_texture> > textures;
+	core::concurrent::mutexed_map<std::string, sprite > sprites;
+    core::concurrent::mutexed_map<std::string, animation > animations;
+
 };// class image_actor

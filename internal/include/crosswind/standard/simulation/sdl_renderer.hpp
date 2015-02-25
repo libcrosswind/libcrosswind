@@ -66,7 +66,7 @@ public:
 
 	template<typename T>
 	void copy_ex(drawing::sdl_texture& sdl_texture, 
-				 geometry::rectangle<T>& quad, SDL_Rect* clip = nullptr, 
+				 geometry::rectangle<T>& quad, geometry::rectangle<T>* clip = nullptr,
 				 double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE ){
 		//Set rendering space and render to screen
 		auto& q_pos = quad.position.acquire();
@@ -74,21 +74,35 @@ public:
 
 		SDL_Rect render_quad = { q_pos.x, q_pos.y, q_dim.x, q_dim.y };
 
+
 		quad.size.release();
 		quad.position.release();
+
+		SDL_Rect render_clip = { 0, 0, 0, 0};
+		SDL_Rect* render_clip_ptr = nullptr;
 
 		//Set clip rendering dimensions
 		if(clip)
 		{
-			render_quad.w = clip->w;
-			render_quad.h = clip->h;
+			auto& c_pos = clip->position.acquire();
+			auto& c_dim = clip->size.acquire();
+
+			render_clip = { c_pos.x, c_pos.y, c_dim.x, c_dim.y };
+
+			render_quad.w = c_dim.x;
+			render_quad.h = c_dim.y;
+
+			clip->size.release();
+			clip->position.release();
+
+			render_clip_ptr = &render_clip;
 		}
 
 		auto renderer_ptr = renderer.acquire();
 		auto texture_ptr = sdl_texture.texture.acquire();
 
 		//Render to screen
-		if (SDL_RenderCopyEx(renderer_ptr, texture_ptr, clip, &render_quad, angle, center, flip) != 0)
+		if (SDL_RenderCopyEx(renderer_ptr, texture_ptr, render_clip_ptr, &render_quad, angle, center, flip) != 0)
 			throw cw::platform::generic::detail::sdl::sdl_exception("SDL_RenderCopy");
 
 		sdl_texture.texture.release();
