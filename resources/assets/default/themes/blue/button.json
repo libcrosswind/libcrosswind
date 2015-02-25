@@ -1,9 +1,12 @@
 {
-    "default-size": [32, 16, 0],
-    "draggable": false,
-    "text-color": [255, 255, 255],
-    "spritesheet": false,
-    "animated": false,
+    "attributes":
+    {
+      "default-size": [32, 16, 0],
+      "draggable": false,
+      "text-color": [255, 255, 255],
+      "spritesheet": false,
+      "animated": false
+    },
 
     "textures":
     {
@@ -27,7 +30,7 @@
         "action" : "switch", 
         "target" : "texture",
         "value" : "mouse_down"
-      },
+      }
 
     }
 }   

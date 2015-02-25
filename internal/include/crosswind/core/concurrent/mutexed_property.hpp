@@ -19,10 +19,12 @@ class cw::core::concurrent::mutexed_property: public detail::property_interface<
 public:
     mutexed_property(){
         property_value = T();
+        this->init();
     }
 
     mutexed_property(const T& value){
         property_value = value;
+        this->init();
     }
 
     T& acquire(){

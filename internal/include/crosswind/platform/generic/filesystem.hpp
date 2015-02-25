@@ -33,7 +33,7 @@ namespace generic{
 
 class cw::platform::generic::filesystem{
 public:
-    static void add_directory(std::string directory, bool recursively = false){
+    static void add_directory(const std::string& directory, bool recursively = false){
 
         push_directory(directory);
 
@@ -41,7 +41,7 @@ public:
 
     }
 
-	static bool exists (std::string filepath) {
+	static bool exists (const std::string& filepath) {
 
         std::vector<std::string> path = split(filepath);
 
@@ -71,7 +71,7 @@ public:
         }
 	}
 
-    static std::string get_file_path(std::string filepath){
+    static std::string get_file_path(const std::string& filepath){
 
         std::vector<std::string> path = split(filepath);
 
@@ -114,8 +114,9 @@ private:
         return (s.st_mode & S_IFDIR)!=0;
     }
 
-    static std::vector<std::string> split(std::string filepath){
-
+    static std::vector<std::string> split(const std::string& path){
+        std::string filepath = path;
+        
         if(filepath.substr(filepath.size() - 1, filepath.size()).compare("/") == 0){
             filepath  = filepath.substr(0, filepath.size() - 1);
         }
@@ -149,7 +150,7 @@ private:
     }
 
 
-    static void add_recursively(std::string parent) {
+    static void add_recursively(const std::string& parent) {
 
         if(is_dir(parent)){
 

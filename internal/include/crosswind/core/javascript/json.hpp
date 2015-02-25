@@ -5,6 +5,7 @@
 #include <jsoncons/json.hpp>
 
 #include <crosswind/core/concurrent/mutexed_property.hpp>
+#include <crosswind/platform/generic/filesystem.hpp>
 
 namespace cw{
 namespace core{
@@ -21,21 +22,28 @@ public:
     json(){
     }
 
-    json& from_file(std::string filename){
-        auto& raw_json = data.acquire();
-        raw_json = jsoncons::json::parse_file(filename);
-        data.release();
+    json& from_file(const std::string& filename){
+         
+         if(cw::platform::generic::filesystem::exists(filename)){
+
+            auto& raw_json = data.acquire();
+            raw_json = jsoncons::json::parse_file
+            (cw::platform::generic::filesystem::get_file_path(filename));
+            data.release();
+
+        }
+
         return *this;
     }
 
-    json& from_string(std::string json_string){
+    json& from_string(const std::string& json_string){
         auto& raw_json = data.acquire();
         raw_json = jsoncons::json::parse_string(json_string);
         data.release();
         return *this;
     }
 
-    bool has(std::string member) {
+    bool has(const std::string& member) {
         bool has_member = data.acquire().has_member(member);
 
         data.release();

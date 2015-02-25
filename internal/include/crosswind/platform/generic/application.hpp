@@ -3,6 +3,7 @@
 #include <string>
 #include <chrono>
 
+#include <crosswind/core/concurrent/atomical_property.hpp>
 #include <crosswind/core/concurrent/mutexed_property.hpp>
 #include <crosswind/platform/generic/filesystem.hpp>
 #include <crosswind/platform/generic/detail/sdl/sdl_system.hpp>
@@ -11,6 +12,7 @@
 #include <crosswind/standard/geometry/rectangle.hpp>
 #include <crosswind/standard/simulation/sdl_renderer.hpp>
 #include <crosswind/standard/simulation/stage.hpp>
+
 
 
 namespace cw{
@@ -34,32 +36,32 @@ public:
 
     }
 
-    virtual void run(){
+    virtual void init(){
+
         auto& dim = bounds.size.acquire();
 
-        display_window = std::shared_ptr<detail::sdl::sdl_window>(new detail::sdl::sdl_window(title.get().c_str(), 
-                                                                                              SDL_WINDOWPOS_UNDEFINED, 
-                                                                                              SDL_WINDOWPOS_UNDEFINED, 
-                                                                                              dim.x, dim.y, 
-                                                                                              SDL_WINDOW_RESIZABLE));
+        display_window = std::shared_ptr<detail::sdl::sdl_window>(new detail::sdl::sdl_window(title.get().c_str(),
+                SDL_WINDOWPOS_UNDEFINED,
+                SDL_WINDOWPOS_UNDEFINED,
+                dim.x, dim.y,
+                SDL_WINDOW_RESIZABLE));
 
         bounds.size.release();
 
         auto window_ptr = display_window->window.acquire();
         sdl_renderer = std::shared_ptr<standard::simulation::sdl_renderer>
-                        (new standard::simulation::sdl_renderer(window_ptr, -1, SDL_RENDERER_ACCELERATED));
+                (new standard::simulation::sdl_renderer(window_ptr, -1, SDL_RENDERER_ACCELERATED));
         display_window->window.release();
 
-        auto renderer_ptr = sdl_renderer->renderer.acquire();
-        standard::drawing::sdl_texture sprite1(renderer_ptr, 
-                                            cw::platform::generic::filesystem::get_file_path("background-blue.png").c_str());
-        sdl_renderer->renderer.release();
- 
+
+    }
+
+    virtual void run(){
 
         running.set(true);
         previous_time = std::chrono::high_resolution_clock::now();
 
-
+        std::cout << running.get() <<std::endl;
         while (running.get()) {
 
             handle_application_events();
@@ -101,10 +103,13 @@ public:
         sdl_renderer->set_draw_color(128, 32, 200);
         sdl_renderer->clear();
 
-        stages("current")->render(sdl_renderer);
+        stages("current")->render();
 
         sdl_renderer->present();
     }
+
+    core::concurrent::mutexed_map<std::string, std::shared_ptr<standard::simulation::stage> > stages;
+    std::shared_ptr<standard::simulation::sdl_renderer> sdl_renderer;
 
 private:
     double get_delta() {
@@ -129,10 +134,8 @@ private:
     std::shared_ptr<detail::sdl::sdl_window> display_window;
     std::shared_ptr<detail::sdl::sdl_system> sdl_system;
     std::shared_ptr<detail::sdl::sdl_image_system> sdl_image_system;
-    std::shared_ptr<standard::simulation::sdl_renderer> sdl_renderer;
     SDL_Event event;
 
 //    core::concurrent::mutexed_map<std::pair<std::string, std::string>, > events;
-    core::concurrent::mutexed_map<std::string, std::shared_ptr<standard::simulation::stage> > stages;
 
 };// class application

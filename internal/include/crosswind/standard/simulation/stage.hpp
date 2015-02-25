@@ -4,6 +4,7 @@
 
 #include <crosswind/core/concurrent/mutexed_container.hpp>
 #include <crosswind/standard/simulation/image_actor.hpp>
+#include <crosswind/standard/simulation/sdl_renderer.hpp>
 
 namespace cw{
 namespace standard{
@@ -18,7 +19,7 @@ namespace simulation{
 
 class cw::standard::simulation::stage{
 public:
-	stage(/*cw::platform::generic::application* app*/)/*: application(app)*/{
+	stage(std::shared_ptr<standard::simulation::sdl_renderer> renderer): sdl_renderer(renderer) /* application(app)*/{
 
 	}
 
@@ -54,11 +55,9 @@ public:
 
         gui_elements.data.release();
 
-
-
 	}
 
-	virtual void render(std::shared_ptr<standard::simulation::sdl_renderer> sdl_renderer){
+	virtual void render(){
 /*		gui_elements.iterator([sdl_renderer](auto& element){
 			element->render(sdl_renderer);
 		});*/
@@ -79,4 +78,5 @@ public:
 
 protected:
 /*	platform::generic::application* application;	*/
+	std::shared_ptr<standard::simulation::sdl_renderer> sdl_renderer;
 };// class stage

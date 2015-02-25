@@ -21,11 +21,11 @@ template<class T>
 class cw::core::concurrent::detail::property_interface{
 public:
     property_interface(){
-        init();
+        this->init();
     }
 
     property_interface(const T& value){
-        init();
+        this->init();
     }
 
 

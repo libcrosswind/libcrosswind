@@ -20,12 +20,14 @@ namespace concurrent{
 template<class T>
 class cw::core::concurrent::atomical_property: public detail::property_interface<T>{
 public:
-    atomical_property(){
+    atomical_property(): detail::property_interface<T>(){
         property_value.store(0);
+        this->init();
     }
 
-    atomical_property(const T& value){
+    atomical_property(const T& value): detail::property_interface<T>(value){
         property_value.store(value);
+        this->init();
     }
 
 protected:
