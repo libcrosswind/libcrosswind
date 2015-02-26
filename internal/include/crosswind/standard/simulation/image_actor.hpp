@@ -18,10 +18,32 @@ namespace simulation{
 }// namespace standard
 }// namespace cw
 
+class texture_mapping{
+public:
+    std::shared_ptr<cw::standard::drawing::sdl_texture> texture;
+};
+
+class sprite_mapping{
+public:
+    std::string name;
+    std::shared_ptr<cw::standard::geometry::rectangle<int> > clip;
+};
+
+class animation_mapping{
+public:
+    int duration;
+    std::vector<std::string> frames;
+};
+
+class event_mapping{
+public:
+    std::string action;
+    std::string what;
+    std::string which;
+    std::vector<std::pair<std::string, int> > parameters;
+};
+
 class cw::standard::simulation::image_actor{
-    typedef std::shared_ptr<drawing::sdl_texture> texture;
-    typedef std::pair<std::string, std::shared_ptr<geometry::rectangle<int> > > sprite;
-    typedef std::pair<int, std::vector<std::string> > animation;
 public:
 
 	image_actor(const geometry::point<int>& position,
@@ -39,22 +61,24 @@ public:
         for (auto t = raw_json["textures"].begin_members(); t != raw_json["textures"].end_members(); ++t)
         {
             std::string path = t->value().as<std::string>();
-            texture tex(new drawing::sdl_texture(renderer, path.c_str()));
-            load_texture(t->name(), tex);
+            auto mapping = std::shared_ptr<texture_mapping>(new texture_mapping());
+            mapping->texture = std::shared_ptr<drawing::sdl_texture>(new drawing::sdl_texture(renderer, path.c_str()));
+            load_texture(t->name(), mapping);
         }
 
         for (auto s = raw_json["sprites"].begin_members(); s != raw_json["sprites"].end_members(); ++s)
         {
             for(auto cord = s->value().begin_members(); cord != s->value().end_members(); ++cord){
 
-                int nx = cord->value()[0].as<int>();
-                int ny = cord->value()[1].as<int>();
-                int nw = cord->value()[2].as<int>();
-                int nh = cord->value()[3].as<int>();
+                int x = cord->value()[0].as<int>();
+                int y = cord->value()[1].as<int>();
+                int w = cord->value()[2].as<int>();
+                int h = cord->value()[3].as<int>();
 
-                std::shared_ptr<geometry::rectangle<int> > rect(new geometry::rectangle<int>(nx, ny, nw, nh));
-
-                load_sprite(s->name(), sprite(cord->name(), rect));
+                auto mapping =  std::shared_ptr<sprite_mapping>(new sprite_mapping());
+                mapping->name = cord->name();
+                mapping->clip = std::shared_ptr<geometry::rectangle<int> >(new geometry::rectangle<int>(x, y, w, h));
+                load_sprite(s->name(), mapping);
 
             }
 
@@ -69,18 +93,21 @@ public:
                 frames.push_back(f->as<std::string>());
 			}
 
+            auto mapping = std::shared_ptr<animation_mapping>(new animation_mapping());
+            mapping->duration = a->value()["time"].as<int>();
+            mapping->frames = frames;
 
-            load_animation(a->name(), animation(a->value()["time"].as<int>(), frames));
+            load_animation(a->name(), mapping);
         }
 
         for (auto e = raw_json["events"].begin_members(); e != raw_json["events"].end_members(); ++e)
         {
-            std::cout << e->name() << std::endl;
-            for(auto p = e->value().begin_members(); p != e->value().end_members();  ++p){
+            auto mapping = std::shared_ptr<event_mapping>(new event_mapping());
+            mapping->action = e->value()["action"].as<std::string>();
+            mapping->what = e->value()["what"].as<std::string>();
+            mapping->which = e->value()["which"].as<std::string>();
 
-                std::cout << p->name() << " " << p->value() << std::endl;
-
-            }
+            load_event(e->name(), mapping);
         }
 
         json.data.release();
@@ -130,16 +157,16 @@ public:
 		auto& m = textures.data.acquire();
 		auto& s = sprites.data.acquire();
 
-		sdl_renderer->copy_ex(*m["current"], bounds, s["current"].second.get());
+		sdl_renderer->copy_ex(*m["current"]->texture, bounds, s["current"]->clip.get());
 
 		sprites.data.release();
 		textures.data.release();
 	}
 
-    void load_texture(const std::string& name, std::shared_ptr<drawing::sdl_texture> texture){
+    void load_texture(const std::string& name, std::shared_ptr<texture_mapping> new_texture){
         auto& m = textures.data.acquire();
 
-        m[name] = texture;
+        m[name] = new_texture;
 
         textures.data.release();
     }
@@ -154,7 +181,7 @@ public:
 		textures.data.release();
 	}
 
-    void load_sprite(const std::string& name, sprite new_sprite){
+    void load_sprite(const std::string& name, std::shared_ptr<sprite_mapping> new_sprite){
         auto& s = sprites.data.acquire();
 
         s[name] = new_sprite;
@@ -172,7 +199,7 @@ public:
         sprites.data.release();
     }
 
-    void load_animation(const std::string& name, animation new_animation){
+    void load_animation(const std::string& name, std::shared_ptr<animation_mapping> new_animation){
         auto& a = animations.data.acquire();
 
         a[name] = new_animation;
@@ -190,11 +217,29 @@ public:
         animations.data.release();
     }
 
+    void load_event(const std::string& name, std::shared_ptr<event_mapping> new_event){
+        auto& e = events.data.acquire();
+
+        e[name] = new_event;
+
+        events.data.release();
+    }
+
+    void swap_event(const std::string& previous_event, const std::string& new_event){
+        auto& e = events.data.acquire();
+
+        if(e[previous_event] != e[new_event]){
+            e[previous_event] = e[new_event];
+        }
+
+        events.data.release();
+    }
+
 	geometry::rectangle<int> bounds;
 
 private:
-    core::concurrent::mutexed_map<std::string, std::shared_ptr<drawing::sdl_texture> > textures;
-	core::concurrent::mutexed_map<std::string, sprite > sprites;
-    core::concurrent::mutexed_map<std::string, animation > animations;
-
+    core::concurrent::mutexed_map<std::string, std::shared_ptr< texture_mapping   > > textures;
+	core::concurrent::mutexed_map<std::string, std::shared_ptr< sprite_mapping    > > sprites;
+    core::concurrent::mutexed_map<std::string, std::shared_ptr< animation_mapping > > animations;
+    core::concurrent::mutexed_map<std::string, std::shared_ptr< event_mapping     > > events;
 };// class image_actor

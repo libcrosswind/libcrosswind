@@ -1,0 +1,75 @@
+{
+  "attributes":
+  {
+    "default-size": [190, 94, 0],
+    "draggable": false,
+    "text-color": [255, 255, 255],
+    "animated": false
+  },
+
+  "textures":
+  {
+    "button":"assets/default/graphics/textures/gui/button/blue_button_spritesheet.png"
+  },
+
+  "sprites":
+  {
+    "mouse_up"  :{ "button" : [0, 0,  190, 49] },
+    "mouse_down":{ "button" : [0, 49, 190, 94] },
+    "mouse_over":{ "button" : [0, 0,  190, 49] },
+    "mouse_out" :{ "button" : [0, 0,  190, 49] }
+  },
+
+	"animations":
+	{
+		"on"   :{ "time": 0.100, "frames": ["mouse_down"] },
+    "off"  :{ "time": 0.100, "frames": ["mouse_up"]   },
+    "hover":{ "time": 0.100, "frames": ["mouse_up"]   },
+    "left" :{ "time": 0.100, "frames": ["mouse_up"]   }
+	},
+
+  "events":
+  {
+    "on_mouse_up":
+    {
+      "action"      : "start",
+      "what"        : "animation",
+      "which"       : "off",
+      "parameters"  : [null]
+    },
+
+    "on_mouse_down":
+    {
+      "action"      : "start",
+      "what"        : "animation",
+      "which"       : "on",
+      "parameters"  : [null]
+    }
+  },
+
+  "conditions":
+  {
+    "animation":
+    {
+      "name"        : "on",
+      "triggers"    : "start",
+      "what"        : "animation",
+      "which"       : "off",
+      "parameters"  : [null]
+    },
+
+    "event":
+    {
+      "name"        : "on_mouse_down",
+      "triggers"    : "start",
+      "what"        : "animation",
+      "which"       : "on",
+      "parameters"  : [null]
+    },
+  },
+
+  "properties":
+  {
+    "default-animation":"off"
+  }
+}
