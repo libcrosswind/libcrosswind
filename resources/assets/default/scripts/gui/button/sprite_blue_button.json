@@ -32,17 +32,33 @@
   {
     "on_mouse_up":
     {
-      "action"      : "start",
       "what"        : "animation",
+      "action"      : "start",
       "which"       : "off",
       "parameters"  : [null]
     },
 
     "on_mouse_down":
     {
-      "action"      : "start",
       "what"        : "animation",
+      "action"      : "start",
       "which"       : "on",
+      "parameters"  : [null]
+    },
+
+    "on_mouse_over":
+    {
+      "what"        : "none",
+      "action"      : "none",
+      "which"       : "none",
+      "parameters"  : [null]
+    },
+
+    "on_mouse_out":
+    {
+      "what"        : "animation",
+      "action"      : "start",
+      "which"       : "off",
       "parameters"  : [null]
     }
   },
@@ -65,7 +81,7 @@
       "what"        : "animation",
       "which"       : "on",
       "parameters"  : [null]
-    },
+    }
   },
 
   "properties":

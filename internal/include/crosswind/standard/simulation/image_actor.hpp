@@ -37,8 +37,8 @@ public:
 
 class event_mapping{
 public:
-    std::string action;
     std::string what;
+    std::string action;
     std::string which;
     std::vector<std::pair<std::string, int> > parameters;
 };
@@ -103,12 +103,14 @@ public:
         for (auto e = raw_json["events"].begin_members(); e != raw_json["events"].end_members(); ++e)
         {
             auto mapping = std::shared_ptr<event_mapping>(new event_mapping());
-            mapping->action = e->value()["action"].as<std::string>();
             mapping->what = e->value()["what"].as<std::string>();
+            mapping->action = e->value()["action"].as<std::string>();
             mapping->which = e->value()["which"].as<std::string>();
 
             load_event(e->name(), mapping);
         }
+
+        std::cout << raw_json["properties"]["default-animation"]  << std::endl;
 
         json.data.release();
 
@@ -128,29 +130,33 @@ public:
 				switch(e->type){
 
 					case SDL_MOUSEMOTION:
-						swap_texture("current", "mouse_over");
+                        trigger(events("mouse_over"));
 					break;
 				
 					case SDL_MOUSEBUTTONDOWN:
-						swap_texture("current", "mouse_down");
+                        trigger(events("mouse_down"));
 					break;
 					
 					case SDL_MOUSEBUTTONUP:
-						swap_texture("current", "mouse_up");
+                        trigger(events("mouse_up"));
 					break;
 
 				}
 
 			} else {//Mouse is outside button
-				swap_texture("current", "mouse_out");			
+                trigger(events("mouse_out"));
 			}
 
 		}
 	}
 
 	void update(double delta){
-		
-	}
+
+        auto& s = sprites.data.acquire();
+
+        sprites.data.release();
+
+    }
 
 	void render(auto sdl_renderer){
 
@@ -162,6 +168,15 @@ public:
 		sprites.data.release();
 		textures.data.release();
 	}
+
+    void trigger(std::shared_ptr< event_mapping > event){
+
+        if(event->what == "animation"){
+            if(event->action == "start"){
+                swap_animation("current", event->which);
+            }
+        }
+    }
 
     void load_texture(const std::string& name, std::shared_ptr<texture_mapping> new_texture){
         auto& m = textures.data.acquire();
