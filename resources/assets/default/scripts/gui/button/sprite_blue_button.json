@@ -15,7 +15,7 @@
   "sprites":
   {
     "mouse_up"  :{ "button" : [0, 0,  190, 49] },
-    "mouse_down":{ "button" : [0, 49, 190, 94] },
+    "mouse_down":{ "button" : [0, 49, 190, 45] },
     "mouse_over":{ "button" : [0, 0,  190, 49] },
     "mouse_out" :{ "button" : [0, 0,  190, 49] }
   },

@@ -25,8 +25,8 @@ int main(int argc, char **argv) {
             pos.x = 180;
             pos.y = 180;
 
-            dim.x = 38;
-            dim.y = 40;
+            dim.x = 76;
+            dim.y = 80;
 
             gui_elements.push_back
                     (std::shared_ptr<cw::standard::simulation::image_actor>

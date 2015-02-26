@@ -57,7 +57,6 @@ public:
 				auto renderer):
 	bounds(position.x, position.y, size.x, size.y){
 
-        std::cout<< template_file <<std ::endl;
     	cw::core::javascript::json json;
  		json.from_file(template_file);
 
@@ -87,7 +86,6 @@ public:
                 int w = cord->value()[2].as<int>();
                 int h = cord->value()[3].as<int>();
 
-                std::cout << cord->value() << std::endl;
                 auto mapping =  std::shared_ptr<sprite_mapping>(new sprite_mapping());
                 mapping->name = cord->name();
                 mapping->clip = std::shared_ptr<geometry::rectangle<int> >(new geometry::rectangle<int>(x, y, w, h));
@@ -102,7 +100,6 @@ public:
             std::vector<std::string> frames;
 
 			for(auto f = a->value()["frames"].begin_elements(); f != a->value()["frames"].end_elements();  ++f){
-
                 frames.push_back(f->as<std::string>());
 			}
 

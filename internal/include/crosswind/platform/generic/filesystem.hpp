@@ -45,8 +45,6 @@ public:
 
         std::vector<std::string> path = split(filepath);
 
-        std::cout << path[0] <<std::endl;
-        std::cout << path[1] <<std::endl;
         bool search_result  = false;
         auto& local_directories = directories.acquire();
 
