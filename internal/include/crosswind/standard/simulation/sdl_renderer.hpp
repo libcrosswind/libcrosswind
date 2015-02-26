@@ -89,9 +89,6 @@ public:
 
 			render_clip = { c_pos.x, c_pos.y, c_dim.x, c_dim.y };
 
-			render_quad.w = c_dim.x;
-			render_quad.h = c_dim.y;
-
 			clip->size.release();
 			clip->position.release();
 

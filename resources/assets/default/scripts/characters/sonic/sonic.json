@@ -1,0 +1,98 @@
+{
+  "attributes":
+  {
+    "default-size": [38, 40, 0],
+    "draggable": false,
+    "text-color": [255, 255, 255],
+    "animated": false
+  },
+
+  "textures":
+  {
+    "sonic":"assets/default/graphics/textures/characters/sonic/sonic_spritesheet.png"
+  },
+
+  "sprites":
+  {
+    "stand_1"   :{ "sonic"  : [0, 9, 38, 49] },
+    "walk_1"    :{ "sonic"  : [292, 120,  330, 160] },
+    "walk_2"    :{ "sonic"  : [335, 120,  373, 160] },
+    "walk_3"    :{ "sonic"  : [378, 120,  416, 160] },
+    "walk_4"    :{ "sonic"  : [413, 120,  451, 160] },
+    "walk_5"    :{ "sonic"  : [456, 120,  494, 160] },
+    "walk_6"    :{ "sonic"  : [499, 120,  537, 160] },
+    "run_1"     :{ "sonic"  : [230, 225,  268, 265] },
+    "run_2"     :{ "sonic"  : [273, 225,  311, 265] },
+    "run_3"     :{ "sonic"  : [313, 225,  351, 265] },
+    "run_4"     :{ "sonic"  : [353, 225,  391, 265] }
+  },
+
+	"animations":
+	{
+    "stand"    :{ "time": 0.125,  "frames": ["stand_1"]   },
+		"walk"     :{ "time": 0.750,  "frames": ["walk_1", "walk_2", "walk_3", "walk_4", "walk_5", "walk_6"] },
+    "run"      :{ "time": 0.500,  "frames": ["run_1", "run_2", "run_3", "run_4"]   }
+	},
+
+  "events":
+  {
+    "on_mouse_up":
+    {
+      "what"        : "none",
+      "action"      : "none",
+      "which"       : "none",
+      "parameters"  : [null]
+    },
+
+    "on_mouse_down":
+    {
+      "what"        : "none",
+      "action"      : "none",
+      "which"       : "none",
+      "parameters"  : [null]
+    },
+
+    "on_mouse_over":
+    {
+      "what"        : "none",
+      "action"      : "none",
+      "which"       : "none",
+      "parameters"  : [null]
+    },
+
+    "on_mouse_out":
+    {
+      "what"        : "none",
+      "action"      : "none",
+      "which"       : "none",
+      "parameters"  : [null]
+    }
+  },
+
+  "conditions":
+  {
+    "animation":
+    {
+      "name"        : "on",
+      "triggers"    : "start",
+      "what"        : "animation",
+      "which"       : "off",
+      "parameters"  : [null]
+    },
+
+    "event":
+    {
+      "name"        : "on_mouse_down",
+      "triggers"    : "start",
+      "what"        : "animation",
+      "which"       : "on",
+      "parameters"  : [null]
+    }
+  },
+
+  "properties":
+  {
+    "default-animation":"stand",
+    "default-texture": "sonic"
+  }
+}

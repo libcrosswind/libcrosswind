@@ -31,7 +31,12 @@ public:
 
 class animation_mapping{
 public:
-    int duration;
+    animation_mapping(){
+        current_frame = 0;
+    }
+
+    double duration;
+    unsigned int current_frame;
     std::vector<std::string> frames;
 };
 
@@ -58,6 +63,13 @@ public:
 
         auto& raw_json = json.data.acquire();
 
+        int texture_w   = raw_json["attributes"]["default-size"][0].as<int>();
+        int texture_h   = raw_json["attributes"]["default-size"][1].as<int>();
+//        int texture_d  = raw_json["attributes"]["default-size"][0].as<int>();
+
+
+
+
         for (auto t = raw_json["textures"].begin_members(); t != raw_json["textures"].end_members(); ++t)
         {
             std::string path = t->value().as<std::string>();
@@ -75,6 +87,7 @@ public:
                 int w = cord->value()[2].as<int>();
                 int h = cord->value()[3].as<int>();
 
+                std::cout << cord->value() << std::endl;
                 auto mapping =  std::shared_ptr<sprite_mapping>(new sprite_mapping());
                 mapping->name = cord->name();
                 mapping->clip = std::shared_ptr<geometry::rectangle<int> >(new geometry::rectangle<int>(x, y, w, h));
@@ -94,7 +107,7 @@ public:
 			}
 
             auto mapping = std::shared_ptr<animation_mapping>(new animation_mapping());
-            mapping->duration = a->value()["time"].as<int>();
+            mapping->duration = a->value()["time"].as<double>();
             mapping->frames = frames;
 
             load_animation(a->name(), mapping);
@@ -110,11 +123,13 @@ public:
             load_event(e->name(), mapping);
         }
 
-        std::cout << raw_json["properties"]["default-animation"]  << std::endl;
+        swap_animation("current", raw_json["properties"]["default-animation"].as<std::string>());
+        swap_texture("current", raw_json["properties"]["default-texture"].as<std::string>());
 
         json.data.release();
 
-        //swap_texture("current", "mouse_up");
+        delta_count = 0;
+
 	}
 
 	void handle_event(SDL_Event* e){
@@ -130,21 +145,21 @@ public:
 				switch(e->type){
 
 					case SDL_MOUSEMOTION:
-                        trigger(events("mouse_over"));
+                        trigger(events("on_mouse_over"));
 					break;
 				
 					case SDL_MOUSEBUTTONDOWN:
-                        trigger(events("mouse_down"));
+                        trigger(events("on_mouse_down"));
 					break;
 					
 					case SDL_MOUSEBUTTONUP:
-                        trigger(events("mouse_up"));
+                        trigger(events("on_mouse_up"));
 					break;
 
 				}
 
 			} else {//Mouse is outside button
-                trigger(events("mouse_out"));
+                trigger(events("on_mouse_out"));
 			}
 
 		}
@@ -152,10 +167,24 @@ public:
 
 	void update(double delta){
 
-        auto& s = sprites.data.acquire();
+        delta_count += delta;
 
-        sprites.data.release();
+        auto& a = animations.data.acquire();
 
+        if(delta_count >= a["current"]->duration / a["current"]->frames.size()){
+
+            delta_count = 0;
+
+            a["current"]->current_frame++;
+
+            if(a["current"]->current_frame >= a["current"]->frames.size()){
+                a["current"]->current_frame = 0;
+            }
+        }
+
+        swap_sprite("current", a["current"]->frames[a["current"]->current_frame]);
+
+        animations.data.release();
     }
 
 	void render(auto sdl_renderer){
@@ -171,7 +200,7 @@ public:
 
     void trigger(std::shared_ptr< event_mapping > event){
 
-        if(event->what == "animation"){
+         if(event->what == "animation"){
             if(event->action == "start"){
                 swap_animation("current", event->which);
             }
@@ -251,6 +280,9 @@ public:
     }
 
 	geometry::rectangle<int> bounds;
+
+private:
+    float delta_count;
 
 private:
     core::concurrent::mutexed_map<std::string, std::shared_ptr< texture_mapping   > > textures;

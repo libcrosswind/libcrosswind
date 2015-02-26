@@ -58,18 +58,36 @@ public:
 
     virtual void run(){
 
+        const int SCREEN_FPS = 60;
+        const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+
+        int frame_counter = 0;
+
         running.set(true);
-        previous_time = std::chrono::high_resolution_clock::now();
+        previous_delta_time = std::chrono::high_resolution_clock::now();
 
         std::cout << running.get() <<std::endl;
         while (running.get()) {
+
+            auto begin = std::chrono::high_resolution_clock::now();
 
             handle_application_events();
             handle_input_events();
             handle_update();
             handle_rendering();
 
-            SDL_Delay(1);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto time_diference = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+            double delta = time_diference.count();
+
+            delta /= 1000000000;
+            //If frame finished early
+            int frameTicks = delta;
+            if( frameTicks < SCREEN_TICKS_PER_FRAME )
+            {
+                //Wait remaining time
+                SDL_Delay( SCREEN_TICKS_PER_FRAME - frameTicks );
+            }
         }
 //        on_exit();
     }
@@ -115,17 +133,16 @@ private:
     double get_delta() {
 
         auto current_time = std::chrono::high_resolution_clock::now();
-        auto time_diference = std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - previous_time);
+        auto time_diference = std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - previous_delta_time);
         double delta = time_diference.count();
 
         delta /= 1000000000;
-        previous_time = current_time;
+        previous_delta_time = current_time;
 
         return delta;
     }
 
-
-    std::chrono::high_resolution_clock::time_point previous_time;
+    std::chrono::high_resolution_clock::time_point previous_delta_time;
 
     standard::geometry::rectangle<int> bounds;
     core::concurrent::mutexed_property<std::string> title;

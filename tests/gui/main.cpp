@@ -16,17 +16,22 @@ int main(int argc, char **argv) {
             auto renderer_ptr = sdl_renderer->renderer.acquire();
 
             cw::standard::geometry::point<int> pos(10, 10);
-            cw::standard::geometry::point<int> dim(80, 20);
+            cw::standard::geometry::point<int> dim(150, 40);
 
             gui_elements.push_back
                     (std::shared_ptr<cw::standard::simulation::image_actor>
                             (new cw::standard::simulation::image_actor(pos, dim, "sprite_blue_button.json", renderer_ptr)));
 
-  /*          pos.x = 150;
+            pos.x = 180;
+            pos.y = 180;
+
+            dim.x = 38;
+            dim.y = 40;
+
             gui_elements.push_back
                     (std::shared_ptr<cw::standard::simulation::image_actor>
-                            (new cw::standard::simulation::image_actor(pos, dim, "green_button.json", renderer_ptr)));
-*/
+                            (new cw::standard::simulation::image_actor(pos, dim, "sonic.json", renderer_ptr)));
+
 
             sdl_renderer->renderer.release();
         }
