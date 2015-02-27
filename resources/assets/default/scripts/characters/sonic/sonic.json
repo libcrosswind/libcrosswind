@@ -92,7 +92,7 @@
 
   "properties":
   {
-    "default-animation":"walk",
+    "default-animation":"run",
     "default-texture": "sonic"
   }
 }

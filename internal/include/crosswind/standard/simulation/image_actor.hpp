@@ -55,6 +55,7 @@ public:
 				const geometry::point<int>& size,
 				const std::string& template_file,
 				auto renderer):
+
 	bounds(position.x, position.y, size.x, size.y){
 
     	cw::core::javascript::json json;
@@ -65,9 +66,6 @@ public:
         int texture_w   = raw_json["attributes"]["default-size"][0].as<int>();
         int texture_h   = raw_json["attributes"]["default-size"][1].as<int>();
 //        int texture_d  = raw_json["attributes"]["default-size"][0].as<int>();
-
-
-
 
         for (auto t = raw_json["textures"].begin_members(); t != raw_json["textures"].end_members(); ++t)
         {
@@ -286,4 +284,6 @@ private:
 	core::concurrent::mutexed_map<std::string, std::shared_ptr< sprite_mapping    > > sprites;
     core::concurrent::mutexed_map<std::string, std::shared_ptr< animation_mapping > > animations;
     core::concurrent::mutexed_map<std::string, std::shared_ptr< event_mapping     > > events;
+
+    core::functional::delegate<void, int, int> mouse_event;
 };// class image_actor

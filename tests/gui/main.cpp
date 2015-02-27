@@ -13,6 +13,7 @@ int main(int argc, char **argv) {
     public:
         dummy_stage(std::shared_ptr<cw::standard::simulation::sdl_renderer> renderer)
                 :cw::standard::simulation::stage(renderer){
+
             auto renderer_ptr = sdl_renderer->renderer.acquire();
 
             cw::standard::geometry::point<int> pos(10, 10);
@@ -31,7 +32,6 @@ int main(int argc, char **argv) {
             gui_elements.push_back
                     (std::shared_ptr<cw::standard::simulation::image_actor>
                             (new cw::standard::simulation::image_actor(pos, dim, "sonic.json", renderer_ptr)));
-
 
             sdl_renderer->renderer.release();
         }
