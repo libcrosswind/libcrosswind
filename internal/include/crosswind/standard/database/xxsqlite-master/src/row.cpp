@@ -1,34 +1,34 @@
-/*
-   Copyright (C) 2013  Nick Ogden <nick@nickogden.org>
+#pragma once
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
-#include "row.hpp"
-#include "error.hpp"
+#include <cassert>
+#include <string>
+#include <memory>
 
 #include <sqlite3.h>
 
-#include <cassert>
+namespace cw{
+namespace standard{
+namespace database{
 
-namespace sqlite {
+class sqlite_row;
 
-namespace {
+}// namespace database
+}// namespace standard
+}// namespace cw
 
-std::size_t find_column_index(
-        const std::string &column_name,
-        const std::shared_ptr<sqlite3_stmt> &stmt
-) {
+
+class cw::standard::database::sqlite_row{
+public:
+  sqlite_row(const std::shared_ptr<sqlite3_stmt> &statement): stmt(statement) {
+      assert(statement && "received null sqlite3_stmt");
+  }
+
+  std::size_t column_count() const {
+      return sqlite3_column_count(stmt.get());
+  }
+
+  std::size_t find_column_index(const std::string &column_name, const std::shared_ptr<sqlite3_stmt> &stmt) {
+
     assert(stmt && "null sqlite3_stmt provided");
     std::size_t column_count(sqlite3_column_count(stmt.get()));
     for (std::size_t i(0); i < column_count; ++i) {
@@ -37,31 +37,23 @@ std::size_t find_column_index(
     }
     assert(false && "invalid column name provided");
     throw error("invalid column name '" + column_name + "'");
-}
+  }
 
-}
 
-row::row(const std::shared_ptr<sqlite3_stmt> &statement): stmt(statement) {
-    assert(statement && "received null sqlite3_stmt");
-}
+  field operator[](const std::string &column_name) const {
+      return {stmt, find_column_index(column_name, stmt)};
+  }
 
-std::size_t row::column_count() const {
-    return sqlite3_column_count(stmt.get());
-}
+  field operator[](const std::size_t &column_index) const {
+      assert(is_valid_index(column_index) && "invalid column index requested");
+      if (! is_valid_index(column_index))
+          throw error("no column at index " + std::to_string(column_index));
+      return {stmt, column_index};
+  }
 
-field row::operator[](const std::string &column_name) const {
-    return {stmt, find_column_index(column_name, stmt)};
-}
+  bool is_valid_index(const std::size_t &index) const {
+      return index < column_count();
+  }
 
-field row::operator[](const std::size_t &column_index) const {
-    assert(is_valid_index(column_index) && "invalid column index requested");
-    if (! is_valid_index(column_index))
-        throw error("no column at index " + std::to_string(column_index));
-    return {stmt, column_index};
-}
 
-bool row::is_valid_index(const std::size_t &index) const {
-    return index < column_count();
-}
-
-} // namespace sqlite
+};// class sqlite_row
