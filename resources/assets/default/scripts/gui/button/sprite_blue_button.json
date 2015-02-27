@@ -3,8 +3,7 @@
   {
     "default-size": [190, 49, 0],
     "draggable": false,
-    "text-color": [255, 255, 255],
-    "animated": false
+    "text-color": [255, 255, 255]
   },
 
   "textures":

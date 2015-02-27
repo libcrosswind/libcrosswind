@@ -285,5 +285,5 @@ private:
     core::concurrent::mutexed_map<std::string, std::shared_ptr< animation_mapping > > animations;
     core::concurrent::mutexed_map<std::string, std::shared_ptr< event_mapping     > > events;
 
-    core::functional::delegate<void, int, int> mouse_event;
+    core::functional::delegate<void> on_mouse_click;
 };// class image_actor
