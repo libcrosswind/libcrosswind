@@ -15,7 +15,7 @@ Current modules:
 Crosswind is a toolset that aims to integrate high level C++14 functions for fast app development.
 Intended to be header-only with minimal dependencies. 
 
-If you're on Windows, install the required dependencies from the 3rdparty directory.
+If you're on Windows, install the software tools from the 3rdparty directory.
 
 Current dependencies:
 - [x] ASIO
