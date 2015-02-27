@@ -18,11 +18,20 @@ Intended to be header-only with minimal dependencies.
 If you're on Windows, install the required dependencies from the 3rdparty directory.
 
 Current dependencies:
+- [x] ASIO
+- [x] jsoncons
 - [x] SDL2
+- [x] SDL_image
+- [x] SDL_ttf
+- [x] SDL_mixer
+- [x] SQLite3
 - [ ] OpenCV
+- [ ] Bullet3
 
-Run the build scripts from inside the setup folder via sh {script}.sh. 
+ASIO, jsoncons and SQLite3 are not required to be built, they are configured to be header-only. For the rest of the dependencies you can run the build scripts from inside the setup folder via sh {script}.sh. 
 SDL2 does not build with haptics support with mingw32, as it seems, you need to build with mingw64 for haptics to be enabled. Until a workaround is found you have to stick with mingw64 based builds.
+
+The build script works for the windows platform at the moment and it will be tweaked in order to provide the building of the SDL2, OpenCV and Bullet3 libraries for the other platforms.
 
 Current supported platforms:
 
