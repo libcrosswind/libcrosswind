@@ -11,18 +11,34 @@
 
 namespace cw{
 namespace standard{
+namespace database{
 namespace sqlite{
 
-    class database;
-
+    class sqlite_database;
+    
 }// namespace sqlite
+}// namespace database
 }// namespace standard
 }// namespace cw
 
-class cw::standard::sqlite::database{
+class cw::standard::database::sqlite::sqlite_database{
 
 public:
-    database(const std::string &path,
+    enum access_mode {
+        read_only         = 0x01,
+        read_write        = 0x02,
+        read_write_create = 0x06
+    };
+
+    enum cache_type {
+        shared_cache  = 0x00020000,
+        private_cache = 0x00040000
+    };
+
+
+
+public:
+    sqlite_database(const std::string &path,
              const access_mode &permissions,
              const cache_type &visibility) {
 
@@ -38,7 +54,7 @@ public:
 
     }
 
-    database(const special_t &,
+    sqlite_database(const special_t &,
              const access_mode &permissions,
              const cache_type &visibility) {
         std::stringstream uri;
@@ -55,7 +71,7 @@ public:
 
     }
 
-    ~database() {
+    ~sqlite_database() {
         close();
     }
 
@@ -78,7 +94,7 @@ public:
         db = nullptr;
         // Can't throw, called from destructor
         assert(status == SQLITE_OK &&
-            "database closed with active statements or unfinished backups");
+            "sqlite_database closed with active statements or unfinished backups");
     }
 
     std::shared_ptr<sqlite3_stmt> create_statement(const std::string &sql) const {
@@ -97,15 +113,15 @@ public:
         return create_statement(sql);
     }
 
-    std::ostream& operator<<(std::ostream &os, const database &db) {
-        os << "database:\n"
+    std::ostream& operator<<(std::ostream &os, const sqlite_database &db) {
+        os << "sqlite_database:\n"
               "  open: " << ((db.db == nullptr) ? "false" : "true") << "\n";
         return os;
     }
 
     void as_transaction(
-            database &db,
-            const std::function<void(database &)> &operations
+            sqlite_database &db,
+            const std::function<void(sqlite_database &)> &operations
     ) try {
         db.execute("BEGIN;");
         operations(db);
@@ -136,16 +152,5 @@ public:
         return os;
     }
 
-private:
-    enum access_mode {
-        read_only         = 0x01,
-        read_write        = 0x02,
-        read_write_create = 0x06
-    };
 
-    enum cache_type {
-        shared_cache  = 0x00020000,
-        private_cache = 0x00040000
-    };
-
-};// class database
+};// class sqlite_database
