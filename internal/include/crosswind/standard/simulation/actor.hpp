@@ -14,7 +14,6 @@ namespace simulation{
 
     class actor;
     class renderable_actor;
-    class logic_actor;
 }
 }
 }
@@ -138,48 +137,15 @@ private:
             assert(!parent); //Actor cannot have 2 parents
 
             parent = new_parent;
-/*
-            if ( Stage::IsInstalled() && // Don't emit signals or send messages during Core destruction
-                 parent->OnStage() )
-            {
-              // Instruct each actor to create a corresponding node in the scene graph
-              ConnectToStage( index );
-            }*/
         }   else    { // parent being set to NULL
                 assert(parent != NULL);// Actor should have a parent
 
                 parent = NULL;
-                /*
-                // Don't emit signals or send messages during Core destruction
-                if ( Stage::IsInstalled() && 
-                     on_stage() ){
-
-                  std::assert(node != NULL);
-
-                  if(node != NULL){
-                    // Disconnect the Node & its children from the scene-graph.
-                    DisconnectNodeMessage( mStage->GetUpdateManager(), *mNode );
-                  }
-
-                  // Instruct each actor to discard pointers to the scene-graph
-                  DisconnectFromStage();
-                }*/
             }
     }
 
     actor* parent;
 };
-
-class cw::standard::simulation::renderable_actor: 
-        public cw::standard::simulation::actor{
-
-};
-
-class cw::standard::simulation::logic_actor: 
-        public cw::standard::simulation::actor{
-
-};
-
 
 
 

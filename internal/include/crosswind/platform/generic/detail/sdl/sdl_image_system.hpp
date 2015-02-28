@@ -18,8 +18,6 @@ namespace sdl{
 }// namespace platform
 }// namespace cw
 
-
-
 class cw::platform::generic::detail::sdl::sdl_image_system{
 public:
   sdl_image_system(int flags) {
@@ -35,7 +33,6 @@ public:
   sdl_image_system(sdl_image_system&& other) = delete;
   sdl_image_system& operator=(sdl_image_system&& other) = delete;
 
-
   ~sdl_image_system() {
     IMG_Quit();
   }
@@ -50,8 +47,6 @@ public:
   int init_flags() {
     return IMG_Init(0);
   }
-
-
 
 };
  

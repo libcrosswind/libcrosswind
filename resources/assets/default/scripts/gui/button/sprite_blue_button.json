@@ -2,7 +2,6 @@
   "attributes":
   {
     "default-size": [190, 49, 0],
-    "draggable": false,
     "text-color": [255, 255, 255]
   },
 
@@ -58,27 +57,6 @@
       "what"        : "animation",
       "action"      : "start",
       "which"       : "off",
-      "parameters"  : [null]
-    }
-  },
-
-  "conditions":
-  {
-    "animation":
-    {
-      "name"        : "on",
-      "triggers"    : "start",
-      "what"        : "animation",
-      "which"       : "off",
-      "parameters"  : [null]
-    },
-
-    "event":
-    {
-      "name"        : "on_mouse_down",
-      "triggers"    : "start",
-      "what"        : "animation",
-      "which"       : "on",
       "parameters"  : [null]
     }
   },

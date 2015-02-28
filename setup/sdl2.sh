@@ -60,9 +60,9 @@ VORBIS_DIR_NAME=libvorbis-1.3.3
 VORBIS=$SDL_MIXER/external/$VORBIS_DIR_NAME
 VORBIS_TEMP=$TEMP_DIR/vorbis_build
 
-SMPEG_DIR_NAME=smpeg2-2.0.0
-SMPEG=$SDL_MIXER/external/$SMPEG_DIR_NAME
-SMPEG_TEMP=$TEMP_DIR/smpeg_build
+#SMPEG_DIR_NAME=smpeg2-2.0.0
+#SMPEG=$SDL_MIXER/external/$SMPEG_DIR_NAME
+#SMPEG_TEMP=$TEMP_DIR/smpeg_build
 
 
 ###########################Default##################################
@@ -87,7 +87,7 @@ mkdir -p $FREETYPE_TEMP
 
 mkdir -p $OGG_TEMP
 mkdir -p $VORBIS_TEMP
-mkdir -p $SMPEG_TEMP
+#mkdir -p $SMPEG_TEMP
 
 
 ###########################BUILD####################################

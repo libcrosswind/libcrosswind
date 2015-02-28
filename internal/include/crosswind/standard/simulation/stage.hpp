@@ -3,7 +3,8 @@
 #include <memory>
 
 #include <crosswind/core/concurrent/mutexed_container.hpp>
-#include <crosswind/standard/simulation/image_actor.hpp>
+#include <crosswind/standard/simulation/standard_actor.hpp>
+#include <crosswind/standard/simulation/interactive_actor.hpp>
 #include <crosswind/standard/simulation/sdl_renderer.hpp>
 
 namespace cw{
@@ -32,13 +33,13 @@ public:
 			element->handle_event(e);
 		});*/
 
-        auto& container = gui_elements.data.acquire();
+        auto& container = interactive_queue.data.acquire();
 
         for(auto& element: container){
            element->handle_event(e);
         }
 
-        gui_elements.data.release();
+		interactive_queue.data.release();
 	}
 
 	virtual void update(double delta){
@@ -47,34 +48,32 @@ public:
 			element->update(delta);
 		});*/
 
-        auto& container = gui_elements.data.acquire();
+        auto& container = standard_queue.data.acquire();
 
         for(auto& element: container){
            element->update(delta);
         }
 
-        gui_elements.data.release();
-
+		standard_queue.data.release();
 	}
 
 	virtual void render(){
 /*		gui_elements.iterator([sdl_renderer](auto& element){
 			element->render(sdl_renderer);
 		});*/
-        auto& container = gui_elements.data.acquire();
+        auto& container = graphical_queue.data.acquire();
 
         for(auto& element: container){
            element->render(sdl_renderer);
         }
 
-        gui_elements.data.release();
-
+		graphical_queue.data.release();
 
 	}
 
-//	concurrent::mutexed_vector<std::shared_ptr<audio_actor> > sound_elements;
-	core::concurrent::mutexed_vector<std::shared_ptr<image_actor> > gui_elements;
-//	concurrent::mutexed_vector<std::shared_ptr<mesh_actor> > spatial_elements;
+	core::concurrent::mutexed_vector<std::shared_ptr<interactive_actor> > interactive_queue;
+	core::concurrent::mutexed_vector<std::shared_ptr<standard_actor>    > standard_queue;
+	core::concurrent::mutexed_vector<std::shared_ptr<graphical_actor>   > graphical_queue;
 
 protected:
 /*	platform::generic::application* application;	*/

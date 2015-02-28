@@ -53,7 +53,6 @@ public:
                 (new standard::simulation::sdl_renderer(window_ptr, -1, SDL_RENDERER_ACCELERATED));
         display_window->window.release();
 
-
     }
 
     virtual void run(){

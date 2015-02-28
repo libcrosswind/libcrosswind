@@ -2,9 +2,7 @@
   "attributes":
   {
     "default-size": [38, 40, 0],
-    "draggable": false,
-    "text-color": [255, 255, 255],
-    "animated": false
+    "text-color": [255, 255, 255]
   },
 
   "textures":
@@ -33,62 +31,6 @@
 		"walk"     :{ "time": 0.750,  "frames": ["walk_1", "walk_2", "walk_3", "walk_4", "walk_5", "walk_6"] },
     "run"      :{ "time": 0.500,  "frames": ["run_1", "run_2", "run_3", "run_4"]   }
 	},
-
-  "events":
-  {
-    "on_mouse_up":
-    {
-      "what"        : "none",
-      "action"      : "none",
-      "which"       : "none",
-      "parameters"  : [null]
-    },
-
-    "on_mouse_down":
-    {
-      "what"        : "none",
-      "action"      : "none",
-      "which"       : "none",
-      "parameters"  : [null]
-    },
-
-    "on_mouse_over":
-    {
-      "what"        : "none",
-      "action"      : "none",
-      "which"       : "none",
-      "parameters"  : [null]
-    },
-
-    "on_mouse_out":
-    {
-      "what"        : "none",
-      "action"      : "none",
-      "which"       : "none",
-      "parameters"  : [null]
-    }
-  },
-
-  "conditions":
-  {
-    "animation":
-    {
-      "name"        : "on",
-      "triggers"    : "start",
-      "what"        : "animation",
-      "which"       : "off",
-      "parameters"  : [null]
-    },
-
-    "event":
-    {
-      "name"        : "on_mouse_down",
-      "triggers"    : "start",
-      "what"        : "animation",
-      "which"       : "on",
-      "parameters"  : [null]
-    }
-  },
 
   "properties":
   {
