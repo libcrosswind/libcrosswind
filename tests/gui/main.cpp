@@ -1,27 +1,26 @@
-#include <crosswind/core/javascript/json.hpp>
-
-#include <crosswind/platform/generic/application.hpp>
+#include <crosswind/platform/application.hpp>
+#include <crosswind/platform/filesystem.hpp>
 
 int main(int argc, char **argv) {
-    cw::platform::generic::filesystem::add_directory("assets", true);
+    cw::platform::filesystem::add_directory("assets", true);
 
-    cw::platform::generic::application app;
+    cw::platform::application app;
 
     app.init();
 
-    class dummy_stage: public cw::standard::simulation::stage{
+    class dummy_stage: public cw::simulation::stage{
     public:
-        dummy_stage(std::shared_ptr<cw::standard::simulation::sdl_renderer> renderer)
-                :cw::standard::simulation::stage(renderer){
+        dummy_stage(std::shared_ptr<cw::platform::sdl::sdl_renderer> renderer)
+                cw::simulation::stage(renderer){
 
             auto renderer_ptr = sdl_renderer->renderer.acquire();
 
-            cw::standard::geometry::point<int> pos(10, 10);
-            cw::standard::geometry::point<int> dim(150, 40);
+            cw::geometry::point<int> pos(10, 10);
+            cw::geometry::point<int> dim(150, 40);
 
             gui_elements.push_back
-                    (std::shared_ptr<cw::standard::simulation::interactive_actor>
-                            (new cw::standard::simulation::interactive_actor(pos, dim, "sprite_blue_button.json", renderer_ptr)));
+                    (std::shared_ptr<cw::simulation::interactive_image>
+                            (new cw::simulation::interactive_actor(pos, dim, "sprite_blue_button.json", renderer_ptr)));
 
             pos.x = 180;
             pos.y = 180;
@@ -30,14 +29,14 @@ int main(int argc, char **argv) {
             dim.y = 80;
 
             gui_elements.push_back
-                    (std::shared_ptr<cw::standard::simulation::standard_actor>
-                            (new cw::standard::simulation::standard_actor(pos, dim, "sonic.json", renderer_ptr)));
+                    (std::shared_ptr<cw::simulation::standard_image>
+                            (new cw::simulation::standard_actor(pos, dim, "sonic.json", renderer_ptr)));
 
             sdl_renderer->renderer.release();
         }
     };
 
-    app.stages("current", std::shared_ptr<cw::standard::simulation::stage>(new dummy_stage(app.sdl_renderer)));
+    app.stages("current", std::shared_ptr<cw::simulation::stage>(new dummy_stage(app.sdl_renderer)));
 
     app.run();
 

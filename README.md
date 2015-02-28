@@ -7,10 +7,23 @@ Current status:
 - [ ] Stable
 
 Current modules:
-- [x] core (lacks javascript interpreter)
-- [ ] platform (needs work with gui and widgets)
-- [ ] standard (almost finished)
-- [ ] trivial  (needs to be rearranged)
+- [ ] audio      -
+- [ ] concurrent - atomic_property, mutex_property, mutex_container, hollow_property, resource_property
+- [ ] container  - cacheable
+- [ ] crypto     - base64, sha1
+- [ ] database   - sqlite
+- [ ] drawing    - 
+- [ ] event      - queue
+- [ ] functional - delegate
+- [ ] geometry   - point, rectangle, box
+- [ ] javascript - json
+- [ ] math       - clamp, vector2, vector 3
+- [ ] network    - 
+- [ ] platform   - application, filesystem
+- [ ] simulation - stage, standard_image, interactive_image
+- [ ] trivial    - this module is used internally by other modules
+- [ ] video      -
+
 
 Crosswind is a toolset that aims to integrate high level C++14 functions for fast app development.
 Intended to be header-only with minimal dependencies. 

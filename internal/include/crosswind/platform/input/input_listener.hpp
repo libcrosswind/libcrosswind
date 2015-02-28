@@ -1,6 +1,6 @@
 #pragma once
 
-#include <crosswind/core/functional/delegate.hpp>
+#include <crosswind/functional/delegate.hpp>
 
 namespace cw{
 namespace platform{
