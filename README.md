@@ -44,7 +44,7 @@ Current supported platforms:
 - [ ] Blackberry
 
 Roadmap:
-- [ ] GUI 		  
+- [x] GUI 		  
 - [x] Delegates	
 - [ ] Websockets   
 - [x] Cryptography 
@@ -55,10 +55,10 @@ Roadmap:
 - [ ] 3D
 - [ ] Peripherals
 - [ ] Serial, I2C, GPIO, UART, SPI
-- [ ] Audio
+- [x] Audio
 - [ ] Video
 - [ ] SRTP
-- [ ] DB 
+- [x] DB 
 - [ ] Bindings with other languages.
 
 
