@@ -68,15 +68,15 @@ public:
 	void add(std::shared_ptr<T> actor){
 
 		if(std::is_base_of<detail::interactive_actor, T>()){
-			add(actor);
+			add(std::dynamic_pointer_cast<detail::interactive_actor>(actor));
 		}
 
 		if(std::is_base_of<detail::standard_actor, T>()){
-			add(actor);
+			add(std::dynamic_pointer_cast<detail::standard_actor>(actor));
 		}
 		
 		if(std::is_base_of<detail::graphical_actor, T>()){
-			add(actor);
+			add(std::dynamic_pointer_cast<detail::graphical_actor>(actor));
 		}
 	}
 

@@ -20,8 +20,7 @@ int main(int argc, char **argv) {
             cw::geometry::point<int> pos(10, 10);
             cw::geometry::point<int> dim(150, 40);
 
-            add(std::shared_ptr<cw::simulation::interactive_image>
-                    (new cw::simulation::interactive_image(pos, dim, sdl_renderer, "sprite_blue_button.json")));
+            add(std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "sprite_blue_button.json"));
 
             pos.x = 180;
             pos.y = 180;
@@ -29,14 +28,13 @@ int main(int argc, char **argv) {
             dim.x = 76;
             dim.y = 80;
 
-            add(std::shared_ptr<cw::simulation::standard_image>
-                    (new cw::simulation::standard_image(pos, dim, sdl_renderer, "sonic.json")));
+            add(std::make_shared<cw::simulation::standard_image>(pos, dim, sdl_renderer, "sonic.json"));
 
 
         }
     };
 
-    app.stages("current", std::shared_ptr<cw::simulation::stage>(new dummy_stage(app.sdl_renderer)));
+    app.stages("current", std::make_shared<dummy_stage>(app.sdl_renderer));
 
     app.run();
 
