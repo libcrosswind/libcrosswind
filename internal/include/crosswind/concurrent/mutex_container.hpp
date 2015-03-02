@@ -85,33 +85,13 @@ public:
 template<class T>
 class cw::concurrent::mutex_vector: public cw::concurrent::mutex_container<std::vector<T> >{
 public:
-    template<typename U>
-    void push_back(const U& element){
-        push_back(is_pushable<U>{}, element);
-    }
-
-    template<typename U>
-    void push_back(std::true_type, const U& element){
+    void push_back(const T& element){
         auto& container = this->data.acquire();
 
         container.push_back(element);
 
         this->data.release();
     }
-
-    template<typename U>
-    void push_back( std::false_type, const U& element ) {
-
-    }
-
-
-
-private:
-    template<typename U>
-    struct is_pushable : public std::false_type {};
-
-    template<typename A>
-    struct is_pushable<std::vector<T, A> > : public std::true_type {};
 
 };
 

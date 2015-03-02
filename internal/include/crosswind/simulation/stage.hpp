@@ -62,20 +62,34 @@ public:
 
 	}
 
+
+
 	template<typename T>
 	void add(std::shared_ptr<T> actor){
 
 		if(std::is_base_of<detail::interactive_actor, T>()){
-			interactive_queue.push_back(actor);
+			add(actor);
 		}
 
 		if(std::is_base_of<detail::standard_actor, T>()){
-			standard_queue.push_back(actor);
+			add(actor);
 		}
 		
 		if(std::is_base_of<detail::graphical_actor, T>()){
-			graphical_queue.push_back(actor);
+			add(actor);
 		}
+	}
+
+	void add(std::shared_ptr<detail::interactive_actor> actor){
+		interactive_queue.push_back(actor);
+	}
+
+	void add(std::shared_ptr<detail::standard_actor> actor){
+		standard_queue.push_back(actor);
+	}
+
+	void add(std::shared_ptr<detail::graphical_actor> actor){
+		graphical_queue.push_back(actor);
 	}
 
 protected:
