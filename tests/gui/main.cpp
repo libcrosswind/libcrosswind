@@ -71,8 +71,6 @@ int main(int argc, char **argv) {
             btn_play_audio->on_mouse_down += [sdl_audio_system](){
                 sdl_audio_system->play_music("marble");
             };
-
-
         }
 
     private:

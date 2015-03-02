@@ -1,5 +1,10 @@
 Requirements:
 
+General:
+CMake
+http://www.cmake.org/download/
+Download, install and ensure it is added to PATH
+
 Windows:
 
 MSYS (required for building sdl)
