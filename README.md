@@ -7,21 +7,21 @@ Current status:
 - [ ] Stable
 
 Current modules:
-- [ ] audio      - ogg
-- [ ] concurrent - atomic_property, mutex_property, mutex_container, hollow_property, resource_property
-- [ ] container  - cacheable
-- [ ] crypto     - base64, sha1
+- [x] audio      - ogg, wav
+- [x] concurrent - atomic_property, mutex_property, mutex_container, hollow_property, resource_property
+- [x] container  - cacheable
+- [x] crypto     - base64, sha1
 - [ ] database   - sqlite
 - [ ] drawing    - rgb, rgba
 - [ ] event      - queue
-- [ ] functional - delegate
+- [x] functional - delegate
 - [ ] geometry   - point, rectangle, box
-- [ ] javascript - json
-- [ ] math       - clamp, vector2, vector 3
+- [x] javascript - json
+- [x] math       - clamp, vector2, vector 3
 - [ ] network    - 
-- [ ] platform   - application, filesystem
-- [ ] simulation - stage, standard_image, interactive_image
-- [ ] trivial    - this module is used internally by other modules
+- [x] platform   - application, filesystem
+- [x] simulation - stage, standard_image, interactive_image
+- [x] trivial    - this module is used internally by other modules
 - [ ] video      -
 
 
@@ -39,7 +39,7 @@ Current dependencies:
 - [x] SDL_mixer
 - [x] SQLite3
 - [ ] OpenCV
-- [ ] Bullet3
+- [x] Bullet3
 
 ASIO, jsoncons and SQLite3 are not required to be built, they are configured to be header-only. For the rest of the dependencies you can run the build scripts from inside the setup folder via sh {script}.sh. 
 SDL2 does not build with haptics support with mingw32, as it seems, you need to build with mingw64 for haptics to be enabled. Until a workaround is found you have to stick with mingw64 based builds.
@@ -57,32 +57,32 @@ Current supported platforms:
 - [ ] Blackberry
 
 Roadmap:
-- [x] GUI 		  
-- [x] Delegates	
-- [ ] Websockets   
+- [ ] 3D
+- [x] Audio
+- [ ] Bindings
+- [x] DB 
+- [x] Concurrency  
 - [x] Cryptography 
+- [x] Delegates	
+- [x] GUI 		  
+- [ ] Websockets   
 - [x] Filesystem   
 - [x] JSON		   
-- [x] Concurrency  
 - [ ] Javascript
-- [ ] 3D
 - [ ] Peripherals
 - [ ] Serial, I2C, GPIO, UART, SPI
-- [x] Audio
-- [ ] Video
 - [ ] SRTP
-- [x] DB 
-- [ ] Bindings with other languages.
+- [ ] Video
 
 
 Future releases:
 
 0.2:
 - [x] GUI
+- [x] Audio 
 
 0.3: 
 - [x] Websockets  (ws only)
-- [x] Audio 
 
 0.4:
 - [x] DB (SQLite)
