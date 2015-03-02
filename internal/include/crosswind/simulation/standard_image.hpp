@@ -33,11 +33,10 @@ public:
         for (auto t = raw_json["textures"].begin_members(); t != raw_json["textures"].end_members(); ++t)
         {
             std::string path = t->value().as<std::string>();
-            auto mapping = std::shared_ptr<detail::texture_mapping>(new detail::texture_mapping());
+            auto mapping = std::make_shared<detail::texture_mapping>();
             auto renderer_ptr = sdl_renderer->renderer.acquire();
             
-            mapping->texture = std::shared_ptr<platform::sdl::sdl_texture>
-            (new platform::sdl::sdl_texture(renderer_ptr, path.c_str()));
+            mapping->texture = std::make_shared<platform::sdl::sdl_texture>(renderer_ptr, path.c_str());
 
             sdl_renderer->renderer.release();
             store_graphical_item(textures, t->name(), mapping);
@@ -52,9 +51,9 @@ public:
                 int w = cord->value()[2].as<int>();
                 int h = cord->value()[3].as<int>();
 
-                auto mapping =  std::shared_ptr<detail::sprite_mapping>(new detail::sprite_mapping());
+                auto mapping =  std::make_shared<detail::sprite_mapping>();
                 mapping->name = cord->name();
-                mapping->clip = std::shared_ptr<geometry::rectangle<int> >(new geometry::rectangle<int>(x, y, w, h));
+                mapping->clip = std::make_shared<geometry::rectangle<int> >(x, y, w, h);
                 store_graphical_item(sprites, s->name(), mapping);
 
             }
@@ -69,7 +68,7 @@ public:
                 frames.push_back(f->as<std::string>());
 			}
 
-            auto mapping = std::shared_ptr<detail::animation_mapping>(new detail::animation_mapping());
+            auto mapping = std::make_shared<detail::animation_mapping>();
             mapping->duration = a->value()["time"].as<double>();
             mapping->frames = frames;
 

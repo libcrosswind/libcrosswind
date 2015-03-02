@@ -27,7 +27,7 @@ public:
 
 	    for (auto e = raw_json["events"].begin_members(); e != raw_json["events"].end_members(); ++e)
         {
-            auto mapping = std::shared_ptr<detail::event_mapping>(new detail::event_mapping());
+            auto mapping = std::make_shared<detail::event_mapping>();
             mapping->what = e->value()["what"].as<std::string>();
             mapping->action = e->value()["action"].as<std::string>();
             mapping->which = e->value()["which"].as<std::string>();

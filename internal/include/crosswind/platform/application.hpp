@@ -51,8 +51,7 @@ public:
 
         auto window_ptr = display_window->window.acquire();
 
-        sdl_renderer = std::shared_ptr<sdl::sdl_renderer>
-        (new sdl::sdl_renderer(window_ptr, -1, SDL_RENDERER_ACCELERATED));
+        sdl_renderer = std::make_shared<sdl::sdl_renderer>(window_ptr, -1, SDL_RENDERER_ACCELERATED);
         
         display_window->window.release();
 
