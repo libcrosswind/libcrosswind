@@ -3,6 +3,7 @@
 #include <memory>
 #include <type_traits>
 
+#include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/concurrent/mutex_container.hpp>
 #include <crosswind/platform/sdl/sdl_renderer.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
@@ -23,6 +24,9 @@ public:
 	stage()/*: application(app)*/{
 
 	}
+
+    virtual void init(std::shared_ptr<cw::platform::sdl::sdl_renderer> sdl_renderer,
+            std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system) = 0;
 
 	virtual void handle_stage_events(){
 
@@ -91,6 +95,8 @@ public:
 	void add(std::shared_ptr<detail::graphical_actor> actor){
 		graphical_queue.push_back(actor);
 	}
+
+    concurrent::mutex_property<std::string> name;
 
 protected:
 	concurrent::mutex_vector<std::shared_ptr<detail::interactive_actor> > interactive_queue;

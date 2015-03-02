@@ -2,7 +2,10 @@
 
 #include <SDL2/SDL_mixer.h>
 
+#include <crosswind/concurrent/mutex_container.hpp>
+#include <crosswind/platform/sdl/sdl_music.hpp>
 #include <crosswind/platform/sdl/sdl_exception.hpp>
+
 
 namespace cw{
 namespace platform{
@@ -28,7 +31,59 @@ public:
     	Mix_Quit();
 	}
 
+	void load_music(const std::string& name, const std::string& path){
 
+			bgm_tracks(name, std::make_shared<sdl_music>(path));
+
+	}
+
+
+	void play_music(const std::string& name){
+
+		if(Mix_PlayingMusic() == 0){ 					// If there is no music playing
+			auto track = bgm_tracks(name);
+			auto track_ptr = track->music.acquire();
+
+			Mix_PlayMusic(track_ptr, -1);				// Play the music
+
+			track->music.release();
+
+		} else {										// There is music playing
+			stop_music();								// Stop the music
+
+			auto track = bgm_tracks(name);
+			auto track_ptr = track->music.acquire();
+
+			Mix_PlayMusic(track_ptr, -1);				// Play the music
+
+			track->music.release();
+		}
+
+	}
+
+	void pause_music(){
+
+		Mix_PausedMusic() == 1 ? // If the music is paused
+        Mix_ResumeMusic()	   : // Resume the music, else
+		Mix_PauseMusic ();    	 // Pause the music        		
+
+	}
+
+
+	void resume_music(){
+
+ 		if(Mix_PausedMusic() == 1){// If the music is paused
+            //Resume the music
+            Mix_ResumeMusic();
+        } 
+	}
+
+	void stop_music(){
+        Mix_HaltMusic();// Stop the music
+	}
+
+
+private:
 	// non-copyable
 	sdl_audio_system(const sdl_audio_system& other) = delete;
 	sdl_audio_system& operator=(const sdl_audio_system& other) = delete;
@@ -39,4 +94,6 @@ public:
 
 	// non-default
 	sdl_audio_system() = delete;
+
+    concurrent::mutex_map<std::string, std::shared_ptr<sdl_music> > bgm_tracks;
 };// class sdl_audio_system

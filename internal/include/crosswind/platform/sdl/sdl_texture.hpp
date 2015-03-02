@@ -24,4 +24,5 @@ public:
 	}
 
 	concurrent::resource_property<SDL_Texture> data;
+	
 };// class sdl_texture

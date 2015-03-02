@@ -54,7 +54,6 @@ public:
         sdl_renderer = std::make_shared<sdl::sdl_renderer>(window_ptr, -1, SDL_RENDERER_ACCELERATED);
         
         display_window->window.release();
-
     }
 
     virtual void run(){
@@ -120,8 +119,14 @@ public:
         sdl_renderer->present();
     }
 
-    concurrent::mutex_map<std::string, std::shared_ptr<simulation::stage> > stages;
-    std::shared_ptr<sdl::sdl_renderer> sdl_renderer;
+    void add_stage(auto stage){
+        stage->init(sdl_renderer, sdl_audio_system);
+        stages(stage->name.get(), stage);
+    }
+
+    void swap_stage(const std::string& previous_stage, const std::string& new_stage){
+        stages(previous_stage, stages(new_stage));
+    }
 
 private:
     double get_delta() {
@@ -139,8 +144,9 @@ private:
 private:
 
     std::shared_ptr< sdl::sdl_core_system  >  sdl_core_system;
-    std::shared_ptr< sdl::sdl_audio_system >  sdl_audio_system;    
     std::shared_ptr< sdl::sdl_image_system >  sdl_image_system;
+    std::shared_ptr< sdl::sdl_renderer     >  sdl_renderer;
+    std::shared_ptr< sdl::sdl_audio_system >  sdl_audio_system;
 
     std::shared_ptr< sdl::sdl_window >  display_window;
 
@@ -151,5 +157,8 @@ private:
     concurrent::atomic_property<bool> running;
 
     std::chrono::high_resolution_clock::time_point previous_delta_time;
+
+    concurrent::mutex_map<std::string, std::shared_ptr<simulation::stage> > stages;
+
 
 };// class application

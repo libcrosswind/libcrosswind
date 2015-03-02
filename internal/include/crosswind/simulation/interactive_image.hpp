@@ -14,32 +14,18 @@ namespace simulation{
 class cw::simulation::interactive_image: public cw::simulation::standard_image, public cw::simulation::detail::interactive_actor{
 public:
 	interactive_image(	const geometry::point<int>& position,
-        	            const geometry::point<int>& size, 
-    	                const std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer,
-	                    const std::string& template_file): standard_image(position, size, sdl_renderer, template_file){
-
-
-		cw::javascript::json json;
- 		json.from_file(template_file);
-
-        auto& raw_json = json.data.acquire();
-
-
-	    for (auto e = raw_json["events"].begin_members(); e != raw_json["events"].end_members(); ++e)
-        {
-            auto mapping = std::make_shared<detail::event_mapping>();
-            mapping->what = e->value()["what"].as<std::string>();
-            mapping->action = e->value()["action"].as<std::string>();
-            mapping->which = e->value()["which"].as<std::string>();
-
-            store_interactive_item(events, e->name(), mapping);
-        }
-
-
-        json.data.release();
-
+        	            const geometry::point<int>& size): standard_image(position, size){
 
 	}
+
+    virtual void init(const std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer,
+            const std::string& template_file) override {
+
+        load_events(template_file);
+        load_image(sdl_renderer, template_file);
+
+    }
+
 
 	void handle_event(SDL_Event* e){
 		//If mouse event happened
@@ -75,12 +61,37 @@ public:
 		}
 	}
 
-    void trigger(std::shared_ptr<detail::event_mapping> event){
-         if(event->what == "animation"){
+
+protected:
+
+    virtual void trigger(std::shared_ptr<detail::event_mapping> event){
+        if(event->what == "animation"){
             if(event->action == "start"){
-				swap_graphical_item(animations, "current", event->which);
+                swap_graphical_item(animations, "current", event->which);
             }
         }
+    }
+
+    virtual void load_events(const std::string& template_file){
+
+        cw::javascript::json json;
+        json.from_file(template_file);
+
+        auto& raw_json = json.data.acquire();
+
+
+        for (auto e = raw_json["events"].begin_members(); e != raw_json["events"].end_members(); ++e)
+        {
+            auto mapping = std::make_shared<detail::event_mapping>();
+            mapping->what = e->value()["what"].as<std::string>();
+            mapping->action = e->value()["action"].as<std::string>();
+            mapping->which = e->value()["which"].as<std::string>();
+
+            store_interactive_item(events, e->name(), mapping);
+        }
+
+
+        json.data.release();
     }
 
 };// class interactive_image
