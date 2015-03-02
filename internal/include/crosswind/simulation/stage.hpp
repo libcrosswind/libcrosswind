@@ -1,11 +1,13 @@
 #pragma once 
 
 #include <memory>
+#include <type_traits>
 
-#include <crosswind/core/concurrent/mutexed_container.hpp>
-#include <crosswind/standard/simulation/standard_actor.hpp>
-#include <crosswind/standard/simulation/interactive_actor.hpp>
-#include <crosswind/standard/simulation/sdl_renderer.hpp>
+#include <crosswind/concurrent/mutex_container.hpp>
+#include <crosswind/platform/sdl/sdl_renderer.hpp>
+#include <crosswind/simulation/detail/standard_actor.hpp>
+#include <crosswind/simulation/detail/interactive_actor.hpp>
+#include <crosswind/simulation/detail/graphical_actor.hpp>
 
 namespace cw{
 namespace simulation{
@@ -69,11 +71,27 @@ public:
 
 	}
 
-	core::concurrent::mutexed_vector<std::shared_ptr<interactive_actor> > interactive_queue;
-	core::concurrent::mutexed_vector<std::shared_ptr<standard_actor>    > standard_queue;
-	core::concurrent::mutexed_vector<std::shared_ptr<graphical_actor>   > graphical_queue;
+	template<typename T>
+	void add(std::shared_ptr<T> actor){
+//		template <class From, class To> struct is_convertible
+		if(std::is_base_of<detail::interactive_actor, T>()){
+			interactive_queue.push_back(actor);
+		}
+
+		if(std::is_base_of<detail::standard_actor, T>()){
+			standard_queue.push_back(actor);
+		}
+		
+		if(std::is_base_of<detail::graphical_actor, T>()){
+			graphical_queue.push_back(actor);
+		}
+	}
+
+	concurrent::mutex_vector<std::shared_ptr<detail::interactive_actor> > interactive_queue;
+	concurrent::mutex_vector<std::shared_ptr<detail::standard_actor>    > standard_queue;
+	concurrent::mutex_vector<std::shared_ptr<detail::graphical_actor>   > graphical_queue;
 
 protected:
 /*	platform::generic::application* application;	*/
-	std::shared_ptr<standard::simulation::sdl_renderer> sdl_renderer;
+	std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer;
 };// class stage

@@ -5,85 +5,51 @@
 
 #include <SDL2/SDL_events.h>
 
-#include <crosswind/core/concurrent/mutexed_map.hpp>
+#include <crosswind/concurrent/mutex_container.hpp>
+#include <crosswind/simulation/detail/mapping/event_mapping.hpp>
 
 namespace cw{
 namespace simulation{
+namespace detail{
 
 	class interactive_actor;
 
+}// namespace detail
 }// namespace simulation
 }// namespace cw
 
 
-class cw::simulation::interactive_actor{
+class cw::simulation::detail::interactive_actor{
 public:
 	interactive_actor(){
 
 	}
 
-	virtual void handle_event(SDL_Event* e){
+	virtual void handle_event(SDL_Event* e) = 0;
+ 
+    virtual void trigger(std::shared_ptr<event_mapping> event) = 0;
 
-		//If mouse event happened
-		if(e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP ){
-			//Get mouse position
-			int x, y;
-			SDL_GetMouseState( &x, &y );
+    template<typename T, typename U>
+    void store_interactive_item(T& mm, const std::string& name, std::shared_ptr<U> new_Item){
+        auto& container = mm.data.acquire();
 
-			if(bounds.contains_xy(x, y)){ //Mouse is inside button
-				//Set mouse over sprite
-				switch(e->type){
+        container[name] = new_Item;
 
-					case SDL_MOUSEMOTION:
-                        trigger(events("on_mouse_over"));
-					break;
-				
-					case SDL_MOUSEBUTTONDOWN:
-                        trigger(events("on_mouse_down"));
-					break;
-					
-					case SDL_MOUSEBUTTONUP:
-                        trigger(events("on_mouse_up"));
-					break;
-
-				}
-
-			} else {//Mouse is outside button
-                trigger(events("on_mouse_out"));
-			}
-
-		}
-	}
-
-    virtual void trigger(std::shared_ptr< event_mapping > event){
-
-         if(event->what == "animation"){
-            if(event->action == "start"){
-                //swap_animation("current", event->which);
-            }
-        }
+        mm.data.release();
     }
 
-    void load_event(const std::string& name, std::shared_ptr<event_mapping> new_event){
-        auto& e = events.data.acquire();
+    template<typename T>
+    void swap_interactive_item(T& mm, const std::string& previous_item, const std::string& new_Item){
+        auto& container = mm.data.acquire();
 
-        e[name] = new_event;
-
-        events.data.release();
-    }
-
-    void swap_event(const std::string& previous_event, const std::string& new_event){
-        auto& e = events.data.acquire();
-
-        if(e[previous_event] != e[new_event]){
-            e[previous_event] = e[new_event];
+        if(container[previous_item] != container[new_Item]){
+            container[previous_item] = container[new_Item];
         }
 
-        events.data.release();
+        mm.data.release();
     }
 
-private:
-    core::concurrent::mutexed_map<std::string, std::shared_ptr< event_mapping     > > events;
-
-   // core::functional::delegate<void> on_mouse_click;
+protected:
+    concurrent::mutex_map<std::string, std::shared_ptr<event_mapping> > events;
+   // functional::delegate<void> on_mouse_click;
 };// class image_actor

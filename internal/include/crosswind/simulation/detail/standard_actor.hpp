@@ -22,6 +22,6 @@ public:
 
 	virtual void update(double delta)= 0;
 
-private:
+protected:
     float delta_count;
 };// class standard_actor

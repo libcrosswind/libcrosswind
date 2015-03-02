@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <crosswind/geometry/point.hpp>
-#include <crosswind/concurrent/mutexed_property.hpp>
+#include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/concurrent/hollow_property.hpp>
 
 namespace cw {
@@ -144,8 +144,8 @@ public:
 		return *this;
 	}
 	
-	concurrent::mutexed_property<point<T> > position;
-	concurrent::mutexed_property<point<T> > size;
+	concurrent::mutex_property<point<T> > position;
+	concurrent::mutex_property<point<T> > size;
 	concurrent::hollow_property<T> right_bound;
 	concurrent::hollow_property<T> bottom_bound;
 };

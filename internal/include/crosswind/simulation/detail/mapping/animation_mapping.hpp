@@ -4,7 +4,6 @@
 #include <string>
 
 namespace cw{
-namespace standard{
 namespace simulation{
 namespace detail{
 
@@ -12,10 +11,9 @@ class animation_mapping;
 
 }// namespace detail
 }// namespace simulation	
-}// namespace standard
 }// namespace cw
 
-class cw::standard::simulation::detail::animation_mapping{
+class cw::simulation::detail::animation_mapping{
 public:
     animation_mapping(){
         current_frame = 0;

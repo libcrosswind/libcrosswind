@@ -6,6 +6,7 @@
 #include <SDL2/SDL_render.h>
 
 #include <crosswind/concurrent/resource_property.hpp>
+#include <crosswind/geometry/rectangle.hpp>
 #include <crosswind/platform/sdl/sdl_exception.hpp>
 #include <crosswind/platform/sdl/sdl_texture.hpp>
 

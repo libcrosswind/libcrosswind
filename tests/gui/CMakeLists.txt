@@ -37,6 +37,17 @@ set_target_properties(gui
     RUNTIME_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/bin"
 )
 
-target_link_libraries (gui LINK_PUBLIC mingw32 SDL2main SDL2 SDL2_image SDL2_ttf freetype jpeg png z winmm imm32 version)
+set(SDL2_libs        SDL2main SDL2 winmm imm32 version)
+set(SDL2_image_libs  SDL2_image jpeg png z)
+set(SDL2_ttf_libs    SDL2_ttf freetype)
+set(SDL2_mixer_libs  SDL2_mixer vorbisenc vorbisfile vorbis ogg)
+set(win32_libs       winmm imm32 version)
+
+target_link_libraries (gui LINK_PUBLIC mingw32
+                                                ${SDL2_libs}
+                                                ${SDL2_image_libs}
+                                                ${SDL2_ttf_libs}
+                                                ${SDL2_mixer_libs}
+                                                ${win32_libs})
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)

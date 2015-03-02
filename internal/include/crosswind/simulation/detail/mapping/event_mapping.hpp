@@ -5,7 +5,6 @@
 #include <utility>
 
 namespace cw{
-namespace standard{
 namespace simulation{
 namespace detail{
 
@@ -13,11 +12,10 @@ namespace detail{
 
 }// namespace detail
 }// namespace simulation
-}// namespace standard
 }// namespace cw
 
 
-class cw::standard::simulation::detail::event_mapping{
+class cw::simulation::detail::event_mapping{
 public:
     std::string what;
     std::string action;

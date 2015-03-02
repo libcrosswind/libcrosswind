@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
 
 #include <crosswind/platform/sdl/sdl_exception.hpp>
 

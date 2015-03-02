@@ -6,14 +6,16 @@
 #include <crosswind/concurrent/atomic_property.hpp>
 #include <crosswind/concurrent/mutex_property.hpp>
 
+#include <crosswind/geometry/rectangle.hpp>
+
 #include <crosswind/platform/sdl/sdl_core_system.hpp>
 #include <crosswind/platform/sdl/sdl_audio_system.hpp>
 #include <crosswind/platform/sdl/sdl_image_system.hpp>
 #include <crosswind/platform/sdl/sdl_renderer.hpp>
 #include <crosswind/platform/sdl/sdl_window.hpp>
 
-#include <crosswind/geometry/rectangle.hpp>
 #include <crosswind/simulation/stage.hpp>
+
 
 namespace cw{
 namespace platform{
@@ -26,7 +28,7 @@ namespace platform{
 class cw::platform::application{
 public:
     application(): 
-    bounds(0, 0, 640, 480),
+    bounds(new geometry::rectangle<int>(0, 0, 640, 480)),
     title("Main window"),
     sdl_core_system (new sdl::sdl_core_system ( SDL_INIT_VIDEO | SDL_INIT_AUDIO    )),
     sdl_audio_system(new sdl::sdl_audio_system( 44100, MIX_DEFAULT_FORMAT, 2, 2048 )), 
@@ -37,7 +39,7 @@ public:
 
     virtual void init(){
 
-        auto& dim = bounds.size.acquire();
+        auto& dim = bounds->size.acquire();
 
         display_window = std::shared_ptr<sdl::sdl_window>(new sdl::sdl_window(title.get().c_str(),
                 SDL_WINDOWPOS_UNDEFINED,
@@ -45,7 +47,7 @@ public:
                 dim.x, dim.y,
                 SDL_WINDOW_RESIZABLE));
 
-        bounds.size.release();
+        bounds->size.release();
 
         auto window_ptr = display_window->window.acquire();
 
@@ -69,7 +71,6 @@ public:
 
             auto begin_frame = std::chrono::high_resolution_clock::now();
 
-            handle_application_events();
             handle_input_events();
             handle_update();
             handle_rendering();

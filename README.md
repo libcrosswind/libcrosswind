@@ -7,12 +7,12 @@ Current status:
 - [ ] Stable
 
 Current modules:
-- [ ] audio      -
+- [ ] audio      - ogg
 - [ ] concurrent - atomic_property, mutex_property, mutex_container, hollow_property, resource_property
 - [ ] container  - cacheable
 - [ ] crypto     - base64, sha1
 - [ ] database   - sqlite
-- [ ] drawing    - 
+- [ ] drawing    - rgb, rgba
 - [ ] event      - queue
 - [ ] functional - delegate
 - [ ] geometry   - point, rectangle, box

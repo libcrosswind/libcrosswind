@@ -1,8 +1,11 @@
 #pragma once
 
-#include <crosswind/core/javascript/json.hpp>
+#include <crosswind/javascript/json.hpp>
 #include <crosswind/platform/sdl/sdl_renderer.hpp>
-#include <crosswind/standard/drawing/texture.hpp>
+#include <crosswind/platform/sdl/sdl_texture.hpp>
+#include <crosswind/simulation/detail/object.hpp>
+#include <crosswind/simulation/detail/standard_actor.hpp>
+#include <crosswind/simulation/detail/graphical_actor.hpp>
 
 namespace cw{
 namespace simulation{
@@ -19,10 +22,10 @@ class cw::simulation::standard_image: public cw::simulation::detail::object,
 public:
 	standard_image( const geometry::point<int>& position,
                     const geometry::point<int>& size, 
-                    const auto& renderer,
+                    const std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer,
                     const std::string& template_file): object(position, size){
 
-		cw::core::javascript::json json;
+		cw::javascript::json json;
  		json.from_file(template_file);
 
         auto& raw_json = json.data.acquire();
@@ -30,9 +33,14 @@ public:
         for (auto t = raw_json["textures"].begin_members(); t != raw_json["textures"].end_members(); ++t)
         {
             std::string path = t->value().as<std::string>();
-            auto mapping = std::shared_ptr<texture_mapping>(new texture_mapping());
-            mapping->texture = std::shared_ptr<drawing::sdl_texture>(new drawing::sdl_texture(renderer, path.c_str()));
-            load_texture(t->name(), mapping);
+            auto mapping = std::shared_ptr<detail::texture_mapping>(new detail::texture_mapping());
+            auto renderer_ptr = sdl_renderer->renderer.acquire();
+            
+            mapping->texture = std::shared_ptr<platform::sdl::sdl_texture>
+            (new platform::sdl::sdl_texture(renderer_ptr, path.c_str()));
+
+            sdl_renderer->renderer.release();
+            store_graphical_item(textures, t->name(), mapping);
         }
 
         for (auto s = raw_json["sprites"].begin_members(); s != raw_json["sprites"].end_members(); ++s)
@@ -44,10 +52,10 @@ public:
                 int w = cord->value()[2].as<int>();
                 int h = cord->value()[3].as<int>();
 
-                auto mapping =  std::shared_ptr<sprite_mapping>(new sprite_mapping());
+                auto mapping =  std::shared_ptr<detail::sprite_mapping>(new detail::sprite_mapping());
                 mapping->name = cord->name();
                 mapping->clip = std::shared_ptr<geometry::rectangle<int> >(new geometry::rectangle<int>(x, y, w, h));
-                load_sprite(s->name(), mapping);
+                store_graphical_item(sprites, s->name(), mapping);
 
             }
 
@@ -61,15 +69,15 @@ public:
                 frames.push_back(f->as<std::string>());
 			}
 
-            auto mapping = std::shared_ptr<animation_mapping>(new animation_mapping());
+            auto mapping = std::shared_ptr<detail::animation_mapping>(new detail::animation_mapping());
             mapping->duration = a->value()["time"].as<double>();
             mapping->frames = frames;
 
-            load_animation(a->name(), mapping);
+            store_graphical_item(animations, a->name(), mapping);
         }
 
-        swap_animation("current", raw_json["properties"]["default-animation"].as<std::string>());
-        swap_texture("current", raw_json["properties"]["default-texture"].as<std::string>());
+        swap_graphical_item(animations, "current", raw_json["properties"]["default-animation"].as<std::string>());
+        swap_graphical_item(textures,   "current", raw_json["properties"]["default-texture"].as<std::string>());
 
         json.data.release();
 
@@ -92,13 +100,12 @@ public:
             }
         }
 
-        sprites.swap("current", a["current"]->frames[a["current"]->current_frame]);
+        swap_graphical_item(sprites, "current", a["current"]->frames[a["current"]->current_frame]);
 
         animations.data.release();
     }
 
-
-	virtual void render(auto sdl_renderer){
+	virtual void render(std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer){
 
 		auto& m = textures.data.acquire();
 		auto& s = sprites.data.acquire();
@@ -108,9 +115,4 @@ public:
 		sprites.data.release();
 		textures.data.release();
 	}
-
-private:
-    core::container::cacheable<std::string, std::shared_ptr< texture_mapping   > > textures;
-    core::container::cacheable<std::string, std::shared_ptr< sprite_mapping    > > sprites;
-    core::container::cacheable<std::string, std::shared_ptr< animation_mapping > > animations;
 };

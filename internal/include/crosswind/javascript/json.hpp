@@ -4,7 +4,7 @@
 #include <string>
 #include <jsoncons/json.hpp>
 
-#include <crosswind/concurrent/mutexed_property.hpp>
+#include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/platform/filesystem.hpp>
 
 namespace cw{
@@ -48,6 +48,6 @@ public:
         return has_member;
     }
 
-    concurrent::mutexed_property<jsoncons::json> data;
+    concurrent::mutex_property<jsoncons::json> data;
 
 };// class json

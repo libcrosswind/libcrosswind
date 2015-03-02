@@ -1,5 +1,8 @@
+
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
+
+#include <crosswind/simulation/interactive_image.hpp>
 
 int main(int argc, char **argv) {
     cw::platform::filesystem::add_directory("assets", true);
@@ -10,17 +13,15 @@ int main(int argc, char **argv) {
 
     class dummy_stage: public cw::simulation::stage{
     public:
-        dummy_stage(std::shared_ptr<cw::platform::sdl::sdl_renderer> renderer)
+        dummy_stage(std::shared_ptr<cw::platform::sdl::sdl_renderer> renderer):
                 cw::simulation::stage(renderer){
 
-            auto renderer_ptr = sdl_renderer->renderer.acquire();
 
             cw::geometry::point<int> pos(10, 10);
             cw::geometry::point<int> dim(150, 40);
 
-            gui_elements.push_back
-                    (std::shared_ptr<cw::simulation::interactive_image>
-                            (new cw::simulation::interactive_actor(pos, dim, "sprite_blue_button.json", renderer_ptr)));
+            add(std::shared_ptr<cw::simulation::interactive_image>
+                    (new cw::simulation::interactive_image(pos, dim, sdl_renderer, "sprite_blue_button.json")));
 
             pos.x = 180;
             pos.y = 180;
@@ -28,11 +29,10 @@ int main(int argc, char **argv) {
             dim.x = 76;
             dim.y = 80;
 
-            gui_elements.push_back
+  /*          gui_elements.push_back
                     (std::shared_ptr<cw::simulation::standard_image>
                             (new cw::simulation::standard_actor(pos, dim, "sonic.json", renderer_ptr)));
-
-            sdl_renderer->renderer.release();
+*/
         }
     };
 

@@ -33,8 +33,6 @@ public:
         private_cache = 0x00040000
     };
 
-
-
 public:
     sqlite_database(const std::string &path,
              const access_mode &permissions,

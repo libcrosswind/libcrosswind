@@ -20,23 +20,23 @@ class cw::container::cacheable{
 public:
     typedef std::function<void(std::map<std::string, T>&)> cache_manipulation;
 
-    void store(std::string resource_name, std::string path){
-        cache(resource_name, source(path));
-    }
-
-    void store(std::string resource_name, T data){
+    void store(const std::string& resource_name, const T& data){
         cache(resource_name, data);
     }
 
-    T load(std::string resource_name){
+    T load(const std::string& resource_name){
         return cache(resource_name);
+    }
+
+    void swap(const std::string& previous_resource, const std::string& new_resource){
+        cache(previous_resource, cache(new_resource));
     }
 
     void clear(){
         cache.clear();
     }
 
-    void add_manipulation(std::string name, cache_manipulation manipulation){
+    void add_manipulation(const std::string& name, cache_manipulation manipulation){
         manipulations(name, manipulation);
     }
 
@@ -44,14 +44,12 @@ public:
 
     }
 
-    void apply_manipulation(std::string name){
+    void apply_manipulation(const std::string& name){
         cache.apply(manipulations(name));
     }
 
-    std::function<T(std::string)> source;
 private:
     concurrent::mutex_container<std::map<std::string, T> > cache;
     concurrent::mutex_container<std::map<std::string, cache_manipulation> > manipulations;
-
 };
 
