@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 
             pos.x += dim.x + 10;
 
-            add(std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "green_button.json"));
+            add(std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "blue_button.json"));
 
             pos.x = 180;
             pos.y = 150;
