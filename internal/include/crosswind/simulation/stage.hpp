@@ -29,7 +29,15 @@ public:
             std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system) = 0;
 
 	virtual void handle_stage_events(){
+		auto& container = event_queue.data.acquire();
 
+		for(auto& event : container){
+			event();
+		}
+
+		container.clear();
+
+		event_queue.data.release();
 	}
 	
 	virtual void handle_input(SDL_Event* e){
@@ -96,12 +104,18 @@ public:
 		graphical_queue.push_back(actor);
 	}
 
+	void post_event(const std::function<void()>& event){
+		event_queue.push_back(event);
+	}
+
     concurrent::mutex_property<std::string> name;
 
 protected:
 	concurrent::mutex_vector<std::shared_ptr<detail::interactive_actor> > interactive_queue;
 	concurrent::mutex_vector<std::shared_ptr<detail::standard_actor>    > standard_queue;
 	concurrent::mutex_vector<std::shared_ptr<detail::graphical_actor>   > graphical_queue;
+	concurrent::mutex_vector<std::function<void()> > event_queue;
+
 
 protected:
 /*	platform::generic::application* application;	*/

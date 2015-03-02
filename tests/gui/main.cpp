@@ -57,19 +57,27 @@ int main(int argc, char **argv) {
             sonic->init(sdl_renderer, "sonic.json");
 
             btn_stand->on_mouse_down += [this](){
-                this->sonic->swap_graphical_item(this->sonic->animations, "current", "stand");
+                post_event([this](){
+                    this->sonic->swap_graphical_item(this->sonic->animations, "current", "stand");
+                });
             };
 
             btn_walk->on_mouse_down += [this](){
-                this->sonic->swap_graphical_item(this->sonic->animations, "current", "walk");
+                post_event([this](){
+                    this->sonic->swap_graphical_item(this->sonic->animations, "current", "walk");
+                });
             };
 
             btn_run->on_mouse_down += [this](){
-                this->sonic->swap_graphical_item(this->sonic->animations, "current", "run");
+                post_event([this](){
+                    this->sonic->swap_graphical_item(this->sonic->animations, "current", "run");
+                });
             };
 
-            btn_play_audio->on_mouse_down += [sdl_audio_system](){
-                sdl_audio_system->play_music("marble");
+            btn_play_audio->on_mouse_down += [this, sdl_audio_system](){
+                this->post_event([sdl_audio_system](){
+                    sdl_audio_system->play_music("marble");
+                });
             };
         }
 
