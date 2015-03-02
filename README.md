@@ -13,7 +13,7 @@ Current modules:
 - [x] crypto     - base64, sha1
 - [ ] database   - sqlite
 - [ ] drawing    - rgb, rgba
-- [ ] event      - queue
+- [x] event      - dispatcher (internal only, interface will be added in the next commits)
 - [x] functional - delegate
 - [ ] geometry   - point, rectangle, box
 - [x] javascript - json
