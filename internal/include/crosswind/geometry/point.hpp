@@ -26,6 +26,11 @@ public:
 		y = ny;
 	}
 
+    point(const point<T>& other){
+        x = other.x;
+        y = other.y;
+    }
+
 	bool operator==(const auto& other) const {
 		return x == other.x && y == other.y;
 	}

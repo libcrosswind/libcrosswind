@@ -1,18 +1,69 @@
 {
-    "attributes":
+  "attributes":
+  {
+    "default-size": [190, 49, 0],
+    "text-color": [255, 255, 255]
+  },
+
+  "textures":
+  {
+    "button":"assets/default/graphics/textures/gui/button/blue_button_spritesheet.png"
+  },
+
+  "sprites":
+  {
+    "mouse_up"  :{ "button" : [0, 0,  190, 49] },
+    "mouse_down":{ "button" : [0, 49, 190, 45] },
+    "mouse_over":{ "button" : [0, 0,  190, 49] },
+    "mouse_out" :{ "button" : [0, 0,  190, 49] }
+  },
+
+	"animations":
+	{
+		"on"   :{ "time": 0.100, "frames": ["mouse_down"] },
+    "off"  :{ "time": 0.100, "frames": ["mouse_up"]   },
+    "hover":{ "time": 0.100, "frames": ["mouse_up"]   },
+    "left" :{ "time": 0.100, "frames": ["mouse_up"]   }
+	},
+
+  "events":
+  {
+    "on_mouse_up":
     {
-      "default-size": [32, 16, 0],
-      "draggable": false,
-      "text-color": [255, 255, 255],
-      "animated": false
+      "what"        : "animation",
+      "action"      : "start",
+      "which"       : "off",
+      "parameters"  : [null]
     },
 
-    "textures":
+    "on_mouse_down":
     {
-      "mouse_up":"assets/default/graphics/textures/gui/button/green_button_off.png",
-      "mouse_down":"assets/default/graphics/textures/gui/button/green_button_on.png",
-      "mouse_over":"assets/default/graphics/textures/gui/button/green_button_off.png",
-      "mouse_out":"assets/default/graphics/textures/gui/button/green_button_off.png"
-    }
+      "what"        : "animation",
+      "action"      : "start",
+      "which"       : "on",
+      "parameters"  : [null]
+    },
 
+    "on_mouse_over":
+    {
+      "what"        : "none",
+      "action"      : "none",
+      "which"       : "none",
+      "parameters"  : [null]
+    },
+
+    "on_mouse_out":
+    {
+      "what"        : "animation",
+      "action"      : "start",
+      "which"       : "off",
+      "parameters"  : [null]
+    }
+  },
+
+  "properties":
+  {
+    "default-animation":"off",
+    "default-texture": "button"
+  }
 }

@@ -18,10 +18,14 @@ int main(int argc, char **argv) {
             cw::geometry::point<int> pos(10, 10);
             cw::geometry::point<int> dim(150, 40);
 
-            add(std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "sprite_blue_button.json"));
+            add(std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "blue_button.json"));
+
+            pos.x += dim.x + 10;
+
+            add(std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "green_button.json"));
 
             pos.x = 180;
-            pos.y = 180;
+            pos.y = 150;
 
             dim.x = 76;
             dim.y = 80;
@@ -29,6 +33,11 @@ int main(int argc, char **argv) {
             add(std::make_shared<cw::simulation::standard_image>(pos, dim, sdl_renderer, "sonic.json"));
 
         }
+
+    private:
+        std::shared_ptr<cw::simulation::interactive_image> blue_button;
+        std::shared_ptr<cw::simulation::interactive_image> green_button;
+        std::shared_ptr<cw::simulation::standard_image> sonic;
     };
 
     app->stages("current", std::make_shared<dummy_stage>(app->sdl_renderer));
