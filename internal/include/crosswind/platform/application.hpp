@@ -70,7 +70,8 @@ public:
         while (running.get()) {
 
             auto begin_frame = std::chrono::high_resolution_clock::now();
-
+            
+            handle_application_events();
             handle_input_events();
             handle_update();
             handle_rendering();
@@ -89,6 +90,10 @@ public:
                 SDL_Delay( SCREEN_TICKS_PER_FRAME - frameTicks );
             }
         }
+    }
+
+    void handle_application_events(){
+        stages("current")->handle_stage_events();
     }
 
     void handle_input_events(){

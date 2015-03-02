@@ -29,10 +29,10 @@ int main(int argc, char **argv) {
             dim.x = 76;
             dim.y = 80;
 
-  /*          gui_elements.push_back
-                    (std::shared_ptr<cw::simulation::standard_image>
-                            (new cw::simulation::standard_actor(pos, dim, "sonic.json", renderer_ptr)));
-*/
+            add(std::shared_ptr<cw::simulation::standard_image>
+                    (new cw::simulation::standard_image(pos, dim, sdl_renderer, "sonic.json")));
+
+
         }
     };
 

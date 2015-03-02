@@ -29,13 +29,10 @@ public:
 	}
 	
 	virtual void handle_input(SDL_Event* e){
-/*		gui_elements.iterator([e](auto& element){
-			element->handle_event(e);
-		});*/
 
-        auto& container = interactive_queue.data.acquire();
+		auto& container = interactive_queue.data.acquire();
 
-        for(auto& element: container){
+		for(auto& element: container){
            element->handle_event(e);
         }
 
@@ -43,14 +40,10 @@ public:
 	}
 
 	virtual void update(double delta){
-		handle_stage_events();
-/*		gui_elements.iterator([&delta](auto& element){
-			element->update(delta);
-		});*/
 
         auto& container = standard_queue.data.acquire();
 
-        for(auto& element: container){
+		for(auto& element: container){
            element->update(delta);
         }
 
@@ -58,12 +51,10 @@ public:
 	}
 
 	virtual void render(){
-/*		gui_elements.iterator([sdl_renderer](auto& element){
-			element->render(sdl_renderer);
-		});*/
+
         auto& container = graphical_queue.data.acquire();
 
-        for(auto& element: container){
+		for(auto& element: container){
            element->render(sdl_renderer);
         }
 
@@ -73,7 +64,7 @@ public:
 
 	template<typename T>
 	void add(std::shared_ptr<T> actor){
-//		template <class From, class To> struct is_convertible
+
 		if(std::is_base_of<detail::interactive_actor, T>()){
 			interactive_queue.push_back(actor);
 		}
@@ -87,6 +78,7 @@ public:
 		}
 	}
 
+protected:
 	concurrent::mutex_vector<std::shared_ptr<detail::interactive_actor> > interactive_queue;
 	concurrent::mutex_vector<std::shared_ptr<detail::standard_actor>    > standard_queue;
 	concurrent::mutex_vector<std::shared_ptr<detail::graphical_actor>   > graphical_queue;

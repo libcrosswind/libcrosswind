@@ -49,7 +49,6 @@ public:
         //TODO test with Visual Studio.
         auto result = std::find_if(local_directories.begin(), local_directories.end(),
                 [&](std::string const& directory)  {
-                    std::cout << directory << std::endl;
                     return path[0] != "" ?
                             is_file(directory + "/" + path[0] + "/" + path[1]) ||
                             is_dir(directory + "/" + path[0] + "/" + path[1])
