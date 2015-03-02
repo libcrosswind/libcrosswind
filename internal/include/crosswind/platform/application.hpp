@@ -116,7 +116,7 @@ public:
         sdl_renderer->set_draw_color(0, 0, 0);
         sdl_renderer->clear();
 
-        stages("current")->render();
+        stages("current")->render(sdl_renderer);
 
         sdl_renderer->present();
     }

@@ -20,7 +20,7 @@ namespace simulation{
 
 class cw::simulation::stage{
 public:
-	stage(std::shared_ptr<platform::sdl::sdl_renderer> renderer): sdl_renderer(renderer) /* application(app)*/{
+	stage()/*: application(app)*/{
 
 	}
 
@@ -50,7 +50,7 @@ public:
 		standard_queue.data.release();
 	}
 
-	virtual void render(){
+	virtual void render(std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer){
 
         auto& container = graphical_queue.data.acquire();
 
@@ -99,5 +99,5 @@ protected:
 
 protected:
 /*	platform::generic::application* application;	*/
-	std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer;
+
 };// class stage

@@ -13,8 +13,7 @@ int main(int argc, char **argv) {
 
     class dummy_stage: public cw::simulation::stage{
     public:
-        dummy_stage(std::shared_ptr<cw::platform::sdl::sdl_renderer> renderer):
-                cw::simulation::stage(renderer){
+        dummy_stage(std::shared_ptr<cw::platform::sdl::sdl_renderer> sdl_renderer){
 
 
             cw::geometry::point<int> pos(10, 10);
