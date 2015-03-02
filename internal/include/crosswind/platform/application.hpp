@@ -65,7 +65,6 @@ public:
         running.set(true);
         previous_delta_time = std::chrono::high_resolution_clock::now();
 
-        std::cout << running.get() <<std::endl;
         while (running.get()) {
 
             auto begin_frame = std::chrono::high_resolution_clock::now();

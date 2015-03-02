@@ -78,18 +78,6 @@ public:
 
             };
 
-            on_dimension_set += [this](){
-                std::lock_guard<std::mutex> lock(texture_mutex);
-
-            };
-
-            std::function<void(std::map<std::string, std::shared_ptr<texture> >)>
-                    resize_manipulation = [this](std::map<std::string, std::shared_ptr<texture> > textures){
-                                        for(auto& texture : textures){
-                                            texture.second->resize(this->get_width(), this->get_height());
-                                        }
-            };
-
 
             on_mouse_down += [this](int x, int y, int button){
 
@@ -128,22 +116,6 @@ public:
 
             };
 
-            on_mouse_down += [this](int x, int y, int button){
-
-                for(auto& element : elements){
-                    element->on_mouse_down(x, y, button);
-                }
-
-            };
-
-            on_mouse_move += [this](int x, int y){
-
-                for(auto& element : elements){
-                    element->on_mouse_move(x, y);
-                }
-
-            };
-
             on_mouse_up += [this](int x, int y){
 
                 for(auto& element : elements){
@@ -163,17 +135,8 @@ public:
         }
 
 
-        virtual void update(double delta){
-
-            for(auto& element : elements){
-                element->update(delta);
-            }
-        }
-
 public:
         //Properties
-        atomical_property<bool> draggable;
-        atomical_property<bool> pressed;
         mutexed_property<std::string> name;
 
         detail::text text;
@@ -182,7 +145,6 @@ public:
         input_handler input;
 
         //Delegates
-        delegate<void> on_clicked;
 
     };
 */

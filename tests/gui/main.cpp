@@ -18,11 +18,16 @@ int main(int argc, char **argv) {
             cw::geometry::point<int> pos(10, 10);
             cw::geometry::point<int> dim(150, 40);
 
-            add(std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "blue_button.json"));
-
+            btn_stand = std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "blue_button.json");
             pos.x += dim.x + 10;
+            btn_walk  = std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "blue_button.json");
+            pos.x += dim.x + 10;
+            btn_run   = std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "blue_button.json");
 
-            add(std::make_shared<cw::simulation::interactive_image>(pos, dim, sdl_renderer, "blue_button.json"));
+            add(btn_stand);
+            add(btn_walk);
+            add(btn_run);
+
 
             pos.x = 180;
             pos.y = 150;
@@ -30,13 +35,28 @@ int main(int argc, char **argv) {
             dim.x = 76;
             dim.y = 80;
 
-            add(std::make_shared<cw::simulation::standard_image>(pos, dim, sdl_renderer, "sonic.json"));
+            sonic = std::make_shared<cw::simulation::standard_image>(pos, dim, sdl_renderer, "sonic.json");
+
+            btn_stand->on_mouse_down += [this](){
+                this->sonic->swap_graphical_item(this->sonic->animations, "current", "stand");
+            };
+
+            btn_walk->on_mouse_down += [this](){
+                this->sonic->swap_graphical_item(this->sonic->animations, "current", "walk");
+            };
+
+            btn_run->on_mouse_down += [this](){
+                this->sonic->swap_graphical_item(this->sonic->animations, "current", "run");
+            };
+
+            add(sonic);
 
         }
 
     private:
-        std::shared_ptr<cw::simulation::interactive_image> blue_button;
-        std::shared_ptr<cw::simulation::interactive_image> green_button;
+        std::shared_ptr<cw::simulation::interactive_image> btn_stand;
+        std::shared_ptr<cw::simulation::interactive_image> btn_walk;
+        std::shared_ptr<cw::simulation::interactive_image> btn_run;
         std::shared_ptr<cw::simulation::standard_image> sonic;
     };
 

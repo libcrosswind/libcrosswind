@@ -58,11 +58,13 @@ public:
 				
 					case SDL_MOUSEBUTTONDOWN:
                         trigger(events("on_mouse_down"));
+                        on_mouse_down();
 					break;
 					
 					case SDL_MOUSEBUTTONUP:
                         trigger(events("on_mouse_up"));
-					break;
+                        on_mouse_up();
+                    break;
 
 				}
 

@@ -47,7 +47,6 @@ public:
         mm.data.release();
     }
 
-protected:
     concurrent::mutex_map<std::string, std::shared_ptr< detail::animation_mapping > > animations;
     concurrent::mutex_map<std::string, std::shared_ptr< detail::sprite_mapping    > > sprites;
     concurrent::mutex_map<std::string, std::shared_ptr< detail::texture_mapping   > > textures;

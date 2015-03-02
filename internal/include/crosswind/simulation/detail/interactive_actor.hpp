@@ -6,6 +6,7 @@
 #include <SDL2/SDL_events.h>
 
 #include <crosswind/concurrent/mutex_container.hpp>
+#include <crosswind/functional/delegate.hpp>
 #include <crosswind/simulation/detail/mapping/event_mapping.hpp>
 
 namespace cw{
@@ -49,7 +50,10 @@ public:
         mm.data.release();
     }
 
+public:
+    functional::delegate<void> on_mouse_down;
+    functional::delegate<void> on_mouse_up;
+
 protected:
     concurrent::mutex_map<std::string, std::shared_ptr<event_mapping> > events;
-   // functional::delegate<void> on_mouse_click;
 };// class image_actor
