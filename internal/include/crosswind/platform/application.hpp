@@ -142,7 +142,6 @@ private:
     }
 
 private:
-
     std::shared_ptr< sdl::sdl_core_system  >  sdl_core_system;
     std::shared_ptr< sdl::sdl_image_system >  sdl_image_system;
     std::shared_ptr< sdl::sdl_renderer     >  sdl_renderer;

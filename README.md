@@ -64,6 +64,7 @@ Roadmap:
 - [x] Concurrency  
 - [x] Cryptography 
 - [x] Delegates	
+- [x] Physics
 - [x] GUI 		  
 - [ ] Websockets   
 - [x] Filesystem   
@@ -80,12 +81,14 @@ Future releases:
 0.2:
 - [x] GUI
 - [x] Audio 
+- [x] DB (SQLite)
+- [x] Physics
+
 
 0.3: 
 - [x] Websockets  (ws only)
 
 0.4:
-- [x] DB (SQLite)
 - [x] 3D
 
 0.5:
