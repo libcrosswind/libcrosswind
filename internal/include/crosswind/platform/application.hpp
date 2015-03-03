@@ -25,6 +25,8 @@ namespace platform{
 }// namespace platform
 }// namespace cw
 
+
+
 class cw::platform::application{
 public:
     application(): 

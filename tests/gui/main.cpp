@@ -7,7 +7,6 @@
 int main(int argc, char **argv) {
     cw::platform::filesystem::add_directory("assets", true);
 
-
     auto app = std::make_shared<cw::platform::application>();
     app->init();
 

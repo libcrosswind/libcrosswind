@@ -22,6 +22,7 @@ class cw::simulation::standard_image: public cw::simulation::detail::object,
 public:
 	standard_image( const geometry::point<int>& position,
                     const geometry::point<int>& size): object(position, size){
+
 	}
 
     virtual void init(const std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer,
@@ -65,7 +66,6 @@ public:
 	}
 
 protected:
-
     virtual void load_image(  const std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer,
             const std::string& template_file){
 
