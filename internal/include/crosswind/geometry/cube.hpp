@@ -59,6 +59,14 @@ public:
         vertices.push_back({-s[0]/2, -s[1]/2,  s[2]/2});
         vertices.push_back({-s[0]/2, -s[1]/2, -s[2]/2});
         vertices.push_back({ s[0]/2, -s[1]/2, -s[2]/2});
+
+/*        "front_face"    :[1.0, 0.0, 0.0],
+        "left_face"     :[0.0, 0.0, 1.0],
+        "back_face"     :[1.0, 0.0, 1.0],
+        "right_face"    :[1.0, 1.0, 1.0],
+        "top_face"      :[1.0, 0.0, 1.0],
+        "bottom_face"   :[1.0, 1.0, 0.0],*/
+
 	}
 
 	virtual void update(double delta){

@@ -61,6 +61,8 @@ public:
         sdl_gl_renderer->set_draw_color(0.f, 0.f, 0.f);
 
         display_window->window.release();
+
+        sdl_gl_renderer->set_perspective(45.0, 640.0/480.0, 1.0, 500.0);
     }
 
     virtual void run(){
