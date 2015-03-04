@@ -17,7 +17,7 @@ namespace sdl{
 
 class cw::platform::sdl::sdl_exception{
 public:
-	sdl_exception(const char* function)
+	sdl_exception(const std::string& function)
 		: sdl_function_(function),
 		  sdl_error_(SDL_GetError()),
 		  what_string(sdl_function_ + " failed: " + sdl_error_) {

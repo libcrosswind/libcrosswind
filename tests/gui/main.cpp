@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
         marble_zone(){
 
             this->name.set("marble_zone");
-
+/*
             cw::geometry::point<int> pos(10, 10);
             cw::geometry::point<int> dim(100, 40);
 
@@ -41,15 +41,15 @@ int main(int argc, char **argv) {
             add(btn_walk);
             add(btn_run);
             add(btn_play_audio);
-            add(sonic);
+            add(sonic);*/
         }
 
         virtual void init(std::shared_ptr<cw::platform::sdl::sdl_renderer> sdl_renderer,
                 std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
 
-            sdl_audio_system->load_music("marble", cw::platform::filesystem::get_file_path("marble_zone_bgm.ogg"));
+            //sdl_audio_system->load_music("marble", cw::platform::filesystem::get_file_path("marble_zone_bgm.ogg"));
 
-            btn_stand->init(sdl_renderer, "blue_button.json");
+/*            btn_stand->init(sdl_renderer, "blue_button.json");
             btn_walk->init(sdl_renderer, "blue_button.json");
             btn_run->init(sdl_renderer, "blue_button.json");
             btn_play_audio->init(sdl_renderer, "blue_button.json");
@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
                 this->post_event([sdl_audio_system](){
                     sdl_audio_system->play_music("marble");
                 });
-            };
+            };*/
         }
 
     private:

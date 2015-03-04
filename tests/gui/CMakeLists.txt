@@ -44,6 +44,7 @@ set(SDL2_ttf_libs    SDL2_ttf freetype)
 set(SDL2_mixer_libs  SDL2_mixer vorbisenc vorbisfile vorbis ogg)
 set(win32_libs       winmm imm32 version)
 set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
+set(opengl_libs      glu32 opengl32)
 
 
 target_link_libraries (gui LINK_PUBLIC mingw32
@@ -52,6 +53,7 @@ target_link_libraries (gui LINK_PUBLIC mingw32
                                                 ${SDL2_ttf_libs}
                                                 ${SDL2_mixer_libs}
                                                 ${win32_libs}
-                                                ${bullet3_libbs})
+                                                ${bullet3_libbs}
+                                                ${opengl_libs})
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)

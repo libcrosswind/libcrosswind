@@ -11,10 +11,11 @@
 #include <crosswind/platform/sdl/sdl_core_system.hpp>
 #include <crosswind/platform/sdl/sdl_audio_system.hpp>
 #include <crosswind/platform/sdl/sdl_image_system.hpp>
-#include <crosswind/platform/sdl/sdl_renderer.hpp>
+#include <crosswind/platform/sdl/sdl_gl_renderer.hpp>
 #include <crosswind/platform/sdl/sdl_window.hpp>
 
 #include <crosswind/simulation/stage.hpp>
+
 
 
 namespace cw{
@@ -39,6 +40,7 @@ public:
 
     }
 
+
     virtual void init(){
 
         auto& dim = bounds->size.acquire();
@@ -47,14 +49,17 @@ public:
                 SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED,
                 dim.x, dim.y,
-                SDL_WINDOW_RESIZABLE));
+                SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN));
 
         bounds->size.release();
 
         auto window_ptr = display_window->window.acquire();
 
-        sdl_renderer = std::make_shared<sdl::sdl_renderer>(window_ptr, -1, SDL_RENDERER_ACCELERATED);
-        
+        std::vector<int> gl_version = {2, 1};
+        sdl_gl_renderer = std::make_shared<sdl::sdl_gl_renderer>(gl_version, window_ptr);
+
+        sdl_gl_renderer->set_draw_color(0.f, 0.f, 0.f);
+
         display_window->window.release();
     }
 
@@ -92,7 +97,7 @@ public:
     }
 
     void handle_application_events(){
-        stages("current")->handle_stage_events();
+      //  stages("current")->handle_stage_events();
     }
 
     void handle_input_events(){
@@ -102,28 +107,38 @@ public:
                 running.set(false);
             }
 
-            stages("current")->handle_input(&event);
+          //  stages("current")->handle_input(&event);
 
         }
     }
 
     void handle_update(){
-        stages("current")->update(get_delta());
+     //   stages("current")->update(get_delta());
     }
 
     void handle_rendering(){
 
-        sdl_renderer->set_draw_color(0, 0, 0);
-        sdl_renderer->clear();
+        sdl_gl_renderer->clear();
 
-        stages("current")->render(sdl_renderer);
 
-        sdl_renderer->present();
+        glBegin(GL_TRIANGLES);                      // Drawing Using Triangles
+            glVertex3f( 0.0f, 1.0f, 0.0f);              // Top
+            glVertex3f(-1.0f,-1.0f, 0.0f);              // Bottom Left
+            glVertex3f( 1.0f,-1.0f, 0.0f);              // Bottom Right
+        glEnd();                            // Finished Drawing The Triangle
+
+
+       // stages("current")->render(sdl_renderer);
+        auto window_ptr = display_window->window.acquire();
+
+        sdl_gl_renderer->present(window_ptr);
+
+        display_window->window.release();
     }
 
     void add_stage(auto stage){
-        stage->init(sdl_renderer, sdl_audio_system);
-        stages(stage->name.get(), stage);
+//        stage->init(sdl_gl_renderer, sdl_audio_system);
+//        stages(stage->name.get(), stage);
     }
 
     void swap_stage(const std::string& previous_stage, const std::string& new_stage){
@@ -146,7 +161,7 @@ private:
 private:
     std::shared_ptr< sdl::sdl_core_system  >  sdl_core_system;
     std::shared_ptr< sdl::sdl_image_system >  sdl_image_system;
-    std::shared_ptr< sdl::sdl_renderer     >  sdl_renderer;
+    std::shared_ptr< sdl::sdl_gl_renderer  >  sdl_gl_renderer;
     std::shared_ptr< sdl::sdl_audio_system >  sdl_audio_system;
 
     std::shared_ptr< sdl::sdl_window >  display_window;

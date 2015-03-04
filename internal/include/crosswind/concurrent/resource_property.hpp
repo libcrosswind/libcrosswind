@@ -20,10 +20,14 @@ class cw::concurrent::resource_property{
 public:
 	template<class Creator, class Destructor, class... Arguments>
 	resource_property(Creator c, Destructor d, Arguments&&... args): resource(make_resource(c, d, args...)){
+	
 	}
-
-
-
+/*
+	template<class Creator, class Destructor, class... Arguments>
+	create(Creator c, Destructor d, Arguments&&... args){
+		resource = std::move(make_resource(c, d, args...));
+	}
+*/
 	Resource* acquire(){
         property_mutex.lock();
         return resource.get();
