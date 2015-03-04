@@ -79,6 +79,7 @@ Roadmap:
 Future releases:
 
 0.2:
+- [x] 3D
 - [x] GUI
 - [x] Audio 
 - [x] DB (SQLite)
@@ -89,19 +90,16 @@ Future releases:
 - [x] Websockets  (ws only)
 
 0.4:
-- [x] 3D
-
-0.5:
 - [x] Video
 
-0.6:
+0.5:
 - [x] Websockets (wss)
 - [x] SRTP
 
-0.7:
+0.6:
 - [x] Javascript (interpreter)
 
-0.8:
+0.7:
 - [x] Bindings with other languages.
 
 
