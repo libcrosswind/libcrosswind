@@ -2,7 +2,7 @@
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
 
-#include <crosswind/simulation/interactive_image.hpp>
+#include <crosswind/geometry/cube.hpp>
 
 int main(int argc, char **argv) {
     cw::platform::filesystem::add_directory("assets", true);
@@ -42,9 +42,12 @@ int main(int argc, char **argv) {
             add(btn_run);
             add(btn_play_audio);
             add(sonic);*/
+
+            cube = std::make_shared<cw::geometry::cube>(cw::math::vector3(0.0,0.0,0.0), cw::math::vector3(1.0,1.0,1.0));
+            add(cube);
         }
 
-        virtual void init(std::shared_ptr<cw::platform::sdl::sdl_renderer> sdl_renderer,
+        virtual void init(std::shared_ptr<cw::platform::sdl::sdl_gl_renderer> sdl_gl_renderer,
                 std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
 
             //sdl_audio_system->load_music("marble", cw::platform::filesystem::get_file_path("marble_zone_bgm.ogg"));
@@ -81,12 +84,14 @@ int main(int argc, char **argv) {
         }
 
     private:
-        std::shared_ptr<cw::simulation::interactive_image> btn_stand;
+/*        std::shared_ptr<cw::simulation::interactive_image> btn_stand;
         std::shared_ptr<cw::simulation::interactive_image> btn_walk;
         std::shared_ptr<cw::simulation::interactive_image> btn_run;
         std::shared_ptr<cw::simulation::interactive_image> btn_play_audio;
 
-        std::shared_ptr<cw::simulation::standard_image> sonic;
+        std::shared_ptr<cw::simulation::standard_image> sonic;*/
+
+        std::shared_ptr<cw::geometry::cube> cube;
     };
 
     app->add_stage(std::make_shared<marble_zone>());

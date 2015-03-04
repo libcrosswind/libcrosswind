@@ -1,7 +1,5 @@
 #pragma once
 
-#include <crosswind/geometry/point.hpp>
-#include <crosswind/geometry/rectangle.hpp>
 
 namespace cw{
 namespace simulation{
@@ -15,12 +13,13 @@ namespace detail{
 
 class cw::simulation::detail::object{
 public:
-    object(const geometry::point<int>& position, const geometry::point<int>& size):
-    bounds(position.x, position.y, size.x, size.y){
+    object(const math::vector3& p, const math::vector3& s):
+    position(p), size(s){
 
     }
 
-	geometry::rectangle<int> bounds;
+    math::vector3 position;
+    math::vector3 size;
 };
 
 

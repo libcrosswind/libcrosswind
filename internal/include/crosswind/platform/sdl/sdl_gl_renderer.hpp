@@ -5,11 +5,13 @@
 #include <vector>
 
 #include <SDL2/SDL_opengl.h>
-#include <GL\GLU.h>
+#include <GL/GLU.h>
 
 #include <crosswind/concurrent/resource_property.hpp>
-#include <crosswind/platform/sdl/sdl_exception.hpp>
 #include <crosswind/math/clamp.hpp>
+#include <crosswind/math/vector3.hpp>
+#include <crosswind/platform/sdl/sdl_exception.hpp>
+
 
 namespace cw{
 namespace platform{
@@ -28,56 +30,58 @@ public:
 	sdl_gl_renderer(const std::vector<int>& gl_version, Args... args){
 
 		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, gl_version[0] );
-        SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, gl_version[1] );
+                SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, gl_version[1] );
 
-/*        context = std::make_unique<concurrent::resource_property<void> >
-        (SDL_GL_CreateContext, SDL_GL_DeleteContext, args...);
-*/
+        /*        context = std::make_unique<concurrent::resource_property<void> >
+                (SDL_GL_CreateContext, SDL_GL_DeleteContext, args...);
+        */
 
-        context = SDL_GL_CreateContext(args...);
+                context = SDL_GL_CreateContext(args...);
 
-        auto error = GL_NO_ERROR;
-        std::string error_string = "";
+                auto error = GL_NO_ERROR;
+                std::string error_string = "";
 
-        //Vsync
-		if(SDL_GL_SetSwapInterval(1) < 0){
-			error_string.append(SDL_GetError());
+                //Vsync
+        		if(SDL_GL_SetSwapInterval(1) < 0){
+        			error_string.append(SDL_GetError());
 
-			throw sdl_exception("Warning: Unable to set VSync! SDL Error: " + error_string);
-		}
+        			throw sdl_exception("Warning: Unable to set VSync! SDL Error: " + error_string);
+        		}
 
 
-        //Initialize Projection Matrix
-        glMatrixMode( GL_PROJECTION );
-        glLoadIdentity();
+                //Initialize Projection Matrix
+                glMatrixMode( GL_PROJECTION );
+                glLoadIdentity();
 
-        error = glGetError();
-        //Check for error
-        if(error != GL_NO_ERROR){
-        	error_string.append(reinterpret_cast<const char*>(gluErrorString(error)));
-			throw sdl_exception("Error initializing OpenGL! " + error_string);
-        }
+                error = glGetError();
+                //Check for error
+                if(error != GL_NO_ERROR){
+                	error_string.append(reinterpret_cast<const char*>(gluErrorString(error)));
+        			throw sdl_exception("Error initializing OpenGL! " + error_string);
+                }
 
-        //Initialize Modelview Matrix
-        glMatrixMode( GL_MODELVIEW );
-        glLoadIdentity();
+                //Initialize Modelview Matrix
+                glMatrixMode( GL_MODELVIEW );
+                glLoadIdentity();
 
-        error = glGetError();
+                error = glGetError();
 
-        //Check for error
-        if(error != GL_NO_ERROR){
-        	error_string.append(reinterpret_cast<const char*>(gluErrorString(error)));
-			throw sdl_exception("Error initializing OpenGL! " + error_string);
-        }
+                //Check for error
+                if(error != GL_NO_ERROR){
+                	error_string.append(reinterpret_cast<const char*>(gluErrorString(error)));
+        			throw sdl_exception("Error initializing OpenGL! " + error_string);
+                }
 
-        error = glGetError();
+                glEnable(GL_DEPTH_TEST);
 
-        //Check for error
-        if(error != GL_NO_ERROR){
-        	error_string.append(reinterpret_cast<const char*>(gluErrorString(error)));
+                error = glGetError();
 
-			throw sdl_exception("Error initializing OpenGL! " + error_string);
-        }
+                //Check for error
+                if(error != GL_NO_ERROR){
+                	error_string.append(reinterpret_cast<const char*>(gluErrorString(error)));
+
+        			throw sdl_exception("Error initializing OpenGL! " + error_string);
+                }
 
 
 
@@ -87,6 +91,40 @@ public:
 		SDL_GL_DeleteContext(context);  
 	}
 
+        void draw_triangles(concurrent::mutex_vector<cw::math::vector3>& vertices){
+                glBegin(GL_TRIANGLES);
+
+                draw_vertices(vertices);
+
+                glEnd();
+
+                //        glTranslatef(0.0f, 0.0f, 0.0f);
+//        glRotatef(45.0f, 1.0f, 1.0f, 1.0f);
+//        glScalef(1.0f, 0.5f, 1.0f);
+/*        glBegin(GL_TRIANGLES);                      // Drawing Using Triangles
+            glColor3f(1.0f, 0.0f, 0.0f);
+            glVertex3f( 0.0f, 1.0f, 0.0f);              // Top
+            glColor3f(0.0f, 1.0f, 0.0f);
+            glVertex3f(-1.0f,-1.0f, 0.0f);              // Bottom Left
+            glColor3f(0.0f, 0.0f, 1.0f);
+            glVertex3f( 1.0f,-1.0f, 0.0f);              // Bottom Right
+        glEnd();                            // Finished Drawing The Triangle
+*/
+
+        }
+
+        void draw_quads(concurrent::mutex_vector<cw::math::vector3>& vertices){
+                glBegin(GL_QUADS);
+
+                draw_vertices(vertices);
+                
+                glEnd();
+        }
+
+        void load_identity(){
+                glLoadIdentity();
+        }
+
 	void present(auto window_ptr) {
 
 		//Update screen
@@ -95,8 +133,8 @@ public:
 
 	void clear() {
 
-        //Clear color buffer
-        glClear(GL_COLOR_BUFFER_BIT);
+                //Clear color buffer
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	}
 
@@ -104,10 +142,19 @@ public:
 
  		cw::math::clamp<float> clamp(0.f, 1.f);
 
-        //Initialize clear color
-        glClearColor(clamp(r), clamp(g), clamp(b), clamp(a));
+                //Initialize clear color
+                glClearColor(clamp(r), clamp(g), clamp(b), clamp(a));
 	}
 
 	SDL_GLContext context;
+private:
+        void draw_vertices(concurrent::mutex_vector<cw::math::vector3>& vertices){
+                auto& container = vertices.data.acquire();
+                for(auto vertex : container){
+                        glVertex3f(vertex[0], vertex[1], vertex[2]);
+                }
+                vertices.data.release();   
+        }
+
 	//std::unique_ptr<concurrent::resource_property<void> > context;
 };// class sdl_gl_renderer

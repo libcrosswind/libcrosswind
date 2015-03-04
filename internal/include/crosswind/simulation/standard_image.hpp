@@ -1,6 +1,7 @@
 #pragma once
 
 #include <crosswind/javascript/json.hpp>
+#include <crosswind/math/vector3.hpp>
 #include <crosswind/platform/sdl/sdl_renderer.hpp>
 #include <crosswind/platform/sdl/sdl_texture.hpp>
 #include <crosswind/simulation/detail/object.hpp>
@@ -20,21 +21,21 @@ class cw::simulation::standard_image: public cw::simulation::detail::object,
                                       public cw::simulation::detail::standard_actor,
                                       public cw::simulation::detail::graphical_actor{
 public:
-	standard_image( const geometry::point<int>& position,
-                    const geometry::point<int>& size): object(position, size){
+	standard_image( const math::vector3& p,
+                    const math::vector3& s): object(p, s){
 
 	}
 
     virtual void init(const std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer,
             const std::string& template_file){
 
-            load_image(sdl_renderer, template_file);
+//            load_image(sdl_renderer, template_file);
 
     }
 
 	virtual void update(double delta){
 
-        delta_count += delta;
+/*        delta_count += delta;
 
         auto& a = animations.data.acquire();
 
@@ -51,24 +52,24 @@ public:
 
         swap_graphical_item(sprites, "current", a["current"]->frames[a["current"]->current_frame]);
 
-        animations.data.release();
+        animations.data.release();*/
     }
 
-	virtual void render(std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer){
-
+	virtual void render(std::shared_ptr<platform::sdl::sdl_gl_renderer> sdl_gl_renderer){
+/*
 		auto& m = textures.data.acquire();
 		auto& s = sprites.data.acquire();
 
 		sdl_renderer->copy_ex(m["current"]->texture, bounds, s["current"]->clip.get());
 
 		sprites.data.release();
-		textures.data.release();
+		textures.data.release();*/
 	}
 
 protected:
     virtual void load_image(  const std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer,
             const std::string& template_file){
-
+/*
         cw::javascript::json json;
         json.from_file(template_file);
 
@@ -122,7 +123,7 @@ protected:
         swap_graphical_item(animations, "current", raw_json["properties"]["default-animation"].as<std::string>());
         swap_graphical_item(textures,   "current", raw_json["properties"]["default-texture"].as<std::string>());
 
-        json.data.release();
+        json.data.release();*/
     }
 
 

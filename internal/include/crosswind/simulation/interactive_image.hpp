@@ -1,6 +1,7 @@
 #pragma once
 
 #include <crosswind/javascript/json.hpp>
+#include <crosswind/math/vector3.hpp>
 #include <crosswind/simulation/standard_image.hpp>
 
 namespace cw{
@@ -13,23 +14,23 @@ namespace simulation{
 
 class cw::simulation::interactive_image: public cw::simulation::standard_image, public cw::simulation::detail::interactive_actor{
 public:
-	interactive_image(	const geometry::point<int>& position,
-        	            const geometry::point<int>& size): standard_image(position, size){
+	interactive_image(	const math::vector3& p,
+        	            const math::vector3& s): standard_image(p, s){
 
 	}
 
     virtual void init(const std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer,
             const std::string& template_file) override {
 
-        load_events(template_file);
-        load_image(sdl_renderer, template_file);
+/*        load_events(template_file);
+        load_image(sdl_renderer, template_file);*/
 
     }
 
 
 	void handle_event(SDL_Event* e){
 		//If mouse event happened
-		if(e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP ){
+/*		if(e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP ){
 			//Get mouse position
 			int x, y;
 			SDL_GetMouseState( &x, &y );
@@ -58,22 +59,22 @@ public:
                 trigger(events("on_mouse_out"));
 			}
 
-		}
+		}*/
 	}
 
 
 protected:
 
     virtual void trigger(std::shared_ptr<detail::event_mapping> event){
-        if(event->what == "animation"){
+/*        if(event->what == "animation"){
             if(event->action == "start"){
                 swap_graphical_item(animations, "current", event->which);
             }
-        }
+        }*/
     }
 
     virtual void load_events(const std::string& template_file){
-
+/*
         cw::javascript::json json;
         json.from_file(template_file);
 
@@ -91,7 +92,7 @@ protected:
         }
 
 
-        json.data.release();
+        json.data.release();*/
     }
 
 };// class interactive_image

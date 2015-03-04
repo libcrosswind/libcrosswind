@@ -5,7 +5,7 @@
 
 #include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/concurrent/mutex_container.hpp>
-#include <crosswind/platform/sdl/sdl_renderer.hpp>
+#include <crosswind/platform/sdl/sdl_gl_renderer.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
 #include <crosswind/simulation/detail/interactive_actor.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>
@@ -25,7 +25,7 @@ public:
 
 	}
 
-    virtual void init(std::shared_ptr<cw::platform::sdl::sdl_renderer> sdl_renderer,
+    virtual void init(std::shared_ptr<cw::platform::sdl::sdl_gl_renderer> sdl_gl_renderer,
             std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system) = 0;
 
 	virtual void handle_stage_events(){
@@ -62,12 +62,12 @@ public:
 		standard_queue.data.release();
 	}
 
-	virtual void render(std::shared_ptr<platform::sdl::sdl_renderer> sdl_renderer){
+	virtual void render(std::shared_ptr<platform::sdl::sdl_gl_renderer> sdl_gl_renderer){
 
         auto& container = graphical_queue.data.acquire();
 
 		for(auto& element: container){
-           element->render(sdl_renderer);
+           element->render(sdl_gl_renderer);
         }
 
 		graphical_queue.data.release();

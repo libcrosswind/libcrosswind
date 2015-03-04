@@ -5,14 +5,15 @@
 namespace cw{
 namespace math{
 
-    template<class T>
     class vector3;
 
 }// namespace math
 }// namespace cw
 
 
-template<class T>
 class cw::math::vector3: public btVector3{
-
+public:
+	vector3(double x, double y, double z): btVector3(x, y, z){
+		
+	}
 };// class vector3

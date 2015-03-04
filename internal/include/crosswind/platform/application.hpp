@@ -97,7 +97,7 @@ public:
     }
 
     void handle_application_events(){
-      //  stages("current")->handle_stage_events();
+        stages("current")->handle_stage_events();
     }
 
     void handle_input_events(){
@@ -107,38 +107,30 @@ public:
                 running.set(false);
             }
 
-          //  stages("current")->handle_input(&event);
+            stages("current")->handle_input(&event);
 
         }
     }
 
     void handle_update(){
-     //   stages("current")->update(get_delta());
+        stages("current")->update(get_delta());
     }
 
     void handle_rendering(){
 
         sdl_gl_renderer->clear();
+        sdl_gl_renderer->load_identity();
 
+        stages("current")->render(sdl_gl_renderer);
 
-        glBegin(GL_TRIANGLES);                      // Drawing Using Triangles
-            glVertex3f( 0.0f, 1.0f, 0.0f);              // Top
-            glVertex3f(-1.0f,-1.0f, 0.0f);              // Bottom Left
-            glVertex3f( 1.0f,-1.0f, 0.0f);              // Bottom Right
-        glEnd();                            // Finished Drawing The Triangle
-
-
-       // stages("current")->render(sdl_renderer);
         auto window_ptr = display_window->window.acquire();
-
         sdl_gl_renderer->present(window_ptr);
-
         display_window->window.release();
     }
 
     void add_stage(auto stage){
-//        stage->init(sdl_gl_renderer, sdl_audio_system);
-//        stages(stage->name.get(), stage);
+        stage->init(sdl_gl_renderer, sdl_audio_system);
+        stages(stage->name.get(), stage);
     }
 
     void swap_stage(const std::string& previous_stage, const std::string& new_stage){
