@@ -3,7 +3,6 @@
 #include <memory>
 
 
-#include <crosswind/math/vector3.hpp>
 #include <crosswind/platform/sdl/sdl_gl_renderer.hpp>
 #include <crosswind/concurrent/mutex_container.hpp>
 #include <crosswind/simulation/detail/mapping/animation_mapping.hpp>
@@ -48,7 +47,6 @@ public:
         mm.data.release();*/
     }
 
-    concurrent::mutex_vector<cw::math::vector3> vertices;
 //    concurrent::mutex_map<std::string, std::shared_ptr< detail::animation_mapping > > animations;
 //    concurrent::mutex_map<std::string, std::shared_ptr< detail::sprite_mapping    > > sprites;
 //    concurrent::mutex_map<std::string, std::shared_ptr< detail::texture_mapping   > > textures;

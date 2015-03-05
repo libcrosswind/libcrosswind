@@ -119,7 +119,8 @@ public:
         */
     }
 
-    void draw_quads(concurrent::mutex_vector<cw::math::vector3>& vertices){
+    void draw_quads(concurrent::mutex_vector<cw::math::vector3>& faces, 
+                    concurrent::mutex_vector<cw::math::vector3>& vertices){
         glBegin(GL_QUADS);
         draw_vertices(vertices);
         glEnd();
@@ -150,13 +151,18 @@ public:
 
 	SDL_GLContext context;
 private:
-    void draw_vertices(concurrent::mutex_vector<cw::math::vector3>& vertices){
+
+    void draw_vertex(const cw::math::vector3& vertex, const cw::math::vector3& color){
+
+    }
+
+/*    void draw_vertices(concurrent::mutex_vector<cw::math::vector3>& vertices){
         auto& container = vertices.data.acquire();
         for(auto vertex : container){
             glVertex3f(vertex[0], vertex[1], vertex[2]);
         }
         vertices.data.release();
-    }
+    }*/
 
 	//std::unique_ptr<concurrent::resource_property<void> > context;
 };// class sdl_gl_renderer

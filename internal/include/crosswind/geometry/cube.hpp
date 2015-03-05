@@ -60,13 +60,23 @@ public:
         vertices.push_back({-s[0]/2, -s[1]/2, -s[2]/2});
         vertices.push_back({ s[0]/2, -s[1]/2, -s[2]/2});
 
-/*        "front_face"    :[1.0, 0.0, 0.0],
-        "left_face"     :[0.0, 0.0, 1.0],
-        "back_face"     :[1.0, 0.0, 1.0],
-        "right_face"    :[1.0, 1.0, 1.0],
-        "top_face"      :[1.0, 0.0, 1.0],
-        "bottom_face"   :[1.0, 1.0, 0.0],*/
+        // front face
+        face_colors.push_back({1.0, 0.0, 0.0});
 
+        // left face
+        face_colors.push_back({0.0, 0.0, 1.0});
+
+        // back face
+        face_colors.push_back({1.0, 0.0, 1.0});
+
+        // right face
+        face_colors.push_back({1.0, 1.0, 1.0});
+
+        // top face
+        face_colors.push_back({1.0, 0.0, 1.0});
+
+        // bottom face
+        face_colors.push_back({1.0, 1.0, 0.0});
 	}
 
 	virtual void update(double delta){
@@ -93,7 +103,7 @@ public:
 
 	virtual void render(std::shared_ptr<platform::sdl::sdl_gl_renderer> sdl_gl_renderer){
 
-		sdl_gl_renderer->draw_quads(vertices);
+		sdl_gl_renderer->draw_quads(vertices, face_colors);
 
 	}
 

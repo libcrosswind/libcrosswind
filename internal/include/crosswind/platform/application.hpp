@@ -40,7 +40,6 @@ public:
 
     }
 
-
     virtual void init(){
 
         auto& dim = bounds->size.acquire();
