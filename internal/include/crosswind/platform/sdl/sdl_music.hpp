@@ -15,9 +15,10 @@ namespace sdl{
 
 class cw::platform::sdl::sdl_music{
 public:
-	sdl_music(const std::string& filepath): music(Mix_LoadMUS, Mix_FreeMusic, filepath.c_str()) {
+	sdl_music(const std::string& file_path): music(Mix_LoadMUS, Mix_FreeMusic, file_path.c_str()) {
 
 	}
 
 	concurrent::resource_property<Mix_Music> music;
+
 };// class sdl_music

@@ -3,9 +3,9 @@
 #include <SDL2/SDL_mixer.h>
 
 #include <crosswind/concurrent/mutex_container.hpp>
+#include <crosswind/platform/sdl/sdl_chunk.hpp>
 #include <crosswind/platform/sdl/sdl_music.hpp>
 #include <crosswind/platform/sdl/sdl_exception.hpp>
-
 
 namespace cw{
 namespace platform{
@@ -33,7 +33,7 @@ public:
 
 	void load_music(const std::string& name, const std::string& path){
 
-			bgm_tracks(name, std::make_shared<sdl_music>(path));
+        bgm_tracks(name, std::make_shared<sdl_music>(path));
 
 	}
 
@@ -78,9 +78,24 @@ public:
         } 
 	}
 
-	void stop_music(){
+    void stop_music(){
         Mix_HaltMusic();// Stop the music
-	}
+    }
+
+    void load_effect(const std::string& name, const std::string& path){
+        sfx_tracks(name, std::make_shared<sdl_chunk>(path));
+    }
+
+    void play_effect(const std::string& name){
+        auto track = sfx_tracks(name);
+        auto track_ptr = track->music.acquire();
+
+        Mix_PlayChannel(-1, track_ptr, 0);		 // Play the effect
+
+        track->music.release();
+    }
+
+
 
 
 private:
@@ -96,4 +111,6 @@ private:
 	sdl_audio_system() = delete;
 
     concurrent::mutex_map<std::string, std::shared_ptr<sdl_music> > bgm_tracks;
+    concurrent::mutex_map<std::string, std::shared_ptr<sdl_chunk> > sfx_tracks;
+
 };// class sdl_audio_system

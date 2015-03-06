@@ -13,8 +13,6 @@ namespace concurrent{
 }// namespace concurrent
 }// namespace cw
 
-
-
 template<class T>
 class cw::concurrent::atomic_property: public cw::concurrent::detail::property_interface<T>{
 public:

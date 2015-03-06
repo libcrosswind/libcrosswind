@@ -23,7 +23,7 @@ add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC -DASIO_STANDALONE -DASIO_S
 
 elseif( CMAKE_BUILD_TYPE STREQUAL "Release")
 
-add_compile_options(-std=c++1y)
+add_compile_options(-std=gnu++1y  -O2 -DGLEW_STATIC -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION -D_WIN32_WINNT=0x0501)
 
 endif()
 

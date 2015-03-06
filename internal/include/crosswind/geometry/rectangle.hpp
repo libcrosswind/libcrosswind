@@ -3,7 +3,6 @@
 #include <crosswind/math/vector3.hpp>
 #include <crosswind/simulation/detail/object.hpp>
 
-
 namespace cw {
 namespace geometry{
 
@@ -47,5 +46,4 @@ public:
 
  	}
 
-	
 };// class rectangle

@@ -5,15 +5,12 @@
 
 #include <crosswind/concurrent/atomic_property.hpp>
 #include <crosswind/concurrent/mutex_property.hpp>
-
 #include <crosswind/geometry/rectangle.hpp>
-
 #include <crosswind/platform/sdl/sdl_core_system.hpp>
 #include <crosswind/platform/sdl/sdl_audio_system.hpp>
 #include <crosswind/platform/sdl/sdl_image_system.hpp>
 #include <crosswind/platform/sdl/sdl_gl_renderer.hpp>
 #include <crosswind/platform/sdl/sdl_window.hpp>
-
 #include <crosswind/simulation/stage.hpp>
 
 

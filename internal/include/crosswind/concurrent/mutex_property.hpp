@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mutex>
+
 #include <crosswind/concurrent/detail/property_interface.hpp>
 
 namespace cw{
@@ -56,4 +57,5 @@ protected:
 private:
     std::mutex property_mutex;
     T property_value;
+
 };// class mutex_property

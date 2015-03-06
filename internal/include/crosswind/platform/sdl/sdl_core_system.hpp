@@ -14,7 +14,6 @@ namespace sdl{
 }// namespace platform
 }// namespace cw
 
-
 class cw::platform::sdl::sdl_core_system{
 public:
 	sdl_core_system(auto flags) {
@@ -38,7 +37,5 @@ public:
 	void quit_subsystem(auto flags) {
 		SDL_QuitSubSystem(flags);
 	}
-
-
 
 };// class sdl_core_system 

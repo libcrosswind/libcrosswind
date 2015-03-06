@@ -5,7 +5,6 @@
 #include <crosswind/simulation/detail/graphical_actor.hpp>
 #include <crosswind/simulation/gl/gl_vbo.hpp>
 
-
 namespace cw{
 namespace simulation{
 
@@ -50,4 +49,4 @@ public:
 		draw_vertex_array(vertices);
 	}
 
-};
+};// class sprite

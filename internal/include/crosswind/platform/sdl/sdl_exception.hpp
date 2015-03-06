@@ -41,7 +41,8 @@ public:
 private:
 	std::string sdl_function_;
 	std::string sdl_error_;
-	std::string what_string;    
-};
+	std::string what_string;
+
+};// class sdl_exception
 
  

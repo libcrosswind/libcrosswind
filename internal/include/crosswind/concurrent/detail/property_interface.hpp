@@ -13,8 +13,6 @@ namespace detail{
 }// namespace concurrent
 }// namespace cw
 
-
-
 template<class T>
 class cw::concurrent::detail::property_interface{
 public:
