@@ -19,7 +19,7 @@ include_directories(${INCLUDE_LIBRARY_PATH})
 
 if( CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-add_compile_options(-std=gnu++1y -g -Og -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION -D_WIN32_WINNT=0x0501)
+add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION -D_WIN32_WINNT=0x0501)
 
 elseif( CMAKE_BUILD_TYPE STREQUAL "Release")
 
@@ -45,7 +45,7 @@ set(SDL2_mixer_libs  SDL2_mixer vorbisenc vorbisfile vorbis ogg)
 set(win32_libs       winmm imm32 version)
 set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
 set(opengl_libs      glu32 opengl32)
-
+set(opengl_ext_libs  glew)
 
 target_link_libraries (gui LINK_PUBLIC mingw32
                                                 ${SDL2_libs}
@@ -54,6 +54,7 @@ target_link_libraries (gui LINK_PUBLIC mingw32
                                                 ${SDL2_mixer_libs}
                                                 ${win32_libs}
                                                 ${bullet3_libbs}
+                                                ${opengl_ext_libs}
                                                 ${opengl_libs})
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)

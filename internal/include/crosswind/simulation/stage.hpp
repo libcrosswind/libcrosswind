@@ -62,12 +62,12 @@ public:
 		standard_queue.data.release();
 	}
 
-	virtual void render(std::shared_ptr<platform::sdl::sdl_gl_renderer> sdl_gl_renderer){
+	virtual void render(){
 
         auto& container = graphical_queue.data.acquire();
 
 		for(auto& element: container){
-           element->render(sdl_gl_renderer);
+           element->draw();
         }
 
 		graphical_queue.data.release();

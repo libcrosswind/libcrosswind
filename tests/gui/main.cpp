@@ -2,39 +2,27 @@
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
 
-#include <crosswind/geometry/cube.hpp>
+#include <crosswind/simulation/sprite.hpp>
 
 int main(int argc, char **argv) {
     cw::platform::filesystem::add_directory("assets", true);
 
     auto app = std::make_shared<cw::platform::application>();
-    app->init();
+    app->init({SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480});
 
     class marble_zone: public cw::simulation::stage{
     public:
         marble_zone(){
 
             this->name.set("marble_zone");
+
+
+
 /*
-            cw::geometry::point<int> pos(10, 10);
-            cw::geometry::point<int> dim(100, 40);
-
-
             btn_stand = std::make_shared<cw::simulation::interactive_image>(pos, dim);
-            pos.x += dim.x + 10;
             btn_walk  = std::make_shared<cw::simulation::interactive_image>(pos, dim);
-            pos.x += dim.x + 10;
             btn_run   = std::make_shared<cw::simulation::interactive_image>(pos, dim);
-
-            pos.x += dim.x + 10;
             btn_play_audio = std::make_shared<cw::simulation::interactive_image>(pos, dim);
-
-            pos.x = 180;
-            pos.y = 150;
-
-            dim.x = 76;
-            dim.y = 80;
-
             sonic = std::make_shared<cw::simulation::standard_image>(pos, dim);
 
             add(btn_stand);
@@ -43,8 +31,9 @@ int main(int argc, char **argv) {
             add(btn_play_audio);
             add(sonic);*/
 
-            cube = std::make_shared<cw::geometry::cube>(cw::math::vector3(0.0,0.0,0.0), cw::math::vector3(1.0,1.0,1.0));
-            add(cube);
+            simple_sprite = std::make_shared<cw::simulation::sprite>(cw::math::vector3(-0.5f, -0.5f, 1.0f),
+                    cw::math::vector3(1.0f,1.0f,0.0f));
+            add(simple_sprite);
         }
 
         virtual void init(std::shared_ptr<cw::platform::sdl::sdl_gl_renderer> sdl_gl_renderer,
@@ -91,7 +80,7 @@ int main(int argc, char **argv) {
 
         std::shared_ptr<cw::simulation::standard_image> sonic;*/
 
-        std::shared_ptr<cw::geometry::cube> cube;
+        std::shared_ptr<cw::simulation::sprite> simple_sprite;
     };
 
     app->add_stage(std::make_shared<marble_zone>());

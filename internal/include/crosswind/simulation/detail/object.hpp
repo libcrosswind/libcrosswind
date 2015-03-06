@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 
 namespace cw{
 namespace simulation{
@@ -18,9 +19,11 @@ public:
 
     }
 
+protected:
+    std::vector<float> vertices;
     math::vector3 position;
     math::vector3 size;
-};
+};// class object
 
 
 /*

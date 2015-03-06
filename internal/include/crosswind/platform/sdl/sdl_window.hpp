@@ -5,8 +5,8 @@
 
 #include <crosswind/concurrent/hollow_property.hpp>
 #include <crosswind/concurrent/resource_property.hpp>
+#include <crosswind/math/vector3.hpp>
 #include <crosswind/platform/sdl/sdl_exception.hpp>
-#include <crosswind/geometry/point.hpp>
 
 namespace cw{
 namespace platform{
@@ -22,8 +22,8 @@ class cw::platform::sdl::sdl_window{
 public:
 	concurrent::hollow_property<std::string> title;
 	concurrent::hollow_property<float> brightness;
-	concurrent::hollow_property<geometry::point<int> > size;
-	concurrent::hollow_property<geometry::point<int> > position;
+	concurrent::hollow_property<math::vector3> size;
+	concurrent::hollow_property<math::vector3> position;
 	concurrent::resource_property<SDL_Window> window;
 
 	template<typename... Args>
@@ -65,9 +65,9 @@ public:
 			return bright;
 		};
 
-		size.set = [this](const geometry::point<int>& new_size){
+		size.set = [this](const math::vector3& new_size){
 			auto window_ptr = this->window.acquire();
-			SDL_SetWindowSize(window_ptr, new_size.x, new_size.y);
+			SDL_SetWindowSize(window_ptr, new_size[0], new_size[1]);
 			window.release();
 		};
 
@@ -78,12 +78,12 @@ public:
 			SDL_GetWindowSize(window_ptr, &w, &h);
 			window.release();
 
-			return geometry::point<int>(w, h);
+			return math::vector3(w, h, 0.0f);
 		};
 
-		position.set = [this](const geometry::point<int>& new_size){
+		position.set = [this](const math::vector3& new_position){
 			auto window_ptr = this->window.acquire();
-			SDL_SetWindowPosition(window_ptr, new_size.x, new_size.y);
+			SDL_SetWindowPosition(window_ptr, new_position[0], new_position[1]);
 			window.release();
 		};
 
@@ -94,7 +94,7 @@ public:
 			SDL_GetWindowPosition(window_ptr, &w, &h);
 			window.release();
 
-			return geometry::point<int>(w, h);
+			return math::vector3(w, h, 0.0f);
 		};
 
 	}

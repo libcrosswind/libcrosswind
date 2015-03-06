@@ -2,12 +2,12 @@
 
 #include <memory>
 
-
-#include <crosswind/platform/sdl/sdl_gl_renderer.hpp>
+/*
 #include <crosswind/concurrent/mutex_container.hpp>
 #include <crosswind/simulation/detail/mapping/animation_mapping.hpp>
 #include <crosswind/simulation/detail/mapping/sprite_mapping.hpp>
 #include <crosswind/simulation/detail/mapping/texture_mapping.hpp>
+*/
 
 namespace cw{
 namespace simulation{
@@ -25,7 +25,7 @@ public:
 
 	}
 
-	virtual void render(std::shared_ptr<platform::sdl::sdl_gl_renderer> sdl_renderer) = 0;
+	virtual void draw() = 0;
 
 	template<typename T, typename U>
     void store_graphical_item(T& mm, const std::string& name, std::shared_ptr<U> new_Item){

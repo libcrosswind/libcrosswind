@@ -30,8 +30,7 @@ namespace platform{
 
 class cw::platform::application{
 public:
-    application(): 
-    bounds(new geometry::rectangle<int>(0, 0, 640, 480)),
+    application():
     title("Main window"),
     sdl_core_system (new sdl::sdl_core_system ( SDL_INIT_VIDEO | SDL_INIT_AUDIO    )),
     sdl_audio_system(new sdl::sdl_audio_system( 44100, MIX_DEFAULT_FORMAT, 2, 2048 )), 
@@ -40,28 +39,22 @@ public:
 
     }
 
-    virtual void init(){
+    virtual void init(const std::vector<int>& bounds){
 
-        auto& dim = bounds->size.acquire();
 
         display_window = std::shared_ptr<sdl::sdl_window>(new sdl::sdl_window(title.get().c_str(),
-                SDL_WINDOWPOS_UNDEFINED,
-                SDL_WINDOWPOS_UNDEFINED,
-                dim.x, dim.y,
+                bounds[0], bounds[1],
+                bounds[2], bounds[3],
                 SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN));
-
-        bounds->size.release();
 
         auto window_ptr = display_window->window.acquire();
 
         std::vector<int> gl_version = {2, 1};
         sdl_gl_renderer = std::make_shared<sdl::sdl_gl_renderer>(gl_version, window_ptr);
 
-        sdl_gl_renderer->set_draw_color(0.f, 0.f, 0.f);
+        sdl_gl_renderer->set_clear_color(0.f, 0.f, 0.f);
 
         display_window->window.release();
-
-        sdl_gl_renderer->set_perspective(45.0, 640.0/480.0, 1.0, 500.0);
     }
 
     virtual void run(){
@@ -120,9 +113,8 @@ public:
     void handle_rendering(){
 
         sdl_gl_renderer->clear();
-        sdl_gl_renderer->load_identity();
 
-        stages("current")->render(sdl_gl_renderer);
+        stages("current")->render();
 
         auto window_ptr = display_window->window.acquire();
         sdl_gl_renderer->present(window_ptr);
@@ -161,13 +153,10 @@ private:
 
     SDL_Event event;
 
-    std::shared_ptr<geometry::rectangle<int> > bounds;
     concurrent::mutex_property<std::string> title;
     concurrent::atomic_property<bool> running;
 
     std::chrono::high_resolution_clock::time_point previous_delta_time;
 
     concurrent::mutex_map<std::string, std::shared_ptr<simulation::stage> > stages;
-
-
 };// class application
