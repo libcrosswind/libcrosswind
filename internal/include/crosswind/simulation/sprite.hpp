@@ -3,7 +3,7 @@
 #include <crosswind/geometry/rectangle.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>
-#include <crosswind/simulation/gl/vbo.hpp>
+#include <crosswind/simulation/gl/gl_vbo.hpp>
 
 
 namespace cw{
@@ -17,7 +17,7 @@ namespace simulation{
 class cw::simulation::sprite: 	public cw::geometry::rectangle,
 	                            public cw::simulation::detail::standard_actor,
                               	public cw::simulation::detail::graphical_actor,
-                              	public cw::simulation::gl::vbo{
+                              	public cw::simulation::gl::gl_vbo{
 
 public:
 	sprite(const math::vector3& p, const math::vector3& s): rectangle(p, s){

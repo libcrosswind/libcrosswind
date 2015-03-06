@@ -7,19 +7,19 @@ namespace cw{
 namespace simulation{
 namespace gl{
 
-	class vbo;
+	class gl_vbo;
 
 }// namespace gl
 }// namespace simulation
 }// namespace cw
 
-class cw::simulation::gl::vbo{
+class cw::simulation::gl::gl_vbo{
 public:
-	vbo(unsigned short num_buffers = 1): id(0), allocated_buffers(num_buffers){
+	gl_vbo(unsigned short num_buffers = 1): id(0), allocated_buffers(num_buffers){
 		glGenBuffers(allocated_buffers, &id);
 	}
 
-	~vbo(){
+	~gl_vbo(){
 		glDeleteBuffers(allocated_buffers, &id);
 	}
 
@@ -48,4 +48,4 @@ public:
 private:
 	uint32_t id;
 	unsigned short allocated_buffers;
-};// class vbo
+};// class gl_vbo

@@ -3,6 +3,7 @@
 #include <crosswind/platform/filesystem.hpp>
 
 #include <crosswind/simulation/sprite.hpp>
+#include <crosswind/simulation/gl/glsl_program.hpp>
 
 int main(int argc, char **argv) {
     cw::platform::filesystem::add_directory("assets", true);
@@ -16,7 +17,12 @@ int main(int argc, char **argv) {
 
             this->name.set("marble_zone");
 
-
+            glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
+            std::string vertex_shader = "assets/default/graphics/shaders/simple.vert";
+            std::string fragment_shader = "assets/default/graphics/shaders/simple.frag";
+            glsl_program->compile(vertex_shader, fragment_shader);
+            glsl_program->link();
+            glsl_program->add_attribute("vertex_position");
 
 /*
             btn_stand = std::make_shared<cw::simulation::interactive_image>(pos, dim);
@@ -72,6 +78,21 @@ int main(int argc, char **argv) {
             };*/
         }
 
+        virtual void render() override {
+
+            auto& container = graphical_queue.data.acquire();
+            glsl_program->use();
+
+            for(auto& element: container){
+                element->draw();
+            }
+
+            glsl_program->unuse();
+            graphical_queue.data.release();
+
+        }
+
+
     private:
 /*        std::shared_ptr<cw::simulation::interactive_image> btn_stand;
         std::shared_ptr<cw::simulation::interactive_image> btn_walk;
@@ -81,6 +102,7 @@ int main(int argc, char **argv) {
         std::shared_ptr<cw::simulation::standard_image> sonic;*/
 
         std::shared_ptr<cw::simulation::sprite> simple_sprite;
+        std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
     };
 
     app->add_stage(std::make_shared<marble_zone>());
@@ -88,7 +110,4 @@ int main(int argc, char **argv) {
     app->run();
 
     return 0;
-
-
-
 }
