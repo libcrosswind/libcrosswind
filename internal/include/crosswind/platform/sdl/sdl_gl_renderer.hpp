@@ -38,8 +38,12 @@ public:
         if(glewInit() != GLEW_OK){
             throw sdl_exception("Could not initialize glew");
         }
+        printf("OpenGL version: %s \n", glGetString(GL_VERSION));
 
         SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1);
+
+        //Vsync
+        SDL_GL_SetSwapInterval(1);
 
 	}
 

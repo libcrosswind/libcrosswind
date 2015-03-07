@@ -39,11 +39,8 @@ int main(int argc, char **argv) {
             std::make_unique<cw::platform::sdl::sdl_surface>(cw::platform::filesystem::get_file_path("blue_button_spritesheet.png"));
 
             auto data_ptr = sonic_texture_surface->data.acquire();
-
-
             sonic_texture = std::make_shared<cw::simulation::gl::gl_texture>
                     (glm::vec2(data_ptr->w, data_ptr->h), data_ptr->format->BytesPerPixel, data_ptr->pixels);
-
             sonic_texture_surface->data.release();
 
 
@@ -61,7 +58,7 @@ int main(int argc, char **argv) {
             add(sonic);*/
 
             simple_sprite = std::make_shared<cw::simulation::sprite>
-                    (glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(1.0f,1.0f,0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.5f));
+                    (glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(1.0f,1.0f,0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
 
             add(simple_sprite);
         }
