@@ -84,10 +84,10 @@ public:
 	    glBindAttribLocation(program_id, attributes_number++, attribute_name.c_str());
     }
 
-	GLint GLSLProgram::getUniformLocation(const std::string& uniformName) {
-		GLint location = glGetUniformLocation(_programID, uniformName.c_str());
+	int32_t get_uniform_location(const std::string& uniform_name) {
+		auto location = glGetUniformLocation(program_id, uniform_name.c_str());
 		if (location == GL_INVALID_INDEX) {
-			fatalError("Uniform " + uniformName + " not found in shader!");
+			throw platform::sdl::sdl_exception("Uniform " + uniform_name + " not found in shader");
 		}
 		return location;
 	}
