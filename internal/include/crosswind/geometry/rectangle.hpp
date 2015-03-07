@@ -36,10 +36,10 @@ public:
 			detail::vertex bottom_left;
 
 			top_right.set_position(px + dx, py + dy, pz, pw);
-			top_right.color = {0.0, 0.0, 1.0, 1.0};
+			top_right.color = c;
 
 			top_left.set_position(px, py + dy, pz, pw);
-			top_left.color = {0.0, 0.0, 1.0, 1.0};
+			top_left.color = c;
 				
 			bottom_right.set_position(px + dx, py, pz, pw);
 			bottom_right.color = c;

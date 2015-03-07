@@ -2,15 +2,13 @@
 //Vertex shader
 
 //VBO input data.
-in vec3 vertex_position; 
+in vec4 vertex_position; 
+in vec4 vertex_color; 
+in vec2 vertex_uv; 
 
 out vec2 fragment_uv;
 
 void main() {
-    gl_Position.xyz = vertex_position;
-    
-    //Normalized coordinates
-    gl_Position.w = 1.0;
-    
-    fragment_uv = vec2(vertexUV.x, 1.0 - vertexUV.y);
+    gl_Position = vertex_position;
+    fragment_uv = vec2(vertex_uv.x, 1.0 - vertex_uv.y);
 }

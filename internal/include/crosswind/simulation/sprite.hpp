@@ -21,7 +21,17 @@ class cw::simulation::sprite: 	public cw::geometry::rectangle,
                               	public cw::simulation::gl::gl_vbo{
 
 public:
-	sprite(const glm::vec3& p, const glm::vec3& s): rectangle(p, s){
+	sprite(const glm::vec3& p, const glm::vec3& s, const glm::vec4& uv): rectangle(p, s){
+        // first triangle
+        vertices[0].set_uv(uv.z, uv.w); // top right
+        vertices[1].set_uv(uv.x, uv.w); // top left
+        vertices[2].set_uv(uv.x, uv.y); // bottom left
+
+        // second triangle
+        vertices[3].set_uv(uv.x, uv.y); // bottom left
+        vertices[4].set_uv(uv.w, uv.y); // bottom right
+        vertices[5].set_uv(uv.z, uv.w); // top right
+
         upload_vertex_array(vertices);
 	}
 

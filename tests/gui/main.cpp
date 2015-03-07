@@ -2,9 +2,14 @@
 
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
+#include <crosswind/platform/sdl/sdl_surface.hpp>
 
 #include <crosswind/simulation/sprite.hpp>
 #include <crosswind/simulation/gl/glsl_program.hpp>
+#include <crosswind/simulation/gl/gl_texture.hpp>
+
+#include <iostream>
+
 
 int main(int argc, char **argv) {
     cw::platform::filesystem::add_directory("assets", true);
@@ -19,13 +24,28 @@ int main(int argc, char **argv) {
             this->name.set("marble_zone");
 
             glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
-            std::string vertex_shader = "assets/default/graphics/shaders/primitive_shading.vert";
-            std::string fragment_shader = "assets/default/graphics/shaders/primitive_shading.frag";
+//            std::string vertex_shader = "assets/default/graphics/shaders/primitive_shading.vert";
+//            std::string fragment_shader = "assets/default/graphics/shaders/primitive_shading.frag";
+            std::string vertex_shader = "assets/default/graphics/shaders/texture_shading.vert";
+            std::string fragment_shader = "assets/default/graphics/shaders/texture_shading.frag";
+
             glsl_program->compile(vertex_shader, fragment_shader);
             glsl_program->add_attribute("vertex_position");
             glsl_program->add_attribute("vertex_color");
             glsl_program->add_attribute("vertex_uv");
             glsl_program->link();
+
+            std::unique_ptr<cw::platform::sdl::sdl_surface> sonic_texture_surface =
+            std::make_unique<cw::platform::sdl::sdl_surface>(cw::platform::filesystem::get_file_path("blue_button_spritesheet.png"));
+
+            auto data_ptr = sonic_texture_surface->data.acquire();
+
+
+            sonic_texture = std::make_shared<cw::simulation::gl::gl_texture>
+                    (glm::vec2(data_ptr->w, data_ptr->h), data_ptr->format->BytesPerPixel, data_ptr->pixels);
+
+            sonic_texture_surface->data.release();
+
 
 /*
             btn_stand = std::make_shared<cw::simulation::interactive_image>(pos, dim);
@@ -41,7 +61,7 @@ int main(int argc, char **argv) {
             add(sonic);*/
 
             simple_sprite = std::make_shared<cw::simulation::sprite>
-                    (glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(1.0f,1.0f,0.0f));
+                    (glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(1.0f,1.0f,0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
 
             add(simple_sprite);
         }
@@ -89,11 +109,18 @@ int main(int argc, char **argv) {
 
             auto& container = graphical_queue.data.acquire();
             glsl_program->use();
-            
+
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, sonic_texture->id);
+
+            auto texture_location = glsl_program->get_uniform_location("texture_sampler");
+            glUniform1i(texture_location, 0);
+
             for(auto& element: container){
                 element->draw();
             }
 
+            glBindTexture(GL_TEXTURE_2D, 0);
             glsl_program->unuse();
             graphical_queue.data.release();
 
@@ -109,6 +136,7 @@ int main(int argc, char **argv) {
         std::shared_ptr<cw::simulation::standard_image> sonic;*/
 
         std::shared_ptr<cw::simulation::sprite> simple_sprite;
+        std::shared_ptr<cw::simulation::gl::gl_texture> sonic_texture;
         std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
     };
 
