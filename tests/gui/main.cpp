@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
             std::string fragment_shader = "assets/default/graphics/shaders/simple.frag";
             glsl_program->compile(vertex_shader, fragment_shader);
             glsl_program->link();
-           // glsl_program->add_attribute("vertex_position");
+            glsl_program->add_attribute("vertex_position");
 
 /*
             btn_stand = std::make_shared<cw::simulation::interactive_image>(pos, dim);
