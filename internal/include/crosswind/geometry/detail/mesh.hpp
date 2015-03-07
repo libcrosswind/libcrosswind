@@ -5,6 +5,8 @@
 
 #include <glm/glm.hpp>
 
+#include <crosswind/geometry/detail/vertex.hpp>
+
 namespace cw{
 namespace geometry{
 namespace detail{
@@ -23,7 +25,7 @@ public:
     }
 
 protected:
-    std::vector<std::pair<glm::vec4, glm::vec4> > vertices; //first is position, second is color.
+    std::vector<vertex> vertices;
     glm::vec3 position;
     glm::vec3 size;
 };// class mesh

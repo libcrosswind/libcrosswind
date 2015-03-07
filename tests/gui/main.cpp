@@ -1,3 +1,4 @@
+#include <glm/glm.hpp>
 
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
@@ -18,8 +19,8 @@ int main(int argc, char **argv) {
             this->name.set("marble_zone");
 
             glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
-            std::string vertex_shader = "assets/default/graphics/shaders/simple.vert";
-            std::string fragment_shader = "assets/default/graphics/shaders/simple.frag";
+            std::string vertex_shader = "assets/default/graphics/shaders/primitive_shading.vert";
+            std::string fragment_shader = "assets/default/graphics/shaders/primitive_shading.frag";
             glsl_program->compile(vertex_shader, fragment_shader);
             glsl_program->add_attribute("vertex_position");
             glsl_program->link();
@@ -37,8 +38,8 @@ int main(int argc, char **argv) {
             add(btn_play_audio);
             add(sonic);*/
 
-            simple_sprite = std::make_shared<cw::simulation::sprite>(cw::math::vector3(-0.5f, -0.5f, 1.0f),
-                    cw::math::vector3(1.0f,1.0f,0.0f));
+            simple_sprite = std::make_shared<cw::simulation::sprite>(glm::vec3(-0.5f, -0.5f, 1.0f),
+                    glm::vec3(1.0f,1.0f,0.0f));
             add(simple_sprite);
         }
 

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <cstddef>
 #include <vector>
 #include <GL/glew.h>
+
+#include <crosswind/geometry/detail/vertex.hpp>
 
 namespace cw{
 namespace simulation{
@@ -23,22 +26,44 @@ public:
 		glDeleteBuffers(allocated_buffers, &id);
 	}
 
-	void upload_vertex_array(const std::vector<float>& vertex_array){
+	void upload_vertex_array(const std::vector<geometry::detail::vertex>& vertex_array){
 		glBindBuffer(GL_ARRAY_BUFFER, id);
 
-		glBufferData(GL_ARRAY_BUFFER, vertex_array.size()*sizeof(float), vertex_array.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER,
+                     sizeof(geometry::detail::vertex)*vertex_array.size(),
+                     vertex_array.data(),
+                     GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	void draw_vertex_array(const std::vector<float>& vertex_array){
+	void draw_vertex_array(const std::vector<geometry::detail::vertex>& vertex_array){
 		glBindBuffer(GL_ARRAY_BUFFER, id);
 
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glVertexAttribPointer(0,
+                              4,
+                              GL_FLOAT,
+                              GL_FALSE,
+                              sizeof(geometry::detail::vertex),
+                              (void*)offsetof(geometry::detail::vertex, geometry::detail::vertex::position));
 
-		glDrawArrays(GL_TRIANGLES, 0, vertex_array.size()/3);
+        glVertexAttribPointer(1,
+                              4,
+                              GL_UNSIGNED_BYTE,
+                              GL_TRUE,
+                              sizeof(geometry::detail::vertex),
+                              (void*)offsetof(geometry::detail::vertex, geometry::detail::vertex::color));
+
+        glVertexAttribPointer(2,
+                              2,
+                              GL_FLOAT,
+                              GL_FALSE,
+                              sizeof(geometry::detail::vertex),
+                              (void*)offsetof(geometry::detail::vertex, geometry::detail::vertex::uv));
+
+		glDrawArrays(GL_TRIANGLES, 0, vertex_array.size());
 
 		glDisableVertexAttribArray(0);
 

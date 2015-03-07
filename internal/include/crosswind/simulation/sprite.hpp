@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include <crosswind/geometry/rectangle.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>
@@ -19,7 +21,7 @@ class cw::simulation::sprite: 	public cw::geometry::rectangle,
                               	public cw::simulation::gl::gl_vbo{
 
 public:
-	sprite(const math::vector3& p, const math::vector3& s): rectangle(p, s){
+	sprite(const glm::vec3& p, const glm::vec3& s): rectangle(p, s){
         upload_vertex_array(vertices);
 	}
 

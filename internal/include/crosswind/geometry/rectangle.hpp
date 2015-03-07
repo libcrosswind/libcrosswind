@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 #include <crosswind/geometry/detail/mesh.hpp>
+#include <crosswind/geometry/detail/vertex.hpp>
 
 namespace cw {
 namespace geometry{
@@ -16,32 +17,45 @@ namespace geometry{
 
 class cw::geometry::rectangle: public cw::geometry::detail::mesh{
 public:	
-	rectangle(const glm::vec3& p, const glm::vec3& s, const glm::vec4& c):
+	rectangle(const glm::vec3& p, const glm::vec3& s, const glm::vec4& c = glm::vec4(255,255,255,1.0)):
 		mesh(p, s){
 
-			auto px = p[0];
-			auto py = p[1];
-			auto pz = p[2];
-			auto pw = 1.0;
+			auto px = p.x;
+			auto py = p.y;
+			auto pz = p.z;
+			auto pw = 1.0f;
 
-			auto w = s[0];
-			auto h = s[1];
-			auto d = s[2];
+			auto dx = s.x;
+			auto dy = s.y;
+			auto dz = s.z;
 
-			auto tr = std::make_pair(glm::vec4(px + w, py + h, pz, pw), c);
-			auto tl = std::make_pair(glm::vec4(px, py + h, pz, pw), c);
-			auto br = std::make_pair(glm::vec4(px+w, py, pz, pw), c);
-			auto bl = std::make_pair(glm::vec4(px, py, pz, pw), c);
+
+			detail::vertex top_right;
+			detail::vertex top_left;
+			detail::vertex bottom_right;
+			detail::vertex bottom_left;
+
+			top_right.set_position(px + dx, py + dy, pz, pw);
+			top_right.color = c;
+
+			top_left.set_position(px, py + dy, pz, pw);
+			top_left.color = c;
+				
+			bottom_right.set_position(px + dx, py, pz, pw);
+			bottom_right.color = c;
+
+			bottom_left.set_position(px, py, pz, pw);
+			bottom_left.color = c;
 
 			vertices = {
 				// First triangle
-				tr,
-				tl,
-				bl,
+				top_right,
+				top_left,
+				bottom_left,
 				//Second triangle
-				bl,
-				br,
-				tr
+				bottom_left,
+				bottom_right,
+				top_right
 			};
 
  	}
