@@ -21,8 +21,8 @@ int main(int argc, char **argv) {
             std::string vertex_shader = "assets/default/graphics/shaders/simple.vert";
             std::string fragment_shader = "assets/default/graphics/shaders/simple.frag";
             glsl_program->compile(vertex_shader, fragment_shader);
-            glsl_program->link();
             glsl_program->add_attribute("vertex_position");
+            glsl_program->link();
 
 /*
             btn_stand = std::make_shared<cw::simulation::interactive_image>(pos, dim);
@@ -45,11 +45,11 @@ int main(int argc, char **argv) {
         virtual void init(std::shared_ptr<cw::platform::sdl::sdl_gl_renderer> sdl_gl_renderer,
                 std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
 
-            sdl_audio_system->load_music("marble", cw::platform::filesystem::get_file_path("marble_zone_bgm.ogg"));
-            sdl_audio_system->play_music("marble");
+//            sdl_audio_system->load_music("marble", cw::platform::filesystem::get_file_path("marble_zone_bgm.ogg"));
+//            sdl_audio_system->play_music("marble");
 
-            sdl_audio_system->load_effect("jump", cw::platform::filesystem::get_file_path("Jump.wav"));
-            sdl_audio_system->play_effect("jump");
+//            sdl_audio_system->load_effect("jump", cw::platform::filesystem::get_file_path("Jump.wav"));
+//            sdl_audio_system->play_effect("jump");
 
 /*            btn_stand->init(sdl_renderer, "blue_button.json");
             btn_walk->init(sdl_renderer, "blue_button.json");

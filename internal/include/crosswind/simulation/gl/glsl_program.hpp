@@ -33,6 +33,7 @@ public:
     }
 
     void compile(const std::string& vertex_shader_filepath, const std::string& fragment_shader_filepath){
+		program_id = glCreateProgram();
 
 	    if ((vertex_shader_id = glCreateShader(GL_VERTEX_SHADER)) == 0) {
 	            throw platform::sdl::sdl_exception("Could not create vertex shader");
@@ -48,7 +49,6 @@ public:
     }
 
     void link(){
-	    program_id = glCreateProgram();
 
 	    glAttachShader(program_id, vertex_shader_id);
 	    glAttachShader(program_id, fragment_shader_id);
