@@ -5,6 +5,7 @@
 #include <crosswind/platform/sdl/sdl_surface.hpp>
 
 #include <crosswind/simulation/sprite.hpp>
+#include <crosswind/simulation/camera.hpp>
 #include <crosswind/simulation/gl/glsl_program.hpp>
 #include <crosswind/simulation/gl/gl_texture.hpp>
 
@@ -35,8 +36,10 @@ int main(int argc, char **argv) {
             glsl_program->add_attribute("vertex_uv");
             glsl_program->link();
 
-            std::unique_ptr<cw::platform::sdl::sdl_surface> sonic_texture_surface =
-            std::make_unique<cw::platform::sdl::sdl_surface>(cw::platform::filesystem::get_file_path("blue_button_spritesheet.png"));
+            camera = std::make_shared<cw::simulation::camera>(640, 480);
+
+            std::string surface_path = cw::platform::filesystem::get_file_path("blue_button_spritesheet.png");
+            auto sonic_texture_surface = std::make_unique<cw::platform::sdl::sdl_surface>(surface_path);
 
             auto data_ptr = sonic_texture_surface->data.acquire();
             sonic_texture = std::make_shared<cw::simulation::gl::gl_texture>
@@ -58,9 +61,10 @@ int main(int argc, char **argv) {
             add(sonic);*/
 
             simple_sprite = std::make_shared<cw::simulation::sprite>
-                    (glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(1.0f,1.0f,0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+                    (glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(640/2,480/2,0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
 
             add(simple_sprite);
+            add(camera);
         }
 
         virtual void init(std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
@@ -113,6 +117,11 @@ int main(int argc, char **argv) {
             auto texture_location = glsl_program->get_uniform_location("texture_sampler");
             glUniform1i(texture_location, 0);
 
+            auto projection_matrix_location = glsl_program->get_uniform_location("projection_matrix");
+            auto camera_matrix = camera->get_camera_matrix();
+
+            glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE, &(camera_matrix[0][0]));
+
             for(auto& element: container){
                 element->draw();
             }
@@ -131,7 +140,7 @@ int main(int argc, char **argv) {
         std::shared_ptr<cw::simulation::interactive_image> btn_play_audio;
 
         std::shared_ptr<cw::simulation::standard_image> sonic;*/
-
+        std::shared_ptr<cw::simulation::camera> camera;
         std::shared_ptr<cw::simulation::sprite> simple_sprite;
         std::shared_ptr<cw::simulation::gl::gl_texture> sonic_texture;
         std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;

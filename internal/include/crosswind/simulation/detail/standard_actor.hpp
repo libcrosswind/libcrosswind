@@ -1,7 +1,5 @@
 #pragma once
 
-#include <SDL2/SDL_events.h>
-
 namespace cw{
 namespace simulation{
 namespace detail{

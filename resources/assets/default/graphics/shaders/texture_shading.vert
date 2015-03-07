@@ -8,7 +8,9 @@ in vec2 vertex_uv;
 
 out vec2 fragment_uv;
 
+uniform mat4 projection_matrix;
+
 void main() {
-    gl_Position = vertex_position;
+    gl_Position = projection_matrix * vertex_position;
     fragment_uv = vec2(vertex_uv.x, 1.0 - vertex_uv.y);
 }
