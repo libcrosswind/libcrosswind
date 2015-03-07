@@ -2,6 +2,7 @@
 
 #include <string>
 #include <SDL2/SDL_video.h>
+#include <glm/glm.hpp>
 
 #include <crosswind/concurrent/hollow_property.hpp>
 #include <crosswind/concurrent/resource_property.hpp>
@@ -22,8 +23,8 @@ class cw::platform::sdl::sdl_window{
 public:
 	concurrent::hollow_property<std::string> title;
 	concurrent::hollow_property<float> brightness;
-	concurrent::hollow_property<math::vector3> size;
-	concurrent::hollow_property<math::vector3> position;
+	concurrent::hollow_property<glm::vec2> size;
+	concurrent::hollow_property<glm::vec2> position;
 	concurrent::resource_property<SDL_Window> window;
 
 	template<typename... Args>
@@ -65,9 +66,26 @@ public:
 			return bright;
 		};
 
-		size.set = [this](const math::vector3& new_size){
+        position.set = [this](const glm::vec2& new_position){
+            auto window_ptr = this->window.acquire();
+            SDL_SetWindowPosition(window_ptr, new_position.x, new_position.y);
+            window.release();
+        };
+
+        position.get = [this](){
+            int x, y;
+
+            auto window_ptr = this->window.acquire();
+            SDL_GetWindowPosition(window_ptr, &x, &y);
+            window.release();
+
+            return glm::vec2(x, y);
+        };
+
+
+		size.set = [this](const glm::vec2& new_size){
 			auto window_ptr = this->window.acquire();
-			SDL_SetWindowSize(window_ptr, new_size[0], new_size[1]);
+			SDL_SetWindowSize(window_ptr, new_size.x, new_size.y);
 			window.release();
 		};
 
@@ -78,24 +96,10 @@ public:
 			SDL_GetWindowSize(window_ptr, &w, &h);
 			window.release();
 
-			return math::vector3(w, h, 0.0f);
+			return glm::vec2(w, h);
 		};
 
-		position.set = [this](const math::vector3& new_position){
-			auto window_ptr = this->window.acquire();
-			SDL_SetWindowPosition(window_ptr, new_position[0], new_position[1]);
-			window.release();
-		};
 
-		position.get = [this](){
-			int w, h;
-
-			auto window_ptr = this->window.acquire();
-			SDL_GetWindowPosition(window_ptr, &w, &h);
-			window.release();
-
-			return math::vector3(w, h, 0.0f);
-		};
 
 	}
 

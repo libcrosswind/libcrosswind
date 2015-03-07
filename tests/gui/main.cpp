@@ -40,13 +40,13 @@ int main(int argc, char **argv) {
             add(btn_play_audio);
             add(sonic);*/
 
-            simple_sprite = std::make_shared<cw::simulation::sprite>(glm::vec3(-0.5f, -0.5f, 1.0f),
-                    glm::vec3(1.0f,1.0f,0.0f));
+            simple_sprite = std::make_shared<cw::simulation::sprite>
+                    (glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(1.0f,1.0f,0.0f));
+
             add(simple_sprite);
         }
 
-        virtual void init(std::shared_ptr<cw::platform::sdl::sdl_gl_renderer> sdl_gl_renderer,
-                std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
+        virtual void init(std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
 
 //            sdl_audio_system->load_music("marble", cw::platform::filesystem::get_file_path("marble_zone_bgm.ogg"));
 //            sdl_audio_system->play_music("marble");

@@ -25,8 +25,7 @@ public:
 
 	}
 
-    virtual void init(std::shared_ptr<cw::platform::sdl::sdl_gl_renderer> sdl_gl_renderer,
-            std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system) = 0;
+    virtual void init(std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system) = 0;
 
 	virtual void handle_stage_events(){
 		auto& container = event_queue.data.acquire();

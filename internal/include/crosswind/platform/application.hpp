@@ -119,7 +119,7 @@ public:
     }
 
     void add_stage(auto stage){
-        stage->init(sdl_gl_renderer, sdl_audio_system);
+        stage->init(sdl_audio_system);
         stages(stage->name.get(), stage);
     }
 
@@ -146,7 +146,7 @@ private:
     std::shared_ptr< sdl::sdl_gl_renderer  >  sdl_gl_renderer;
     std::shared_ptr< sdl::sdl_audio_system >  sdl_audio_system;
 
-    std::shared_ptr< sdl::sdl_window >  display_window;
+    std::shared_ptr<sdl::sdl_window>  display_window;
 
     SDL_Event event;
 
