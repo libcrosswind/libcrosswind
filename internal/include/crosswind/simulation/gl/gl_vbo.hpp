@@ -51,8 +51,8 @@ public:
 
         glVertexAttribPointer(1,
                               4,
-                              GL_UNSIGNED_BYTE,
-                              GL_TRUE,
+                              GL_FLOAT,
+                              GL_FALSE,
                               sizeof(geometry::detail::vertex),
                               (void*)offsetof(geometry::detail::vertex, geometry::detail::vertex::color));
 

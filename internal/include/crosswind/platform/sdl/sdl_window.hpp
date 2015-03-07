@@ -23,8 +23,8 @@ class cw::platform::sdl::sdl_window{
 public:
 	concurrent::hollow_property<std::string> title;
 	concurrent::hollow_property<float> brightness;
-	concurrent::hollow_property<glm::vec2> size;
 	concurrent::hollow_property<glm::vec2> position;
+    concurrent::hollow_property<glm::vec2> size;
 	concurrent::resource_property<SDL_Window> window;
 
 	template<typename... Args>
