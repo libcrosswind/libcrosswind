@@ -9,19 +9,19 @@ Current status:
 Current modules:
 - [x] audio      - ogg, wav
 - [x] concurrent - atomic_property, mutex_property, mutex_container, hollow_property, resource_property
-- [x] container  - cacheable
+- [x] container  - cache
 - [x] crypto     - base64, sha1
 - [ ] database   - sqlite
-- [x] event      - dispatcher (internal only, interface will be added in the next commits)
+- [x] event      - dispatcher
 - [x] functional - delegate
 - [ ] geometry   - point, rectangle, box
 - [x] javascript - json
-- [x] math       - clamp, vector2, vector 3
-- [ ] network    - 
+- [x] math       - clamp, vector3
+- [ ] network    - ws
 - [x] platform   - application, filesystem
-- [x] simulation - stage, standard_image, interactive_image
+- [x] simulation - stage, sprite
 - [x] trivial    - this module is used internally by other modules
-- [ ] video      -
+- [ ] video      - 
 
 
 Crosswind is a toolset that aims to integrate high level C++14 functions for fast app development.
