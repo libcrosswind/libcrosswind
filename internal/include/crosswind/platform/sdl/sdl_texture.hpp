@@ -1,6 +1,5 @@
 #pragma once 
 
-#include <SDL2/SDL_render.h>
 #include <SDL2/SDL_image.h>
 
 #include <crosswind/concurrent/resource_property.hpp>

@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
 
             auto& container = graphical_queue.data.acquire();
             glsl_program->use();
-
+            
             for(auto& element: container){
                 element->draw();
             }

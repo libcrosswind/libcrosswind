@@ -41,6 +41,7 @@ Current dependencies:
 - [ ] OpenCV
 - [x] Bullet3
 - [x] Glew
+- [x] GLM
 
 ASIO, jsoncons and SQLite3 are not required to be built, they are configured to be header-only. For the rest of the dependencies you can run the build scripts from inside the setup folder via sh {script}.sh. 
 SDL2 does not build with haptics support with mingw32, as it seems, you need to build with mingw64 for haptics to be enabled. Until a workaround is found you have to stick with mingw64 based builds.

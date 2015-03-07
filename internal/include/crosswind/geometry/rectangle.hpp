@@ -1,7 +1,8 @@
 #pragma once
 
-#include <crosswind/math/vector3.hpp>
-#include <crosswind/simulation/detail/object.hpp>
+#include <glm/glm.hpp>
+
+#include <crosswind/geometry/detail/mesh.hpp>
 
 namespace cw {
 namespace geometry{
@@ -11,37 +12,34 @@ namespace geometry{
 }// namespace geometry
 }// namespace cw
 
-class cw::geometry::rectangle: public cw::simulation::detail::object{
+class cw::geometry::rectangle: public cw::geometry::detail::mesh{
 public:	
-	rectangle(const math::vector3& p, const math::vector3& s):
-		object(p, s){
+	rectangle(const glm::vec3& p, const glm::vec3& s, const glm::vec4& c):
+		mesh(p, s){
+
+			auto x = p[0];
+			auto y = p[1];
+			auto z = p[2];
+			auto w = 1.0;
+
+			auto w = s[0];
+			auto h = s[1];
+			auto d = s[2];
+
+			auto tr = std::make_pair(glm::vec4(x + w, y + h, z, w), c);
+			auto tl = std::make_pair(glm::vec4(x, y + h, z, w), c);
+			auto br = std::make_pair(glm::vec4(x+w, y, z, w), c);
+			auto bl = std::make_pair(glm::vec4(x, y, z, w), c);
 
 			vertices = {
 				// First triangle
-				p[0] + s[0],		// x
-				p[1] + s[1],		// y
-				p[2],				// z
-
-				p[0],				// x
-				p[1] + s[1],		// y
-				p[2],				// z
-
-				p[0],				// x
-				p[1],				// y
-				p[2],				// z
-
+				tr,
+				tl,
+				bl,
 				//Second triangle
-				p[0],				// x
-				p[1],				// y
-				p[2],				// z
-
-				p[0] + s[0],		// x
-				p[1],				// y
-				p[2],				// z
-
-				p[0] + s[0],		// x
-				p[1] + s[1],		// y
-				p[2]				// z
+				bl,
+				br,
+				tr
 			};
 
  	}
