@@ -29,7 +29,7 @@ public:
 
         // second triangle
         vertices[3].set_uv(uv.x, uv.y); // bottom left
-        vertices[4].set_uv(uv.w, uv.y); // bottom right
+        vertices[4].set_uv(uv.z, uv.y); // bottom right
         vertices[5].set_uv(uv.z, uv.w); // top right
 
         upload_vertex_array(vertices);
