@@ -1,4 +1,5 @@
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
@@ -120,7 +121,7 @@ int main(int argc, char **argv) {
             auto projection_matrix_location = glsl_program->get_uniform_location("projection_matrix");
             auto camera_matrix = camera->get_camera_matrix();
 
-            glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE, &(camera_matrix[0][0]));
+            glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE, glm::value_ptr(camera_matrix));
 
             for(auto& element: container){
                 element->draw();
