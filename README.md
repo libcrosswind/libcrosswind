@@ -14,7 +14,7 @@ Current modules:
 - [ ] database   - sqlite
 - [x] event      - dispatcher
 - [x] functional - delegate
-- [ ] geometry   - point, rectangle, box
+- [ ] geometry   - rectangle
 - [x] javascript - json
 - [x] math       - clamp, vector3
 - [ ] network    - ws
