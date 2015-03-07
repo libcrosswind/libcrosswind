@@ -23,6 +23,8 @@ int main(int argc, char **argv) {
             std::string fragment_shader = "assets/default/graphics/shaders/primitive_shading.frag";
             glsl_program->compile(vertex_shader, fragment_shader);
             glsl_program->add_attribute("vertex_position");
+            glsl_program->add_attribute("vertex_color");
+            glsl_program->add_attribute("vertex_uv");
             glsl_program->link();
 
 /*
