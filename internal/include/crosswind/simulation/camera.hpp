@@ -14,6 +14,8 @@ namespace simulation{
 }// namespace simulation
 }// namespace cw
 
+#include <iostream>
+
 class cw::simulation::camera: public detail::interactive_actor,
 							  public detail::standard_actor{
 public: 
@@ -27,40 +29,33 @@ public:
 		ortho_matrix = glm::ortho(0.0f, screen_dimension.x, 0.0f, screen_dimension.y);
 	}
 
-	void handle_event(SDL_Event* e){
-		switch(e->type){
-			case SDL_KEYDOWN:{
-				switch(e->key.keysym.sym){
-					case SDLK_w:
-						set_position(get_position() + glm::vec3(0.0f, 10.0f, 0.0f));
-					break;
+    void handle_input(std::shared_ptr<platform::input::keyboard_listener> keyboard_listener){
+        if(keyboard_listener->is_key_down("w")){
+            set_position(get_position() + glm::vec3(0.0f, 10.0f, 0.0f));
+        }
 
-					case SDLK_s:
-						set_position(get_position() + glm::vec3(0.0f, -10.0f, 0.0f));
-					break;
+        if(keyboard_listener->is_key_down("s")){
+            set_position(get_position() + glm::vec3(0.0f, -10.0f, 0.0f));
+        }
 
-                    case SDLK_a:
-                        set_position(get_position() + glm::vec3(-10.0f, 0.0f, 0.0f));
-                        break;
+        if(keyboard_listener->is_key_down("a")){
+            set_position(get_position() + glm::vec3(-10.0f, 0.0f, 0.0f));
+        }
 
-                    case SDLK_d:
-                        set_position(get_position() + glm::vec3(10.0f, 0.0f, 0.0f));
-                    break;
+        if(keyboard_listener->is_key_down("d")){
+            set_position(get_position() + glm::vec3(10.0f, 0.0f, 0.0f));
+        }
 
-                    case SDLK_q:
-                        set_scale(get_scale() + 0.1);
-                        break;
-                    case SDLK_e:
-                        set_scale(get_scale() - 0.1);
-                    break;
+        if(keyboard_listener->is_key_down("q")){
+            set_scale(get_scale() + 0.1);
+        }
 
-				}
-			}
-			break;
-		}
-	}
-
-	void trigger(std::shared_ptr<detail::event_mapping> mappint){
+        if(keyboard_listener->is_key_down("e")){
+            set_scale(get_scale() - 0.1);
+        }
+    }
+    
+	void trigger(std::shared_ptr<detail::event_mapping> mapping){
 
 	}
 

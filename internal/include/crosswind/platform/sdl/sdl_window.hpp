@@ -86,7 +86,7 @@ public:
         SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1);
 
         //Vsync
-        SDL_GL_SetSwapInterval(1);
+        SDL_GL_SetSwapInterval(1);//Vsync may drop one or two frames per second but avoids screen tearing.
 
         set_clear_color(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 

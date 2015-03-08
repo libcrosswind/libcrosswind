@@ -26,7 +26,7 @@ public:
 
 	}
 
-	virtual void handle_event(SDL_Event* e) = 0;
+	virtual void handle_input(std::shared_ptr<platform::input::keyboard_listener> keyboard_listener) = 0;
  
     virtual void trigger(std::shared_ptr<event_mapping> event) = 0;
 

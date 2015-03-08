@@ -4,9 +4,11 @@
 
 #include <glm/glm.hpp>
 
+
 #include <crosswind/concurrent/atomic_property.hpp>
 #include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/geometry/rectangle.hpp>
+#include <crosswind/platform/input/keyboard_listener.hpp>
 #include <crosswind/platform/sdl/sdl_core_system.hpp>
 #include <crosswind/platform/sdl/sdl_audio_system.hpp>
 #include <crosswind/platform/sdl/sdl_image_system.hpp>
@@ -19,12 +21,12 @@
 namespace cw{
 namespace platform{
 
-    class application;
+        class application;
 
 }// namespace platform
 }// namespace cw
-#include <iostream>
 
+#include <iostream>
 
 class cw::platform::application{
 public:
@@ -37,7 +39,10 @@ public:
         sdl_window->set_clear_color(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
         sdl_fps_limiter = std::make_shared<sdl::sdl_fps_limiter>(fps);
+        keyboard_listener = std::make_shared<input::keyboard_listener>();
     }
+
+
 
     virtual void run(){
 
@@ -64,6 +69,7 @@ public:
             }
 
         }
+
     }
 
     void add_stage(auto stage){
@@ -81,12 +87,16 @@ private:
     }
 
     void handle_input_events(){
+
+        keyboard_listener->refresh();
+
         while(SDL_PollEvent(&event)){
             //User requests quit
             if(event.type == SDL_QUIT){
                 running.set(false);
             }
-            stages("current")->handle_input(&event);
+
+            stages("current")->handle_input(keyboard_listener);
         }
     }
 
@@ -106,8 +116,10 @@ private:
     std::shared_ptr< sdl::sdl_image_system >  sdl_image_system;
     std::shared_ptr< sdl::sdl_audio_system >  sdl_audio_system;
 
-    std::shared_ptr<sdl::sdl_window>        sdl_window;
     std::shared_ptr<sdl::sdl_fps_limiter>   sdl_fps_limiter;
+    std::shared_ptr<sdl::sdl_window>        sdl_window;
+    std::shared_ptr<input::keyboard_listener> keyboard_listener;
+
 
     SDL_Event event;
 

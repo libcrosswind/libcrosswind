@@ -5,6 +5,7 @@
 
 #include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/concurrent/mutex_container.hpp>
+#include <crosswind/platform/input/keyboard_listener.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
 #include <crosswind/simulation/detail/interactive_actor.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>
@@ -38,12 +39,12 @@ public:
 		event_queue.data.release();
 	}
 	
-	virtual void handle_input(SDL_Event* e){
+	virtual void handle_input(std::shared_ptr<platform::input::keyboard_listener> keyboard_listener){
 
 		auto& container = interactive_queue.data.acquire();
 
 		for(auto& element: container){
-           element->handle_event(e);
+           element->handle_input(keyboard_listener);
         }
 
 		interactive_queue.data.release();
