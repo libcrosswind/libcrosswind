@@ -57,7 +57,7 @@ public:
             sdl_fps_limiter->begin();
 
             handle_application_events();
-            handle_input_events();
+            handle_input();
             handle_update();
             handle_rendering();
 
@@ -83,21 +83,22 @@ public:
 
 private:
     void handle_application_events(){
-        stages("current")->handle_stage_events();
-    }
-
-    void handle_input_events(){
-
-        keyboard_listener->refresh();
-
         while(SDL_PollEvent(&event)){
             //User requests quit
             if(event.type == SDL_QUIT){
                 running.set(false);
             }
 
-            stages("current")->handle_input(keyboard_listener);
         }
+        stages("current")->handle_stage_events();
+    }
+
+    void handle_input(){
+
+        keyboard_listener->refresh();
+
+        stages("current")->handle_input(keyboard_listener);
+
     }
 
     void handle_update(){
