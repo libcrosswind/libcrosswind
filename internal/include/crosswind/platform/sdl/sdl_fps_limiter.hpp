@@ -2,8 +2,6 @@
 
 #include <chrono>
 
-#include <SDL2/SDL_timer.h>
-
 namespace cw{
 namespace platform{
 namespace sdl{
@@ -14,67 +12,61 @@ namespace sdl{
 }// namespace platform
 }// namespace cw
 
-class cw::platform::sdl::sdl_fps_limiter{
+
+class cw::platform::sdl::sdl_fps_limiter {
 public:
-	sdl_fps_limiter(int screen_fps = 60): ticks_per_frame(0){
-		set_fps(60);
+    sdl_fps_limiter(float screen_fps = 60.00f) : ticks_per_frame(0.00f), delta(0.00f), fps(0.00f){
+        set_fps(screen_fps);
         previous_delta = std::chrono::high_resolution_clock::now();
-	}
+    }
 
-	void set_fps(int fps){
-		ticks_per_frame = (1000/fps);
-	}
+    void set_fps(float fps) {
+        ticks_per_frame = (1000.00f / fps);
+    }
 
-	void begin(){
+    void begin() {
         begin_time = std::chrono::high_resolution_clock::now();
-	}
+    }
 
-	void reset_delta(){
-		previous_delta = std::chrono::high_resolution_clock::now();
-	}
+    void reset_delta() {
+        previous_delta = std::chrono::high_resolution_clock::now();
+    }
 
     float get_delta() {
+        auto time_difference = std::chrono::duration_cast<std::chrono::nanoseconds>(begin_time - previous_delta);
 
-        current_delta = std::chrono::high_resolution_clock::now();
-        
-        auto time_diference = 
-        std::chrono::duration_cast<std::chrono::nanoseconds>(current_delta - previous_delta);
+        previous_delta = begin_time;
 
-        float delta = time_diference.count();
-
-        delta /= 1000000000;
-        previous_delta = current_delta;
+        delta = time_difference.count() / 1'000'000;
 
         return delta;
     }
 
-	float end(){
-  		end_time = std::chrono::high_resolution_clock::now();
+    float end() {
+        end_time = std::chrono::high_resolution_clock::now();
+        auto time_difference = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - begin_time);
 
-        auto time_diference = 
-        std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - begin_time);
+        float frame_ticks = time_difference.count() / 1'000'000;
 
-        float frame_ticks = time_diference.count();
-
-        frame_ticks /= 1000000000;
-
-        //If frame finished early
-        if( frame_ticks < ticks_per_frame )
-        {
-            //Wait remaining time
-            SDL_Delay( ticks_per_frame - frame_ticks );
+        // if frame finished early
+        if (frame_ticks < ticks_per_frame) {
+            fps = 1000.00f/ticks_per_frame;
+            SDL_Delay(ticks_per_frame - frame_ticks); // wait remaining time
+        } else {
+            fps = 1000.00f/frame_ticks;
         }
 
-        return frame_ticks;
-	}
-
+        return fps;
+    }
 
 
 private:
-	int ticks_per_frame;
+    float ticks_per_frame;
+    float delta;
+    float fps;
+
     std::chrono::high_resolution_clock::time_point begin_time;
     std::chrono::high_resolution_clock::time_point end_time;
 
     std::chrono::high_resolution_clock::time_point previous_delta;
-    std::chrono::high_resolution_clock::time_point current_delta;
-};
+};// class sdl_fps_limiter

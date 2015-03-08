@@ -23,7 +23,7 @@ namespace platform{
 
 }// namespace platform
 }// namespace cw
-
+#include <iostream>
 
 
 class cw::platform::application{
@@ -43,8 +43,11 @@ public:
 
         sdl_fps_limiter->reset_delta();
         running.set(true);
+        int frame_counter = 0;
 
         while (running.get()) {
+
+            frame_counter++;
 
             sdl_fps_limiter->begin();
 
@@ -53,10 +56,15 @@ public:
             handle_update();
             handle_rendering();
 
-            sdl_fps_limiter->end();
+            double fps = sdl_fps_limiter->end();
+
+            if(frame_counter == 10){
+                frame_counter = 0;
+                std::cout<< "FPS: " << fps << std::endl;
+            }
+
         }
     }
-
 
     void add_stage(auto stage){
         stage->init(sdl_audio_system);

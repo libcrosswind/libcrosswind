@@ -92,6 +92,7 @@ int main(int argc, char **argv) {
 
             sprite_batch->upload(simple_sprite);
 
+
             sprite_batch->end();
 
             for(auto& element: container){
@@ -103,7 +104,6 @@ int main(int argc, char **argv) {
             graphical_queue.data.release();
 
         }
-
 
     private:
         std::shared_ptr<cw::simulation::camera> camera;
