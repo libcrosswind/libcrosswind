@@ -53,6 +53,14 @@ public:
         if(sdl_input_listener->is_key_down("e")){
             set_scale(get_scale() - 0.1);
         }
+
+        if(sdl_input_listener->is_key_down("mouse_left")){
+            std::cout
+                        << "X: " << convert_screen_to_world(sdl_input_listener->get_mouse_coordinates()).x
+                        << " Y: " << convert_screen_to_world(sdl_input_listener->get_mouse_coordinates()).y
+                        <<
+            std::endl;
+        }
     }
 
 	void trigger(std::shared_ptr<detail::event_mapping> mapping){
@@ -93,6 +101,14 @@ public:
             needs_matrix_update = false;
 		}
 	}
+
+    glm::vec2 convert_screen_to_world(glm::vec2 screen_coordinates) {
+        screen_coordinates.y = screen_dimension.y - screen_coordinates.y;
+        screen_coordinates -= glm::vec2(screen_dimension.x / 2, screen_dimension.y / 2);
+        screen_coordinates /= glm::vec2(scale.x, scale.y);
+        screen_coordinates += glm::vec2(position.x, position.y);
+        return screen_coordinates;
+    }
 
 private:
     bool needs_matrix_update;

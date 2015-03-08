@@ -64,7 +64,7 @@ public:
 
             double fps = sdl_fps_limiter->end();
 
-            if(frame_counter == 10){
+            if(frame_counter == 1000){
                 frame_counter = 0;
                 std::cout<< "FPS: " << fps << std::endl;
             }
