@@ -4,10 +4,12 @@
 #include <map>
 
 #include <SDL2/SDL_keyboard.h>
+#include <SDL2/SDL_mouse.h>
 
 namespace cw{
 namespace platform{
-namespace input{
+namespace sdl{
+
 namespace
 {
 #ifdef __cplusplus
@@ -22,16 +24,16 @@ namespace
 #endif
 }
 
-	class keyboard_listener;
+	class sdl_input_listener;
 
-}// namespace input
+}// namespace sdl
 }// namespace platform
 }// namespace cw
 
 
-class cw::platform::input::keyboard_listener{
+class cw::platform::sdl::sdl_input_listener{
 public:
-	keyboard_listener(){
+    sdl_input_listener(){
 
         int array_counter = 0;
 
@@ -48,13 +50,23 @@ public:
             array_counter++;
         }
 
-	}
+        key_map["mouse_left"] = false;
+        key_map["mouse_middle"] = false;
+        key_map["mouse_right"] = false;
+
+
+
+    }
 
 	bool is_key_down(const std::string& key){
 
 		return key_map[key];
 
 	}
+
+    glm::vec2 get_mouse_coordinates(){
+        return mouse_coordinates;
+    }
 
 	void refresh(){
 
@@ -64,10 +76,22 @@ public:
 			key_map[key.first] = state[SDL_GetScancodeFromName(key.first.c_str())];
 		}
 
+        int x, y;
+
+        auto mouse_flags = SDL_GetMouseState(&x, &y);
+
+        key_map["mouse_left"] = mouse_flags & SDL_BUTTON(SDL_BUTTON_LEFT);
+        key_map["mouse_middle"] = mouse_flags & SDL_BUTTON(SDL_BUTTON_MIDDLE);
+        key_map["mouse_right"] = mouse_flags & SDL_BUTTON(SDL_BUTTON_RIGHT);
+
+
+        mouse_coordinates.x = x;
+        mouse_coordinates.y = y;
 
 	}
 
+private:
     std::map<std::string, bool> key_map;
-
-};// class keyboard_listener
+    glm::vec2 mouse_coordinates;
+};// class sdl_input_listener
 

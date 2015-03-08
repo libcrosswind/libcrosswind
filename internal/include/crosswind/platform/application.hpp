@@ -8,12 +8,13 @@
 #include <crosswind/concurrent/atomic_property.hpp>
 #include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/geometry/rectangle.hpp>
-#include <crosswind/platform/input/keyboard_listener.hpp>
 #include <crosswind/platform/sdl/sdl_core_system.hpp>
 #include <crosswind/platform/sdl/sdl_audio_system.hpp>
 #include <crosswind/platform/sdl/sdl_image_system.hpp>
 #include <crosswind/platform/sdl/sdl_window.hpp>
 #include <crosswind/platform/sdl/sdl_fps_limiter.hpp>
+#include <crosswind/platform/sdl/sdl_input_listener.hpp>
+
 #include <crosswind/simulation/stage.hpp>
 
 
@@ -39,7 +40,7 @@ public:
         sdl_window->set_clear_color(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
         sdl_fps_limiter = std::make_shared<sdl::sdl_fps_limiter>(fps);
-        keyboard_listener = std::make_shared<input::keyboard_listener>();
+        sdl_input_listener = std::make_shared<sdl::sdl_input_listener>();
     }
 
 
@@ -88,16 +89,16 @@ private:
             if(event.type == SDL_QUIT){
                 running.set(false);
             }
-
         }
+
         stages("current")->handle_stage_events();
     }
 
     void handle_input(){
 
-        keyboard_listener->refresh();
+        sdl_input_listener->refresh();
 
-        stages("current")->handle_input(keyboard_listener);
+        stages("current")->handle_input(sdl_input_listener);
 
     }
 
@@ -119,7 +120,7 @@ private:
 
     std::shared_ptr<sdl::sdl_fps_limiter>   sdl_fps_limiter;
     std::shared_ptr<sdl::sdl_window>        sdl_window;
-    std::shared_ptr<input::keyboard_listener> keyboard_listener;
+    std::shared_ptr<sdl::sdl_input_listener> sdl_input_listener;
 
 
     SDL_Event event;

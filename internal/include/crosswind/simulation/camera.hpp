@@ -29,32 +29,32 @@ public:
 		ortho_matrix = glm::ortho(0.0f, screen_dimension.x, 0.0f, screen_dimension.y);
 	}
 
-    void handle_input(std::shared_ptr<platform::input::keyboard_listener> keyboard_listener){
-        if(keyboard_listener->is_key_down("w")){
+    void handle_input(std::shared_ptr<platform::sdl::sdl_input_listener> sdl_input_listener){
+        if(sdl_input_listener->is_key_down("w")){
             set_position(get_position() + glm::vec3(0.0f, 10.0f, 0.0f));
         }
 
-        if(keyboard_listener->is_key_down("s")){
+        if(sdl_input_listener->is_key_down("s")){
             set_position(get_position() + glm::vec3(0.0f, -10.0f, 0.0f));
         }
 
-        if(keyboard_listener->is_key_down("a")){
+        if(sdl_input_listener->is_key_down("a")){
             set_position(get_position() + glm::vec3(-10.0f, 0.0f, 0.0f));
         }
 
-        if(keyboard_listener->is_key_down("d")){
+        if(sdl_input_listener->is_key_down("d")){
             set_position(get_position() + glm::vec3(10.0f, 0.0f, 0.0f));
         }
 
-        if(keyboard_listener->is_key_down("q")){
+        if(sdl_input_listener->is_key_down("q")){
             set_scale(get_scale() + 0.1);
         }
 
-        if(keyboard_listener->is_key_down("e")){
+        if(sdl_input_listener->is_key_down("e")){
             set_scale(get_scale() - 0.1);
         }
     }
-    
+
 	void trigger(std::shared_ptr<detail::event_mapping> mapping){
 
 	}
