@@ -5,7 +5,6 @@
 
 #include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/concurrent/mutex_container.hpp>
-#include <crosswind/platform/sdl/sdl_gl_renderer.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
 #include <crosswind/simulation/detail/interactive_actor.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>

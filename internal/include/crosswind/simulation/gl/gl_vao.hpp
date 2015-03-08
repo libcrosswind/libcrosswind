@@ -10,20 +10,20 @@ namespace cw{
 namespace simulation{
 namespace gl{
 
-	class gl_vbo;
+	class gl_vao;
 
 }// namespace gl
 }// namespace simulation
 }// namespace cw
 
-class cw::simulation::gl::gl_vbo{
+class cw::simulation::gl::gl_vao{
 public:
-	gl_vbo(unsigned short num_buffers = 1): id(0), allocated_buffers(num_buffers){
-		glGenBuffers(allocated_buffers, &id);
+/*	gl_vao(unsigned short num_arrays = 1): vao_id(0), allocated_arrays(num_buffers){
+		glGenVertexArrays(1, &vao_id);
 	}
 
-	~gl_vbo(){
-		glDeleteBuffers(allocated_buffers, &id);
+	~gl_vao(){
+		glDeleteVertexArrays(allocated_arrays, &vao_id);
 	}
 
 	void upload_vertex_array(const std::vector<geometry::detail::vertex>& vertex_array){
@@ -76,5 +76,5 @@ public:
 	}
 private:
 	uint32_t id;
-	unsigned short allocated_buffers;
-};// class gl_vbo
+	unsigned short allocated_arrays;*/
+};// class gl_vao

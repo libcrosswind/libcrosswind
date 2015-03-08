@@ -30,22 +30,10 @@ public:
 			auto dz = s.z;
 
 
-			detail::vertex top_right;
-			detail::vertex top_left;
-			detail::vertex bottom_right;
-			detail::vertex bottom_left;
-
-			top_right.set_position(px + dx, py + dy, pz, pw);
-			top_right.color = c;
-
-			top_left.set_position(px, py + dy, pz, pw);
-			top_left.color = c;
-				
-			bottom_right.set_position(px + dx, py, pz, pw);
-			bottom_right.color = c;
-
-			bottom_left.set_position(px, py, pz, pw);
-			bottom_left.color = c;
+			detail::vertex top_right(glm::vec4(px + dx, py + dy, pz, pw), c, glm::vec2(0.0, 0.0));
+			detail::vertex top_left(glm::vec4(px, py + dy, pz, pw), c, glm::vec2(0.0));
+			detail::vertex bottom_right(glm::vec4(px + dx, py, pz, pw), c, glm::vec2(0.0));
+			detail::vertex bottom_left(glm::vec4(px, py, pz, pw), c, glm::vec2(0.0));
 
 			vertices = {
 				// First triangle

@@ -3,9 +3,9 @@
 #include <glm/glm.hpp>
 
 #include <crosswind/geometry/rectangle.hpp>
-#include <crosswind/simulation/detail/standard_actor.hpp>
-#include <crosswind/simulation/detail/graphical_actor.hpp>
-#include <crosswind/simulation/gl/gl_vbo.hpp>
+//#include <crosswind/simulation/detail/standard_actor.hpp>
+//#include <crosswind/simulation/detail/graphical_actor.hpp>
+//#include <crosswind/simulation/gl/gl_vbo.hpp>
 
 namespace cw{
 namespace simulation{
@@ -15,13 +15,22 @@ namespace simulation{
 }// namespace simulation
 }// namespace cw
 
-class cw::simulation::sprite: 	public cw::geometry::rectangle,
-	                            public cw::simulation::detail::standard_actor,
-                              	public cw::simulation::detail::graphical_actor,
-                              	public cw::simulation::gl::gl_vbo{
 
+/* previous inheritance schema
+public cw::simulation::detail::standard_actor,
+public cw::simulation::gl::gl_vbo*/
+
+class cw::simulation::sprite: public cw::geometry::rectangle {
 public:
-	sprite(const glm::vec3& p, const glm::vec3& s, const glm::vec4& uv): rectangle(p, s){
+	sprite(const glm::vec3& p, 
+           const glm::vec3& s, 
+           const glm::vec4& uv, 
+           const uint32_t& t_id, 
+           const float& d):
+            rectangle(p, s),
+            texture_id(t_id),
+            depth(d){
+
         // first triangle
         vertices[0].set_uv(uv.z, uv.w); // top right
         vertices[1].set_uv(uv.x, uv.w); // top left
@@ -32,12 +41,12 @@ public:
         vertices[4].set_uv(uv.z, uv.y); // bottom right
         vertices[5].set_uv(uv.z, uv.w); // top right
 
-        upload_vertex_array(vertices);
+//        upload_vertex_array(vertices);
 	}
 
-	virtual void update(double delta){
+	/*virtual void update(double delta){
 
-/*        delta_count += delta;
+        delta_count += delta;
 
         auto& a = animations.data.acquire();
 
@@ -54,11 +63,14 @@ public:
 
         swap_graphical_item(sprites, "current", a["current"]->frames[a["current"]->current_frame]);
 
-        animations.data.release();*/
-    }
+        animations.data.release();
+    }*/
 
+/*
 	virtual void draw(){
 		draw_vertex_array(vertices);
-	}
+	}*/
 
+    uint32_t texture_id;
+    float depth;
 };// class sprite

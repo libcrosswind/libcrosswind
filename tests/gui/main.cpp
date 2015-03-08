@@ -9,6 +9,8 @@
 #include <crosswind/simulation/camera.hpp>
 #include <crosswind/simulation/gl/glsl_program.hpp>
 #include <crosswind/simulation/gl/gl_texture.hpp>
+#include <crosswind/simulation/gl/gl_sprite_batch.hpp>
+
 
 #include <iostream>
 
@@ -16,8 +18,8 @@
 int main(int argc, char **argv) {
     cw::platform::filesystem::add_directory("assets", true);
 
-    auto app = std::make_shared<cw::platform::application>();
-    app->init({SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480});
+    auto window_bounds = glm::vec4(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
+    auto app = std::make_shared<cw::platform::application>("Main Window", window_bounds);
 
     class marble_zone: public cw::simulation::stage{
     public:
@@ -40,31 +42,23 @@ int main(int argc, char **argv) {
             camera = std::make_shared<cw::simulation::camera>(640, 480);
 
             std::string surface_path = cw::platform::filesystem::get_file_path("blue_button_spritesheet.png");
-            auto sonic_texture_surface = std::make_unique<cw::platform::sdl::sdl_surface>(surface_path);
+            auto surface = std::make_unique<cw::platform::sdl::sdl_surface>(surface_path);
 
-            auto data_ptr = sonic_texture_surface->data.acquire();
             sonic_texture = std::make_shared<cw::simulation::gl::gl_texture>
-                    (glm::vec2(data_ptr->w, data_ptr->h), data_ptr->format->BytesPerPixel, data_ptr->pixels);
-            sonic_texture_surface->data.release();
-
-
-/*
-            btn_stand = std::make_shared<cw::simulation::interactive_image>(pos, dim);
-            btn_walk  = std::make_shared<cw::simulation::interactive_image>(pos, dim);
-            btn_run   = std::make_shared<cw::simulation::interactive_image>(pos, dim);
-            btn_play_audio = std::make_shared<cw::simulation::interactive_image>(pos, dim);
-            sonic = std::make_shared<cw::simulation::standard_image>(pos, dim);
-
-            add(btn_stand);
-            add(btn_walk);
-            add(btn_run);
-            add(btn_play_audio);
-            add(sonic);*/
+                    (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
+                     surface->data.ptr()->format->BytesPerPixel,
+                     surface->data.ptr()->pixels);
 
             simple_sprite = std::make_shared<cw::simulation::sprite>
-                    (glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(640/2,480/2,0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+                           (glm::vec3(-0.5f, -0.5f, 1.0f),
+                            glm::vec3(640/2,480/2,0.0f),
+                            glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+                            sonic_texture->id,
+                            0.0f);
 
-            add(simple_sprite);
+            sprite_batch = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
+
+            add(sprite_batch);
             add(camera);
         }
 
@@ -76,35 +70,6 @@ int main(int argc, char **argv) {
 //            sdl_audio_system->load_effect("jump", cw::platform::filesystem::get_file_path("Jump.wav"));
 //            sdl_audio_system->play_effect("jump");
 
-/*            btn_stand->init(sdl_renderer, "blue_button.json");
-            btn_walk->init(sdl_renderer, "blue_button.json");
-            btn_run->init(sdl_renderer, "blue_button.json");
-            btn_play_audio->init(sdl_renderer, "blue_button.json");
-            sonic->init(sdl_renderer, "sonic.json");
-
-            btn_stand->on_mouse_down += [this](){
-                post_event([this](){
-                    this->sonic->swap_graphical_item(this->sonic->animations, "current", "stand");
-                });
-            };
-
-            btn_walk->on_mouse_down += [this](){
-                post_event([this](){
-                    this->sonic->swap_graphical_item(this->sonic->animations, "current", "walk");
-                });
-            };
-
-            btn_run->on_mouse_down += [this](){
-                post_event([this](){
-                    this->sonic->swap_graphical_item(this->sonic->animations, "current", "run");
-                });
-            };
-
-            btn_play_audio->on_mouse_down += [this, sdl_audio_system](){
-                this->post_event([sdl_audio_system](){
-                    sdl_audio_system->play_music("marble");
-                });
-            };*/
         }
 
         virtual void render() override {
@@ -123,6 +88,12 @@ int main(int argc, char **argv) {
 
             glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE, glm::value_ptr(camera_matrix));
 
+            sprite_batch->begin();
+
+            sprite_batch->upload(simple_sprite);
+
+            sprite_batch->end();
+
             for(auto& element: container){
                 element->draw();
             }
@@ -135,14 +106,9 @@ int main(int argc, char **argv) {
 
 
     private:
-/*        std::shared_ptr<cw::simulation::interactive_image> btn_stand;
-        std::shared_ptr<cw::simulation::interactive_image> btn_walk;
-        std::shared_ptr<cw::simulation::interactive_image> btn_run;
-        std::shared_ptr<cw::simulation::interactive_image> btn_play_audio;
-
-        std::shared_ptr<cw::simulation::standard_image> sonic;*/
         std::shared_ptr<cw::simulation::camera> camera;
         std::shared_ptr<cw::simulation::sprite> simple_sprite;
+        std::shared_ptr<cw::simulation::gl::gl_sprite_batch> sprite_batch;
         std::shared_ptr<cw::simulation::gl::gl_texture> sonic_texture;
         std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
     };

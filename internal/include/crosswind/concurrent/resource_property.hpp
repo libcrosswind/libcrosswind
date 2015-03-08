@@ -33,6 +33,10 @@ public:
         return resource.get();
     }
 
+    Resource* ptr(){ //This returns a raw pointer without locking the property. Not thread-safe.
+        return resource.get();
+    }
+
     void release(){
         property_mutex.unlock();
     }

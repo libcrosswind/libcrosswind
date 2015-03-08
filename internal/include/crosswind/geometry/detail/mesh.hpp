@@ -24,8 +24,9 @@ public:
 
     }
 
-protected:
     std::vector<vertex> vertices;
+
+protected:
     glm::vec3 position;
     glm::vec3 size;
 };// class mesh
