@@ -19,6 +19,7 @@ Current modules:
 - [x] math       - clamp, vector3
 - [ ] network    - ws
 - [x] platform   - application, filesystem
+- [x] physics    - dynamic_world, box, static_plane
 - [x] simulation - stage, sprite
 - [x] trivial    - this module is used internally by other modules
 - [ ] video      - 

@@ -54,7 +54,7 @@ public:
         running.set(true);
         int frame_counter = 0;
 
-        auto box = std::make_shared<physics::box>(1.0f, glm::vec3(0, 20, 0), glm::vec3(1, 1, 1));
+        auto box = std::make_shared<physics::box>(20.0f, glm::vec3(0, 10, 0), glm::vec3(1, 1, 1));
         auto ground = std::make_shared<physics::box>(0.0f, glm::vec3(-4, 0, 0), glm::vec3(10, 1, 10));
 
         dynamic_world->add_rigid_body(ground);
@@ -79,9 +79,7 @@ public:
 
             std::cout
                     << "Box: " << box->get_position().x << " " << box->get_position().y << " " << box->get_position().z
-            << std::endl;
-
-            std::cout
+                    << " "
                     << "ground: " << ground->get_position().x << " " << ground->get_position().y << " " << ground->get_position().z
             << std::endl;
 
