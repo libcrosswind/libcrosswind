@@ -15,6 +15,8 @@
 #include <crosswind/platform/sdl/sdl_fps_limiter.hpp>
 #include <crosswind/platform/sdl/sdl_input_listener.hpp>
 
+#include <crosswind/physics/dynamic_world.hpp>
+
 #include <crosswind/simulation/stage.hpp>
 
 
@@ -41,6 +43,7 @@ public:
 
         sdl_fps_limiter = std::make_shared<sdl::sdl_fps_limiter>(fps);
         sdl_input_listener = std::make_shared<sdl::sdl_input_listener>();
+        dynamic_world = std::make_shared<physics::dynamic_world>(glm::vec3(0.0f, -10.0f, 0.0f));
     }
 
 
@@ -51,6 +54,13 @@ public:
         running.set(true);
         int frame_counter = 0;
 
+        auto box = std::make_shared<physics::box>(1.0f, glm::vec3(0, 20, 0), glm::vec3(1, 1, 1));
+        auto ground = std::make_shared<physics::box>(0.0f, glm::vec3(-4, 0, 0), glm::vec3(10, 1, 10));
+
+        dynamic_world->add_rigid_body(ground);
+        dynamic_world->add_rigid_body(box);
+
+
         while (running.get()) {
 
             frame_counter++;
@@ -59,10 +69,22 @@ public:
 
             handle_application_events();
             handle_input();
+
+            dynamic_world->update(1/60.0);
+
             handle_update();
             handle_rendering();
 
             double fps = sdl_fps_limiter->end();
+
+            std::cout
+                    << "Box: " << box->get_position().x << " " << box->get_position().y << " " << box->get_position().z
+            << std::endl;
+
+            std::cout
+                    << "ground: " << ground->get_position().x << " " << ground->get_position().y << " " << ground->get_position().z
+            << std::endl;
+
 
             if(frame_counter == 1000){
                 frame_counter = 0;
@@ -70,6 +92,9 @@ public:
             }
 
         }
+
+        dynamic_world->remove_rigid_body(ground);
+        dynamic_world->remove_rigid_body(box);
 
     }
 
@@ -122,10 +147,10 @@ private:
     std::shared_ptr<sdl::sdl_window>        sdl_window;
     std::shared_ptr<sdl::sdl_input_listener> sdl_input_listener;
 
-
     SDL_Event event;
 
     concurrent::atomic_property<bool> running;
 
+    std::shared_ptr<physics::dynamic_world> dynamic_world;
     concurrent::mutex_map<std::string, std::shared_ptr<simulation::stage> > stages;
 };// class application

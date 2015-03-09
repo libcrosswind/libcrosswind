@@ -28,8 +28,6 @@ int main(int argc, char **argv) {
             this->name.set("marble_zone");
 
             glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
-//            std::string vertex_shader = "assets/default/graphics/shaders/primitive_shading.vert";
-//            std::string fragment_shader = "assets/default/graphics/shaders/primitive_shading.frag";
             std::string vertex_shader = "assets/default/graphics/shaders/texture_shading.vert";
             std::string fragment_shader = "assets/default/graphics/shaders/texture_shading.frag";
 

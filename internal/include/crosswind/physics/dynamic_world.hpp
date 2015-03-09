@@ -3,83 +3,120 @@
 #include <memory>
 #include <btBulletDynamicsCommon.h>
 
-#include <crosswind/math/vector3.hpp>
+#include <glm/glm.hpp>
 
 namespace cw{
 namespace physics{
 
 	class dynamic_world;
 	class rigid_body;
+	class static_plane;
+    class box;
 
 }// namespace physics
 }// namespace cw
 
+#include <iostream>
+
 class cw::physics::rigid_body{
 	protected:
-		rigid_body(	const cw::math::vector3& transform, 
-					const bt::RigidBody::btRigidBodyConstructionInfo& info): 
-		body(new btRigidBody(info)){
+		rigid_body(const glm::vec3& origin){
 
+            std::cout << "Origin: " << origin.x << " " << origin.y << " " << origin.z << std::endl;
 			transform.setIdentity();
-			transform.setOrigin(btVector3(0, 0, 0));
+			transform.setOrigin(btVector3(origin.x, origin.y, origin.z));
 
 		}
 
-		virtual void init() = 0;
+		void init(const float& mass, btMotionState* m_state, btCollisionShape* c_shape){
 
-	protected:
-		btTransform transform;
-		std::unique_ptr<btRigidBody> body;
+            btScalar m(mass);
+
+            //rigidbody is dynamic if and only if mass is non zero, otherwise static
+            bool isDynamic = (m != 0.f);
+
+            btVector3 localInertia(0,0,0);
+            if (isDynamic)
+                c_shape->calculateLocalInertia(m,localInertia);
+
+
+            btRigidBody::btRigidBodyConstructionInfo info(m, m_state, c_shape, localInertia);
+
+			motion_state 	= std::unique_ptr<btMotionState>(m_state);
+			collision_shape = std::unique_ptr<btCollisionShape>(c_shape);
+			physic_body		= std::make_unique<btRigidBody>(info);
+		}
+
+public:
+
+        glm::vec3 get_position(){
+            btTransform t;
+            physic_body->getMotionState()->getWorldTransform(t);
+            return glm::vec3(t.getOrigin().getX(), t.getOrigin().getY(), t.getOrigin().getZ());
+        }
+
+        btTransform transform;
+		std::unique_ptr<btMotionState> motion_state;
+		std::unique_ptr<btCollisionShape> collision_shape;
+		std::unique_ptr<btRigidBody> physic_body;
 };
 
 class cw::physics::static_plane: public cw::physics::rigid_body{
 	public:
-		static_plane(const cw::math::vector3& origin): rigid_body(origin){
+		static_plane(const glm::vec3& origin,
+                     const glm::vec3& size):
+		rigid_body(origin){
 
-			init();
-
-//			 = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
-
-		}
-
-	protected:
-		virtual void init(){
+			init(0.0f,
+                 new btDefaultMotionState(transform),
+				 new btStaticPlaneShape(btVector3(size.x, size.y, size.z),0));
 
 		}
 
-		std::unique_ptr<btStaticPlaneShape> plane;
 };
+
+
+class cw::physics::box: public cw::physics::rigid_body{
+public:
+    box(const float& mass,
+                 const glm::vec3& origin,
+                 const glm::vec3& size):
+            rigid_body(origin){
+
+            init(mass,
+                 new btDefaultMotionState(transform),
+                 new btBoxShape(btVector3(size.x, size.y, size.z)));
+
+    }
+
+};
+
 
 class cw::physics::dynamic_world{
 public:
-	dynamic_world(const cw::math::vector3 gravity):
-	collision_config(new btDefaultCollisionConfiguration()), 
-	dispatcher(new btDispatcher(collision_config.get()),
-	broadphase(new btDbvtBroadphase()),
-	solver(new btSequentialImpulseConstraintSolver()),
-	world(new btDiscreteDynamicsWorld(dispatcher.get(), broadphase.get(), solver.get(), collision_config.get()){
+	dynamic_world(const glm::vec3& gravity){
 
-		world->setGravity(gravity);
-
+        collision_config.reset(new btDefaultCollisionConfiguration());
+        dispatcher.reset(new btCollisionDispatcher(collision_config.get()));
+        broadphase.reset(new btDbvtBroadphase());
+        solver.reset(new btSequentialImpulseConstraintSolver());
+        world.reset(new btDiscreteDynamicsWorld(dispatcher.get(), broadphase.get(), solver.get(), collision_config.get()));
+		set_gravity(gravity);
+	
 	}
 
 	void add_rigid_body(std::shared_ptr<rigid_body> body){
 
-		btTransform t;
-		t.setIdentity();
-		t.setOrigin(btVector3(0, 0, 0));
-		btMotionState* motion_state = new btDefaultMotionState(t);
-		btRigidBody::btRigidBodyConstructionInfo info(0.0, motion_state, plane);
-		world->addRigidBody(body);
+		world->addRigidBody(body->physic_body.get());
 
 	}
 
-	void remove_rigid_body(btRigidBody* body){
-		world->removeCollisionObject();
+	void remove_rigid_body(std::shared_ptr<rigid_body> body){
+		world->removeCollisionObject(body->physic_body.get());
 	}
 
-	void set_gravity(const btVector3& gravity){
-		world->setGravity(gravity);
+	void set_gravity(const glm::vec3& gravity){
+		world->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
 	}
 
 	void update(double dt){
@@ -93,4 +130,4 @@ private:
 	std::unique_ptr<btDispatcher>    			dispatcher;
 	std::unique_ptr<btCollisionConfiguration>	collision_config;
 
-};
+};// class dynamic_world
