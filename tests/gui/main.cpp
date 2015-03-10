@@ -1,6 +1,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <crosswind/physics/box.hpp>
+
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
 #include <crosswind/platform/sdl/sdl_surface.hpp>

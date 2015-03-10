@@ -1,5 +1,10 @@
 #pragma once
 
+#include <memory>
+
+#include <btBulletDynamicsCommon.h>
+#include <glm/glm.hpp>
+
 namespace cw{
 namespace physics{
 namespace detail{
@@ -14,7 +19,6 @@ class cw::physics::detail::rigid_body{
 	protected:
 		rigid_body(const glm::vec3& origin){
 
-            std::cout << "Origin: " << origin.x << " " << origin.y << " " << origin.z << std::endl;
 			transform.setIdentity();
 			transform.setOrigin(btVector3(origin.x, origin.y, origin.z));
 
