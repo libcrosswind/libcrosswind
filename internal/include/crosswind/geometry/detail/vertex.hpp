@@ -29,6 +29,10 @@ struct cw::geometry::detail::vertex{
     	position.w = w;
     }
 
+	void set_position(const glm::vec4& p){
+		position = p;
+	}
+
     void set_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a){
     	color.r = r;
     	color.g = g;

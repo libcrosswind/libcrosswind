@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
 
             actor_list["ground"]->rigid_body =
                     std::make_shared<cw::physics::box>(0.0f,
-                            glm::vec3(-320.5f, 240.0f, 1.0f),
+                            glm::vec3(-320.5f, -240.0f, 1.0f),
                             glm::vec3(256.0f,256.0f,0.0f));
 
 

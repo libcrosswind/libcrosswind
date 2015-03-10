@@ -58,23 +58,18 @@ public:
 		auto dy = size.y;
 		auto dz = size.z;
 
-		glm::vec4 c = glm::vec4(1.0,1.0,1.0,1.0);
-		detail::vertex top_right(glm::vec4(px + dx, py + dy, pz, pw), c, glm::vec2(0.0, 0.0));
-		detail::vertex top_left(glm::vec4(px, py + dy, pz, pw), c, glm::vec2(0.0));
-		detail::vertex bottom_right(glm::vec4(px + dx, py, pz, pw), c, glm::vec2(0.0));
-		detail::vertex bottom_left(glm::vec4(px, py, pz, pw), c, glm::vec2(0.0));
+		glm::vec4 top_right (px + dx, py + dy, pz, pw);
+		glm::vec4 top_left(px, py + dy, pz, pw);
+		glm::vec4 bottom_right(px + dx, py, pz, pw);
+		glm::vec4 bottom_left(px, py, pz, pw);
 
-		vertices = {
-				// First triangle
-				top_right,
-				top_left,
-				bottom_left,
-				//Second triangle
-				bottom_left,
-				bottom_right,
-				top_right
-		};
+		vertices[0].set_position(top_right);
+		vertices[1].set_position(top_left);
+		vertices[2].set_position(bottom_left);
 
+		vertices[3].set_position(bottom_left);
+		vertices[4].set_position(bottom_right);
+		vertices[5].set_position(top_right);
 
 	}
 

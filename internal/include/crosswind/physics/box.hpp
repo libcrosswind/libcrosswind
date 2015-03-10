@@ -22,7 +22,6 @@ public:
             init(mass,
                  new btDefaultMotionState(transform),
                  new btBoxShape(btVector3(size.x, size.y, size.z)));
-
     }
 
 };// class box
