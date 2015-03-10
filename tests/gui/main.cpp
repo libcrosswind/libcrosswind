@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
 
 
             float horizontal_offset = 0.0f;
-            for(int i = 0; i<4; i++){
+            for(int i = 0; i<1; i++){
 
                 actor_list["ground"]->sprites["tile_" + std::to_string(i)] = std::make_shared<cw::simulation::sprite>
                         (glm::vec3(-320.5f + horizontal_offset, -240.0f, 1.0f),
@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
             actor_list["ground"]->rigid_body =
                     std::make_shared<cw::physics::box>(0.0f,
                             glm::vec3(-320.5f, -240.0f, 1.0f),
-                            glm::vec3(256.0f,256.0f,0.0f));
+                            glm::vec3(256.0f,0.7421875f,1.0f));
 
 
 
