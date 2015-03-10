@@ -7,6 +7,7 @@
 #include <crosswind/platform/filesystem.hpp>
 #include <crosswind/platform/sdl/sdl_surface.hpp>
 
+#include <crosswind/simulation/actor.hpp>
 #include <crosswind/simulation/sprite.hpp>
 #include <crosswind/simulation/camera.hpp>
 #include <crosswind/simulation/gl/glsl_program.hpp>
@@ -39,28 +40,49 @@ int main(int argc, char **argv) {
             glsl_program->add_attribute("vertex_uv");
             glsl_program->link();
 
-            camera = std::make_shared<cw::simulation::camera>(640, 480);
+            camera_list["current"] = std::make_shared<cw::simulation::camera>(640, 480);
 
-            std::string surface_path = cw::platform::filesystem::get_file_path("60.png");
-            auto surface = std::make_unique<cw::platform::sdl::sdl_surface>(surface_path);
+            load_texture("sonic_wait", "SonAni_Wait_intro.png");
+            load_texture("sonic_walk", "SonAni_Walk.png");
+            load_texture("sonic_run", "SonAni_Run.png");
+            load_texture("sonic_roll", "SonAni_Roll.png");
+
+            load_texture("ground", "60.png");
+
+            actor_list["sonic"]  = std::make_shared<cw::simulation::actor>();
+            actor_list["ground"] = std::make_shared<cw::simulation::actor>();
+
+            actor_list["ground"]->sprites["default"] = std::make_shared<cw::simulation::sprite>
+                                                        (glm::vec3(-0.5f, -0.5f, 1.0f),
+                                                            glm::vec3(640/2,480/2,0.0f),
+                                                            glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+                                                            texture_list["ground"]->id,
+                                                            0.0f);
+
+            actor_list["sonic"]->sprites["stand"] = std::make_shared<cw::simulation::sprite>
+                                                        (glm::vec3(-0.5f, -0.5f, 1.0f),
+                                                                glm::vec3(640/2,480/2,0.0f),
+                                                                glm::vec4(0.0f, 0.0f, 0.2f, 1.0f),
+                                                                texture_list["sonic_wait"]->id,
+                                                                0.0f);
 
 
-            sonic_texture = std::make_shared<cw::simulation::gl::gl_texture>
+
+            batch_list["current"] = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
+
+            add(batch_list["current"]);
+            add(camera_list["current"]);
+        }
+
+        void load_texture(const std::string& name, const std::string& path){
+            auto surface = std::make_unique<cw::platform::sdl::sdl_surface>(cw::platform::filesystem::get_file_path(path));
+
+
+            texture_list[name] = std::make_shared<cw::simulation::gl::gl_texture>
                     (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
-                     surface->data.ptr()->format->BytesPerPixel,
-                     surface->data.ptr()->pixels);
+                            surface->data.ptr()->format->BytesPerPixel,
+                            surface->data.ptr()->pixels);
 
-            simple_sprite = std::make_shared<cw::simulation::sprite>
-                           (glm::vec3(-0.5f, -0.5f, 1.0f),
-                            glm::vec3(640/2,480/2,0.0f),
-                            glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
-                            sonic_texture->id,
-                            0.0f);
-
-            sprite_batch = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
-
-            add(sprite_batch);
-            add(camera);
         }
 
         virtual void init(std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
@@ -75,42 +97,46 @@ int main(int argc, char **argv) {
 
         virtual void render() override {
 
-            auto& container = graphical_queue.data.acquire();
             glsl_program->use();
 
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, sonic_texture->id);
+            glActiveTexture(GL_TEXTURE0); //Need to integrate this into batch list or program keymap
 
             auto texture_location = glsl_program->get_uniform_location("texture_sampler");
             glUniform1i(texture_location, 0);
 
             auto projection_matrix_location = glsl_program->get_uniform_location("projection_matrix");
-            auto camera_matrix = camera->get_camera_matrix();
+            auto camera_matrix = camera_list["current"]->get_camera_matrix();
 
             glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE, glm::value_ptr(camera_matrix));
 
-            sprite_batch->begin();
+            batch_list["current"]->begin();
 
-            sprite_batch->upload(simple_sprite);
+            for(auto& actor_mapping : actor_list){
+                for(auto& sprite_mapping : actor_mapping.second->sprites){
+                    batch_list["current"]->upload(sprite_mapping.second);
+                }
+            }
 
+            batch_list["current"]->end();
 
-            sprite_batch->end();
+            auto& container = graphical_queue.data.acquire();
 
             for(auto& element: container){
                 element->draw();
             }
 
-            glBindTexture(GL_TEXTURE_2D, 0);
-            glsl_program->unuse();
             graphical_queue.data.release();
+
+            glsl_program->unuse();
 
         }
 
     private:
-        std::shared_ptr<cw::simulation::camera> camera;
-        std::shared_ptr<cw::simulation::sprite> simple_sprite;
-        std::shared_ptr<cw::simulation::gl::gl_sprite_batch> sprite_batch;
-        std::shared_ptr<cw::simulation::gl::gl_texture> sonic_texture;
+        std::map<std::string, std::shared_ptr<cw::simulation::camera> > camera_list;
+        std::map<std::string, std::shared_ptr<cw::simulation::actor> >  actor_list;
+        std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_sprite_batch>  > batch_list;
+        std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_texture> > texture_list;
+
         std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
     };
 
