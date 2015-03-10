@@ -11,7 +11,6 @@
 #include <crosswind/simulation/gl/gl_texture.hpp>
 #include <crosswind/simulation/gl/gl_sprite_batch.hpp>
 
-
 #include <iostream>
 
 
@@ -21,11 +20,12 @@ int main(int argc, char **argv) {
     auto window_bounds = glm::vec4(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
     auto app = std::make_shared<cw::platform::application>("Main Window", window_bounds);
 
-    class marble_zone: public cw::simulation::stage{
-    public:
-        marble_zone(){
 
-            this->name.set("marble_zone");
+    class green_hill_zone: public cw::simulation::stage{
+    public:
+        green_hill_zone(){
+
+            this->name.set("green_hill_zone");
 
             glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
             std::string vertex_shader = "assets/default/graphics/shaders/texture_shading.vert";
@@ -39,8 +39,9 @@ int main(int argc, char **argv) {
 
             camera = std::make_shared<cw::simulation::camera>(640, 480);
 
-            std::string surface_path = cw::platform::filesystem::get_file_path("blue_button_spritesheet.png");
+            std::string surface_path = cw::platform::filesystem::get_file_path("60.png");
             auto surface = std::make_unique<cw::platform::sdl::sdl_surface>(surface_path);
+
 
             sonic_texture = std::make_shared<cw::simulation::gl::gl_texture>
                     (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
@@ -111,8 +112,8 @@ int main(int argc, char **argv) {
         std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
     };
 
-    app->add_stage(std::make_shared<marble_zone>());
-    app->swap_stage("current", "marble_zone");
+    app->add_stage(std::make_shared<green_hill_zone>());
+    app->swap_stage("current", "green_hill_zone");
     app->run();
 
     return 0;

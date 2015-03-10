@@ -15,19 +15,12 @@ namespace concurrent{
 template<class Resource>
 class cw::concurrent::resource_property{
 
-	typedef std::unique_ptr<Resource, void (*)(Resource*)> resource_ptr;
-
 public:
 	template<class Creator, class Destructor, class... Arguments>
 	resource_property(Creator c, Destructor d, Arguments&&... args): resource(make_resource(c, d, args...)){
 	
 	}
-/*
-	template<class Creator, class Destructor, class... Arguments>
-	create(Creator c, Destructor d, Arguments&&... args){
-		resource = std::move(make_resource(c, d, args...));
-	}
-*/
+
 	Resource* acquire(){
         property_mutex.lock();
         return resource.get();
@@ -48,14 +41,14 @@ protected:
 		auto r = c(std::forward<Arguments>(args)...);
 		if (!r) { throw std::runtime_error {"Unable to create resource"}; }
 		typedef typename std::decay<decltype(*r)>::type ResourceType;
-		return std::unique_ptr<ResourceType, void(*)(ResourceType*)>(r, d);
+		return std::shared_ptr<ResourceType>(r, d);
 	}
 
 
 private:
     std::mutex property_mutex;
 
-	resource_ptr resource;
+	std::shared_ptr<Resource> resource;
 };// class resource_property
 
 

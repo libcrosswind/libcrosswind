@@ -64,8 +64,7 @@ public:
 class cw::physics::static_plane: public cw::physics::rigid_body{
 	public:
 		static_plane(const glm::vec3& origin,
-                     const glm::vec3& size):
-		rigid_body(origin){
+                     const glm::vec3& size): rigid_body(origin){
 
 			init(0.0f,
                  new btDefaultMotionState(transform),
@@ -79,9 +78,8 @@ class cw::physics::static_plane: public cw::physics::rigid_body{
 class cw::physics::box: public cw::physics::rigid_body{
 public:
     box(const float& mass,
-                 const glm::vec3& origin,
-                 const glm::vec3& size):
-            rigid_body(origin){
+        const glm::vec3& origin,
+        const glm::vec3& size): rigid_body(origin){
 
             init(mass,
                  new btDefaultMotionState(transform),
@@ -89,6 +87,17 @@ public:
 
     }
 
+};
+
+class cw::physics::sphere: public cw::physics::rigid_body{
+	sphere(const float& mass,
+           const glm::vec3& origin,
+           const float& radius): rigid_body(origin){
+
+			init(mass,
+				new btDefaultMotionState(transform),
+				new btSphereShape(btScalar(radius)));
+	}
 };
 
 
