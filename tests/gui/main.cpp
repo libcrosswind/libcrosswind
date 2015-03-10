@@ -49,7 +49,9 @@ int main(int argc, char **argv) {
             load_texture("sonic_run", "SonAni_Run.png");
             load_texture("sonic_roll", "SonAni_Roll.png");
 
-            load_texture("ground", "60.png");
+//            load_texture("ground", "60.png");
+
+            load_texture("ground", "blue_rectangle.png");
 
             actor_list["sonic"]  = std::make_shared<cw::simulation::actor>();
             actor_list["ground"] = std::make_shared<cw::simulation::actor>();
@@ -59,8 +61,8 @@ int main(int argc, char **argv) {
             for(int i = 0; i<1; i++){
 
                 actor_list["ground"]->sprites["tile_" + std::to_string(i)] = std::make_shared<cw::simulation::sprite>
-                        (glm::vec3(-320.5f + horizontal_offset, -240.0f, 1.0f),
-                                glm::vec3(256.0f,256.0f,0.0f),
+                        (glm::vec3(0.0f + horizontal_offset, -200.0f, 1.0f),
+                                glm::vec3(256.0f, 256.0f, 256.0f),
                                 glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
                                 texture_list["ground"]->id,
                                 0.0f);
@@ -70,22 +72,19 @@ int main(int argc, char **argv) {
 
             actor_list["ground"]->rigid_body =
                     std::make_shared<cw::physics::box>(0.0f,
-                            glm::vec3(-320.5f, -240.0f, 1.0f),
-                            glm::vec3(256.0f,66,1.0f));
-
-
-
+                            glm::vec3(0.0f, -200.0f, 1.0f),
+                            glm::vec3(128.0f, 128.0f, 128.0f));
 
 
             actor_list["sonic"]->sprites["stand"] = std::make_shared<cw::simulation::sprite>
-                                                        (glm::vec3(-310.0f, 120.0f, 1.0f),
-                                                                glm::vec3(48, 48,0.0f),
+                                                        (glm::vec3(0.0f, 0.0f, 1.0f),
+                                                                glm::vec3(48, 48, 48.0f),
                                                                 glm::vec4(0.0f, 0.0f, 0.2f, 1.0f),
                                                                 texture_list["sonic_wait"]->id,
                                                                 0.0f);
 
-            actor_list["sonic"]->rigid_body = std::make_shared<cw::physics::box>(20.0f,
-                    glm::vec3(-310.0f, 120.0f, 1.0f), glm::vec3(48, 48,0.0f));
+            actor_list["sonic"]->rigid_body = std::make_shared<cw::physics::box>(35.0f,
+                    glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(24.0f, 24.0f,24.0f));
 
 
             add(batch_list["current"]);

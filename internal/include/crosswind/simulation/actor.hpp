@@ -24,23 +24,23 @@ public:
 
 	virtual void update(double delta){
 
-			if(frame_counter++ == 30){
+			if(frame_counter++ >= 0){
             std::cout << "rigid_body: " << 
-            			 rigid_body->get_position().x << " " << 
-            			 rigid_body->get_position().y << " " << 
-            			 rigid_body->get_position().z
+            			 rigid_body->get_origin().x << " " << 
+            			 rigid_body->get_origin().y << " " << 
+            			 rigid_body->get_origin().z
             << std::endl;
 				frame_counter = 0;
 
 			for(auto& sprite_mapping : sprites){
 
             std::cout << "mapping: " << sprite_mapping.first << " " <<
-            			 sprite_mapping.second->get_position().x << " " << 
-            			 sprite_mapping.second->get_position().y << " " << 
-            			 sprite_mapping.second->get_position().z
+            			 sprite_mapping.second->get_origin().x << " " << 
+            			 sprite_mapping.second->get_origin().y << " " << 
+            			 sprite_mapping.second->get_origin().z
             << std::endl;
 
-				sprite_mapping.second->set_position(rigid_body->get_position());
+				sprite_mapping.second->set_origin(rigid_body->get_origin());
 			}
 		}
 

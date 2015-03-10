@@ -45,11 +45,10 @@ class cw::physics::detail::rigid_body{
 		}
 
 public:
-
-        glm::vec3 get_position(){
-            btTransform t;
-            physic_body->getMotionState()->getWorldTransform(t);
-            return glm::vec3(t.getOrigin().getX(), t.getOrigin().getY(), t.getOrigin().getZ());
+        glm::vec3 get_origin(){
+            btVector3 t;
+			t = physic_body->getCenterOfMassPosition();
+            return glm::vec3(t[0], t[1], t[2]);
         }
 
         btTransform transform;

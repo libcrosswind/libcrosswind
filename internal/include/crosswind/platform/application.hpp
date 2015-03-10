@@ -20,7 +20,6 @@
 #include <crosswind/simulation/stage.hpp>
 
 
-
 namespace cw{
 namespace platform{
 

@@ -20,13 +20,13 @@ namespace detail{
 class cw::geometry::detail::mesh{
 public:
     mesh(const glm::vec3& p, const glm::vec3& s):
-    position(p), size(s){
+        origin(p), size(s){
 
     }
 
     std::vector<vertex> vertices;
 
 protected:
-    glm::vec3 position;
+    glm::vec3 origin;
     glm::vec3 size;
 };// class mesh

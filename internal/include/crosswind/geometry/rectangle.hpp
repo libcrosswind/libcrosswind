@@ -18,11 +18,11 @@ namespace geometry{
 class cw::geometry::rectangle: public cw::geometry::detail::mesh{
 public:	
 	rectangle(const glm::vec3& p, const glm::vec3& s, const glm::vec4& c = glm::vec4(1.0,1.0,1.0,1.0)):
-		mesh(p, s){
+			cw::geometry::detail::mesh(p, s){
 
-			auto px = p.x;
-			auto py = p.y;
-			auto pz = p.z;
+    		auto px = p.x - s.x/2;
+			auto py = p.y - s.y/2;
+			auto pz = p.z - s.z/2;
 			auto pw = 1.0f;
 
 			auto dx = s.x;
@@ -45,13 +45,14 @@ public:
 				bottom_right,
 				top_right
 			};
+
  	}
 
-	void set_position(const glm::vec3& p){
+	glm::vec3 set_origin(const glm::vec3& new_origin){
 
-		auto px = p.x;
-		auto py = p.y;
-		auto pz = p.z;
+		auto px = new_origin.x - size.x/2;
+		auto py = new_origin.y - size.y/2;
+		auto pz = new_origin.z - size.z/2;
 		auto pw = 1.0f;
 
 		auto dx = size.x;
@@ -71,9 +72,16 @@ public:
 		vertices[4].set_position(bottom_right);
 		vertices[5].set_position(top_right);
 
+		origin = new_origin;
+
 	}
 
-	glm::vec3 get_position(){
-		return position;
+	glm::vec3 get_origin(){
+
+		return origin;
 	}
+
+
+
+
 };// class rectangle
