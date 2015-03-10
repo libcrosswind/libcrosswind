@@ -43,7 +43,7 @@ public:
 
         sdl_fps_limiter = std::make_shared<sdl::sdl_fps_limiter>(fps);
         sdl_input_listener = std::make_shared<sdl::sdl_input_listener>();
-        dynamic_world = std::make_shared<physics::dynamic_world>(glm::vec3(0.0f, -10.0f, 0.0f));
+        dynamic_world = std::make_shared<physics::dynamic_world>(glm::vec3(0.0f, -20.0f, 0.0f));
     }
 
 

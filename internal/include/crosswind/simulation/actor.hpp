@@ -33,6 +33,13 @@ public:
 				frame_counter = 0;
 			}
 
+			for(auto& sprite_mapping : sprites){
+
+				//auto p = rigid_body->get_position();
+				//p.y = -p.y;
+				sprite_mapping.second->set_position(sprite_mapping.second->get_position());
+			}
+
 	}
 
 

@@ -68,6 +68,14 @@ int main(int argc, char **argv) {
                 horizontal_offset += 256;
             }
 
+            actor_list["ground"]->rigid_body =
+                    std::make_shared<cw::physics::box>(0.0f,
+                            glm::vec3(-320.5f, 240.0f, 1.0f),
+                            glm::vec3(256.0f,256.0f,0.0f));
+
+
+
+
 
             actor_list["sonic"]->sprites["stand"] = std::make_shared<cw::simulation::sprite>
                                                         (glm::vec3(-310.0f, 120.0f, 1.0f),
@@ -75,6 +83,9 @@ int main(int argc, char **argv) {
                                                                 glm::vec4(0.0f, 0.0f, 0.2f, 1.0f),
                                                                 texture_list["sonic_wait"]->id,
                                                                 0.0f);
+
+            actor_list["sonic"]->rigid_body = std::make_shared<cw::physics::box>(20.0f,
+                    glm::vec3(-310.0f, 120.0f, 1.0f), glm::vec3(48, 48,0.0f));
 
 
             add(batch_list["current"]);
@@ -97,8 +108,6 @@ int main(int argc, char **argv) {
         virtual void init(std::shared_ptr<cw::physics::dynamic_world> world,
                           std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
 
-            actor_list["ground"]->rigid_body = std::make_shared<cw::physics::box>(20.0f, glm::vec3(0, 10, 0), glm::vec3(1, 1, 1));
-            actor_list["sonic"]->rigid_body = std::make_shared<cw::physics::box>(0.0f, glm::vec3(-4, 0, 0), glm::vec3(10, 1, 10));
 
             sdl_audio_system->load_music("green_hill", cw::platform::filesystem::get_file_path("green_hill_zone_bgm.ogg"));
             sdl_audio_system->play_music("green_hill");
