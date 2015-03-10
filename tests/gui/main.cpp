@@ -41,6 +41,8 @@ int main(int argc, char **argv) {
             glsl_program->link();
 
             camera_list["current"] = std::make_shared<cw::simulation::camera>(640, 480);
+            batch_list["current"] = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
+
 
             load_texture("sonic_wait", "SonAni_Wait_intro.png");
             load_texture("sonic_walk", "SonAni_Walk.png");
@@ -52,26 +54,33 @@ int main(int argc, char **argv) {
             actor_list["sonic"]  = std::make_shared<cw::simulation::actor>();
             actor_list["ground"] = std::make_shared<cw::simulation::actor>();
 
-            actor_list["ground"]->sprites["default"] = std::make_shared<cw::simulation::sprite>
-                                                        (glm::vec3(-0.5f, -0.5f, 1.0f),
-                                                            glm::vec3(640/2,480/2,0.0f),
-                                                            glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
-                                                            texture_list["ground"]->id,
-                                                            0.0f);
+
+            float horizontal_offset = 0.0f;
+            for(int i = 0; i<4; i++){
+
+                actor_list["ground"]->sprites["tile_" + std::to_string(i)] = std::make_shared<cw::simulation::sprite>
+                        (glm::vec3(-320.5f + horizontal_offset, -240.0f, 1.0f),
+                                glm::vec3(256.0f,256.0f,0.0f),
+                                glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+                                texture_list["ground"]->id,
+                                0.0f);
+
+                horizontal_offset += 256;
+            }
+
 
             actor_list["sonic"]->sprites["stand"] = std::make_shared<cw::simulation::sprite>
-                                                        (glm::vec3(-0.5f, -0.5f, 1.0f),
-                                                                glm::vec3(640/2,480/2,0.0f),
+                                                        (glm::vec3(-310.0f, 120.0f, 1.0f),
+                                                                glm::vec3(48, 48,0.0f),
                                                                 glm::vec4(0.0f, 0.0f, 0.2f, 1.0f),
                                                                 texture_list["sonic_wait"]->id,
                                                                 0.0f);
 
 
-
-            batch_list["current"] = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
-
             add(batch_list["current"]);
             add(camera_list["current"]);
+            add(actor_list["sonic"]);
+            add(actor_list["ground"]);
         }
 
         void load_texture(const std::string& name, const std::string& path){
@@ -85,15 +94,30 @@ int main(int argc, char **argv) {
 
         }
 
-        virtual void init(std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
+        virtual void init(std::shared_ptr<cw::physics::dynamic_world> world,
+                          std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
 
-//            sdl_audio_system->load_music("marble", cw::platform::filesystem::get_file_path("marble_zone_bgm.ogg"));
-//            sdl_audio_system->play_music("marble");
+            actor_list["ground"]->rigid_body = std::make_shared<cw::physics::box>(20.0f, glm::vec3(0, 10, 0), glm::vec3(1, 1, 1));
+            actor_list["sonic"]->rigid_body = std::make_shared<cw::physics::box>(0.0f, glm::vec3(-4, 0, 0), glm::vec3(10, 1, 10));
 
-//            sdl_audio_system->load_effect("jump", cw::platform::filesystem::get_file_path("Jump.wav"));
-//            sdl_audio_system->play_effect("jump");
+            sdl_audio_system->load_music("green_hill", cw::platform::filesystem::get_file_path("green_hill_zone_bgm.ogg"));
+            sdl_audio_system->play_music("green_hill");
+
+/*
+            sdl_audio_system->load_effect("jump", cw::platform::filesystem::get_file_path("Jump.wav"));
+            sdl_audio_system->play_effect("jump");*/
+
+
+            world->add_rigid_body(actor_list["ground"]->rigid_body);
+            world->add_rigid_body(actor_list["sonic"]->rigid_body);
 
         }
+
+        virtual void deinit(std::shared_ptr<cw::physics::dynamic_world> world){
+            world->remove_rigid_body(actor_list["ground"]->rigid_body);
+            world->remove_rigid_body(actor_list["sonic"]->rigid_body);
+        }
+
 
         virtual void render() override {
 

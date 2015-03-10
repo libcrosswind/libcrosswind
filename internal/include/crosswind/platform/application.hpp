@@ -54,12 +54,6 @@ public:
         running.set(true);
         int frame_counter = 0;
 
-        auto box = std::make_shared<physics::box>(20.0f, glm::vec3(0, 10, 0), glm::vec3(1, 1, 1));
-        auto ground = std::make_shared<physics::box>(0.0f, glm::vec3(-4, 0, 0), glm::vec3(10, 1, 10));
-
-        dynamic_world->add_rigid_body(ground);
-        dynamic_world->add_rigid_body(box);
-
 
         while (running.get()) {
 
@@ -77,11 +71,6 @@ public:
 
             double fps = sdl_fps_limiter->end();
 
-            std::cout
-                    << "Box: " << box->get_position().x << " " << box->get_position().y << " " << box->get_position().z
-                    << " "
-                    << "ground: " << ground->get_position().x << " " << ground->get_position().y << " " << ground->get_position().z
-            << std::endl;
 
 
             if(frame_counter == 1000){
@@ -91,13 +80,12 @@ public:
 
         }
 
-        dynamic_world->remove_rigid_body(ground);
-        dynamic_world->remove_rigid_body(box);
+        stages("current")->deinit(dynamic_world);
 
     }
 
     void add_stage(auto stage){
-        stage->init(sdl_audio_system);
+        stage->init(dynamic_world, sdl_audio_system);
         stages(stage->name.get(), stage);
     }
 

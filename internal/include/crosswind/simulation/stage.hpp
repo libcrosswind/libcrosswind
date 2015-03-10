@@ -5,6 +5,7 @@
 
 #include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/concurrent/mutex_container.hpp>
+#include <crosswind/physics/dynamic_world.hpp>
 #include <crosswind/platform/sdl/sdl_input_listener.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
 #include <crosswind/simulation/detail/interactive_actor.hpp>
@@ -25,9 +26,13 @@ public:
 
 	}
 
-    virtual void init(std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system) = 0;
+    virtual void init(std::shared_ptr<physics::dynamic_world> world,
+                      std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system) = 0;
 
-	virtual void handle_stage_events(){
+    virtual void deinit(std::shared_ptr<physics::dynamic_world> world) = 0;
+
+
+    virtual void handle_stage_events(){
 		auto& container = event_queue.data.acquire();
 
 		for(auto& event : container){

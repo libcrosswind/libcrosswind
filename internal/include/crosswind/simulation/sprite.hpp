@@ -27,8 +27,7 @@ public:
            const glm::vec4& uv, 
            const uint32_t& t_id, 
            const float& d):
-
-            rectangle(p, s),
+            cw::geometry::rectangle(p, s),
             texture_id(t_id),
             depth(d){
 

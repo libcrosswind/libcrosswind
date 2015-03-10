@@ -16,6 +16,7 @@ namespace detail{
 }// namespace cw
 
 class cw::physics::detail::rigid_body{
+
 	protected:
 		rigid_body(const glm::vec3& origin){
 
