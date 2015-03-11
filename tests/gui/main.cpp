@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
 
 //            load_texture("ground", "60.png");
 
-            load_texture("ground", "blue_rectangle.png");
+            load_texture("ground", "60.png");
 
             actor_list["sonic"]  = std::make_shared<cw::simulation::actor>();
             actor_list["ground"] = std::make_shared<cw::simulation::actor>();
@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
                 actor_list["ground"]->sprites["tile_" + std::to_string(i)] = std::make_shared<cw::simulation::sprite>
                         (glm::vec3(0.0f + horizontal_offset, -200.0f, 1.0f),
                                 glm::vec3(256.0f, 256.0f, 256.0f),
-                                glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+                                glm::vec4(0.0f, 0.0f, 1.0f, 1.0),
                                 texture_list["ground"]->id,
                                 0.0f);
 
@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
             actor_list["ground"]->rigid_body =
                     std::make_shared<cw::physics::box>(0.0f,
                             glm::vec3(0.0f, -200.0f, 1.0f),
-                            glm::vec3(128.0f, 128.0f, 128.0f));
+                            glm::vec3(128.0f, 32.0f, 128.0f));
 
 
             actor_list["sonic"]->sprites["stand"] = std::make_shared<cw::simulation::sprite>
@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
                                                                 0.0f);
 
             actor_list["sonic"]->rigid_body = std::make_shared<cw::physics::box>(35.0f,
-                    glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(24.0f, 24.0f,24.0f));
+                    glm::vec3(0.0f, 200.0f, 1.0f), glm::vec3(24.0f, 24.0f,24.0f));
 
 
             add(batch_list["current"]);
