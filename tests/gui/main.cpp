@@ -18,6 +18,7 @@
 
 
 int main(int argc, char **argv) {
+
     cw::platform::filesystem::add_directory("assets", true);
 
     auto window_bounds = glm::vec4(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
@@ -43,7 +44,6 @@ int main(int argc, char **argv) {
             camera_list["current"] = std::make_shared<cw::simulation::camera>(640, 480);
             batch_list["current"] = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
 
-
             load_texture("sonic_wait", "SonAni_Wait_intro.png");
             load_texture("sonic_walk", "SonAni_Walk.png");
             load_texture("sonic_run", "SonAni_Run.png");
@@ -55,7 +55,6 @@ int main(int argc, char **argv) {
 
             actor_list["sonic"]  = std::make_shared<cw::simulation::actor>();
             actor_list["ground"] = std::make_shared<cw::simulation::actor>();
-
 
             float horizontal_offset = 0.0f;
             for(int i = 0; i<1; i++){

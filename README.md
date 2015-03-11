@@ -81,15 +81,16 @@ Roadmap:
 Future releases:
 
 0.2:
-- [x] 3D
-- [x] GUI
+- [x] 2D
 - [x] Audio 
-- [x] DB (SQLite)
 - [x] Physics
 
 
 0.3: 
 - [x] Websockets  (ws only)
+- [x] 3D
+- [x] DB (SQLite)
+
 
 0.4:
 - [x] Video
