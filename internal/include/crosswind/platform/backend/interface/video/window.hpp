@@ -1,0 +1,46 @@
+#pragma once
+
+#include <string>
+
+#include <glm/glm.hpp>
+
+#include <crosswind/concurrent/hollow_property.hpp>
+#include <crosswind/platform/backend/interface/video/detail/fps_limiter.hpp>
+
+namespace cw{
+namespace platform{
+namespace backend{
+namespace interface{
+namespace video{
+
+	class window;
+
+}// namespace video
+}// namespace interface
+}// namespace backend
+}// namespace platform
+}// namespace cw
+
+class cw::platform::backend::interface::video::window{
+protected:
+    window(float fps): fps_limiter(new detail::fps_limiter(fps)){
+
+    }
+
+    virtual void maximize() = 0;
+    virtual void minimize() = 0;
+    virtual void show() = 0;
+    virtual void hide() = 0;
+    virtual void restore() = 0;
+    virtual void raise() = 0;
+    virtual void set_clear_color(const glm::vec4& color) = 0;
+    virtual void clear() = 0;
+    virtual void present() = 0;
+
+public:
+    std::shared_ptr<detail::fps_limiter> fps_limiter;
+    concurrent::hollow_property<std::string> title;
+    concurrent::hollow_property<float> brightness;
+    concurrent::hollow_property<glm::vec2> position;
+    concurrent::hollow_property<glm::vec2> size;
+};// class window

@@ -55,5 +55,5 @@ public:
 		std::unique_ptr<btMotionState> motion_state;
 		std::unique_ptr<btCollisionShape> collision_shape;
 		std::unique_ptr<btRigidBody> physic_body;
-		
+
 };// class rigid_body

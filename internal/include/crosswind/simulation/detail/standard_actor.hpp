@@ -22,4 +22,5 @@ public:
 
 protected:
     float delta_count;
+
 };// class standard_actor

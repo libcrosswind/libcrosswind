@@ -21,6 +21,11 @@ public:
 		frame_counter = 0;
 	}
 
+    virtual void add_body(std::shared_ptr<physics::detail::rigid_body> body){
+        btCompoundShape* B= new btCompoundShape();
+
+    }
+
 
 	virtual void update(double delta){
 

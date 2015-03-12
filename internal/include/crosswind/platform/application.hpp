@@ -4,10 +4,10 @@
 
 #include <glm/glm.hpp>
 
-
 #include <crosswind/concurrent/atomic_property.hpp>
 #include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/geometry/rectangle.hpp>
+
 #include <crosswind/platform/sdl/sdl_core_system.hpp>
 #include <crosswind/platform/sdl/sdl_audio_system.hpp>
 #include <crosswind/platform/sdl/sdl_image_system.hpp>
@@ -32,10 +32,20 @@ namespace platform{
 
 class cw::platform::application{
 public:
-    application(const std::string& title, const glm::vec4& bounds, int fps = 60):
-    sdl_core_system (new sdl::sdl_core_system ( SDL_INIT_VIDEO | SDL_INIT_AUDIO    )),
-    sdl_audio_system(new sdl::sdl_audio_system( 44100, MIX_DEFAULT_FORMAT, 2, 2048 )), 
-    sdl_image_system(new sdl::sdl_image_system( IMG_INIT_PNG                       )){
+    application(const std::string& title, const glm::vec4& bounds, int fps = 60){
+
+    std::shared_ptr<sdl::sdl_window>        sdl_window;
+    std::shared_ptr<sdl::sdl_input_listener> sdl_input_listener;
+
+
+#if defined(USE_SDL2)
+        std::map<std::vector<int> > config = {
+                std::make_pair("core",  { SDL_INIT_VIDEO | SDL_INIT_AUDIO } ),
+                std::make_pair("audio", { 44100, MIX_DEFAULT_FORMAT, 2, 2048 }),
+                std::make_pair("image", { IMG_INIT_PNG })
+        };
+        engine(new backend::sdl::engine(config));
+#endif
 
         sdl_window = std::make_shared<sdl::sdl_window>(title.c_str(), bounds, SDL_WINDOW_OPENGL);
         sdl_window->set_clear_color(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
@@ -84,7 +94,7 @@ public:
     }
 
     void add_stage(auto stage){
-        stage->init(dynamic_world, sdl_audio_system);
+        stage->init(dynamic_world, backend->resource_manager);
         stages(stage->name.get(), stage);
     }
 
@@ -108,7 +118,7 @@ private:
 
         sdl_input_listener->refresh();
 
-        stages("current")->handle_input(sdl_input_listener);
+        stages("current")->handle_input(backend->input_listener);
 
     }
 
@@ -124,13 +134,7 @@ private:
 
 
 private:
-    std::shared_ptr< sdl::sdl_core_system  >  sdl_core_system;
-    std::shared_ptr< sdl::sdl_image_system >  sdl_image_system;
-    std::shared_ptr< sdl::sdl_audio_system >  sdl_audio_system;
-
-    std::shared_ptr<sdl::sdl_fps_limiter>   sdl_fps_limiter;
-    std::shared_ptr<sdl::sdl_window>        sdl_window;
-    std::shared_ptr<sdl::sdl_input_listener> sdl_input_listener;
+    std::shared_ptr<backend::interface::engine> engine;
 
     SDL_Event event;
 

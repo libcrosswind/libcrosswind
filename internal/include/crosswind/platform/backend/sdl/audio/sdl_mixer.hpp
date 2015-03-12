@@ -3,8 +3,8 @@
 #include <SDL2/SDL_mixer.h>
 
 #include <crosswind/concurrent/mutex_container.hpp>
-#include <crosswind/platform/sdl/sdl_chunk.hpp>
-#include <crosswind/platform/sdl/sdl_music.hpp>
+#include <crosswind/platform/sdl/audio/sdl_chunk.hpp>
+#include <crosswind/platform/sdl/audio/sdl_music.hpp>
 #include <crosswind/platform/sdl/sdl_exception.hpp>
 
 namespace cw{
@@ -17,7 +17,7 @@ namespace sdl{
 }// namespace platform
 }// namespace cw
 
-class cw::platform::sdl::sdl_audio_system{
+class cw::platform::sdl::sdl_audio_mixer: public mixer{
 public:
 	template<typename... Args>
 	sdl_audio_system(Args... args) {
@@ -31,37 +31,29 @@ public:
     	Mix_Quit();
 	}
 
-	void load_music(const std::string& name, const std::string& path){
+	virtual void load_music(const std::string& name, const std::string& path){
 
-        bgm_tracks(name, std::make_shared<sdl_music>(path));
+        bgm_tracks[name] = std::make_shared<sdl_music>(path);
 
 	}
 
 
-	void play_music(const std::string& name){
+	virtual void play_music(const std::string& name){
 
 		if(Mix_PlayingMusic() == 0){ 					// If there is no music playing
-			auto track = bgm_tracks(name);
-			auto track_ptr = track->music.acquire();
 
-			Mix_PlayMusic(track_ptr, -1);				// Play the music
-
-			track->music.release();
+			Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
 
 		} else {										// There is music playing
 			stop_music();								// Stop the music
 
-			auto track = bgm_tracks(name);
-			auto track_ptr = track->music.acquire();
+			Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
 
-			Mix_PlayMusic(track_ptr, -1);				// Play the music
-
-			track->music.release();
 		}
 
 	}
 
-	void pause_music(){
+	virtual void pause_music(){
 
 		Mix_PausedMusic() == 1 ? // If the music is paused
         Mix_ResumeMusic()	   : // Resume the music, else
@@ -69,8 +61,7 @@ public:
 
 	}
 
-
-	void resume_music(){
+	virtual void resume_music(){
 
  		if(Mix_PausedMusic() == 1){// If the music is paused
             //Resume the music
@@ -78,25 +69,19 @@ public:
         } 
 	}
 
-    void stop_music(){
+    virtual void stop_music(){
         Mix_HaltMusic();// Stop the music
     }
 
-    void load_effect(const std::string& name, const std::string& path){
-        sfx_tracks(name, std::make_shared<sdl_chunk>(path));
+    virtual void load_effect(const std::string& name, const std::string& path){
+        sfx_tracks[name] = std::make_shared<sdl_chunk>(path);
     }
 
-    void play_effect(const std::string& name){
-        auto track = sfx_tracks(name);
-        auto track_ptr = track->music.acquire();
+    virtual void play_effect(const std::string& name){
 
-        Mix_PlayChannel(-1, track_ptr, 0);		 // Play the effect
+        Mix_PlayChannel(-1, sfx_tracks[name]->data.ptr(), 0); // Play the effect
 
-        track->music.release();
     }
-
-
-
 
 private:
 	// non-copyable
@@ -109,8 +94,5 @@ private:
 
 	// non-default
 	sdl_audio_system() = delete;
-
-    concurrent::mutex_map<std::string, std::shared_ptr<sdl_music> > bgm_tracks;
-    concurrent::mutex_map<std::string, std::shared_ptr<sdl_chunk> > sfx_tracks;
 
 };// class sdl_audio_system

@@ -4,18 +4,24 @@
 
 namespace cw{
 namespace platform{
-namespace sdl{
+namespace backend{
+namespace interface{
+namespace video{
+namespace detail{
 
-	class sdl_fps_limiter;
+    class fps_limiter;
 
-}// namespace sdl
+}// namespace detail
+}// namespace video
+}// namespace interface
+}// namespace backend
 }// namespace platform
 }// namespace cw
 
 
-class cw::platform::sdl::sdl_fps_limiter {
+class cw::platform::backend::interface::video::detail::fps_limiter {
 public:
-    sdl_fps_limiter(float screen_fps = 60.00f) : ticks_per_frame(0.00f), delta(0.00f), fps(0.00f){
+    fps_limiter(float screen_fps = 60.00f) : ticks_per_frame(0.00f), delta(0.00f), fps(0.00f){
         set_fps(screen_fps);
         previous_delta = std::chrono::high_resolution_clock::now();
     }
@@ -58,7 +64,6 @@ public:
 
         return fps;
     }
-
 
 private:
     float ticks_per_frame;

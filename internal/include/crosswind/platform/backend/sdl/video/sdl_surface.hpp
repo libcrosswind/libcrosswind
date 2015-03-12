@@ -22,5 +22,4 @@ public:
     }
 
 	concurrent::resource_property<SDL_Surface> data;
-	
 };// class sdl_surface

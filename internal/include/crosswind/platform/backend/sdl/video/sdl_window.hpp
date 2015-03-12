@@ -13,67 +13,72 @@
 
 namespace cw{
 namespace platform{
+namespace backend{
 namespace sdl{
+namespace video{
 
-	class sdl_window;
+	class window;
 
+}// namespave video
 }// namespace sdl
+}// namespace backend
 }// namespace platform
 }// namespace cw
 
-class cw::platform::sdl::sdl_window{
+class cw::platform::backend::sdl::window: public cw::platform::backend::video::window{
 public:
 
-	sdl_window(const std::string& window_title, const glm::vec4& bounds, const unsigned int& flags):
-            window(SDL_CreateWindow,
+	window(const std::string& window_title, const glm::vec4& bounds, float fps, const unsigned int& flags):
+            cw::platform::backend::video::window(fps),
+            window_resource(SDL_CreateWindow,
                    SDL_DestroyWindow,
                    window_title.c_str(),
                    bounds[0], bounds[1], bounds[2], bounds[3],
                    flags){
 
 		title.set = [this](const std::string& text){
-			SDL_SetWindowTitle(this->window.ptr(), title.get().c_str());
+			SDL_SetWindowTitle(this->window_resource.ptr(), title.get().c_str());
 		};
 
 		title.get = [this](){
 			std::string text;
-			text = SDL_GetWindowTitle(this->window.ptr());
+			text = SDL_GetWindowTitle(this->window_resource.ptr());
 			return text;
 		};
 
 		brightness.set = [this](const float& bright){
-			if (SDL_SetWindowBrightness(this->window.ptr(), brightness) != 0)
+			if (SDL_SetWindowBrightness(this->window_resource.ptr(), brightness) != 0)
 				throw sdl_exception("SDL_SetWindowBrightness");
         };
 
 		brightness.get = [this](){
 			float bright;
-            bright = SDL_GetWindowBrightness(this->window.ptr());
+            bright = SDL_GetWindowBrightness(this->window_resource.ptr());
 			return bright;
 		};
 
         position.set = [this](const glm::vec2& new_position){
-            SDL_SetWindowPosition(this->window.ptr(), new_position.x, new_position.y);
+            SDL_SetWindowPosition(this->window_resource.ptr(), new_position.x, new_position.y);
         };
 
         position.get = [this](){
             int x, y;
-            SDL_GetWindowPosition(this->window.ptr(), &x, &y);
+            SDL_GetWindowPosition(this->window_resource.ptr(), &x, &y);
             return glm::vec2(x, y);
         };
 
 
 		size.set = [this](const glm::vec2& new_size){
-			SDL_SetWindowSize(this->window.ptr(), new_size.x, new_size.y);
+			SDL_SetWindowSize(this->window_resource.ptr(), new_size.x, new_size.y);
 		};
 
 		size.get = [this](){
 			int w, h;
-			SDL_GetWindowSize(this->window.ptr(), &w, &h);
+			SDL_GetWindowSize(this->window_resource.ptr(), &w, &h);
 			return glm::vec2(w, h);
 		};
 
-        context = SDL_GL_CreateContext(this->window.ptr());
+        context = SDL_GL_CreateContext(this->window_resource.ptr());
         if(context == nullptr){
             throw sdl_exception("Could not create gl context ");
         }
@@ -81,6 +86,7 @@ public:
         if(glewInit() != GLEW_OK){
             throw sdl_exception("Could not initialize glew");
         }
+
         printf("OpenGL version: %s \n", glGetString(GL_VERSION));
 
         SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1);
@@ -98,52 +104,46 @@ public:
         SDL_GL_DeleteContext(context);
     }
 
-	void maximize() {
-		SDL_MaximizeWindow(this->window.ptr());
+    virtual void maximize() {
+		SDL_MaximizeWindow(this->window_resource.ptr());
 	}
 
-	void minimize() {
-		SDL_MinimizeWindow(this->window.ptr());
+    virtual void minimize() {
+		SDL_MinimizeWindow(this->window_resource.ptr());
 	}
 
-	void show() {
-		SDL_ShowWindow(this->window.ptr());
+    virtual void show() {
+		SDL_ShowWindow(this->window_resource.ptr());
 	}
 
-	void hide() {
-		SDL_HideWindow(this->window.ptr());
+    virtual void hide() {
+		SDL_HideWindow(this->window_resource.ptr());
 	}
 
-	void restore() {
-		SDL_RestoreWindow(this->window.ptr());
+    virtual void restore() {
+		SDL_RestoreWindow(this->window_resource.ptr());
 	}
 
-	void raise() {
-		SDL_RaiseWindow(this->window.ptr());
+    virtual void raise() {
+		SDL_RaiseWindow(this->window_resource.ptr());
 	}
 
-    void set_clear_color(const glm::vec4& color) {
+    virtual void set_clear_color(const glm::vec4& color) {
         glClearColor(color.r, color.g, color.b, color.a);
     }
 
-    void clear() {
+    virtual void clear() {
         glClearDepth(1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    void present() {
+    virtual void present() {
         //Update screen
-        SDL_GL_SwapWindow(this->window.ptr());
+        SDL_GL_SwapWindow(this->window_resource.ptr());
     }
-
-public:
-    concurrent::hollow_property<std::string> title;
-    concurrent::hollow_property<float> brightness;
-    concurrent::hollow_property<glm::vec2> position;
-    concurrent::hollow_property<glm::vec2> size;
 
 private:
     SDL_GLContext context;
-    concurrent::resource_property<SDL_Window> window;
+    concurrent::resource_property<SDL_Window> window_resource;
 
 };// class sdl_window

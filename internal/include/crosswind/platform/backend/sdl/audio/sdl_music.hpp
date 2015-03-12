@@ -13,7 +13,15 @@ namespace sdl{
 }// namespace platform
 }// namespace cw
 
-class cw::platform::sdl::sdl_music{
+class cw::platform::music{
+
+	virtual ~music(){
+
+	}
+	
+};
+
+class cw::platform::sdl::sdl_music: public cw::platform::music{
 public:
 	sdl_music(const std::string& file_path): music(Mix_LoadMUS, Mix_FreeMusic, file_path.c_str()) {
 

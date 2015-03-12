@@ -49,7 +49,7 @@ public:
     }
 
     void remove_manipulation(std::string name){
-
+        
     }
 
     void apply_manipulation(const std::string& name){
