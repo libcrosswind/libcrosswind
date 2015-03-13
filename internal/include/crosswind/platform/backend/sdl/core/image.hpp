@@ -58,10 +58,13 @@ public:
                 (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
                         surface->data.ptr()->format->BytesPerPixel,
                         surface->data.ptr()->pixels);
-
-
     }
 
+    std::shared_ptr<cw::simulation::gl::gl_texture> load_texture(const std::string& name){
+        
+        return texture_list[name];
+
+    }
 
 };
  

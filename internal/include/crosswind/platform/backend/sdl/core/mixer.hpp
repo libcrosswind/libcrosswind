@@ -6,6 +6,7 @@
 #include <crosswind/platform/backend/sdl/audio/chunk.hpp>
 #include <crosswind/platform/backend/sdl/audio/music.hpp>
 #include <crosswind/platform/backend/sdl/core/exception.hpp>
+#include <crosswind/platform/filesystem.hpp>
 
 namespace cw{
 namespace platform{
@@ -37,19 +38,19 @@ public:
 
 	virtual void load_music(const std::string& name, const std::string& path){
 
-        bgm_tracks[name] = std::make_shared<audio::music>(path);
+        bgm_tracks[name] = std::make_shared<audio::music>(cw::platform::filesystem::get_file_path(path));
 
 	}
 
 	virtual void play_music(const std::string& name){
 
-		if(Mix_PlayingMusic() == 0){ 					// If there is no music playing
+		if(Mix_PlayingMusic() == 0){ 							// If there is no music playing
 
 			Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
 
-		} else {										// There is music playing
-			stop_music();								// Stop the music
+		} else {												// There is music playing
 
+			stop_music();										// Stop the music
 			Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
 
 		}
@@ -60,7 +61,7 @@ public:
 
 		Mix_PausedMusic() == 1 ? // If the music is paused
         Mix_ResumeMusic()	   : // Resume the music, else
-		Mix_PauseMusic ();    	 // Pause the music        		
+		Mix_PauseMusic ();    	 // Pause the music       
 
 	}
 

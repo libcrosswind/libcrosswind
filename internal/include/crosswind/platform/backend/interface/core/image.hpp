@@ -40,7 +40,8 @@ public:
 
 	}
 
-    virtual void load_texture(const std::string& name, const std::string& path = "") = 0;
+    virtual void load_texture(const std::string& name, const std::string& path) = 0;
+    virtual std::shared_ptr<cw::simulation::gl::gl_texture> load_texture(const std::string& name) = 0;
 
     std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_texture> > texture_list;
 
