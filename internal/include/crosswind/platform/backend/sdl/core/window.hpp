@@ -79,7 +79,8 @@ public:
 
         context = SDL_GL_CreateContext(this->window_resource.ptr());
         if(context == nullptr){
-            throw exception("Could not create gl context ");
+            std::string error = SDL_GetError();
+            throw exception("Could not create gl context " + error);
         }
 
         if(glewInit() != GLEW_OK){

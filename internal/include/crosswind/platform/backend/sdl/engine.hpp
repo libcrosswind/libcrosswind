@@ -38,7 +38,7 @@ public:
         input_listener 	= std::make_shared<core::input_listener>();
 
 
-        window = std::make_shared< core::window >(std::get<0>(window_settings), 
+        window = std::make_shared< core::window >(std::get<0>(window_settings),
 									  			  std::get<1>(window_settings), 
     											  std::get<2>(window_settings), 
     											  std::get<3>(window_settings));

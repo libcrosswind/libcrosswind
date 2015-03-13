@@ -30,98 +30,100 @@ public:
 
         std::vector<int> engine_settings = {
                 SDL_INIT_VIDEO | SDL_INIT_AUDIO,
-                44100, MIX_DEFAULT_FORMAT, 2, 2048,
-                IMG_INIT_PNG
+                IMG_INIT_PNG,
+                44100, MIX_DEFAULT_FORMAT, 2, 2048
+
         };
 
 
-        auto window_settings = std::make_tuple(title, bounds, SDL_WINDOW_OPENGL, fps);
+        auto window_settings = std::make_tuple(title, bounds, fps, SDL_WINDOW_OPENGL);
 
-        std::vector<glm::vec3> physics_settings = {
+        std::vector<glm::vec3> physics_settings{
                 glm::vec3(0.0f, -10.0f, 0.0f)
         };
 
         engine = std::make_shared<backend::sdl::engine>(engine_settings, window_settings, physics_settings);
-#else 
+
+#else
 
 #endif
 
-    }
+}
 
 #undef USE_SDL2
 
-    virtual void run(){
+virtual void run(){
 
-        engine->window->fps_limiter->reset_delta();
+engine->window->fps_limiter->reset_delta();
 
-        engine->running.set(true);
-
-
-        while (engine->running.get()) {
+engine->running.set(true);
 
 
-            engine->window->fps_limiter->begin();
+while (engine->running.get()) {
 
-            handle_application_events();
-            handle_input();
 
-            engine->physics_world->update(1/60.0);
+engine->window->fps_limiter->begin();
 
-            handle_update();
-            handle_rendering();
+handle_application_events();
+handle_input();
 
-            double fps = engine->window->fps_limiter->end();
+engine->physics_world->update(1/60.0);
 
-        }
+handle_update();
+handle_rendering();
 
-        stages("current")->deinit(engine);
+double fps = engine->window->fps_limiter->end();
 
-    }
+}
 
-    void add_stage(auto stage){
-        stage->init(engine);
-        stages(stage->name.get(), stage);
-    }
+stages("current")->deinit(engine);
 
-    void swap_stage(const std::string& previous_stage, const std::string& new_stage){
-        stages(previous_stage, stages(new_stage));
-    }
+}
 
-private:
-    void handle_application_events(){
-        while(SDL_PollEvent(&event)){
-            //User requests quit
-            if(event.type == SDL_QUIT){
-                engine->running.set(false);
-            }
-        }
+void add_stage(auto stage){
+stage->init(engine);
+stages(stage->name.get(), stage);
+}
 
-        stages("current")->handle_stage_events();
-    }
-
-    void handle_input(){
-
-        engine->input_listener->update();
-
-        stages("current")->handle_input(engine->input_listener);
-
-    }
-
-    void handle_update(){
-        stages("current")->update(engine->window->fps_limiter->get_delta());
-    }
-
-    void handle_rendering(){
-        engine->window->clear();
-        stages("current")->render();
-        engine->window->present();
-    }
-
+void swap_stage(const std::string& previous_stage, const std::string& new_stage){
+stages(previous_stage, stages(new_stage));
+}
 
 private:
-    std::shared_ptr<backend::interface::engine> engine;
+void handle_application_events(){
+while(SDL_PollEvent(&event)){
+//User requests quit
+if(event.type == SDL_QUIT){
+engine->running.set(false);
+}
+}
 
-    SDL_Event event;
+stages("current")->handle_stage_events();
+}
 
-    concurrent::mutex_map<std::string, std::shared_ptr<simulation::stage> > stages;
+void handle_input(){
+
+engine->input_listener->update();
+
+stages("current")->handle_input(engine->input_listener);
+
+}
+
+void handle_update(){
+stages("current")->update(engine->window->fps_limiter->get_delta());
+}
+
+void handle_rendering(){
+engine->window->clear();
+stages("current")->render();
+engine->window->present();
+}
+
+
+private:
+std::shared_ptr<backend::interface::engine> engine;
+
+SDL_Event event;
+
+concurrent::mutex_map<std::string, std::shared_ptr<simulation::stage> > stages;
 };// class application

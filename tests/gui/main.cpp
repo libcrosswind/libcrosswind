@@ -1,22 +1,22 @@
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+//#include <glm/gtc/type_ptr.hpp>
 
-#include <crosswind/physics/box.hpp>
-
+//#include <crosswind/physics/box.hpp>
+//
 #include <crosswind/platform/application.hpp>
-#include <crosswind/platform/filesystem.hpp>
+//#include <crosswind/platform/filesystem.hpp>
 
+/*
 #include <crosswind/simulation/actor.hpp>
 #include <crosswind/simulation/sprite.hpp>
 #include <crosswind/simulation/camera.hpp>
 #include <crosswind/simulation/gl/glsl_program.hpp>
 #include <crosswind/simulation/gl/gl_texture.hpp>
 #include <crosswind/simulation/gl/gl_sprite_batch.hpp>
-
-#include <iostream>
-
+*/
 
 int main(int argc, char **argv) {
+
 
     cw::platform::filesystem::add_directory("assets", true);
 
@@ -34,9 +34,9 @@ int main(int argc, char **argv) {
 
         virtual void init(std::shared_ptr<cw::platform::backend::interface::engine> engine){
 
-            engine->mixer->load_music("green_hill", cw::platform::filesystem::get_file_path("green_hill_zone_bgm.ogg"));
+/*            engine->mixer->load_music("green_hill", cw::platform::filesystem::get_file_path("green_hill_zone_bgm.ogg"));
             engine->mixer->play_music("green_hill");
-
+*/
 /*
             engine->mixer->load_effect("jump", cw::platform::filesystem::get_file_path("Jump.wav"));
             engine->mixer->play_effect("jump");
@@ -145,11 +145,11 @@ int main(int argc, char **argv) {
         }
 
     private:
-        std::map<std::string, std::shared_ptr<cw::simulation::camera> > camera_list;
+/*        std::map<std::string, std::shared_ptr<cw::simulation::camera> > camera_list;
         std::map<std::string, std::shared_ptr<cw::simulation::actor> >  actor_list;
         std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_sprite_batch>  > batch_list;
 
-        std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
+        std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;*/
     };
 
     app->add_stage(std::make_shared<green_hill_zone>());
