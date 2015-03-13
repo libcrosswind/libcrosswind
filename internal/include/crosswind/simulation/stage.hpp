@@ -5,8 +5,10 @@
 
 #include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/concurrent/mutex_container.hpp>
-#include <crosswind/physics/dynamic_world.hpp>
-#include <crosswind/platform/sdl/sdl_input_listener.hpp>
+
+#include <crosswind/platform/backend/interface/engine.hpp>
+#include <crosswind/platform/backend/interface/core/input_listener.hpp>
+
 #include <crosswind/simulation/detail/standard_actor.hpp>
 #include <crosswind/simulation/detail/interactive_actor.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>
@@ -26,10 +28,8 @@ public:
 
 	}
 
-    virtual void init(std::shared_ptr<physics::dynamic_world> world,
-                      std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system) = 0;
-
-    virtual void deinit(std::shared_ptr<physics::dynamic_world> world) = 0;
+    virtual void init(std::shared_ptr<platform::backend::interface::engine> engine) = 0;
+    virtual void deinit(std::shared_ptr<platform::backend::interface::engine> engine) = 0;
 
 
     virtual void handle_stage_events(){
@@ -44,12 +44,12 @@ public:
 		event_queue.data.release();
 	}
 	
-	virtual void handle_input(std::shared_ptr<platform::sdl::sdl_input_listener> sdl_input_listener){
+	virtual void handle_input(std::shared_ptr<platform::backend::interface::core::input_listener> input_listener){
 
 		auto& container = interactive_queue.data.acquire();
 
 		for(auto& element: container){
-           element->handle_input(sdl_input_listener);
+           element->handle_input(input_listener);
         }
 
 		interactive_queue.data.release();

@@ -5,7 +5,6 @@
 
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
-#include <crosswind/platform/sdl/sdl_surface.hpp>
 
 #include <crosswind/simulation/actor.hpp>
 #include <crosswind/simulation/sprite.hpp>
@@ -30,34 +29,20 @@ int main(int argc, char **argv) {
         green_hill_zone(){
 
             this->name.set("green_hill_zone");
-        }
-
-        void load_texture(const std::string& name, const std::string& path){
-            auto surface = std::make_unique<cw::platform::sdl::sdl_surface>(cw::platform::filesystem::get_file_path(path));
-
-
-            texture_list[name] = std::make_shared<cw::simulation::gl::gl_texture>
-                    (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
-                            surface->data.ptr()->format->BytesPerPixel,
-                            surface->data.ptr()->pixels);
-
 
         }
 
-        virtual void init(std::shared_ptr<cw::physics::dynamic_world> world,
-                          std::shared_ptr<cw::platform::sdl::sdl_audio_system> sdl_audio_system){
+        virtual void init(std::shared_ptr<cw::platform::backend::interface::engine> engine){
 
-
-            sdl_audio_system->load_music("green_hill", cw::platform::filesystem::get_file_path("green_hill_zone_bgm.ogg"));
-            sdl_audio_system->play_music("green_hill");
+            engine->mixer->load_music("green_hill", cw::platform::filesystem::get_file_path("green_hill_zone_bgm.ogg"));
+            engine->mixer->play_music("green_hill");
 
 /*
-            sdl_audio_system->load_effect("jump", cw::platform::filesystem::get_file_path("Jump.wav"));
-            sdl_audio_system->play_effect("jump");
+            engine->mixer->load_effect("jump", cw::platform::filesystem::get_file_path("Jump.wav"));
+            engine->mixer->play_effect("jump");
 */
 
-
-            glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
+         /*   glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
             std::string vertex_shader = "assets/default/graphics/shaders/texture_shading.vert";
             std::string fragment_shader = "assets/default/graphics/shaders/texture_shading.frag";
 
@@ -70,12 +55,12 @@ int main(int argc, char **argv) {
             camera_list["current"] = std::make_shared<cw::simulation::camera>(640, 480);
             batch_list["current"] = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
 
-            load_texture("sonic_wait", "SonAni_Wait_intro.png");
-            load_texture("sonic_walk", "SonAni_Walk.png");
-            load_texture("sonic_run", "SonAni_Run.png");
-            load_texture("sonic_roll", "SonAni_Roll.png");
+            engine->image->load_texture("sonic_wait", "SonAni_Wait_intro.png");
+            engine->image->load_texture("sonic_walk", "SonAni_Walk.png");
+            engine->image->load_texture("sonic_run", "SonAni_Run.png");
+            engine->image->load_texture("sonic_roll", "SonAni_Roll.png");
 
-            load_texture("ground", "60.png");
+            engine->image->load_texture("ground", "60.png");
 
             actor_list["sonic"]  = std::make_shared<cw::simulation::actor>();
             actor_list["ground"] = std::make_shared<cw::simulation::actor>();
@@ -98,7 +83,6 @@ int main(int argc, char **argv) {
                             glm::vec3(0.0f, -200.0f, 1.0f),
                             glm::vec3(128.0f, 32.0f, 128.0f));
 
-
             actor_list["sonic"]->sprites["stand"] = std::make_shared<cw::simulation::sprite>
                     (glm::vec3(0.0f, 0.0f, 1.0f),
                             glm::vec3(48, 48, 48.0f),
@@ -109,27 +93,24 @@ int main(int argc, char **argv) {
             actor_list["sonic"]->rigid_body = std::make_shared<cw::physics::box>(35.0f,
                     glm::vec3(0.0f, 200.0f, 1.0f), glm::vec3(24.0f, 24.0f,24.0f));
 
-
             add(batch_list["current"]);
             add(camera_list["current"]);
             add(actor_list["sonic"]);
             add(actor_list["ground"]);
 
-            world->add_rigid_body(actor_list["ground"]->rigid_body);
-            world->add_rigid_body(actor_list["sonic"]->rigid_body);
-
+            engine->physics_world->add_rigid_body(actor_list["ground"]->rigid_body);
+            engine->physics_world->add_rigid_body(actor_list["sonic"]->rigid_body);*/
 
         }
 
-        virtual void deinit(std::shared_ptr<cw::physics::dynamic_world> world){
-            world->remove_rigid_body(actor_list["ground"]->rigid_body);
-            world->remove_rigid_body(actor_list["sonic"]->rigid_body);
+        virtual void deinit(std::shared_ptr<cw::platform::backend::interface::engine> engine){
+/*            engine->physics_world->remove_rigid_body(actor_list["ground"]->rigid_body);
+            engine->physics_world->remove_rigid_body(actor_list["sonic"]->rigid_body);*/
         }
-
 
         virtual void render() override {
 
-            glsl_program->use();
+/*            glsl_program->use();
 
             glActiveTexture(GL_TEXTURE0); //Need to integrate this into batch list or program keymap
 
@@ -159,7 +140,7 @@ int main(int argc, char **argv) {
 
             graphical_queue.data.release();
 
-            glsl_program->unuse();
+            glsl_program->unuse();*/
 
         }
 
@@ -167,7 +148,6 @@ int main(int argc, char **argv) {
         std::map<std::string, std::shared_ptr<cw::simulation::camera> > camera_list;
         std::map<std::string, std::shared_ptr<cw::simulation::actor> >  actor_list;
         std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_sprite_batch>  > batch_list;
-        std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_texture> > texture_list;
 
         std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
     };

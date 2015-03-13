@@ -6,7 +6,7 @@
 
 #include <GL/glew.h>
 
-#include <crosswind/platform/sdl/sdl_exception.hpp>
+#include <crosswind/platform/backend/interface/core/exception.hpp>
 
 namespace cw{
 namespace simulation{
@@ -36,11 +36,11 @@ public:
 		program_id = glCreateProgram();
 
 	    if ((vertex_shader_id = glCreateShader(GL_VERTEX_SHADER)) == 0) {
-	            throw platform::sdl::sdl_exception("Could not create vertex shader");
+	            throw platform::backend::interface::core::exception("Could not create vertex shader");
 	    }
 
 	    if ((fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER)) == 0) {
-	            throw platform::sdl::sdl_exception("Could not create fragment shader");
+	            throw platform::backend::interface::core::exception("Could not create fragment shader");
 	    }	    
 
     	//Compile shaders
@@ -71,7 +71,7 @@ public:
 	        glDeleteShader(fragment_shader_id);
 
 	        std::printf("%s\n", &(error_log[0]));
-            throw platform::sdl::sdl_exception("Faled to link shaders");
+            throw platform::backend::interface::core::exception("Faled to link shaders");
 	    }
 
 	    glDetachShader(program_id, vertex_shader_id);
@@ -87,7 +87,7 @@ public:
 	int32_t get_uniform_location(const std::string& uniform_name) {
 		auto location = glGetUniformLocation(program_id, uniform_name.c_str());
 		if (location == GL_INVALID_INDEX) {
-			throw platform::sdl::sdl_exception("Uniform " + uniform_name + " not found in shader");
+			throw platform::backend::interface::core::exception("Uniform " + uniform_name + " not found in shader");
 		}
 		return location;
 	}
@@ -115,7 +115,7 @@ private:
 	    std::ifstream shader_file(shader_filepath);
 	    if (shader_file.fail()) {
 	        perror(shader_filepath.c_str());
-	       	throw platform::sdl::sdl_exception("Failed to open " + shader_filepath);
+	       	throw platform::backend::interface::core::exception("Failed to open " + shader_filepath);
 	    }
 
 	    std::string file_contents = "";
@@ -146,7 +146,7 @@ private:
 
 	        glDeleteShader(shader_id); 
 	        std::printf("%s\n", &(error_log[0]));
-            throw platform::sdl::sdl_exception("Faled to compile shader: " + shader_filepath);
+            throw platform::backend::interface::core::exception("Faled to compile shader: " + shader_filepath);
 	    }
 	}
 

@@ -6,20 +6,20 @@ namespace cw{
 namespace platform{
 namespace backend{
 namespace interface{
-namespace video{
+namespace core{
 namespace detail{
 
     class fps_limiter;
 
 }// namespace detail
-}// namespace video
+}// namespace core
 }// namespace interface
 }// namespace backend
 }// namespace platform
 }// namespace cw
 
 
-class cw::platform::backend::interface::video::detail::fps_limiter {
+class cw::platform::backend::interface::core::detail::fps_limiter {
 public:
     fps_limiter(float screen_fps = 60.00f) : ticks_per_frame(0.00f), delta(0.00f), fps(0.00f){
         set_fps(screen_fps);
@@ -74,4 +74,4 @@ private:
     std::chrono::high_resolution_clock::time_point end_time;
 
     std::chrono::high_resolution_clock::time_point previous_delta;
-};// class sdl_fps_limiter
+};// class fps_limiter

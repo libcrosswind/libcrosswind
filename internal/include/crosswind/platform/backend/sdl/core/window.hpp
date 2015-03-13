@@ -9,27 +9,26 @@
 
 #include <crosswind/concurrent/hollow_property.hpp>
 #include <crosswind/concurrent/resource_property.hpp>
-#include <crosswind/platform/sdl/sdl_exception.hpp>
+#include <crosswind/platform/backend/sdl/core/exception.hpp>
 
 namespace cw{
 namespace platform{
 namespace backend{
 namespace sdl{
-namespace video{
+namespace core{
 
 	class window;
 
-}// namespave video
+}// namespave core
 }// namespace sdl
 }// namespace backend
 }// namespace platform
 }// namespace cw
 
-class cw::platform::backend::sdl::window: public cw::platform::backend::video::window{
+class cw::platform::backend::sdl::core::window: public cw::platform::backend::interface::core::window{
 public:
-
 	window(const std::string& window_title, const glm::vec4& bounds, float fps, const unsigned int& flags):
-            cw::platform::backend::video::window(fps),
+            cw::platform::backend::interface::core::window(fps),
             window_resource(SDL_CreateWindow,
                    SDL_DestroyWindow,
                    window_title.c_str(),
@@ -48,7 +47,7 @@ public:
 
 		brightness.set = [this](const float& bright){
 			if (SDL_SetWindowBrightness(this->window_resource.ptr(), brightness) != 0)
-				throw sdl_exception("SDL_SetWindowBrightness");
+				throw exception("SDL_SetWindowBrightness");
         };
 
 		brightness.get = [this](){
@@ -80,11 +79,11 @@ public:
 
         context = SDL_GL_CreateContext(this->window_resource.ptr());
         if(context == nullptr){
-            throw sdl_exception("Could not create gl context ");
+            throw exception("Could not create gl context ");
         }
 
         if(glewInit() != GLEW_OK){
-            throw sdl_exception("Could not initialize glew");
+            throw exception("Could not initialize glew");
         }
 
         printf("OpenGL version: %s \n", glGetString(GL_VERSION));
@@ -100,7 +99,7 @@ public:
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    ~sdl_window(){
+    ~window(){
         SDL_GL_DeleteContext(context);
     }
 
@@ -145,5 +144,5 @@ public:
 private:
     SDL_GLContext context;
     concurrent::resource_property<SDL_Window> window_resource;
-
+  
 };// class sdl_window

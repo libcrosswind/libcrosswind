@@ -6,10 +6,13 @@
 #include <SDL2/SDL_keyboard.h>
 #include <SDL2/SDL_mouse.h>
 
+#include <crosswind/platform/backend/interface/core/input_listener.hpp>
+
 namespace cw{
 namespace platform{
+namespace backend{
 namespace sdl{
-
+namespace core{
 namespace
 {
 #ifdef __cplusplus
@@ -24,16 +27,18 @@ namespace
 #endif
 }
 
-	class sdl_input_listener;
+	class input_listener;
 
+}// namespace core
 }// namespace sdl
+}// namespace backend
 }// namespace platform
 }// namespace cw
 
 
-class cw::platform::sdl::sdl_input_listener{
+class cw::platform::backend::sdl::core::input_listener: public cw::platform::backend::interface::core::input_listener{
 public:
-    sdl_input_listener(){
+    input_listener(){
 
         int array_counter = 0;
 
@@ -54,21 +59,19 @@ public:
         key_map["mouse_middle"] = false;
         key_map["mouse_right"] = false;
 
-
-
     }
 
-	bool is_key_down(const std::string& key){
+	virtual bool is_key_down(const std::string& key){
 
 		return key_map[key];
 
 	}
 
-    glm::vec2 get_mouse_coordinates(){
+    virtual glm::vec2 get_mouse_coordinates(){
         return mouse_coordinates;
     }
 
-	void refresh(){
+	virtual void update(){
 
 		const uint8_t* state = SDL_GetKeyboardState(NULL);
 
@@ -90,8 +93,5 @@ public:
 
 	}
 
-private:
-    std::map<std::string, bool> key_map;
-    glm::vec2 mouse_coordinates;
 };// class sdl_input_listener
 

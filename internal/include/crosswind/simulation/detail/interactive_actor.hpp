@@ -5,8 +5,10 @@
 
 #include <SDL2/SDL_events.h>
 
+
 #include <crosswind/concurrent/mutex_container.hpp>
 #include <crosswind/functional/delegate.hpp>
+#include <crosswind/platform/backend/interface/core/input_listener.hpp>
 #include <crosswind/simulation/detail/mapping/event_mapping.hpp>
 
 namespace cw{
@@ -26,7 +28,7 @@ public:
 
 	}
 
-	virtual void handle_input(std::shared_ptr<platform::sdl::sdl_input_listener> sdl_input_listener) = 0;
+	virtual void handle_input(std::shared_ptr<platform::backend::interface::core::input_listener> input_listener) = 0;
  
     virtual void trigger(std::shared_ptr<event_mapping> event) = 0;
 

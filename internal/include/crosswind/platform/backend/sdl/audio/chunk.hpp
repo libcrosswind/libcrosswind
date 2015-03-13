@@ -17,7 +17,7 @@ namespace audio{
 }// namespace platform
 }// namespace cw
 
-class cw::platform::backend::sdl::audio::chunk : public cw::platform::backend::audio::chunk_interface{
+class cw::platform::backend::sdl::audio::chunk{
 public:
 	chunk(const std::string& file_path):
             data(Mix_LoadWAV_RW, Mix_FreeChunk, SDL_RWFromFile(file_path.c_str(), "rb"), 1) {

@@ -6,6 +6,8 @@
 #include <crosswind/simulation/detail/interactive_actor.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
 
+#include <crosswind/platform/backend/interface/core/input_listener.hpp>
+
 namespace cw{
 namespace simulation{
 
@@ -29,35 +31,35 @@ public:
 		ortho_matrix = glm::ortho(0.0f, screen_dimension.x, 0.0f, screen_dimension.y);
 	}
 
-    void handle_input(std::shared_ptr<platform::sdl::sdl_input_listener> sdl_input_listener){
-        if(sdl_input_listener->is_key_down("w")){
+    void handle_input(std::shared_ptr<platform::backend::interface::core::input_listener> input_listener){
+        if(input_listener->is_key_down("w")){
             set_position(get_position() + glm::vec3(0.0f, 10.0f, 0.0f));
         }
 
-        if(sdl_input_listener->is_key_down("s")){
+        if(input_listener->is_key_down("s")){
             set_position(get_position() + glm::vec3(0.0f, -10.0f, 0.0f));
         }
 
-        if(sdl_input_listener->is_key_down("a")){
+        if(input_listener->is_key_down("a")){
             set_position(get_position() + glm::vec3(-10.0f, 0.0f, 0.0f));
         }
 
-        if(sdl_input_listener->is_key_down("d")){
+        if(input_listener->is_key_down("d")){
             set_position(get_position() + glm::vec3(10.0f, 0.0f, 0.0f));
         }
 
-        if(sdl_input_listener->is_key_down("q")){
+        if(input_listener->is_key_down("q")){
             set_scale(get_scale() + 0.1);
         }
 
-        if(sdl_input_listener->is_key_down("e")){
+        if(input_listener->is_key_down("e")){
             set_scale(get_scale() - 0.1);
         }
 
-        if(sdl_input_listener->is_key_down("mouse_left")){
+        if(input_listener->is_key_down("mouse_left")){
             std::cout
-                        << "X: " << convert_screen_to_world(sdl_input_listener->get_mouse_coordinates()).x
-                        << " Y: " << convert_screen_to_world(sdl_input_listener->get_mouse_coordinates()).y
+                        << "X: " << convert_screen_to_world(input_listener->get_mouse_coordinates()).x
+                        << " Y: " << convert_screen_to_world(input_listener->get_mouse_coordinates()).y
                         <<
             std::endl;
         }

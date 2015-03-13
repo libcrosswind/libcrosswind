@@ -2,26 +2,30 @@
 
 #include <SDL2/SDL.h>
 
-#include <crosswind/platform/sdl/sdl_exception.hpp>
+#include <crosswind/platform/backend/sdl/core/exception.hpp>
 
 namespace cw{
 namespace platform{
+namespace backend{
 namespace sdl{
+namespace core{
 
-	class sdl_core_system;
+	class nucleus;
 
+}// namespace core
 }// namespace sdl
+}// namespace backend
 }// namespace platform
 }// namespace cw
 
-class cw::platform::sdl::sdl_core_system{
+class cw::platform::backend::sdl::core::nucleus{
 public:
-	sdl_core_system(auto flags) {
+	nucleus(auto flags) {
 		if (SDL_Init(flags) != 0)
-			throw sdl_exception("SDL_Init");
+			throw exception("SDL_Init");
 	}
 
-	~sdl_core_system() {
+	~nucleus() {
 		SDL_Quit();
 	}
 
@@ -31,11 +35,11 @@ public:
 
 	void init_subsystem(auto flags) {
 		if (SDL_InitSubSystem(flags) != 0)
-			throw sdl_exception("SDL_InitSubsystem");
+			throw exception("SDL_InitSubsystem");
 	}
 
 	void quit_subsystem(auto flags) {
 		SDL_QuitSubSystem(flags);
 	}
 
-};// class sdl_core_system 
+};// class nucleus 

@@ -15,10 +15,10 @@ namespace sdl{
 }// namespace cw
 
 
-class cw::platform::sdl::sdl_texture{
+class cw::platform::sdl::texture{
 public:
 	template<typename... Args>
-	sdl_texture(Args... args): data(IMG_LoadTexture, SDL_DestroyTexture, args...){
+	texture(Args... args): data(IMG_LoadTexture, SDL_DestroyTexture, args...){
 		
 	}
 

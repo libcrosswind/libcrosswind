@@ -2,41 +2,44 @@
 
 #include <SDL2/SDL_mixer.h>
 
-#include <crosswind/concurrent/mutex_container.hpp>
-#include <crosswind/platform/sdl/audio/sdl_chunk.hpp>
-#include <crosswind/platform/sdl/audio/sdl_music.hpp>
-#include <crosswind/platform/sdl/sdl_exception.hpp>
+#include <crosswind/platform/backend/interface/core/mixer.hpp>
+#include <crosswind/platform/backend/sdl/audio/chunk.hpp>
+#include <crosswind/platform/backend/sdl/audio/music.hpp>
+#include <crosswind/platform/backend/sdl/core/exception.hpp>
 
 namespace cw{
 namespace platform{
+namespace backend{
 namespace sdl{
+namespace core{
 
-	class sdl_audio_system;
+	class mixer;
 
+}// namespace core
 }// namespace sdl
+}// namespace backend
 }// namespace platform
 }// namespace cw
 
-class cw::platform::sdl::sdl_audio_mixer: public mixer{
+class cw::platform::backend::sdl::core::mixer: public cw::platform::backend::interface::core::mixer{
 public:
 	template<typename... Args>
-	sdl_audio_system(Args... args) {
+	mixer(Args... args) {
 
 		if (Mix_OpenAudio(args...) < 0)
-		 throw sdl_exception("SDL_mixer could not initialize! SDL_mixer Error: %s\n");//, Mix_GetError());
+		 throw exception("SDL_mixer could not initialize! SDL_mixer Error: %s\n");//, Mix_GetError());
 
 	}
 
-	~sdl_audio_system() {
+	~mixer() {
     	Mix_Quit();
 	}
 
 	virtual void load_music(const std::string& name, const std::string& path){
 
-        bgm_tracks[name] = std::make_shared<sdl_music>(path);
+        bgm_tracks[name] = std::make_shared<audio::music>(path);
 
 	}
-
 
 	virtual void play_music(const std::string& name){
 
@@ -74,7 +77,7 @@ public:
     }
 
     virtual void load_effect(const std::string& name, const std::string& path){
-        sfx_tracks[name] = std::make_shared<sdl_chunk>(path);
+        sfx_tracks[name] = std::make_shared<audio::chunk>(path);
     }
 
     virtual void play_effect(const std::string& name){
@@ -85,14 +88,18 @@ public:
 
 private:
 	// non-copyable
-	sdl_audio_system(const sdl_audio_system& other) = delete;
-	sdl_audio_system& operator=(const sdl_audio_system& other) = delete;
+	mixer(const mixer& other) = delete;
+	mixer& operator=(const mixer& other) = delete;
 
 	// non-movable
-	sdl_audio_system(sdl_audio_system&& other) = delete;
-	sdl_audio_system& operator=(sdl_audio_system&& other) = delete;
+	mixer(mixer&& other) = delete;
+	mixer& operator=(mixer&& other) = delete;
 
 	// non-default
-	sdl_audio_system() = delete;
+	mixer() = delete;
 
-};// class sdl_audio_system
+private:
+	std::map<std::string, std::shared_ptr<audio::music> > bgm_tracks;
+	std::map<std::string, std::shared_ptr<audio::chunk> > sfx_tracks;
+
+};// class mixer
