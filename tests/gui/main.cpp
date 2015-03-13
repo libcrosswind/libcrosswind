@@ -62,9 +62,8 @@ int main(int argc, char **argv) {
             actor_list["sonic"]  = std::make_shared<cw::simulation::actor>();
             actor_list["ground"] = std::make_shared<cw::simulation::actor>();
 
-
             actor_list["ground"]->sprites["tile_1"] = std::make_shared<cw::simulation::sprite>
-                    (glm::vec3(0.0f, -200.0f, 1.0f),
+                    (glm::vec3(0.0f, -100.0f, 1.0f),
                                glm::vec3(256.0f, 256.0f, 256.0f),
                                glm::vec4(0.0f, 0.0f, 1.0f, 1.0),
                                engine->image->load_texture("ground")->id,
@@ -72,8 +71,8 @@ int main(int argc, char **argv) {
 
             actor_list["ground"]->rigid_body =
                     std::make_shared<cw::physics::box>(0.0f,
-                            glm::vec3(0.0f, -200.0f, 1.0f),
-                            glm::vec3(128.0f, 32.0f, 128.0f));
+                            glm::vec3(0.0f, -100.0f, 1.0f),
+                            glm::vec3(128.0f, 34.0f, 128.0f));
 
             actor_list["sonic"]->sprites["stand"] = std::make_shared<cw::simulation::sprite>
                     (glm::vec3(0.0f, 0.0f, 1.0f),
