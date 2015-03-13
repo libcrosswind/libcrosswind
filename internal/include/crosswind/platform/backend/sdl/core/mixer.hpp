@@ -78,7 +78,7 @@ public:
     }
 
     virtual void load_effect(const std::string& name, const std::string& path){
-        sfx_tracks[name] = std::make_shared<audio::chunk>(path);
+        sfx_tracks[name] = std::make_shared<audio::chunk>(cw::platform::filesystem::get_file_path(path));
     }
 
     virtual void play_effect(const std::string& name){
