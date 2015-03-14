@@ -6,7 +6,7 @@
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
 
-#include <crosswind/simulation/actor.hpp>
+#include <crosswind/simulation/model.hpp>
 #include <crosswind/simulation/sprite.hpp>
 #include <crosswind/simulation/camera.hpp>
 #include <crosswind/simulation/gl/glsl_program.hpp>
@@ -58,46 +58,57 @@ int main(int argc, char **argv) {
 
             engine->image->load_texture("ground", "60.png");
 
-            actor_list["sonic"]  = std::make_shared<cw::simulation::actor>();
-            actor_list["ground"] = std::make_shared<cw::simulation::actor>();
+            auto sonic_model  = std::make_shared<cw::simulation::model>();
+            auto ground_model = std::make_shared<cw::simulation::model>();
 
-            actor_list["ground"]->sprites["tile_1"] = std::make_shared<cw::simulation::sprite>
-                    (glm::vec3(0.0f, -100.0f, 1.0f),
-                               glm::vec3(256.0f, 256.0f, 256.0f),
-                               glm::vec4(0.0f, 0.0f, 1.0f, 1.0),
-                               engine->image->load_texture("ground")->id,
-                               0.0f);
+            auto ground_sprite = std::make_shared<cw::simulation::sprite>
+                                 (glm::vec3(0.0f, -100.0f, 1.0f),            // position
+                                  glm::vec3(256.0f, 256.0f, 256.0f),         // size
+                                  glm::vec4(0.0f, 0.0f, 1.0f, 1.0),          // uv
+                                  engine->image->load_texture("ground")->id, // texture id
+                                  0.0f);                                     // depth
 
-            actor_list["ground"]->rigid_body =
-                    std::make_shared<cw::physics::box>(0.0f,
-                            glm::vec3(0.0f, -100.0f, 1.0f),
-                            glm::vec3(128.0f, 34.0f, 128.0f));
+            auto ground_body   = std::make_shared<cw::physics::box>
+                                 (0.0f,                               // mass
+                                  glm::vec3(0.0f, -196.0f, 1.0f),     // position
+                                  glm::vec3(128.0f, 32.0f, 128.0f));  // size
 
-            actor_list["sonic"]->sprites["stand"] = std::make_shared<cw::simulation::sprite>
-                    (glm::vec3(0.0f, 0.0f, 1.0f),
-                            glm::vec3(48, 48, 48.0f),
-                            glm::vec4(0.0f, 0.0f, 0.2f, 1.0f),
-                            engine->image->load_texture("sonic_wait")->id,
-                            0.0f);
+            auto stand_sprite  = std::make_shared<cw::simulation::sprite>
+                                 (glm::vec3(0.0f, 0.0f, 1.0f),
+                                  glm::vec3(48, 48, 48.0f),
+                                  glm::vec4(0.0f, 0.0f, 0.2f, 1.0f),
+                                  engine->image->load_texture("sonic_wait")->id,
+                                  0.0f);
 
-            actor_list["sonic"]->rigid_body = std::make_shared<cw::physics::box>(35.0f,
-                    glm::vec3(0.0f, 200.0f, 1.0f), glm::vec3(24.0f, 24.0f,24.0f));
+            auto sonic_body    = std::make_shared<cw::physics::box>
+                                 (35.0f,                          // mass
+                                  glm::vec3(0.0f, 200.0f, 1.0f),  // position
+                                  glm::vec3(24.0f, 24.0f,24.0f)); // size
 
+            sonic_model->add_sprite("stand_sprite", stand_sprite);
+            sonic_model->add_body("sonic_body", sonic_body);
+            sonic_model->constrain("stand_sprite", "sonic_body");
+
+            ground_model->add_sprite("ground_sprite", ground_sprite);
+            ground_model->add_body("ground_body", ground_body);
+
+            model_list["sonic"] = sonic_model;
+            model_list["ground"] = ground_model;
             add(batch_list["current"]);
             add(camera_list["current"]);
-            add(actor_list["sonic"]);
-            add(actor_list["ground"]);
+            add(model_list["sonic"]);
+            add(model_list["ground"]);
 
-            engine->physics_world->add_rigid_body(actor_list["ground"]->rigid_body);
-            engine->physics_world->add_rigid_body(actor_list["sonic"]->rigid_body);
+            engine->physics_world->add_rigid_body(model_list["ground"]->rigid_bodies["ground_body"]);
+            engine->physics_world->add_rigid_body(model_list["sonic"]->rigid_bodies["sonic_body"]);
 
             engine->physics_world->init_debug_drawer(camera_list["current"]);
 
         }
 
         virtual void deinit(std::shared_ptr<cw::platform::backend::interface::engine> engine){
-            engine->physics_world->remove_rigid_body(actor_list["ground"]->rigid_body);
-            engine->physics_world->remove_rigid_body(actor_list["sonic"]->rigid_body);
+            engine->physics_world->remove_rigid_body(model_list["ground"]->rigid_bodies["ground_body"]);
+            engine->physics_world->remove_rigid_body(model_list["sonic"]->rigid_bodies["sonic_body"]);
         }
 
         virtual void render() override {
@@ -116,8 +127,8 @@ int main(int argc, char **argv) {
 
             batch_list["current"]->begin();
 
-            for(auto& actor_mapping : actor_list){
-                for(auto& sprite_mapping : actor_mapping.second->sprites){
+            for(auto& model_mapping : model_list){
+                for(auto& sprite_mapping : model_mapping .second->sprites){
                     batch_list["current"]->upload(sprite_mapping.second);
                 }
             }
@@ -138,7 +149,7 @@ int main(int argc, char **argv) {
 
     private:
         std::map<std::string, std::shared_ptr<cw::simulation::camera> >                 camera_list;
-        std::map<std::string, std::shared_ptr<cw::simulation::actor> >                  actor_list;
+        std::map<std::string, std::shared_ptr<cw::simulation::model> >                  model_list;
         std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_sprite_batch>  >   batch_list;
 
         std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
