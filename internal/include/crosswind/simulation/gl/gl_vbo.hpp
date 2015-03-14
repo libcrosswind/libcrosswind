@@ -74,7 +74,8 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	}
-private:
+
+protected:
 	uint32_t id;
 	unsigned short allocated_buffers;
 };// class gl_vbo

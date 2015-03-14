@@ -89,7 +89,7 @@ public:
 		return scale.x;	// whichever works
 	}
 
-	auto get_camera_matrix(){	
+    glm::mat4 get_camera_matrix(){
 	
 		return camera_matrix;	
 	

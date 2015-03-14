@@ -6,7 +6,6 @@
 #include <crosswind/platform/application.hpp>
 #include <crosswind/platform/filesystem.hpp>
 
-
 #include <crosswind/simulation/actor.hpp>
 #include <crosswind/simulation/sprite.hpp>
 #include <crosswind/simulation/camera.hpp>
@@ -91,6 +90,8 @@ int main(int argc, char **argv) {
 
             engine->physics_world->add_rigid_body(actor_list["ground"]->rigid_body);
             engine->physics_world->add_rigid_body(actor_list["sonic"]->rigid_body);
+
+            engine->physics_world->init_debug_drawer(camera_list["current"]);
 
         }
 

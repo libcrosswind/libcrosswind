@@ -116,6 +116,7 @@ stages("current")->update(engine->window->fps_limiter->get_delta());
 void handle_rendering(){
 engine->window->clear();
 stages("current")->render();
+engine->physics_world->debug_draw_world();
 engine->window->present();
 }
 

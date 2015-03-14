@@ -7,6 +7,8 @@
 
 #include <crosswind/physics/detail/rigid_body.hpp>
 
+#include <crosswind/physics/debug/physics_debug_drawer.hpp>
+
 namespace cw{
 namespace physics{
 
@@ -14,6 +16,8 @@ namespace physics{
 
 }// namespace physics
 }// namespace cw
+
+
 
 class cw::physics::dynamic_world{
 public:
@@ -24,8 +28,11 @@ public:
         broadphase.reset(new btDbvtBroadphase());
         solver.reset(new btSequentialImpulseConstraintSolver());
         world.reset(new btDiscreteDynamicsWorld(dispatcher.get(), broadphase.get(), solver.get(), collision_config.get()));
+		physics_debug_drawer.reset(new debug::physics_debug_drawer());
 		set_gravity(gravity);
-	
+
+		world->setDebugDrawer(physics_debug_drawer.get());
+
 	}
 
 	void add_rigid_body(std::shared_ptr<detail::rigid_body> body){
@@ -42,6 +49,14 @@ public:
 		world->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
 	}
 
+	void init_debug_drawer(auto camera){
+		drawer->init(camera);
+	}
+
+	void debug_draw_world(){
+		world->debugDrawWorld();
+	}
+
 	void update(double dt){
 		world->stepSimulation(dt);
 	}
@@ -52,5 +67,7 @@ private:
 	std::unique_ptr<btBroadphaseInterface> 		broadphase;
 	std::unique_ptr<btDispatcher>    			dispatcher;
 	std::unique_ptr<btCollisionConfiguration>	collision_config;
+	std::unique_ptr<debug::physics_debug_drawer> physics_debug_drawer;
+
 
 };// class dynamic_world
