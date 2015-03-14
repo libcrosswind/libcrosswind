@@ -152,8 +152,8 @@ public:
 	}
 
 	virtual void	drawContactPoint(const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color){
-		btVector3 to=PointOnB+normalOnB*1;//distance;
-		const btVector3&from = pointOnB;
+		btVector3 to= PointOnB+normalOnB*1;//distance;
+		const btVector3&from = PointOnB;
 		glColor4f(color.getX(), color.getY(), color.getZ(),1.f);
 		//glColor4f(0,0,0,1.f);
 		glBegin(GL_LINES);

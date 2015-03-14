@@ -50,7 +50,7 @@ public:
 	}
 
 	void init_debug_drawer(auto camera){
-		drawer->init(camera);
+		physics_debug_drawer->init(camera);
 	}
 
 	void debug_draw_world(){
