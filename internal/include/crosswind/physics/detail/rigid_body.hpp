@@ -18,7 +18,7 @@ namespace detail{
 class cw::physics::detail::rigid_body{
 
 public:
-		rigid_body(const glm::vec3& o, const glm::vec3& s = glm::vec3(1.0f, 1.0f, 1.0f)): scale(s){
+		rigid_body(const glm::vec3& o, const float& s = 1.0): scale(s){
 
 			glm::vec3 s_origin = o * s; 
 
@@ -44,6 +44,10 @@ public:
 			motion_state 	= std::unique_ptr<btMotionState>(m_state);
 			collision_shape = std::unique_ptr<btCollisionShape>(c_shape);
 			physic_body		= std::make_unique<btRigidBody>(info);
+		}
+
+		void set_activation_policy(auto state){
+			physic_body->setActivationState(state);
 		}
 
 
@@ -74,6 +78,20 @@ public:
 
 		}
 
+		void set_linear_speed(const glm::vec3& speed){
+
+			auto spd = speed * scale;
+			physic_body->setLinearVelocity(btVector3(spd.x, spd.y, spd.z));
+
+		}
+
+		glm::vec3 get_linear_speed(){
+			glm::vec3 spd(physic_body->getLinearVelocity().getX(),
+						  physic_body->getLinearVelocity().getY(),
+						  physic_body->getLinearVelocity().getZ());
+			return spd;
+		}
+
 		void apply_force(const glm::vec3& f){
 
 			glm::vec3 force = f*scale;
@@ -82,7 +100,7 @@ public:
 		}
 
         btTransform transform;
-		glm::vec3 scale;
+	    float scale;
 
 		std::unique_ptr<btMotionState> motion_state;
 		std::unique_ptr<btCollisionShape> collision_shape;

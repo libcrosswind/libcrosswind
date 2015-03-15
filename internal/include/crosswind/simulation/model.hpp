@@ -13,6 +13,8 @@ namespace simulation{
 }// namespace simulation
 }// namespace cw
 
+#include <iostream>
+
 
 class cw::simulation::model: public cw::simulation::detail::standard_actor{
 public:
@@ -22,7 +24,7 @@ public:
 
     virtual void add_sprite(const std::string& sprite_name, 
     						std::shared_ptr<sprite> sprite){
-    	sprites[sprite_name] = sprite;
+		sprites[sprite_name] = sprite;
     }
 
     virtual void add_body(const std::string& body_name, 
@@ -39,23 +41,23 @@ public:
 		rigid_bodies[body_name] = body;
     }
 
+	virtual void storage_to_render(const std::string& sprite_name){
+		sprites[sprite_name] = sprite_storage[sprite_name];
+		sprite_storage.erase(sprite_name);
+	}
+
+	virtual void render_to_storage(const std::string& sprite_name){
+		sprite_storage[sprite_name] = sprites[sprite_name];
+		sprites.erase(sprite_name);
+	}
 
     virtual void constrain(const std::string& sprite, 
     	             	   const std::string& body, 
     	             	   const glm::vec3& offset = glm::vec3(0.0f, 0.0f, 0.0f)){
 
-
-    	constrained_bodies[sprites[sprite]] = rigid_bodies[body];
-
-    }
-
-    virtual void constrain(const std::string& body, 
-    					   const std::vector<glm::vec2>& position_clamp){
-
-    	constrained_positions[body] = position_clamp;
+    	constrained_bodies[sprite] = body;
 
     }
-
 
 	virtual void update(double delta){
 
@@ -80,50 +82,15 @@ public:
 */
 
 		for(auto& constrain_mapping : constrained_bodies){
-
-/*
-            std::cout << "mapping: " << constrain_mapping.first << " " <<
-            			 sprites.second->get_origin().x << " " << 
-            			 sprites.second->get_origin().y << " " << 
-            			 sprites.second->get_origin().z
-            << std::endl;*/
 	            
-				glm::vec3 b_origin(constrain_mapping.second->get_origin().x, 
-						 		   constrain_mapping.second->get_origin().y, 
-								   constrain_mapping.second->get_origin().z);
+				glm::vec3 b_origin(rigid_bodies[constrain_mapping.second]->get_origin().x,
+								   rigid_bodies[constrain_mapping.second]->get_origin().y,
+						           rigid_bodies[constrain_mapping.second]->get_origin().z);
 
-
-				constrain_mapping.first->set_origin(b_origin);
+				sprites[constrain_mapping.first]->set_origin(b_origin);
+			std::cout << b_origin.y << std::endl;
 			}
 
-		for(auto& constrain_mapping : constrained_positions){
-
-/*			glm::vec3 b_origin(rigid_bodies[constrain_mapping.first]->get_origin().x,
-					 		   rigid_bodies[constrain_mapping.first]->get_origin().y, 
-							   rigid_bodies[constrain_mapping.first]->get_origin().z);
-
-
-			auto c_xmin = constrained_positions[constrain_mapping.first][0][0];
-			auto c_xmax = constrained_positions[constrain_mapping.first][0][1];			
-
-			auto c_ymin = constrained_positions[constrain_mapping.first][1][0];
-			auto c_ymax = constrained_positions[constrain_mapping.first][1][1];			
-
-			auto c_zmin = constrained_positions[constrain_mapping.first][2][0];
-			auto c_zmax = constrained_positions[constrain_mapping.first][2][1];			
-
-			glm::vec3 c_origin(glm::clamp(b_origin.x, c_xmin, c_xmax),
-							   glm::clamp(b_origin.y, c_ymin, c_ymax),
-							   glm::clamp(b_origin.z, c_zmin, c_zmax));
-
-			c_origin.x = 0.0f;
-			c_origin.y = 0.0f;
-			c_origin.z = 0.0f;
-
-			std::cout << constrain_mapping.first << std::endl;
-
-			rigid_bodies[constrain_mapping.first]->set_origin(c_origin);*/
-		}	
 	}
 
 	
@@ -132,11 +99,10 @@ public:
 
 public:
 	std::map<std::string, std::shared_ptr<sprite> > sprites;
+
 	std::map<std::string, std::shared_ptr<physics::detail::rigid_body> > rigid_bodies;
+	std::map<std::string, std::string> constrained_bodies;
 
-	std::map<std::shared_ptr<sprite>, 
-	         std::shared_ptr<physics::detail::rigid_body> > constrained_bodies;
-
-   	std::map<std::string, std::vector<glm::vec2> > constrained_positions;
-
+private:
+	std::map<std::string, std::shared_ptr<sprite> > sprite_storage;
 };// class model

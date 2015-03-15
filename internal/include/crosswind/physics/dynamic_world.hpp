@@ -21,7 +21,7 @@ namespace physics{
 
 class cw::physics::dynamic_world{
 public:
-	dynamic_world(const glm::vec3& g){
+	dynamic_world(const glm::vec3& g, const float& s){
 
         collision_config.reset(new btDefaultCollisionConfiguration());
         dispatcher.reset(new btCollisionDispatcher(collision_config.get()));
@@ -29,13 +29,15 @@ public:
         solver.reset(new btSequentialImpulseConstraintSolver());
         world.reset(new btDiscreteDynamicsWorld(dispatcher.get(), broadphase.get(), solver.get(), collision_config.get()));
 		physics_debug_drawer.reset(new debug::physics_debug_drawer());
+
+		scale = s;
 		set_gravity(g);
-		scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
 		world->setDebugDrawer(physics_debug_drawer.get());
 
 	}
 
-	void set_scale(const glm::vec3& new_scale){
+	void set_scale(const float& new_scale){
 		scale = new_scale;
 	}
 
@@ -45,6 +47,12 @@ public:
 	}
 
 	void add_rigid_body(std::shared_ptr<detail::rigid_body> body){
+
+		auto st = body->physic_body->getLinearSleepingThreshold();
+
+		st *= scale;
+
+		body->physic_body->setSleepingThresholds(st, body->physic_body->getAngularSleepingThreshold());
 
 		world->addRigidBody(body->physic_body.get());
 
@@ -78,6 +86,6 @@ private:
 	std::unique_ptr<btDispatcher>    			dispatcher;
 	std::unique_ptr<btCollisionConfiguration>	collision_config;
 	std::unique_ptr<debug::physics_debug_drawer> physics_debug_drawer;
-	glm::vec3 scale;
+	float scale;
 
 };// class dynamic_world

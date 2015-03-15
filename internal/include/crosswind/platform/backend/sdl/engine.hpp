@@ -45,7 +45,7 @@ public:
 
         window->set_clear_color(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
-        physics_world = std::make_shared<physics::dynamic_world>(physics_settings[0]);
+        physics_world = std::make_shared<physics::dynamic_world>(physics_settings[0], physics_settings[1].x);
 	}
 
 private:

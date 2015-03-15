@@ -18,9 +18,9 @@ public:
     box(const float& mass,
         const glm::vec3& origin,
         const glm::vec3& size, 
-        const glm::vec3& scale = glm::vec3(1.0f, 1.0f, 1.0f)): rigid_body(origin, scale){
+        const float& s): rigid_body(origin, s){
 
-    		glm::vec3 s_size = size * scale;
+    		glm::vec3 s_size = size * s;
     		
             init(mass,
                  new btDefaultMotionState(transform),

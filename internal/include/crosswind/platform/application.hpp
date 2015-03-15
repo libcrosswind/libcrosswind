@@ -38,8 +38,11 @@ public:
 
         auto window_settings = std::make_tuple(title, bounds, fps, SDL_WINDOW_OPENGL);
 
-        std::vector<glm::vec3> physics_settings{
-                glm::vec3(0.0f, -10.0f, 0.0f)
+
+
+            std::vector<glm::vec3> physics_settings{
+                glm::vec3(0.0f, -10.0f, 0.0f),
+                glm::vec3(0.01, 0.0f, 0.0f)
         };
 
         engine = std::make_shared<backend::sdl::engine>(engine_settings, window_settings, physics_settings);

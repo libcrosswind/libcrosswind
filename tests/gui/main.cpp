@@ -37,10 +37,12 @@ int main(int argc, char **argv) {
 
             engine->mixer->load_effect("jump", "Jump.wav");
         //    engine->mixer->play_effect("jump");
+            // Sonic gravity is -0.21875f per step, we have 60 steps per second.
+            float g = -13.125 / 0.026458f;
+            float a = 224/480;
 
-            // 1 pixel equals 0.000264583 meters
-            engine->physics_world->set_scale(glm::vec3(0.1f, 0.1f, 0.1f));
-            engine->physics_world->set_gravity(glm::vec3(0.0f, -10.f, 0.0f));
+            g += g + a * g;
+            engine->physics_world->set_gravity(glm::vec3(0.0f, g, 0.0f));
 
             glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
             std::string vertex_shader   = "assets/default/graphics/shaders/texture_shading.vert";
@@ -83,20 +85,19 @@ int main(int argc, char **argv) {
                                   engine->image->load_texture("sonic_wait")->id); // texture id
 
             auto sonic_body    = engine->physics_world->create<cw::physics::box>
-                                 (0.1f,                                           // mass
-                                  glm::vec3(0.0f, 200.0f, 1.0f),                  // position
+                                 (1.0f,                                           // mass
+                                  glm::vec3(0.0f, 50.0f, 1.0f),                  // position
                                   glm::vec3(48.0f, 48.0f, 48.0f));                // size
+
+            sonic_body->set_activation_policy(DISABLE_DEACTIVATION);
 
             sonic_model->add_sprite("stand_sprite", stand_sprite);
             sonic_model->add_body("sonic_body", sonic_body);
             sonic_model->constrain("stand_sprite", "sonic_body");
 
             ground_body->set_linear_factor(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-            sonic_body->set_linear_factor(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-/*            sonic_model->constrain("sonic_body", std::vector<glm::vec2>{ glm::vec2(-100.0f, 100.0f),
-                                                                         glm::vec2(-260.0f, 100.0f),
-                                                                         glm::vec2(-15.0f, 15.0f)});
-*/
+            sonic_body->set_linear_factor(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+
             ground_model->add_sprite("ground_sprite", ground_sprite);
             ground_model->add_body("ground_body", ground_body);
 
@@ -112,18 +113,38 @@ int main(int argc, char **argv) {
 
             engine->physics_world->init_debug_drawer(camera_list["current"]);
 
+            this->conditions["jumping"] = false;
+
+
+
+/*            post_event([this, engine](){
+
+            }, true);
+*/
+
             post_event([this, engine](){
                if(engine->input_listener->is_key_down("k")){
 
-                   this->model_list["sonic"]->rigid_bodies["sonic_body"]->apply_force(glm::vec3(0.0f, 1.f, 0.0f));
-
                    if(this->conditions["jumping"] == false){
+
+                       float pixels = 6.5f / 0.026458f;
+                       float aspect = 224/480;
+
+                       pixels += pixels + aspect * pixels;
+                       this->model_list["sonic"]->rigid_bodies["sonic_body"]->set_linear_speed(glm::vec3(0.0f, pixels, 0.0f));
+//                       this->model_list["sonic"]->rigid_bodies["sonic_body"]->apply_force(glm::vec3(0.0f, 1.0f, 0.0f));
                        engine->mixer->play_effect("jump");
                        this->conditions["jumping"] = true;
                    }
 
                } else {
-                   this->conditions["jumping"] = false;
+
+                   if(this->conditions["jumping"] == true){
+//                       this->model_list["sonic"]->rigid_bodies["sonic_body"]->set_linear_speed(glm::vec3(0.0f, -6.5f, 0.0f));
+//                       this->model_list["sonic"]->rigid_bodies["sonic_body"]->apply_force(glm::vec3(0.0f, -1.0f, 0.0f));
+                       this->conditions["jumping"] = false;
+                   }
+
                }
             }, true);
 
