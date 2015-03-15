@@ -13,12 +13,10 @@ namespace simulation{
 }// namespace simulation
 }// namespace cw
 
-#include <iostream>
 
 class cw::simulation::model: public cw::simulation::detail::standard_actor{
 public:
 	model(/*const glm::vec3 o*/)/*: origin(o)*/{
-		frame_counter = 0;
 	}
 
 
@@ -53,27 +51,6 @@ public:
 
 	virtual void update(double delta){
 
-			if(frame_counter++ >= 0){
-
-/*				glm::vec3 b_origin(rigid_body->get_origin().x, 
-						 		   rigid_body->get_origin().y, 
-								   rigid_body->get_origin().z);
-
-
-				glm::vec3 b_offset = offsets[body->name];
-
-				glm::vec3 b_real = b_origin + offset;
-
-				glm::vec3 p_diff = b_real - origin;
-
-            std::cout << "rigid_body: " << 
-            			 p_diff.x << " " << 
-            			 p_diff.y << " " << 
-            			 p_diff.z
-            << std::endl;*/
-
-				frame_counter = 0;
-
 		for(auto& constrain_mapping : constrained_bodies){
 /*
             std::cout << "mapping: " << constrain_mapping.first << " " <<
@@ -91,13 +68,11 @@ public:
 			}
 		}
 
-	}
-
+	
 //	std::map<std::string, glm::vec3> offsets;
 //	glm::vec3 origin;
 
 public:
-	int frame_counter;
 	std::map<std::string, std::shared_ptr<sprite> > sprites;
 	std::map<std::string, std::shared_ptr<physics::detail::rigid_body> > rigid_bodies;
 
