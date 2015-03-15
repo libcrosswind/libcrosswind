@@ -127,6 +127,7 @@ protected:
 	concurrent::mutex_vector<std::shared_ptr<detail::graphical_actor>   > graphical_queue;
 	concurrent::mutex_vector<std::pair<bool, std::function<void()> > > event_queue;
 
+	std::map<std::string, bool> conditions;
 
 protected:
 /*	platform::generic::application* application;	*/

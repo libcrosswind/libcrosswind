@@ -17,11 +17,14 @@ class cw::physics::box: public cw::physics::detail::rigid_body{
 public:
     box(const float& mass,
         const glm::vec3& origin,
-        const glm::vec3& size): rigid_body(origin){
+        const glm::vec3& size, 
+        const glm::vec3& scale = glm::vec3(1.0f, 1.0f, 1.0f)): rigid_body(origin, scale){
 
+    		glm::vec3 s_size = size * scale;
+    		
             init(mass,
                  new btDefaultMotionState(transform),
-                 new btBoxShape(btVector3(size.x, size.y, size.z)));
+                 new btBoxShape(btVector3(s_size.x/2, s_size.y/2, s_size.z/2)));
     }
 
 };// class box

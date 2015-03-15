@@ -25,11 +25,9 @@ public:
 	sprite(const glm::vec3& p, 
            const glm::vec3& s, 
            const glm::vec4& uv, 
-           const uint32_t& t_id, 
-           const float& d):
+           const uint32_t& t_id):
             cw::geometry::rectangle(p, s),
-            texture_id(t_id),
-            depth(d){
+            texture_id(t_id){
 
         // first triangle
         vertices[0].set_uv(uv.z, uv.w); // top right
@@ -72,5 +70,4 @@ public:
 	}*/
 
     uint32_t texture_id;
-    float depth;
 };// class sprite

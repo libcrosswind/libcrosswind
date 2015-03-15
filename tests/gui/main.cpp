@@ -32,11 +32,15 @@ int main(int argc, char **argv) {
 
         virtual void init(std::shared_ptr<cw::platform::backend::interface::engine> engine){
 
-            engine->mixer->load_music("green_hill", "green_hill_zone_bgm.ogg");
-            engine->mixer->play_music("green_hill");
+         //   engine->mixer->load_music("green_hill", "green_hill_zone_bgm.ogg");
+         //   engine->mixer->play_music("green_hill");
 
             engine->mixer->load_effect("jump", "Jump.wav");
-            engine->mixer->play_effect("jump");
+        //    engine->mixer->play_effect("jump");
+
+            // 1 pixel equals 0.000264583 meters
+            engine->physics_world->set_scale(glm::vec3(0.1f, 0.1f, 0.1f));
+            engine->physics_world->set_gravity(glm::vec3(0.0f, -10.f, 0.0f));
 
             glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
             std::string vertex_shader   = "assets/default/graphics/shaders/texture_shading.vert";
@@ -62,33 +66,37 @@ int main(int argc, char **argv) {
             auto ground_model = std::make_shared<cw::simulation::model>();
 
             auto ground_sprite = std::make_shared<cw::simulation::sprite>
-                                 (glm::vec3(0.0f, -100.0f, 1.0f),            // position
-                                  glm::vec3(256.0f, 256.0f, 256.0f),         // size
-                                  glm::vec4(0.0f, 0.0f, 1.0f, 1.0),          // uv
-                                  engine->image->load_texture("ground")->id, // texture id
-                                  0.0f);                                     // depth
+                                 (glm::vec3(0.0f, -100.0f, 1.0f),                 // position
+                                  glm::vec3(256.0f, 256.0f, 256.0f),              // size
+                                  glm::vec4(0.0f, 0.0f, 1.0f, 1.0),               // uv
+                                  engine->image->load_texture("ground")->id);     // texture id
 
-            auto ground_body   = std::make_shared<cw::physics::box>
-                                 (0.0f,                               // mass
-                                  glm::vec3(0.0f, -196.0f, 1.0f),     // position
-                                  glm::vec3(128.0f, 32.0f, 128.0f));  // size
+            auto ground_body   = engine->physics_world->create<cw::physics::box>
+                                 (0.0f,                                           // mass
+                                  glm::vec3(0.0f, -196.0f, 1.0f),                 // position
+                                  glm::vec3(256.0f, 64.0f, 256.0f));              // size
 
             auto stand_sprite  = std::make_shared<cw::simulation::sprite>
-                                 (glm::vec3(0.0f, 0.0f, 1.0f),
-                                  glm::vec3(48, 48, 48.0f),
-                                  glm::vec4(0.0f, 0.0f, 0.2f, 1.0f),
-                                  engine->image->load_texture("sonic_wait")->id,
-                                  0.0f);
+                                 (glm::vec3(0.0f, 0.0f, 1.0f),                    // position
+                                  glm::vec3(48, 48, 48.0f),                       // size
+                                  glm::vec4(0.0f, 0.0f, 0.2f, 1.0f),              // uv
+                                  engine->image->load_texture("sonic_wait")->id); // texture id
 
-            auto sonic_body    = std::make_shared<cw::physics::box>
-                                 (35.0f,                          // mass
-                                  glm::vec3(0.0f, 200.0f, 1.0f),  // position
-                                  glm::vec3(24.0f, 24.0f,24.0f)); // size
+            auto sonic_body    = engine->physics_world->create<cw::physics::box>
+                                 (0.1f,                                           // mass
+                                  glm::vec3(0.0f, 200.0f, 1.0f),                  // position
+                                  glm::vec3(48.0f, 48.0f, 48.0f));                // size
 
             sonic_model->add_sprite("stand_sprite", stand_sprite);
             sonic_model->add_body("sonic_body", sonic_body);
             sonic_model->constrain("stand_sprite", "sonic_body");
 
+            ground_body->set_linear_factor(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+            sonic_body->set_linear_factor(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+/*            sonic_model->constrain("sonic_body", std::vector<glm::vec2>{ glm::vec2(-100.0f, 100.0f),
+                                                                         glm::vec2(-260.0f, 100.0f),
+                                                                         glm::vec2(-15.0f, 15.0f)});
+*/
             ground_model->add_sprite("ground_sprite", ground_sprite);
             ground_model->add_body("ground_body", ground_body);
 
@@ -106,8 +114,16 @@ int main(int argc, char **argv) {
 
             post_event([this, engine](){
                if(engine->input_listener->is_key_down("k")){
-                   this->model_list["sonic"]->rigid_bodies["sonic_body"]->apply_force(glm::vec3(0.0f, 20.0f, 0.0f));
-                   engine->mixer->play_effect("jump");
+
+                   this->model_list["sonic"]->rigid_bodies["sonic_body"]->apply_force(glm::vec3(0.0f, 1.f, 0.0f));
+
+                   if(this->conditions["jumping"] == false){
+                       engine->mixer->play_effect("jump");
+                       this->conditions["jumping"] = true;
+                   }
+
+               } else {
+                   this->conditions["jumping"] = false;
                }
             }, true);
 

@@ -16,11 +16,14 @@ namespace physics{
 class cw::physics::static_plane: public cw::physics::detail::rigid_body{
 	public:
 		static_plane(const glm::vec3& origin,
-                     const glm::vec3& size): rigid_body(origin){
+                     const glm::vec3& size, 
+                     const glm::vec3& scale = glm::vec3(1.0f, 1.0f, 1.0f)): rigid_body(origin, scale){
+
+    		glm::vec3 s_size = size * scale;
 
 			init(0.0f,
                  new btDefaultMotionState(transform),
-				 new btStaticPlaneShape(btVector3(size.x, size.y, size.z),0));
+				 new btStaticPlaneShape(btVector3(s_size.x/2, s_size.y/2, s_size.z/2),0));
 
 		}
 

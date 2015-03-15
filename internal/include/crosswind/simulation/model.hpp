@@ -47,11 +47,40 @@ public:
 
     	constrained_bodies[sprites[sprite]] = rigid_bodies[body];
 
-    }	
+    }
+
+    virtual void constrain(const std::string& body, 
+    					   const std::vector<glm::vec2>& position_clamp){
+
+    	constrained_positions[body] = position_clamp;
+
+    }
+
 
 	virtual void update(double delta){
 
+/*        delta_count += delta;
+
+        auto& a = animations.data.acquire();
+
+        if(delta_count >= a["current"]->duration / a["current"]->frames.size()){
+
+            delta_count = 0;
+
+            a["current"]->current_frame++;
+
+            if(a["current"]->current_frame >= a["current"]->frames.size()){
+                a["current"]->current_frame = 0;
+            }
+        }
+
+        swap_graphical_item(sprites, "current", a["current"]->frames[a["current"]->current_frame]);
+
+        animations.data.release();
+*/
+
 		for(auto& constrain_mapping : constrained_bodies){
+
 /*
             std::cout << "mapping: " << constrain_mapping.first << " " <<
             			 sprites.second->get_origin().x << " " << 
@@ -66,7 +95,36 @@ public:
 
 				constrain_mapping.first->set_origin(b_origin);
 			}
-		}
+
+		for(auto& constrain_mapping : constrained_positions){
+
+/*			glm::vec3 b_origin(rigid_bodies[constrain_mapping.first]->get_origin().x,
+					 		   rigid_bodies[constrain_mapping.first]->get_origin().y, 
+							   rigid_bodies[constrain_mapping.first]->get_origin().z);
+
+
+			auto c_xmin = constrained_positions[constrain_mapping.first][0][0];
+			auto c_xmax = constrained_positions[constrain_mapping.first][0][1];			
+
+			auto c_ymin = constrained_positions[constrain_mapping.first][1][0];
+			auto c_ymax = constrained_positions[constrain_mapping.first][1][1];			
+
+			auto c_zmin = constrained_positions[constrain_mapping.first][2][0];
+			auto c_zmax = constrained_positions[constrain_mapping.first][2][1];			
+
+			glm::vec3 c_origin(glm::clamp(b_origin.x, c_xmin, c_xmax),
+							   glm::clamp(b_origin.y, c_ymin, c_ymax),
+							   glm::clamp(b_origin.z, c_zmin, c_zmax));
+
+			c_origin.x = 0.0f;
+			c_origin.y = 0.0f;
+			c_origin.z = 0.0f;
+
+			std::cout << constrain_mapping.first << std::endl;
+
+			rigid_bodies[constrain_mapping.first]->set_origin(c_origin);*/
+		}	
+	}
 
 	
 //	std::map<std::string, glm::vec3> offsets;
@@ -78,4 +136,7 @@ public:
 
 	std::map<std::shared_ptr<sprite>, 
 	         std::shared_ptr<physics::detail::rigid_body> > constrained_bodies;
+
+   	std::map<std::string, std::vector<glm::vec2> > constrained_positions;
+
 };// class model

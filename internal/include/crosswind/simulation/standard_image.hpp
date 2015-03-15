@@ -35,24 +35,7 @@ public:
 
 	virtual void update(double delta){
 
-/*        delta_count += delta;
 
-        auto& a = animations.data.acquire();
-
-        if(delta_count >= a["current"]->duration / a["current"]->frames.size()){
-
-            delta_count = 0;
-
-            a["current"]->current_frame++;
-
-            if(a["current"]->current_frame >= a["current"]->frames.size()){
-                a["current"]->current_frame = 0;
-            }
-        }
-
-        swap_graphical_item(sprites, "current", a["current"]->frames[a["current"]->current_frame]);
-
-        animations.data.release();*/
     }
 
 	virtual void render(std::shared_ptr<platform::sdl::sdl_gl_renderer> sdl_gl_renderer){

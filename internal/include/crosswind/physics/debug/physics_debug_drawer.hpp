@@ -41,15 +41,21 @@ public:
 
 	}
 
-	void init(std::shared_ptr<cw::simulation::camera> cam){
+	void init(std::shared_ptr<cw::simulation::camera> cam, const glm::vec3& s){
 		camera = cam;
+		scale = s;
 	}
 
 	virtual void	drawLine(const btVector3& from,const btVector3& to,const btVector3& fromColor, const btVector3& toColor){
 
 	}
 
-	virtual void	drawLine(const btVector3& from,const btVector3& to,const btVector3& color){
+	virtual void	drawLine(const btVector3& f,const btVector3& t,const btVector3& color){
+
+		btVector3 from(f.getX() / scale.x, f.getY() / scale.y, f.getZ() / scale.z);
+		btVector3 to(t.getX() / scale.x, t.getY() / scale.y, t.getZ() / scale.z);
+
+
 		glsl_program->use();
 
 		auto projection_matrix_location = glsl_program->get_uniform_location("projection_matrix");
@@ -191,7 +197,7 @@ private:
     std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
 
 	std::shared_ptr<cw::simulation::camera> camera;
-
+	glm::vec3 scale;
 	int debug_mode;
 };
 
