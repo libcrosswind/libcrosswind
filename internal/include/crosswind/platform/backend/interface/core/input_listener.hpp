@@ -31,4 +31,6 @@ protected:
 
     std::map<std::string, bool> key_map;
     glm::vec2 mouse_coordinates;
+
+   // functional::delegate<void, std::string> on_key_down;
 };// class input_listener

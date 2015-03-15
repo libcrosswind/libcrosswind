@@ -104,6 +104,13 @@ int main(int argc, char **argv) {
 
             engine->physics_world->init_debug_drawer(camera_list["current"]);
 
+            post_event([this, engine](){
+               if(engine->input_listener->is_key_down("k")){
+                   this->model_list["sonic"]->rigid_bodies["sonic_body"]->apply_force(glm::vec3(0.0f, 20.0f, 0.0f));
+                   engine->mixer->play_effect("jump");
+               }
+            }, true);
+
         }
 
         virtual void deinit(std::shared_ptr<cw::platform::backend::interface::engine> engine){

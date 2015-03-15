@@ -87,10 +87,8 @@ public:
         key_map["mouse_middle"] = mouse_flags & SDL_BUTTON(SDL_BUTTON_MIDDLE);
         key_map["mouse_right"] = mouse_flags & SDL_BUTTON(SDL_BUTTON_RIGHT);
 
-
         mouse_coordinates.x = x;
         mouse_coordinates.y = y;
-
 	}
 
 };// class sdl_input_listener

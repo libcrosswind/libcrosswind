@@ -44,12 +44,19 @@ class cw::physics::detail::rigid_body{
 			physic_body		= std::make_unique<btRigidBody>(info);
 		}
 
+
+
 public:
         glm::vec3 get_origin(){
             btVector3 t;
 			t = physic_body->getCenterOfMassPosition();
             return glm::vec3(t[0], t[1], t[2]);
         }
+
+		void apply_force(const glm::vec3& force){
+			physic_body->activate(true);
+			physic_body->applyCentralImpulse( btVector3( force.x, force.y, force.z ) );
+		}
 
         btTransform transform;
 		std::unique_ptr<btMotionState> motion_state;

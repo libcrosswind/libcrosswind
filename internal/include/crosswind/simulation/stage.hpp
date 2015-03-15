@@ -34,13 +34,20 @@ public:
 
     virtual void handle_stage_events(){
 		auto& container = event_queue.data.acquire();
+		std::vector<std::pair<bool, std::function<void()> > > continuous_events;
 
-		for(auto& event : container){
-			event();
+		for(auto& event_mapping : container){
+
+			if(event_mapping.first == true){
+				continuous_events.push_back(event_mapping);
+			}
+
+			event_mapping.second();
 		}
 
-		container.clear();
 
+		container.clear();
+		container.insert(container.end(), continuous_events.begin(), continuous_events.end());
 		event_queue.data.release();
 	}
 	
@@ -108,8 +115,8 @@ public:
 		graphical_queue.push_back(actor);
 	}
 
-	void post_event(const std::function<void()>& event){
-		event_queue.push_back(event);
+	void post_event(const std::function<void()>& event, const bool& continuous = false){
+		event_queue.push_back(std::make_pair(continuous, event));
 	}
 
     concurrent::mutex_property<std::string> name;
@@ -118,7 +125,7 @@ protected:
 	concurrent::mutex_vector<std::shared_ptr<detail::interactive_actor> > interactive_queue;
 	concurrent::mutex_vector<std::shared_ptr<detail::standard_actor>    > standard_queue;
 	concurrent::mutex_vector<std::shared_ptr<detail::graphical_actor>   > graphical_queue;
-	concurrent::mutex_vector<std::function<void()> > event_queue;
+	concurrent::mutex_vector<std::pair<bool, std::function<void()> > > event_queue;
 
 
 protected:
