@@ -75,6 +75,21 @@ public:
 
 	virtual void render(){
 
+        renderer->begin();
+
+        renderer->set_uniform_matrix("projection_matrix", camera_list["current"]->get_camera_matrix());
+
+        for(auto& model_mapping : model_list){
+            for(auto& sprite_mapping : model_mapping .second->sprites){
+                renderer->upload(sprite_mapping.second);
+            }
+        }
+
+        renderer->end();
+
+	}
+
+	virtual void draw(){
         auto& container = graphical_queue.data.acquire();
 
 		for(auto& element: container){
@@ -82,7 +97,6 @@ public:
         }
 
 		graphical_queue.data.release();
-
 	}
 
 

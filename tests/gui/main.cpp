@@ -32,8 +32,8 @@ int main(int argc, char **argv) {
 
         virtual void init(std::shared_ptr<cw::platform::backend::interface::engine> engine){
 
-         //   engine->mixer->load_music("green_hill", "green_hill_zone_bgm.ogg");
-         //   engine->mixer->play_music("green_hill");
+            engine->mixer->load_music("green_hill", "green_hill_zone_bgm.ogg");
+            engine->mixer->play_music("green_hill");
 
             engine->mixer->load_effect("jump", "Jump.wav");
         //    engine->mixer->play_effect("jump");
@@ -42,20 +42,12 @@ int main(int argc, char **argv) {
             float a = 224/480;
 
             g += g + a * g;
+            engine->physics_world->set_unit_value(glm::vec3(1.0f, 0.00026458f, 1.0f));
+            engine->physics_world->set_world_ratio(glm::vec3(1.0f, 0.00026458f, 1.0f));
             engine->physics_world->set_gravity(glm::vec3(0.0f, g, 0.0f));
 
-            glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
-            std::string vertex_shader   = "assets/default/graphics/shaders/texture_shading.vert";
-            std::string fragment_shader = "assets/default/graphics/shaders/texture_shading.frag";
-
-            glsl_program->compile(vertex_shader, fragment_shader);
-            glsl_program->add_attribute("vertex_position");
-            glsl_program->add_attribute("vertex_color");
-            glsl_program->add_attribute("vertex_uv");
-            glsl_program->link();
 
             camera_list["current"] = std::make_shared<cw::simulation::camera>(640, 480);
-            batch_list["current"] = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
 
             engine->image->load_texture("sonic_wait", "SonAni_Wait_intro.png");
             engine->image->load_texture("sonic_walk", "SonAni_Walk.png");
@@ -116,12 +108,6 @@ int main(int argc, char **argv) {
             this->conditions["jumping"] = false;
 
 
-
-/*            post_event([this, engine](){
-
-            }, true);
-*/
-
             post_event([this, engine](){
                if(engine->input_listener->is_key_down("k")){
 
@@ -157,27 +143,6 @@ int main(int argc, char **argv) {
 
         virtual void render() override {
 
-            glsl_program->use();
-
-            glActiveTexture(GL_TEXTURE0); //Need to integrate this into batch list or program keymap
-
-            auto texture_location = glsl_program->get_uniform_location("texture_sampler");
-            glUniform1i(texture_location, 0);
-
-            auto projection_matrix_location = glsl_program->get_uniform_location("projection_matrix");
-            auto camera_matrix = camera_list["current"]->get_camera_matrix();
-
-            glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE, glm::value_ptr(camera_matrix));
-
-            batch_list["current"]->begin();
-
-            for(auto& model_mapping : model_list){
-                for(auto& sprite_mapping : model_mapping .second->sprites){
-                    batch_list["current"]->upload(sprite_mapping.second);
-                }
-            }
-
-            batch_list["current"]->end();
 
             auto& container = graphical_queue.data.acquire();
 
@@ -187,16 +152,13 @@ int main(int argc, char **argv) {
 
             graphical_queue.data.release();
 
-            glsl_program->unuse();
 
         }
 
     private:
         std::map<std::string, std::shared_ptr<cw::simulation::camera> >                 camera_list;
         std::map<std::string, std::shared_ptr<cw::simulation::model> >                  model_list;
-        std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_sprite_batch>  >   batch_list;
 
-        std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
     };
 
     app->add_stage(std::make_shared<green_hill_zone>());
