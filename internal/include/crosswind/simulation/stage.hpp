@@ -3,15 +3,13 @@
 #include <memory>
 #include <type_traits>
 
-#include <crosswind/concurrent/mutex_property.hpp>
-#include <crosswind/concurrent/mutex_container.hpp>
-
 #include <crosswind/platform/backend/interface/engine.hpp>
 #include <crosswind/platform/backend/interface/core/input_listener.hpp>
 
 #include <crosswind/simulation/detail/standard_actor.hpp>
 #include <crosswind/simulation/detail/interactive_actor.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>
+
 
 namespace cw{
 namespace simulation{
@@ -20,7 +18,6 @@ namespace simulation{
 
 }// namespace simulation
 }// namespace cw
-
 
 class cw::simulation::stage{
 public:
@@ -31,12 +28,10 @@ public:
     virtual void init(std::shared_ptr<platform::backend::interface::engine> engine) = 0;
     virtual void deinit(std::shared_ptr<platform::backend::interface::engine> engine) = 0;
 
-
     virtual void handle_stage_events(){
-		auto& container = event_queue.data.acquire();
 		std::vector<std::pair<bool, std::function<void()> > > continuous_events;
 
-		for(auto& event_mapping : container){
+		for(auto& event_mapping : event_queue){
 
 			if(event_mapping.first == true){
 				continuous_events.push_back(event_mapping);
@@ -46,57 +41,46 @@ public:
 		}
 
 
-		container.clear();
-		container.insert(container.end(), continuous_events.begin(), continuous_events.end());
-		event_queue.data.release();
+		event_queue.clear();
+		event_queue.insert(event_queue.end(), continuous_events.begin(), continuous_events.end());
 	}
 	
 	virtual void handle_input(std::shared_ptr<platform::backend::interface::core::input_listener> input_listener){
 
-		auto& container = interactive_queue.data.acquire();
-
-		for(auto& element: container){
+		for(auto& element: interactive_queue){
            element->handle_input(input_listener);
         }
-
-		interactive_queue.data.release();
 	}
 
 	virtual void update(double delta){
 
-        auto& container = standard_queue.data.acquire();
-
-		for(auto& element: container){
+		for(auto& element: standard_queue){
            element->update(delta);
         }
-
-		standard_queue.data.release();
 	}
 
 	virtual void render(){
 
         renderer->begin();
 
-        renderer->set_uniform_matrix("projection_matrix", camera_list["current"]->get_camera_matrix());
+//        renderer->set_uniform_matrix("projection_matrix", camera_list["current"]->get_camera_matrix());
 
-        for(auto& model_mapping : model_list){
-            for(auto& sprite_mapping : model_mapping .second->sprites){
+/*        for(auto& model_mapping : model_list){
+            for(auto& sprite_mapping : model_mapping.second->sprites){
                 renderer->upload(sprite_mapping.second);
             }
         }
-
+*/
         renderer->end();
 
 	}
 
 	virtual void draw(){
-        auto& container = graphical_queue.data.acquire();
 
-		for(auto& element: container){
+		for(auto& element: graphical_queue){
            element->draw();
         }
 
-		graphical_queue.data.release();
 	}
 
 
@@ -133,15 +117,18 @@ public:
 		event_queue.push_back(std::make_pair(continuous, event));
 	}
 
-    concurrent::mutex_property<std::string> name;
+    std::string name;
 
 protected:
-	concurrent::mutex_vector<std::shared_ptr<detail::interactive_actor> > interactive_queue;
-	concurrent::mutex_vector<std::shared_ptr<detail::standard_actor>    > standard_queue;
-	concurrent::mutex_vector<std::shared_ptr<detail::graphical_actor>   > graphical_queue;
-	concurrent::mutex_vector<std::pair<bool, std::function<void()> > > event_queue;
+	std::vector<std::shared_ptr<detail::interactive_actor> > interactive_queue;
+	std::vector<std::shared_ptr<detail::standard_actor>    > standard_queue;
+	std::vector<std::shared_ptr<detail::graphical_actor>   > graphical_queue;
+	std::vector<std::pair<bool, std::function<void()> > > event_queue;
 
+	std::shared_ptr< platform::backend::interface::video::renderer> renderer;
 	std::map<std::string, bool> conditions;
+
+	std::map<std::string, std::shared_ptr<cw::simulation::model> >                  model_list;
 
 protected:
 /*	platform::generic::application* application;	*/

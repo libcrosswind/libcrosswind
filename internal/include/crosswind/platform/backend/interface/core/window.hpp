@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-#include <crosswind/concurrent/hollow_property.hpp>
+#include <crosswind/functional/hollow_property.hpp>
 #include <crosswind/platform/backend/interface/core/detail/fps_limiter.hpp>
 
 namespace cw{
@@ -40,8 +40,8 @@ public:
     virtual void present() = 0;
 
     std::shared_ptr<detail::fps_limiter> fps_limiter;
-    concurrent::hollow_property<std::string> title;
-    concurrent::hollow_property<float> brightness;
-    concurrent::hollow_property<glm::vec2> position;
-    concurrent::hollow_property<glm::vec2> size;
+    functional::hollow_property<std::string> title;
+    functional::hollow_property<float> brightness;
+    functional::hollow_property<glm::vec2> position;
+    functional::hollow_property<glm::vec2> size;
 };// class window

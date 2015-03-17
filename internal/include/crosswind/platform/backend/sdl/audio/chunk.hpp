@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL_mixer.h>
-#include <crosswind/concurrent/resource_property.hpp>
+#include <crosswind/functional/resource_property.hpp>
 
 namespace cw{
 namespace platform{
@@ -23,5 +23,5 @@ public:
             data(Mix_LoadWAV_RW, Mix_FreeChunk, SDL_RWFromFile(file_path.c_str(), "rb"), 1) {
 	}
 
-	concurrent::resource_property<Mix_Chunk> data;
+	functional::resource_property<Mix_Chunk> data;
 };// class chunk

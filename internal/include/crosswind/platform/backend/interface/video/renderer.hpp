@@ -1,5 +1,8 @@
 #pragma once
 
+#include <crosswind/simulation/model.hpp>
+#include <crosswind/simulation/gl/gl_sprite_batch.hpp>
+
 namespace cw{
 namespace platform{
 namespace backend{
@@ -54,7 +57,7 @@ public:
 	}
 
 	void upload(std::shared_ptr<cw::simulation::model> model){
-		sprite_batch->upload(model);
+//		sprite_batch->upload(model);
 	}
 
 	void end(){

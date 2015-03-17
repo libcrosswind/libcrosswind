@@ -6,7 +6,6 @@
 #include <SDL2/SDL_events.h>
 
 
-#include <crosswind/concurrent/mutex_container.hpp>
 #include <crosswind/functional/delegate.hpp>
 #include <crosswind/platform/backend/interface/core/input_listener.hpp>
 #include <crosswind/simulation/detail/mapping/event_mapping.hpp>
@@ -31,14 +30,12 @@ public:
 	virtual void handle_input(std::shared_ptr<platform::backend::interface::core::input_listener> input_listener) = 0;
  
     virtual void trigger(std::shared_ptr<event_mapping> event) = 0;
-
+/*
     template<typename T, typename U>
     void store_interactive_item(T& mm, const std::string& name, std::shared_ptr<U> new_Item){
-        auto& container = mm.data.acquire();
 
         container[name] = new_Item;
 
-        mm.data.release();
     }
 
     template<typename T>
@@ -51,11 +48,11 @@ public:
 
         mm.data.release();
     }
-
+*/
 public:
     functional::delegate<void> on_mouse_down;
     functional::delegate<void> on_mouse_up;
 
 protected:
-    concurrent::mutex_map<std::string, std::shared_ptr<event_mapping> > events;
+    std::map<std::string, std::shared_ptr<event_mapping> > events;
 };// class image_actor

@@ -7,8 +7,8 @@
 #include <SDL2/SDL_video.h>
 #include <glm/glm.hpp>
 
-#include <crosswind/concurrent/hollow_property.hpp>
-#include <crosswind/concurrent/resource_property.hpp>
+#include <crosswind/functional/hollow_property.hpp>
+#include <crosswind/functional/resource_property.hpp>
 #include <crosswind/platform/backend/sdl/core/exception.hpp>
 
 namespace cw{
@@ -144,6 +144,6 @@ public:
 
 private:
     SDL_GLContext context;
-    concurrent::resource_property<SDL_Window> window_resource;
+    functional::resource_property<SDL_Window> window_resource;
   
 };// class sdl_window

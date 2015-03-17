@@ -21,7 +21,7 @@ namespace physics{
 
 class cw::physics::dynamic_world{
 public:
-	dynamic_world(const glm::vec3& g, const float& s){
+	dynamic_world(const glm::vec3& g, const float& s, const glm::vec3& u){
 
         collision_config.reset(new btDefaultCollisionConfiguration());
         dispatcher.reset(new btCollisionDispatcher(collision_config.get()));
@@ -31,6 +31,7 @@ public:
 		physics_debug_drawer.reset(new debug::physics_debug_drawer());
 
 		scale = s;
+		unit_value = u / scale;
 		set_gravity(g);
 
 		world->setDebugDrawer(physics_debug_drawer.get());
@@ -64,6 +65,8 @@ public:
 
 	void set_gravity(const glm::vec3& g){
 		glm::vec3 gravity = g*scale;
+		gravity /= unit_value;
+
 		world->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
 	}
 
@@ -87,5 +90,6 @@ private:
 	std::unique_ptr<btCollisionConfiguration>	collision_config;
 	std::unique_ptr<debug::physics_debug_drawer> physics_debug_drawer;
 	float scale;
+	glm::vec3 unit_value;
 
 };// class dynamic_world

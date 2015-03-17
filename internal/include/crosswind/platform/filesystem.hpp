@@ -8,8 +8,6 @@
 #include <forward_list>
 #include <regex>
 
-#include <crosswind/concurrent/mutex_property.hpp>
-
 #if defined (WIN32) //TODO implement std::filesystem whenever the commitee releases it.
     #if _MSC_VER >= 1600
         #include <crosswind/trivial/filesystem/dirent.h>
@@ -44,10 +42,9 @@ public:
         std::vector<std::string> path = split(filepath);
 
         bool search_result  = false;
-        auto& local_directories = directories.acquire();
 
         //TODO test with Visual Studio.
-        auto result = std::find_if(local_directories.begin(), local_directories.end(),
+        auto result = std::find_if(directories.begin(), directories.end(),
                 [&](std::string const& directory)  {
                     return path[0] != "" ?
                             is_file(directory + "/" + path[0] + "/" + path[1]) ||
@@ -57,13 +54,11 @@ public:
                             is_dir(directory + "/" + path[1]);
                 });
 
-        if(result != std::end(local_directories)){
+        if(result != std::end(directories)){
             search_result = true;
         } else {
             search_result = false;
         }
-
-        directories.release();
 
         return search_result;
 
@@ -76,9 +71,8 @@ public:
 
         if(exists(filepath)){
 
-            auto& local_directories = directories.acquire();
 
-            auto result = std::find_if(local_directories.begin(), local_directories.end(),
+            auto result = std::find_if(directories.begin(), directories.end(),
                     [&](std::string const& directory)  {
                         //TODO test with Visual Studio.
                         if(path[0] != ""){
@@ -88,13 +82,11 @@ public:
                         }
                     });
 
-            if(result != std::end(local_directories)){
+            if(result != std::end(directories)){
                 path_string = path[0] != "" ? *result + "/" + path[0] + "/" + path[1] : *result + "/" + path[1];
             } else {
                 path_string = filepath + ": Is not a file";
             }
-
-            directories.release();
 
         } else {
             path_string = filepath + ": Does not exist";
@@ -143,13 +135,12 @@ private:
 
 private:
     static void push_directory(const std::string& directory){
-        auto& local_directories = directories.acquire();
-        if(std::find(local_directories.begin(), local_directories.end(), directory) == local_directories.end())
+
+        if(std::find(directories.begin(), directories.end(), directory) == directories.end())
         {
-            local_directories.push_front(directory);
+            directories.push_front(directory);
         }
 
-        directories.release();
     }
 
 
@@ -174,9 +165,9 @@ private:
 
 
 private:
-    static concurrent::mutex_property<std::forward_list<std::string> > directories;
+    static std::forward_list<std::string> directories;
 };
 
-cw::concurrent::mutex_property<std::forward_list<std::string> > cw::platform::filesystem::directories;
+std::forward_list<std::string> cw::platform::filesystem::directories;
 
 

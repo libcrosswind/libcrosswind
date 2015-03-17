@@ -2,13 +2,14 @@
 
 #include <memory>
 
-#include <crosswind/concurrent/atomic_property.hpp>
 #include <crosswind/platform/backend/interface/core/input_listener.hpp>
 #include <crosswind/platform/backend/interface/core/image.hpp>
 #include <crosswind/platform/backend/interface/core/mixer.hpp>
 #include <crosswind/platform/backend/interface/core/window.hpp>
-//#include <crosswind/platform/backend/interface/physics/dynamic_world.hpp>
 #include <crosswind/physics/dynamic_world.hpp>
+#include <crosswind/platform/backend/interface/video/renderer.hpp>
+
+//#include <crosswind/platform/backend/interface/physics/dynamic_world.hpp>
 
 namespace cw{
 namespace platform{
@@ -25,10 +26,11 @@ namespace interface{
 class cw::platform::backend::interface::engine{
 protected:
 	engine(){
+
 	}
 
 public:
-    concurrent::atomic_property<bool> running;
+    bool running;
     std::shared_ptr<  core::image >  			image;
     std::shared_ptr<  core::mixer >  			mixer;
     std::shared_ptr<  core::input_listener > 	input_listener;

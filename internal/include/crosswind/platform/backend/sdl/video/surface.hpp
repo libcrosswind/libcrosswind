@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL_image.h>
 
-#include <crosswind/concurrent/resource_property.hpp>
+#include <crosswind/functional/resource_property.hpp>
 
 namespace cw{
 namespace platform{
@@ -25,5 +25,5 @@ public:
 
     }
 
-	concurrent::resource_property<SDL_Surface> data;
+	functional::resource_property<SDL_Surface> data;
 };// class surface

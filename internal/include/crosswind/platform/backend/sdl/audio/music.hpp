@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL_mixer.h>
-#include <crosswind/concurrent/resource_property.hpp>
+#include <crosswind/functional/resource_property.hpp>
 
 namespace cw{
 namespace platform{
@@ -23,6 +23,6 @@ public:
 
 	}
 
-	concurrent::resource_property<Mix_Music> data;
+	functional::resource_property<Mix_Music> data;
 
 };// class music
