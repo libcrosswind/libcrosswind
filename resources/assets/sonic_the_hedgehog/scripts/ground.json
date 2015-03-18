@@ -1,0 +1,27 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"ground"	: "sonic_the_hedgehog/graphics/bg/ghz/chunks/60.png"
+	},
+
+	"sprites":
+	{
+		"ground"    : { "ground"  : [0.00, 0.0, 1.0, 1.00] }
+	},
+
+	"animations":
+	{
+   		"ground"    :{ "time": 0.125,  "frames": ["ground"]   }
+	},
+
+	"properties":
+	{
+		"default-animation"	: "ground"
+	}
+}
