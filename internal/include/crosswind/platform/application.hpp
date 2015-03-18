@@ -78,17 +78,17 @@ public:
 
         }
 
-        //      stages("current")->deinit(engine);
-
+        stages["current"]->deinit(engine);
     }
 
     void add_stage(auto stage){
+        stage->setup(engine);
         stage->init(engine);
-        //            stages(stage->name.get(), stage);
+        stages[stage->name] = stage;
     }
 
     void swap_stage(const std::string& previous_stage, const std::string& new_stage){
-//      stages(previous_stage, stages(new_stage));
+        stages[previous_stage] = stages[new_stage];
     }
 
 private:
@@ -100,24 +100,24 @@ private:
                     }
             }
 
-            //     stages("current")->handle_stage_events();
+            stages["current"]->handle_stage_events();
     }
 
     void handle_input(){
 
             engine->input_listener->update();
 
-            //    stages("current")->handle_input(engine->input_listener);
+            stages["current"]->handle_input(engine->input_listener);
 
     }
 
     void handle_update(){
-            //   stages("current")->update(engine->window->fps_limiter->get_delta());
+            stages["current"]->update(engine->window->fps_limiter->get_delta());
     }
 
     void handle_rendering(){
         engine->window->clear();
-        //     stages("current")->render();
+        stages["current"]->render();
         engine->physics_world->debug_draw_world();
         engine->window->present();
     }

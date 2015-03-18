@@ -7,9 +7,9 @@
 
 	"textures":
 	{
-		"SonAni_Wait_intro"	:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Wait_intro.png",
-		"SonAni_Walk"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Walk.png",
-		"SonAni_Run"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Run.png"
+		"SonAni_Wait_intro"	:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Wait_intro.png",
+		"SonAni_Walk"		:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Walk.png",
+		"SonAni_Run"		:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Run.png"
 	},
 
 	"sprites":

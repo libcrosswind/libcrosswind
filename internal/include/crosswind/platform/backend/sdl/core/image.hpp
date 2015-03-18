@@ -39,7 +39,7 @@ public:
 	image(image&& other) = delete;
 	image& operator=(image&& other) = delete;
 
-	~image() {
+	virtual ~image() {
 		IMG_Quit();
 	}
 
@@ -69,6 +69,7 @@ public:
 
     }
 
+
 	std::shared_ptr<simulation::model> load_model(const glm::vec3& origin, const glm::vec3& size, const std::string& template_file){
 
 		cw::javascript::json json;
@@ -88,12 +89,17 @@ public:
 		for (auto s = raw_json["sprites"].begin_members(); s != raw_json["sprites"].end_members(); ++s)
 		{
 			std::string name    = s->name();                        // sprite name
-			std::string texture = s->value()[0].as<std::string>();  // mapped texture.
 
-			glm::vec4 uv(s->value()[1][0].as<float>(), // uv coordinates.
-						 s->value()[1][1].as<float>(),
-					     s->value()[1][2].as<float>(),
-					     s->value()[1][3].as<float>());
+			auto s_props = s->value().begin_members();
+
+			std::string texture = s_props->name();  // mapped texture.
+
+			auto json_uv = s_props->value().begin_elements();
+
+			glm::vec4 uv(json_uv++->as<double>(), // uv coordinates.
+					     json_uv++->as<double>(),
+					     json_uv++->as<double>(),
+					     json_uv->as<double>());
 
 			sprites[name] = std::make_shared<simulation::sprite>(origin, size, uv, load_texture(texture)->id);
 		}

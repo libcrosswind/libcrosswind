@@ -25,12 +25,9 @@ int main(int argc, char **argv) {
 
             engine->mixer->load_music("green_hill", "green_hill_zone_bgm.ogg");
 
-            engine->image->load_texture("sonic_wait", "SonAni_Wait_intro.png");
+            auto sonic_model  = engine->image->load_model(glm::vec3(0,0,0), glm::vec3(40,40,1), "sonic.json");
 
-
-            auto sonic_model  = engine->image->load_model(glm::vec3(0,0,0), glm::vec3(10,10,1), "sonic.json");
-
-            add(sonic_model);
+            add("sonic", sonic_model);
         }
 
         virtual void deinit(std::shared_ptr<cw::platform::backend::interface::engine> engine){

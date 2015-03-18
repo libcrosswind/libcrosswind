@@ -23,12 +23,28 @@ class cw::simulation::stage{
 public:
 	stage()/*: application(app)*/{
 
+
 	}
 
     virtual void init(std::shared_ptr<platform::backend::interface::engine> engine) = 0;
     virtual void deinit(std::shared_ptr<platform::backend::interface::engine> engine) = 0;
 
-    virtual void handle_stage_events(){
+	void setup(std::shared_ptr<platform::backend::interface::engine> engine){
+
+		camera_list["main_camera"] = std::make_shared<camera>(engine->window->size.get());
+		camera_list["current"] = camera_list["main_camera"];
+		add(camera_list["current"]);
+
+		renderer = engine->renderer;
+	}
+
+	void handle_input(std::shared_ptr<platform::backend::interface::core::input_listener> input_listener) {
+		for(auto& i : interactive_queue){
+			i->handle_input(input_listener);
+		}
+	}
+
+		virtual void handle_stage_events(){
 		std::vector<std::pair<bool, std::function<void()> > > continuous_events;
 
 		for(auto& event_mapping : event_queue){
@@ -60,9 +76,7 @@ public:
         renderer->set_uniform_matrix("projection_matrix", camera_list["current"]->get_camera_matrix());
 
         for(auto& model_mapping : model_list){
-            for(auto& sprite_mapping : model_mapping.second->sprites){
-                renderer->upload(sprite_mapping.second);
-            }
+	        renderer->upload(model_mapping.second);
         }
 
         renderer->end();
@@ -78,6 +92,10 @@ public:
 	}
 
 
+	void add(const std::string& name, std::shared_ptr<model> m){
+		model_list[name] = m;
+		add(m);
+	}
 
 	template<typename T>
 	void add(std::shared_ptr<T> actor){
@@ -113,18 +131,18 @@ public:
 
     std::string name;
 
+
 protected:
 	std::vector<std::shared_ptr<detail::interactive_actor> > interactive_queue;
 	std::vector<std::shared_ptr<detail::standard_actor>    > standard_queue;
 	std::vector<std::shared_ptr<detail::graphical_actor>   > graphical_queue;
+
 	std::vector<std::pair<bool, std::function<void()> > > event_queue;
 
 	std::shared_ptr< platform::backend::interface::video::renderer> renderer;
 	std::map<std::string, bool> conditions;
 
-	std::map<std::string, std::shared_ptr<cw::simulation::model> > model_list;
-
-protected:
-/*	platform::generic::application* application;	*/
+	std::map<std::string, std::shared_ptr<model> >  model_list;
+	std::map<std::string, std::shared_ptr<camera> > camera_list;
 
 };// class stage

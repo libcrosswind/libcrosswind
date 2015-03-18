@@ -21,9 +21,9 @@ namespace simulation{
 class cw::simulation::camera: public detail::interactive_actor,
 							  public detail::standard_actor{
 public: 
-	camera(int screen_width, int screen_height):
+	camera(const glm::vec2& screen_size):
     needs_matrix_update(true),
-    screen_dimension(glm::vec2(screen_width, screen_height)),
+    screen_dimension(screen_size),
 	scale(1.0f, 1.0f, 0.0f),
 	position(0.0f, 0.0f, 0.0f), 
 	camera_matrix(1.0f),
