@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include <crosswind/simulation/model.hpp>
 #include <crosswind/simulation/gl/gl_sprite_batch.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>

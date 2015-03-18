@@ -5,6 +5,7 @@
 
 #include <stdio.h> //printf debugging
 
+#include <glm/gtc/type_ptr.hpp>
 
 #include <crosswind/simulation/camera.hpp>
 #include <crosswind/simulation/gl/gl_vbo.hpp>
