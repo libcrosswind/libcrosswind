@@ -7,19 +7,17 @@ Current status:
 - [ ] Stable
 
 Current modules:
-- [x] audio      - ogg, wav
 - [x] container  - cache
 - [x] crypto     - base64, sha1
-- [ ] database   - sqlite
+- [x] database   - sqlite
 - [x] event      - dispatcher
 - [x] functional - delegate, hollow_property, resource_property
-- [ ] geometry   - rectangle
+- [x] geometry   - rectangle
 - [x] javascript - json
 - [ ] network    - ws
-- [x] platform   - application, filesystem
 - [x] physics    - dynamic_world, box, static_plane
+- [x] platform   - application, filesystem
 - [x] simulation - stage, sprite
-- [ ] video      - 
 
 
 Crosswind is a toolset that aims to integrate high level C++14 functions for fast app development.
