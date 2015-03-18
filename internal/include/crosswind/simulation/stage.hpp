@@ -122,7 +122,7 @@ protected:
 	std::shared_ptr< platform::backend::interface::video::renderer> renderer;
 	std::map<std::string, bool> conditions;
 
-	std::map<std::string, std::shared_ptr<cw::simulation::model> >                  model_list;
+	std::map<std::string, std::shared_ptr<cw::simulation::model> > model_list;
 
 protected:
 /*	platform::generic::application* application;	*/

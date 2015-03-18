@@ -65,10 +65,6 @@ public:
         }
     }
 
-	void trigger(std::shared_ptr<detail::event_mapping> mapping){
-
-	}
-
 	void set_position(const glm::vec3& new_position){	
 		position = new_position;
         needs_matrix_update = true;

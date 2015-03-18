@@ -4,7 +4,6 @@
 #include <string>
 #include <jsoncons/json.hpp>
 
-#include <crosswind/concurrent/mutex_property.hpp>
 #include <crosswind/platform/filesystem.hpp>
 
 namespace cw{
@@ -21,31 +20,20 @@ public:
     }
 
     json& from_file(const std::string& filename){
-         
-         if(cw::platform::filesystem::exists(filename)){
 
-            auto& raw_json = data.acquire();
-            raw_json = jsoncons::json::parse_file
-            (cw::platform::filesystem::get_file_path(filename));
-            data.release();
-
-        }
+        data = jsoncons::json::parse_file(platform::filesystem::get_file_path(filename));
 
         return *this;
     }
 
     json& from_string(const std::string& json_string){
-        auto& raw_json = data.acquire();
-        raw_json = jsoncons::json::parse_string(json_string);
-        data.release();
+
+        data = jsoncons::json::parse_string(platform::filesystem::get_file_path(json_string));
         return *this;
     }
 
     bool has(const std::string& member) {
-        bool has_member = data.acquire().has_member(member);
-
-        data.release();
-        return has_member;
+        return data.has_member(member);
     }
 
 

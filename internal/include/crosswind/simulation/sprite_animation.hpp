@@ -13,7 +13,7 @@ class sprite_animation;
 }// namespace simulation	
 }// namespace cw
 
-class cw::simulation::detail::sprite_animation{
+class cw::simulation::sprite_animation{
 public:
     sprite_animation(){
         current_frame = 0;

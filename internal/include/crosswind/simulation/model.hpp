@@ -4,7 +4,7 @@
 #include <crosswind/physics/detail/rigid_body.hpp>
 #include <crosswind/simulation/sprite.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
-#include <crosswind/simulation/detail/mappings/animation_mapping.hpp>
+#include <crosswind/simulation/sprite_animation.hpp>
 
 namespace cw{
 namespace simulation{
@@ -13,8 +13,6 @@ namespace simulation{
 
 }// namespace simulation
 }// namespace cw
-
-#include <iostream>
 
 
 class cw::simulation::model: public cw::simulation::detail::standard_actor{
@@ -46,11 +44,11 @@ public:
 
 		for(auto& constrain_mapping : constrained_bodies){
 
-			glm::vec3 b_origin(rigid_bodies[constrain_mapping.second]->get_origin().x,
+/*			glm::vec3 b_origin(rigid_bodies[constrain_mapping.second]->get_origin().x,
 					rigid_bodies[constrain_mapping.second]->get_origin().y,
 					rigid_bodies[constrain_mapping.second]->get_origin().z);
 
-			sprites[constrain_mapping.first]->set_origin(b_origin);
+			sprites[constrain_mapping.first]->set_origin(b_origin);*/
 		}
 
 
@@ -65,8 +63,7 @@ public:
             }
         }
 
-
-		render_sprite_list["current"] = sprites[animations["current"]->frames[animations["current"]->current_frame]];
+		render_sprite_list["current"] = animations["current"]->frames[animations["current"]->current_frame];
 
 
 	}
@@ -84,5 +81,5 @@ private:
 	std::map<std::string, std::shared_ptr<physics::detail::rigid_body> > rigid_bodies;
 	std::map<std::string, std::string> constrained_bodies;
 
-	std::map<std::string, sprite_animation> animations;
+	std::map<std::string, std::shared_ptr<sprite_animation> > animations;
 };// class model

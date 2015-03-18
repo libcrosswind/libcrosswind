@@ -56,23 +56,23 @@ Current supported platforms:
 - [ ] Blackberry
 
 Roadmap:
+- [x] 2D 		  
 - [ ] 3D
 - [x] Audio
 - [ ] Bindings
 - [x] DB 
-- [x] Concurrency  
 - [x] Cryptography 
 - [x] Delegates	
-- [x] Physics
-- [x] GUI 		  
-- [ ] Websockets   
 - [x] Filesystem   
+- [x] Physics
 - [x] JSON		   
-- [ ] Javascript
+- [ ] Javascript Interpreter
 - [ ] Peripherals
 - [ ] Serial, I2C, GPIO, UART, SPI
 - [ ] SRTP
 - [ ] Video
+- [ ] Websockets   
+
 
 
 Future releases:
@@ -82,12 +82,10 @@ Future releases:
 - [x] Audio 
 - [x] Physics
 
-
 0.3: 
 - [x] Websockets  (ws only)
 - [x] 3D
 - [x] DB (SQLite)
-
 
 0.4:
 - [x] Video

@@ -45,8 +45,12 @@ public:
 	    sprite_list.clear();
 	}
 
-	void upload(std::shared_ptr<sprite> sprite){
-		sprite_list.push_back(sprite);
+	void upload(std::shared_ptr<model> model){
+
+		for(auto& sprite: model->get_render_sprite_list()){
+			sprite_list.push_back(sprite.second);
+		}
+
 	}
 
 	void end(){

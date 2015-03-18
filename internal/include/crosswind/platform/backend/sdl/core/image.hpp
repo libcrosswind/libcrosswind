@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL_image.h>
 
+#include <crosswind/javascript/json.hpp>
 #include <crosswind/platform/backend/interface/core/image.hpp>
 #include <crosswind/platform/backend/sdl/core/exception.hpp>
 #include <crosswind/platform/backend/sdl/video/surface.hpp>
@@ -75,51 +76,48 @@ public:
 
 		auto& raw_json = json.data;
 
+		auto model = std::make_shared<simulation::model>();
 
 		for (auto t = raw_json["textures"].begin_members(); t != raw_json["textures"].end_members(); ++t)
 		{
-			load_texture(t->name().as<std::string>(), t->value().as<std::string>());
+			load_texture(t->name(), t->value().as<std::string>());
 		}
 
-		/*			auto sprite_animation = std::make_shared<simulation::sprite_animation>();
-
-			sprite_animation */
-
-		std::map[];
+		std::map<std::string, std::shared_ptr<simulation::sprite> > sprites;
 
 		for (auto s = raw_json["sprites"].begin_members(); s != raw_json["sprites"].end_members(); ++s)
 		{
-			s->name().as<std::string>();         // sprite name
-			s->value().name().as<std::string>(); // mapped texture.
+			std::string name    = s->name();                        // sprite name
+			std::string texture = s->value()[0].as<std::string>();  // mapped texture.
 
-			glm::vec4 uv(s->value().value()[0].as<float>(), // uv coordinates.
-						 s->value().value()[1].as<float>(),
-					     s->value().value()[2].as<float>(),
-					     s->value().value()[3].as<float>());
+			glm::vec4 uv(s->value()[1][0].as<float>(), // uv coordinates.
+						 s->value()[1][1].as<float>(),
+					     s->value()[1][2].as<float>(),
+					     s->value()[1][3].as<float>());
 
-/*			const glm::vec3& p,
-			const glm::vec3& s,
-			const glm::vec4& uv,
-			const uint32_t& t_id):*/
+			sprites[name] = std::make_shared<simulation::sprite>(origin, size, uv, load_texture(texture)->id);
 		}
+
+		std::map<std::string, std::shared_ptr<simulation::sprite_animation> > animations;
 
 		for (auto a = raw_json["animations"].begin_members(); a != raw_json["animations"].end_members(); ++a)
 		{
-			std::vector<std::string> frames;
+
+			std::vector<std::shared_ptr<simulation::sprite> > frames;
 
 			for(auto f = a->value()["frames"].begin_elements(); f != a->value()["frames"].end_elements();  ++f){
-				frames.push_back(f->as<std::string>());
+				frames.push_back(sprites[f->as<std::string>()]);
 			}
 
-			auto mapping = std::make_shared<detail::animation_mapping>();
-			mapping->duration = a->value()["time"].as<double>();
-			mapping->frames = frames;
+			auto animation = std::make_shared<simulation::sprite_animation>();
+			animation->duration = a->value()["time"].as<double>();
+			animation->frames = frames;
 
-			store_graphical_item(animations, a->name(), mapping);
+			animations[a->name()] = animation;
 		}
 
-		model->animations["current"] 
-		animations["current"] = animations[raw_json["properties"]["default-animation"].as<std::string>()];
+		model->get_animations() = animations;
+		model->change_animation(raw_json["properties"]["default-animation"].as<std::string>());
 
 		return model;
 	}
