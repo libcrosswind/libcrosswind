@@ -84,6 +84,7 @@ public:
     void add_stage(auto stage){
         stage->setup(engine);
         stage->init(engine);
+        engine->physics_world->init_debug_drawer(stage->get_camera("main_camera"));
         stages[stage->name] = stage;
     }
 
@@ -93,26 +94,26 @@ public:
 
 private:
     void handle_application_events(){
-            while(SDL_PollEvent(&event)){
-                    //User requests quit
-                    if(event.type == SDL_QUIT){
-                            engine->running = false;
-                    }
-            }
+        while(SDL_PollEvent(&event)){
+                //User requests quit
+                if(event.type == SDL_QUIT){
+                        engine->running = false;
+                }
+        }
 
-            stages["current"]->handle_stage_events();
+        stages["current"]->handle_stage_events();
     }
 
     void handle_input(){
 
-            engine->input_listener->update();
+        engine->input_listener->update();
 
-            stages["current"]->handle_input(engine->input_listener);
+        stages["current"]->handle_input(engine->input_listener);
 
     }
 
     void handle_update(){
-            stages["current"]->update(engine->window->fps_limiter->get_delta());
+        stages["current"]->update(1/60.0/*engine->window->fps_limiter->get_delta()*/);
     }
 
     void handle_rendering(){

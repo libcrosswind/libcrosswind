@@ -15,16 +15,13 @@ LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib)
 
 include_directories(${INCLUDE_LIBRARY_PATH})
 
-set(SDL2_libs        SDL2main SDL2 winmm imm32 version)
-
-
 if( CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 add_compile_options(-std=gnu++1y  -DGLEW_STATIC -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION -D_WIN32_WINNT=0x0501 -g -Og)
 
 else( CMAKE_BUILD_TYPE STREQUAL "Release")
 
-add_compile_options( -std=gnu++1y -fopenmp -c -DGLEW_STATIC -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION -D_WIN32_WINNT=0x0501 -O3 )
+add_compile_options( -std=gnu++1y -DGLEW_STATIC -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION -D_WIN32_WINNT=0x0501 -O3 )
 
 endif()
 

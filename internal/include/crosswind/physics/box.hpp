@@ -15,9 +15,9 @@ namespace physics{
 
 class cw::physics::box: public cw::physics::detail::rigid_body{
 public:
-    box(const float& mass,
-        const glm::vec3& origin,
-        const glm::vec3& size, 
+    box(const glm::vec3& origin,
+        const glm::vec3& size,
+        const float& mass,
         const float& s): rigid_body(origin, s){
 
     		glm::vec3 s_size = size * s;

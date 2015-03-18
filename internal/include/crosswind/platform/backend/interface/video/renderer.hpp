@@ -2,6 +2,7 @@
 
 #include <crosswind/simulation/model.hpp>
 #include <crosswind/simulation/gl/gl_sprite_batch.hpp>
+#include <crosswind/simulation/detail/graphical_actor.hpp>
 
 namespace cw{
 namespace platform{
@@ -17,7 +18,7 @@ namespace video{
 }// namespace platform
 }// namespace cw
 
-class cw::platform::backend::interface::video::renderer{
+class cw::platform::backend::interface::video::renderer: public cw::simulation::detail::graphical_actor{
 public:
 	renderer(){
 
@@ -26,7 +27,7 @@ public:
         glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
         std::string vertex_shader   = "assets/default/graphics/shaders/texture_shading.vert";
         std::string fragment_shader = "assets/default/graphics/shaders/texture_shading.frag";
-        
+
         glsl_program->compile(vertex_shader, fragment_shader);
         glsl_program->add_attribute("vertex_position");
         glsl_program->add_attribute("vertex_color");
@@ -45,7 +46,7 @@ public:
         auto texture_location = glsl_program->get_uniform_location("texture_sampler");
         glUniform1i(texture_location, 0);
 
-        sprite_batch->begin();
+        sprite_batch->clear();
 
 	}
 
@@ -60,10 +61,15 @@ public:
 		sprite_batch->upload(model);
 	}
 
+    void draw(){
+        sprite_batch->create();
+        sprite_batch->draw();
+    }
+
 	void end(){
-        sprite_batch->end();
 		glsl_program->unuse();
 	}
+
 
 
 

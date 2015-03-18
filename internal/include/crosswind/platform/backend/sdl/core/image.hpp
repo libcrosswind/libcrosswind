@@ -94,12 +94,14 @@ public:
 
 			std::string texture = s_props->name();  // mapped texture.
 
-			auto json_uv = s_props->value().begin_elements();
 
-			glm::vec4 uv(json_uv++->as<double>(), // uv coordinates.
-					     json_uv++->as<double>(),
-					     json_uv++->as<double>(),
-					     json_uv->as<double>());
+			glm::vec4 uv(s_props->value()[0].as<double>(), // uv coordinates.
+					 	 s_props->value()[1].as<double>(),
+				 		 s_props->value()[2].as<double>(),
+						 s_props->value()[3].as<double>());
+
+			std::cout << "Sprite: " << name << std::endl;
+			std::cout << "X: " << uv.x << " Y: " << uv.y << " Z: " << uv.z << " W: " << uv.w << std::endl;
 
 			sprites[name] = std::make_shared<simulation::sprite>(origin, size, uv, load_texture(texture)->id);
 		}
@@ -123,6 +125,16 @@ public:
 		}
 
 		model->get_animations() = animations;
+
+		for(auto m : model->get_animations()){
+			std::cout << "Animation name: \t\t" << m.first << std::endl;
+			std::cout << "Animation duration: \t\t" << m.second->duration << std::endl;
+			std::cout << "Animation frames: \t\t" << m.second->frames.size() << std::endl;
+
+		}
+
+		std::cout << "Default animation: " << raw_json["properties"]["default-animation"].as<std::string>() << std::endl;
+
 		model->change_animation(raw_json["properties"]["default-animation"].as<std::string>());
 
 		return model;

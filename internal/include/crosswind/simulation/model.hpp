@@ -64,8 +64,6 @@ public:
         }
 
 		render_sprite_list["current"] = animations["current"]->frames[animations["current"]->current_frame];
-
-
 	}
 
 	auto& get_render_sprite_list(){

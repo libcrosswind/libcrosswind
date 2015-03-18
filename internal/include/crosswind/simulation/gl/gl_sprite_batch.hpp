@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 
 #include <crosswind/geometry/detail/vertex.hpp>
+#include <crosswind/simulation/model.hpp>
 #include <crosswind/simulation/sprite.hpp>
 #include <crosswind/simulation/detail/graphical_actor.hpp>
 
@@ -40,20 +41,20 @@ public:
 		create_vertex_array();
 	}
 
-	void begin(){
+	void clear(){
 	    batch_list.clear();
 	    sprite_list.clear();
 	}
 
-	void upload(std::shared_ptr<model> model){
+	void upload(std::shared_ptr<model> m){
 
-		for(auto& sprite: model->get_render_sprite_list()){
+		for(auto& sprite: m->get_render_sprite_list()){
 			sprite_list.push_back(sprite.second);
 		}
 
 	}
 
-	void end(){
+	void create(){
     	std::stable_sort(sprite_list.begin(), sprite_list.end(), [](auto a, auto b){
 		    return (a->texture_id < b->texture_id);
     	});

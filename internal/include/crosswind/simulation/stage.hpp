@@ -33,9 +33,12 @@ public:
 
 		camera_list["main_camera"] = std::make_shared<camera>(engine->window->size.get());
 		camera_list["current"] = camera_list["main_camera"];
-		add(camera_list["current"]);
 
 		renderer = engine->renderer;
+
+		add(camera_list["current"]);
+	//	add(renderer);
+
 	}
 
 	void handle_input(std::shared_ptr<platform::backend::interface::core::input_listener> input_listener) {
@@ -44,7 +47,7 @@ public:
 		}
 	}
 
-		virtual void handle_stage_events(){
+	virtual void handle_stage_events(){
 		std::vector<std::pair<bool, std::function<void()> > > continuous_events;
 
 		for(auto& event_mapping : event_queue){
@@ -78,6 +81,8 @@ public:
         for(auto& model_mapping : model_list){
 	        renderer->upload(model_mapping.second);
         }
+
+		renderer->draw();
 
         renderer->end();
 
@@ -130,6 +135,10 @@ public:
 	}
 
     std::string name;
+
+	auto get_camera(const std::string& name){
+		return camera_list[name];
+	}
 
 
 protected:

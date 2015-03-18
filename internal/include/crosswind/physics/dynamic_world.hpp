@@ -8,6 +8,7 @@
 #include <crosswind/physics/detail/rigid_body.hpp>
 
 #include <crosswind/physics/debug/physics_debug_drawer.hpp>
+#include <crosswind/physics/box.hpp>
 
 namespace cw{
 namespace physics{
@@ -45,6 +46,11 @@ public:
 	template<typename T, typename... Args>
 	std::shared_ptr<detail::rigid_body> create(Args... args){
 		return std::make_shared<T>(args..., scale);
+	}
+
+	template<typename T>
+	auto create_rigid_body(const glm::vec3& origin, const glm::vec3& size, const float& mass){
+		return std::make_shared<T>(origin, size, mass, scale);
 	}
 
 	void add_rigid_body(std::shared_ptr<detail::rigid_body> body){
