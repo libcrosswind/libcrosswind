@@ -69,7 +69,7 @@ public:
             handle_application_events();
             handle_input();
 
-            engine->physics_world->update(1/60.0);
+            engine->physics->update(1/60.0);
 
             handle_update();
             handle_rendering();
@@ -84,7 +84,7 @@ public:
     void add_stage(auto stage){
         stage->setup(engine);
         stage->init(engine);
-        engine->physics_world->init_debug_drawer(stage->get_camera("main_camera"));
+        engine->physics->init_debug_drawer(stage->get_camera("main_camera"));
         stages[stage->name] = stage;
     }
 
@@ -119,7 +119,7 @@ private:
     void handle_rendering(){
         engine->window->clear();
         stages["current"]->render();
-        engine->physics_world->debug_draw_world();
+        engine->physics->debug_draw_world();
         engine->window->present();
     }
 

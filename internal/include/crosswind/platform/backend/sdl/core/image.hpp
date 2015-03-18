@@ -137,6 +137,9 @@ public:
 
 		model->change_animation(raw_json["properties"]["default-animation"].as<std::string>());
 
+		model->set_origin(origin);
+		model->set_size(size);
+
 		return model;
 	}
 

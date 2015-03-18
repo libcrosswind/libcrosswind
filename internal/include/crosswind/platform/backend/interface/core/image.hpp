@@ -40,7 +40,6 @@ protected:
 
 public:
 	virtual ~image() {
-
 	}
 
     virtual void load_texture(const std::string& name, const std::string& path) = 0;

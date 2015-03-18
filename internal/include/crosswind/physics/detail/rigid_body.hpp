@@ -18,9 +18,9 @@ namespace detail{
 class cw::physics::detail::rigid_body{
 
 public:
-		rigid_body(const glm::vec3& o, const float& s = 1.0): scale(s){
+		rigid_body(const glm::vec3& o, const float& s = 1.0, const glm::vec3& u = glm::vec3(1,1,1)): scale(s), unit_value(u){
 
-			glm::vec3 s_origin = o * s; 
+			glm::vec3 s_origin = o * s;
 
 			transform.setIdentity();
 			transform.setOrigin(btVector3(s_origin.x, s_origin.y, s_origin.z));
@@ -81,6 +81,7 @@ public:
 		void set_linear_speed(const glm::vec3& speed){
 
 			auto spd = speed * scale;
+			spd /= unit_value;
 			physic_body->setLinearVelocity(btVector3(spd.x, spd.y, spd.z));
 
 		}
@@ -89,7 +90,7 @@ public:
 			glm::vec3 spd(physic_body->getLinearVelocity().getX(),
 						  physic_body->getLinearVelocity().getY(),
 						  physic_body->getLinearVelocity().getZ());
-			return spd;
+			return spd * unit_value;
 		}
 
 		void apply_force(const glm::vec3& f){
@@ -101,6 +102,7 @@ public:
 
         btTransform transform;
 	    float scale;
+	    glm::vec3 unit_value;
 
 		std::unique_ptr<btMotionState> motion_state;
 		std::unique_ptr<btCollisionShape> collision_shape;

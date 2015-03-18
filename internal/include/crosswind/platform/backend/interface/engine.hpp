@@ -35,6 +35,6 @@ public:
     std::shared_ptr<  core::mixer >  			mixer;
     std::shared_ptr<  core::input_listener > 	input_listener;
     std::shared_ptr<  core::window    	> 		window;
-    std::shared_ptr<  physics::dynamic_world> 	physics_world;
+    std::shared_ptr<  physics::dynamic_world> 	physics;
     std::shared_ptr<  video::renderer   >       renderer;
 };// class engine

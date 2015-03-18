@@ -17,40 +17,36 @@ namespace simulation{
 
 class cw::simulation::model: public cw::simulation::detail::standard_actor{
 public:
-	model(){
+	model(): origin(0.0f, 0.0f, 0.0f){
 
 	}
 
-    virtual void add_body(const std::string& body_name, 
-						  std::shared_ptr<physics::detail::rigid_body> body){
+    virtual void attach_rigid_body(const std::string& body_name,
+						           std::shared_ptr<physics::detail::rigid_body> body,
+                                   const bool& synchronize = false){
+
 		rigid_bodies[body_name] = body;
+
+	    if(synchronize){
+		    attached_bodies[body_name] = rigid_bodies[body_name];
+	    }
     }
 
-    virtual void constrain(const std::string& sprite, 
-    	             	   const std::string& body, 
-    	             	   const glm::vec3& offset = glm::vec3(0.0f, 0.0f, 0.0f)){
 
-    	constrained_bodies[sprite] = body;
-
-    }
-
-	virtual void change_animation(const std::string& new_animation){
+	virtual void change_animation(const std::string& new_animation, const bool& flip = false){
 		animations["current"] = animations[new_animation];
+/*		if(flip){
+
+			for(auto& sprite : animations["current"]->frames){
+				sprite->
+			}
+
+		}*/
 	}
 
 	virtual void update(double delta){
 
         delta_count += delta;
-
-		for(auto& constrain_mapping : constrained_bodies){
-
-/*			glm::vec3 b_origin(rigid_bodies[constrain_mapping.second]->get_origin().x,
-					rigid_bodies[constrain_mapping.second]->get_origin().y,
-					rigid_bodies[constrain_mapping.second]->get_origin().z);
-
-			sprites[constrain_mapping.first]->set_origin(b_origin);*/
-		}
-
 
         if(delta_count >= animations["current"]->duration / animations["current"]->frames.size()){
 
@@ -64,6 +60,15 @@ public:
         }
 
 		render_sprite_list["current"] = animations["current"]->frames[animations["current"]->current_frame];
+
+		for(auto& mapping : attached_bodies){
+
+			glm::vec3 b_origin(mapping.second->get_origin().x,
+					mapping.second->get_origin().y,
+					mapping.second->get_origin().z);
+
+			render_sprite_list["current"]->set_origin(b_origin);
+		}
 	}
 
 	auto& get_render_sprite_list(){
@@ -74,10 +79,29 @@ public:
 		return animations;
 	}
 
-private:
-	std::map<std::string, std::shared_ptr<sprite> > render_sprite_list;
-	std::map<std::string, std::shared_ptr<physics::detail::rigid_body> > rigid_bodies;
-	std::map<std::string, std::string> constrained_bodies;
+	void set_origin(const glm::vec3& o){
+		origin = o;
+	}
 
+	auto get_origin(){
+		return origin;
+	}
+
+	void set_size(const glm::vec3& s){
+		size = s;
+	}
+
+	auto get_size(){
+		return size;
+	}
+
+private:
+	glm::vec3 origin;
+	glm::vec3 size;
+
+	std::map<std::string, std::shared_ptr<sprite> > render_sprite_list;
 	std::map<std::string, std::shared_ptr<sprite_animation> > animations;
+	std::map<std::string, std::shared_ptr<physics::detail::rigid_body> > rigid_bodies;
+	std::map<std::string, std::shared_ptr<physics::detail::rigid_body> > attached_bodies;
+
 };// class model

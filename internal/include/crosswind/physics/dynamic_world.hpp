@@ -50,7 +50,7 @@ public:
 
 	template<typename T>
 	auto create_rigid_body(const glm::vec3& origin, const glm::vec3& size, const float& mass){
-		return std::make_shared<T>(origin, size, mass, scale);
+		return std::make_shared<T>(origin, size, mass, scale, unit_value);
 	}
 
 	void add_rigid_body(std::shared_ptr<detail::rigid_body> body){

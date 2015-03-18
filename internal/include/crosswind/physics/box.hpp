@@ -18,7 +18,8 @@ public:
     box(const glm::vec3& origin,
         const glm::vec3& size,
         const float& mass,
-        const float& s): rigid_body(origin, s){
+        const float& s,
+        const glm::vec3& u): rigid_body(origin, s, u){
 
     		glm::vec3 s_size = size * s;
     		
