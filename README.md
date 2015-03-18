@@ -8,20 +8,17 @@ Current status:
 
 Current modules:
 - [x] audio      - ogg, wav
-- [x] concurrent - atomic_property, mutex_property, mutex_container, hollow_property, resource_property
 - [x] container  - cache
 - [x] crypto     - base64, sha1
 - [ ] database   - sqlite
 - [x] event      - dispatcher
-- [x] functional - delegate
+- [x] functional - delegate, hollow_property, resource_property
 - [ ] geometry   - rectangle
 - [x] javascript - json
-- [x] math       - clamp, vector3
 - [ ] network    - ws
 - [x] platform   - application, filesystem
 - [x] physics    - dynamic_world, box, static_plane
 - [x] simulation - stage, sprite
-- [x] trivial    - this module is used internally by other modules
 - [ ] video      - 
 
 

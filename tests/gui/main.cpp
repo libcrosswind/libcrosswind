@@ -7,7 +7,6 @@
 
 int main(int argc, char **argv) {
 
-
     cw::platform::filesystem::add_directory("assets", true);
 
     auto window_bounds = glm::vec4(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
@@ -29,13 +28,9 @@ int main(int argc, char **argv) {
             engine->image->load_texture("sonic_wait", "SonAni_Wait_intro.png");
 
 
-            auto sonic_model  = std::make_shared<cw::simulation::model>();
-//            sonic_model->load_sprite_sheet("sonic.json");
+            auto sonic_model  = engine->image->load_model(glm::vec3(0,0,0), glm::vec3(10,10,1), "sonic.json");
 
-            model_list["sonic"] = sonic_model;
-            add(model_list["sonic"]);
-            add(model_list["ground"]);
-
+            add(sonic_model);
         }
 
         virtual void deinit(std::shared_ptr<cw::platform::backend::interface::engine> engine){

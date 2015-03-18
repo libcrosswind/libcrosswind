@@ -48,6 +48,7 @@ public:
         return has_member;
     }
 
-    concurrent::mutex_property<jsoncons::json> data;
+
+    jsoncons::json data;
 
 };// class json

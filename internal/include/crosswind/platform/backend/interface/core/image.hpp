@@ -3,8 +3,10 @@
 #include <map>
 #include <string>
 
+#include <glm/glm.hpp>
 #include <SDL2/SDL_image.h>
 
+#include <crosswind/simulation/model.hpp>
 #include <crosswind/simulation/gl/gl_texture.hpp>
 
 namespace cw{
@@ -41,7 +43,11 @@ public:
 	}
 
     virtual void load_texture(const std::string& name, const std::string& path) = 0;
-    virtual std::shared_ptr<cw::simulation::gl::gl_texture> load_texture(const std::string& name) = 0;
+
+	virtual std::shared_ptr<cw::simulation::gl::gl_texture> load_texture(const std::string& name) = 0;
+
+	virtual std::shared_ptr<cw::simulation::model>
+			load_model(const glm::vec3& origin, const glm::vec3& size, const std::string& template_file);
 
     std::map<std::string, std::shared_ptr<cw::simulation::gl::gl_texture> > texture_list;
 

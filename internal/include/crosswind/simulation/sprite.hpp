@@ -39,35 +39,7 @@ public:
         vertices[4].set_uv(uv.z, uv.y); // bottom right
         vertices[5].set_uv(uv.z, uv.w); // top right
 
-//        upload_vertex_array(vertices);
 	}
-
-	/*virtual void update(double delta){
-
-        delta_count += delta;
-
-        auto& a = animations.data.acquire();
-
-        if(delta_count >= a["current"]->duration / a["current"]->frames.size()){
-
-            delta_count = 0;
-
-            a["current"]->current_frame++;
-
-            if(a["current"]->current_frame >= a["current"]->frames.size()){
-                a["current"]->current_frame = 0;
-            }
-        }
-
-        swap_graphical_item(sprites, "current", a["current"]->frames[a["current"]->current_frame]);
-
-        animations.data.release();
-    }*/
-
-/*
-	virtual void draw(){
-		draw_vertex_array(vertices);
-	}*/
 
     uint32_t texture_id;
 };// class sprite

@@ -135,7 +135,7 @@ private:
 	    		batch_list.emplace_back(batch);
 
 	    	} else {
-	    		batch_list.back()->vertex_count += sprite->vertices.size();
+                batch_list.back()->vertex_count += sprite->vertices.size();
 	    	}
 
 	    	vertices.insert(vertices.end(), sprite->vertices.begin(), sprite->vertices.end());

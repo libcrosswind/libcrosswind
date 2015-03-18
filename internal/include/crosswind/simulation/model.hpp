@@ -1,9 +1,10 @@
 #pragma once
 
 #include <map>
+#include <crosswind/physics/detail/rigid_body.hpp>
 #include <crosswind/simulation/sprite.hpp>
 #include <crosswind/simulation/detail/standard_actor.hpp>
-#include <crosswind/physics/detail/rigid_body.hpp>
+#include <crosswind/simulation/detail/mappings/animation_mapping.hpp>
 
 namespace cw{
 namespace simulation{
@@ -18,38 +19,14 @@ namespace simulation{
 
 class cw::simulation::model: public cw::simulation::detail::standard_actor{
 public:
-	model(/*const glm::vec3 o*/)/*: origin(o)*/{
+	model(){
+
 	}
-
-
-    virtual void add_sprite(const std::string& sprite_name, 
-    						std::shared_ptr<sprite> sprite){
-		sprites[sprite_name] = sprite;
-    }
 
     virtual void add_body(const std::string& body_name, 
 						  std::shared_ptr<physics::detail::rigid_body> body){
-		
-		glm::vec3 b_origin(body->get_origin().x, 
-						   body->get_origin().y, 
-						   body->get_origin().z);
-
-//		glm::vec3 offset = origin - b_origin;
-
-//		rigid_body = body;
-//		offsets[body->name] = offset;
 		rigid_bodies[body_name] = body;
     }
-
-	virtual void storage_to_render(const std::string& sprite_name){
-		sprites[sprite_name] = sprite_storage[sprite_name];
-		sprite_storage.erase(sprite_name);
-	}
-
-	virtual void render_to_storage(const std::string& sprite_name){
-		sprite_storage[sprite_name] = sprites[sprite_name];
-		sprites.erase(sprite_name);
-	}
 
     virtual void constrain(const std::string& sprite, 
     	             	   const std::string& body, 
@@ -59,50 +36,53 @@ public:
 
     }
 
+	virtual void change_animation(const std::string& new_animation){
+		animations["current"] = animations[new_animation];
+	}
+
 	virtual void update(double delta){
 
-/*        delta_count += delta;
+        delta_count += delta;
 
-        auto& a = animations.data.acquire();
+		for(auto& constrain_mapping : constrained_bodies){
 
-        if(delta_count >= a["current"]->duration / a["current"]->frames.size()){
+			glm::vec3 b_origin(rigid_bodies[constrain_mapping.second]->get_origin().x,
+					rigid_bodies[constrain_mapping.second]->get_origin().y,
+					rigid_bodies[constrain_mapping.second]->get_origin().z);
+
+			sprites[constrain_mapping.first]->set_origin(b_origin);
+		}
+
+
+        if(delta_count >= animations["current"]->duration / animations["current"]->frames.size()){
 
             delta_count = 0;
 
-            a["current"]->current_frame++;
+	        animations["current"]->current_frame++;
 
-            if(a["current"]->current_frame >= a["current"]->frames.size()){
-                a["current"]->current_frame = 0;
+            if(animations["current"]->current_frame >= animations["current"]->frames.size()){
+	            animations["current"]->current_frame = 0;
             }
         }
 
-        swap_graphical_item(sprites, "current", a["current"]->frames[a["current"]->current_frame]);
 
-        animations.data.release();
-*/
+		render_sprite_list["current"] = sprites[animations["current"]->frames[animations["current"]->current_frame]];
 
-		for(auto& constrain_mapping : constrained_bodies){
-	            
-				glm::vec3 b_origin(rigid_bodies[constrain_mapping.second]->get_origin().x,
-								   rigid_bodies[constrain_mapping.second]->get_origin().y,
-						           rigid_bodies[constrain_mapping.second]->get_origin().z);
-
-				sprites[constrain_mapping.first]->set_origin(b_origin);
-			std::cout << b_origin.y << std::endl;
-			}
 
 	}
 
-	
-//	std::map<std::string, glm::vec3> offsets;
-//	glm::vec3 origin;
+	auto& get_render_sprite_list(){
+		return render_sprite_list;
+	}
 
-public:
-	std::map<std::string, std::shared_ptr<sprite> > sprites;
+	auto& get_animations(){
+		return animations;
+	}
 
+private:
+	std::map<std::string, std::shared_ptr<sprite> > render_sprite_list;
 	std::map<std::string, std::shared_ptr<physics::detail::rigid_body> > rigid_bodies;
 	std::map<std::string, std::string> constrained_bodies;
 
-private:
-	std::map<std::string, std::shared_ptr<sprite> > sprite_storage;
+	std::map<std::string, sprite_animation> animations;
 };// class model

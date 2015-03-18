@@ -20,7 +20,7 @@ namespace video{
 class cw::platform::backend::interface::video::renderer{
 public:
 	renderer(){
-        
+
         sprite_batch = std::make_shared<cw::simulation::gl::gl_sprite_batch>();
         
         glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
@@ -57,7 +57,7 @@ public:
 	}
 
 	void upload(std::shared_ptr<cw::simulation::model> model){
-//		sprite_batch->upload(model);
+		sprite_batch->upload(model);
 	}
 
 	void end(){
@@ -65,6 +65,9 @@ public:
 		glsl_program->unuse();
 	}
 
+
+
+private:
     std::shared_ptr<cw::simulation::gl::glsl_program>    glsl_program;
     std::shared_ptr<cw::simulation::gl::gl_sprite_batch> sprite_batch;
 };

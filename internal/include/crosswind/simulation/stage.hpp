@@ -45,12 +45,6 @@ public:
 		event_queue.insert(event_queue.end(), continuous_events.begin(), continuous_events.end());
 	}
 	
-	virtual void handle_input(std::shared_ptr<platform::backend::interface::core::input_listener> input_listener){
-
-		for(auto& element: interactive_queue){
-           element->handle_input(input_listener);
-        }
-	}
 
 	virtual void update(double delta){
 
@@ -63,14 +57,14 @@ public:
 
         renderer->begin();
 
-//        renderer->set_uniform_matrix("projection_matrix", camera_list["current"]->get_camera_matrix());
+        renderer->set_uniform_matrix("projection_matrix", camera_list["current"]->get_camera_matrix());
 
-/*        for(auto& model_mapping : model_list){
+        for(auto& model_mapping : model_list){
             for(auto& sprite_mapping : model_mapping.second->sprites){
                 renderer->upload(sprite_mapping.second);
             }
         }
-*/
+
         renderer->end();
 
 	}
