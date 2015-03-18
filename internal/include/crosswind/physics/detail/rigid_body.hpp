@@ -90,7 +90,7 @@ public:
 			glm::vec3 spd(physic_body->getLinearVelocity().getX(),
 						  physic_body->getLinearVelocity().getY(),
 						  physic_body->getLinearVelocity().getZ());
-			return spd * unit_value;
+			return spd / scale * unit_value;
 		}
 
 		void apply_force(const glm::vec3& f){

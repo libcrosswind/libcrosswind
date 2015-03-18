@@ -44,7 +44,10 @@ public:
 
                 if(this->conditions["jumping"] == false){
 
-                    this->sonic_body->set_linear_speed(glm::vec3(0.0f, 6.5f, 0.0f));
+                    auto spd = this->sonic_body->get_linear_speed();
+                    spd.y = 6.5f;
+
+                    this->sonic_body->set_linear_speed(spd);
                     sonic_model->change_animation("roll_1");
                     engine->mixer->play_effect("jump");
                     this->conditions["jumping"] = true;
@@ -59,10 +62,10 @@ public:
 
             }
 
-/*            if(engine->input_listener->is_key_down("Right")){
+            if(engine->input_listener->is_key_down("Right")){
 
 
-                float acc = 0.046875 / 0.026458f;
+                float acc = 0.046875;
 
                 auto spd = this->sonic_body->get_linear_speed();
 
@@ -74,7 +77,7 @@ public:
 
             } else {
 
-                float frc = 0.046875 / 0.026458f;
+                float frc = 0.046875;
 
                 auto spd = this->sonic_body->get_linear_speed();
 
@@ -82,12 +85,13 @@ public:
 
                 if(spd.x < 0){
                     spd.x = 0;
+                } else {
+                    this->sonic_body->set_linear_speed(spd);
                 }
 
-                this->sonic_body->set_linear_speed(spd);
 
             }
-*/
+
 
 
         }, true);
