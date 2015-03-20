@@ -109,7 +109,8 @@ public:
 
     virtual void play_effect(const std::string& name){
 
-        Mix_PlayChannel(-1, sfx_tracks[name]->data.ptr(), 0); // Play the effect
+	    sfx_info[name].first = Mix_PlayChannel(-1, sfx_tracks[name]->data.ptr(), 0); // Play the effect
+	    sfx_info[name].second = true;
 
     }
 

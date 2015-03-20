@@ -75,7 +75,8 @@ public:
                         sonic_model->set_facing(false);
                     }
 
-                    if(this->sonic_body->get_speed().x >=  0.53125f || this->sonic_body->get_speed().x <=  0.53125f){
+                    if(glm::sign(this->sonic_body->get_speed().x) * this->sonic_body->get_speed().x >=  0.53125f){
+
                         if(engine->input_listener->is_key_down("Down")){
 
                             if(this->sonic_body->on_ground()) {
@@ -96,7 +97,7 @@ public:
                         }
                     }
 
-                    if(this->sonic_body->get_speed().x >= 6 || this->sonic_body->get_speed().x <= -6){
+                    if(glm::sign(this->sonic_body->get_speed().x) * this->sonic_body->get_speed().x >= 6.0f){
 
                         if(!sonic_model->conditions["spinning"])
                             sonic_model->change_animation("run", sonic_model->get_facing());
