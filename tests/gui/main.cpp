@@ -58,7 +58,7 @@ public:
 
         sonic_model->attach_character("sonic_body", sonic_body, true);
 
-        this->sonic_body->set_jump_speed(6.5f * 1.3);
+        this->sonic_body->set_jump_speed(6.5f + (224.0f / 480.0f * 6.5f));
 
         sonic_model->set_facing(true);
         sonic_model->conditions["braking"]  = false;
@@ -144,6 +144,24 @@ public:
                     }
 
 
+                    float frame_duration = glm::max(8.0f - glm::abs(this->sonic_body->get_speed().x), 3.0f);
+
+                    frame_duration *= 1.0f / 60.0f; // 1 second / 60 frames;
+
+                    sonic_model->get_animations()["walk"]->duration =
+                            frame_duration * sonic_model->get_animations()["walk"]->frames.size();
+
+                    sonic_model->get_animations()["run"]->duration =
+                            frame_duration * sonic_model->get_animations()["run"]->frames.size();
+
+
+                    frame_duration = glm::max(8.0f - glm::abs(this->sonic_body->get_speed().x), 1.0f);
+
+                    frame_duration *= 1.0f / 60.0f;
+
+                    sonic_model->get_animations()["roll_1"]->duration =
+                            frame_duration * sonic_model->get_animations()["roll_1"]->frames.size();
+
                 }
 
         }, true);
@@ -192,9 +210,7 @@ public:
                 }
 
                 this->sonic_body->set_speed(spd);
-            }
-
-            if(engine->input_listener->is_key_down("Left")){
+            } else if(engine->input_listener->is_key_down("Left")){
 
                 float acc = -0.046875;
                 float dec = -0.5f;
@@ -256,13 +272,25 @@ public:
         }, true);
 
 
-        post_event([this](){
+        post_event([this, engine](){
 
             auto c = this->camera_list["current"];
 
-//            c->set_position(c->get_position() + glm::vec3(10.0f, 0.0f, 0.0f));
+/*            if(glm::abs(this->sonic_body->get_origin().x) > engine->window->size.get().x * 0.45f ||
+                    glm::abs(this->sonic_body->get_origin().x) > engine->window->size.get().x * 0.50f){
+
+                c->set_position(this->sonic_body->get_origin());
+
+            }
+
+            if(glm::abs(this->sonic_body->get_origin().y) > engine->window->size.get().y * 0.45){
+                c->set_position(this->sonic_body->get_origin());
+            }
+
+*/
 
             c->set_position(this->sonic_body->get_origin());
+
 
 
         }, true);
