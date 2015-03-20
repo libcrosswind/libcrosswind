@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include <SDL2/SDL_mixer.h>
 
 #include <crosswind/platform/backend/interface/core/mixer.hpp>
@@ -38,6 +40,7 @@ public:
 
 	virtual void load_music(const std::string& name, const std::string& path){
 
+		bgm_info[name] = std::make_pair(-1, false); // channel, playing.
         bgm_tracks[name] = std::make_shared<audio::music>(cw::platform::filesystem::get_file_path(path));
 
 	}
@@ -46,14 +49,23 @@ public:
 
 		if(Mix_PlayingMusic() == 0){ 							// If there is no music playing
 
-			Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
+			bgm_info[name].first = Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
+			bgm_info[name].second = true;
 
 		} else {												// There is music playing
 
 			stop_music();										// Stop the music
-			Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
+			bgm_info[name].first = Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
+			bgm_info[name].second = true;
 
 		}
+
+	}
+
+	virtual bool is_playing_music(const std::string& name){
+
+		bgm_info[name].second = Mix_Playing(bgm_info[name].first);
+		return bgm_info[name].second;
 
 	}
 
@@ -74,11 +86,25 @@ public:
 	}
 
     virtual void stop_music(){
-        Mix_HaltMusic();// Stop the music
+
+	    for(auto& bgm : bgm_info){
+		    bgm.second.first  = -2;
+		    bgm.second.second = false;
+	    }
+
+	    for(auto& sfx : sfx_info){
+		    sfx.second.first = -2;
+		    sfx.second.second = false;
+	    }
+
+	    Mix_HaltMusic();// Stop the music
     }
 
     virtual void load_effect(const std::string& name, const std::string& path){
-        sfx_tracks[name] = std::make_shared<audio::chunk>(cw::platform::filesystem::get_file_path(path));
+
+	    sfx_info[name] = std::make_pair(-1, false); // channel, playing.
+	    sfx_tracks[name] = std::make_shared<audio::chunk>(cw::platform::filesystem::get_file_path(path));
+
     }
 
     virtual void play_effect(const std::string& name){
@@ -86,6 +112,13 @@ public:
         Mix_PlayChannel(-1, sfx_tracks[name]->data.ptr(), 0); // Play the effect
 
     }
+
+	virtual bool is_playing_effect(const std::string& name){
+
+		sfx_info[name].second = Mix_Playing(sfx_info[name].first);
+		return sfx_info[name].second;
+
+	}
 
 private:
 	// non-copyable
@@ -102,5 +135,9 @@ private:
 private:
 	std::map<std::string, std::shared_ptr<audio::music> > bgm_tracks;
 	std::map<std::string, std::shared_ptr<audio::chunk> > sfx_tracks;
+
+	std::map<std::string, std::pair<int, bool> > bgm_info;
+	std::map<std::string, std::pair<int, bool> > sfx_info;
+
 
 };// class mixer

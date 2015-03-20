@@ -19,7 +19,11 @@ public:
     virtual void init(std::shared_ptr<cw::platform::backend::interface::engine> engine){
 
         engine->mixer->load_music("green_hill", "green_hill_zone_bgm.ogg");
+        engine->mixer->play_music("green_hill");
+
         engine->mixer->load_effect("jump", "Jump.wav");
+        engine->mixer->load_effect("stop", "Skid.wav");
+        engine->mixer->load_effect("spin", "Spin.wav");
 
         auto sonic_model  = engine->image->load_model(glm::vec3(0, 80, 0), glm::vec3( 40,  42, 10), "sonic.json");
 
@@ -45,7 +49,7 @@ public:
             ground_models.push_back(m);
         }
 
-        sonic_body =
+        this->sonic_body =
                 engine->physics->create_character(glm::vec3(0, 80, 0), glm::vec2(26, 24), 0.35);
 
       //  sonic_body->set_activation_policy(DISABLE_DEACTIVATION);
@@ -56,22 +60,88 @@ public:
 
         this->sonic_body->set_jump_speed(6.5f * 1.3);
 
+        sonic_model->set_facing(true);
+        sonic_model->conditions["braking"]  = false;
+        sonic_model->conditions["spinning"] = false;
 
+        // ground animations
         post_event([this, engine, sonic_model](){
 
                 if(this->sonic_body->on_ground()) {
 
                     if(this->sonic_body->get_speed().x > 0){
-
-                        sonic_model->change_animation("walk", sonic_model->get_facing());
-
+                        sonic_model->set_facing(true);
                     } else if(this->sonic_body->get_speed().x < 0){
-                        sonic_model->change_animation("walk", sonic_model->get_facing());
+                        sonic_model->set_facing(false);
+                    }
+
+                    if(this->sonic_body->get_speed().x >=  0.53125f || this->sonic_body->get_speed().x <=  0.53125f){
+                        if(engine->input_listener->is_key_down("Down")){
+
+                            if(this->sonic_body->on_ground()) {
+                                if(!sonic_model->conditions["spinning"]){
+
+                                    sonic_model->conditions["spinning"] = true;
+                                    sonic_model->change_animation("roll_1", sonic_model->get_facing());
+
+                                    if(!engine->mixer->is_playing_effect("stop")){
+                                        engine->mixer->play_effect("spin");
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+                    }
+
+                    if(this->sonic_body->get_speed().x >= 6 || this->sonic_body->get_speed().x <= -6){
+
+                        if(!sonic_model->conditions["spinning"])
+                            sonic_model->change_animation("run", sonic_model->get_facing());
+
+                    } else {
+
+                        if(!sonic_model->conditions["spinning"])
+                            sonic_model->change_animation("walk", sonic_model->get_facing());
+
                     }
 
                     if(this->sonic_body->get_speed().x == 0.0f){
-                        sonic_model->change_animation("stand", sonic_model->get_facing());
+
+                        if(engine->input_listener->is_key_down("Up")){
+
+                            sonic_model->change_animation("look_up", sonic_model->get_facing());
+
+                        } else if(engine->input_listener->is_key_down("Down")){
+
+                            sonic_model->change_animation("duck", sonic_model->get_facing());
+
+                        } else {
+
+                            sonic_model->conditions["braking"] = false;
+                            sonic_model->conditions["spinning"] = false;
+                            sonic_model->change_animation("stand", sonic_model->get_facing());
+
+                        }
+
                     }
+
+                    if(sonic_model->conditions["braking"]){
+
+                        sonic_model->change_animation("stop", sonic_model->get_facing());
+
+                        if(!engine->mixer->is_playing_effect("stop")){
+
+                            if(engine->input_listener->is_key_down("Left") || engine->input_listener->is_key_down("Right")){
+                                engine->mixer->play_effect("stop");
+                            }
+
+                        }
+
+                    }
+
 
                 }
 
@@ -79,10 +149,12 @@ public:
 
         // jumping
         post_event([this, engine, sonic_model](){
+
             if(engine->input_listener->is_key_down("k")){
 
                 if(this->sonic_body->on_ground()) {
                     this->sonic_body->jump();
+                    sonic_model->conditions["spinning"] = false;
                     sonic_model->change_animation("roll_1", sonic_model->get_facing());
                     engine->mixer->play_effect("jump");
                 }
@@ -91,63 +163,66 @@ public:
 
         }, true);
 
-
         // movement
         post_event([this, engine, sonic_model](){
 
             if(engine->input_listener->is_key_down("Right")){
 
                 float acc = 0.046875;
+                float dec = 0.5f;
 
                 auto spd = this->sonic_body->get_speed();
 
-                spd.x += acc;
+                if(sonic_model->get_facing() == false){
+                    if(spd.x <= -4.5f)
+                        sonic_model->conditions["braking"] = true;
+
+                    spd.x += dec;
+                } else {
+                    spd.x += acc;
+                }
 
                 if(spd.x > 6){
                     spd.x = 6;
                 }
 
-                this->sonic_body->set_speed(spd);
-
-                sonic_model->set_facing(true);
-
-                if(this->sonic_body->on_ground()){
-                    if(spd.x >= 6){
-                        sonic_model->change_animation("run", sonic_model->get_facing());
-                    } else {
-                        sonic_model->change_animation("walk", sonic_model->get_facing());
-                    }
+                if(spd.x >= 0){
+                    sonic_model->conditions["braking"] = false;
                 }
 
+                this->sonic_body->set_speed(spd);
             }
 
             if(engine->input_listener->is_key_down("Left")){
 
                 float acc = -0.046875;
+                float dec = -0.5f;
 
                 auto spd = this->sonic_body->get_speed();
 
-                spd.x += acc;
+                if(sonic_model->get_facing() == true){
+                    if(spd.x >= 4.5f)
+                        sonic_model->conditions["braking"] = true;
+
+                    spd.x += dec;
+                } else {
+                    spd.x += acc;
+                }
 
                 if(spd.x < -6){
                     spd.x = -6;
                 }
 
-                this->sonic_body->set_speed(spd);
-                sonic_model->set_facing(false);
-                if(this->sonic_body->on_ground()){
-                    if(spd.x <= -6){
-                        sonic_model->change_animation("run", sonic_model->get_facing());
-                    } else {
-                        sonic_model->change_animation("walk", sonic_model->get_facing());
-                    }
+                if(spd.x <= 0){
+                    sonic_model->conditions["braking"] = false;
                 }
 
+                this->sonic_body->set_speed(spd);
             }
 
         }, true);
 
-        // friction
+        // friction calculation
         post_event([this, engine, sonic_model](){
 
             if(!engine->input_listener->is_key_down("Left") && !engine->input_listener->is_key_down("Right")){
@@ -175,7 +250,6 @@ public:
                 }
 
                 this->sonic_body->set_speed(spd);
-
             }
 
         }, true);

@@ -123,6 +123,8 @@ public:
 		return size;
 	}
 
+	std::map<std::string, bool> conditions;
+
 private:
 	glm::vec3 origin;
 	glm::vec3 size;
