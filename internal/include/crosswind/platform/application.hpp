@@ -119,7 +119,7 @@ private:
     void handle_rendering(){
         engine->window->clear();
         stages["current"]->render();
-        engine->physics->debug_draw_world();
+        //engine->physics->debug_draw_world();
         engine->window->present();
     }
 

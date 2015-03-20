@@ -19,7 +19,7 @@ namespace simulation{
 class cw::simulation::model: public cw::simulation::detail::standard_actor{
 public:
 	model(): origin(0.0f, 0.0f, 0.0f){
-
+		facing = true;
 	}
 
 	virtual void attach_character(const std::string& character_name,
@@ -49,17 +49,18 @@ public:
 		return rigid_bodies;
 	}
 
+	virtual void change_animation(const std::string& new_animation, const bool& x_orientation = true){
 
-
-	virtual void change_animation(const std::string& new_animation, const bool& flip = false){
 		animations["current"] = animations[new_animation];
-/*		if(flip){
+		animations["current"]->flip(x_orientation);
+	}
 
-			for(auto& sprite : animations["current"]->frames){
-				sprite->
-			}
+	void set_facing(bool f){
+		facing = f;
+	}
 
-		}*/
+	bool get_facing(){
+		return facing;
 	}
 
 	virtual void update(double delta){
@@ -125,6 +126,7 @@ public:
 private:
 	glm::vec3 origin;
 	glm::vec3 size;
+	bool facing;
 
 	std::map<std::string, std::shared_ptr<sprite> > render_sprite_list;
 	std::map<std::string, std::shared_ptr<sprite_animation> > animations;

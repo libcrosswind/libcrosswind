@@ -27,7 +27,6 @@ namespace core{
 class cw::platform::backend::interface::core::image{
 protected:
 	image() {
-		texture_list["dummy"] = nullptr;
 	}
 
 	// non-copyable

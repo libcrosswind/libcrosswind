@@ -25,7 +25,7 @@ public:
 
         int chunk_size = 256;
         int offset = 0;
-        for(int i = 0; i<4; i++){
+        for(int i = 0; i<10; i++){
 
             auto m = engine->image->load_model(glm::vec3(0 + offset, 0, 0), glm::vec3(chunk_size, chunk_size, 10), "ground.json");
 
@@ -46,7 +46,7 @@ public:
         }
 
         sonic_body =
-                engine->physics->create_character(glm::vec3(0, 80, 0), glm::vec2(40, 42), 0.35);
+                engine->physics->create_character(glm::vec3(0, 80, 0), glm::vec2(26, 24), 0.35);
 
       //  sonic_body->set_activation_policy(DISABLE_DEACTIVATION);
       //  sonic_body->set_linear_factor(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
@@ -54,21 +54,25 @@ public:
 
         sonic_model->attach_character("sonic_body", sonic_body, true);
 
-        this->sonic_body->set_jump_speed(6.5f);
+        this->sonic_body->set_jump_speed(6.5f * 1.3);
 
 
         post_event([this, engine, sonic_model](){
 
                 if(this->sonic_body->on_ground()) {
+
                     if(this->sonic_body->get_speed().x > 0){
-                        sonic_model->change_animation("walk");
+
+                        sonic_model->change_animation("walk", sonic_model->get_facing());
+
                     } else if(this->sonic_body->get_speed().x < 0){
-                        sonic_model->change_animation("walk");
-                    } else {
-                        sonic_model->change_animation("stand");
+                        sonic_model->change_animation("walk", sonic_model->get_facing());
                     }
 
-                    std::cout << "SPD X: " << this->sonic_body->get_speed().x << std::endl;
+                    if(this->sonic_body->get_speed().x == 0.0f){
+                        sonic_model->change_animation("stand", sonic_model->get_facing());
+                    }
+
                 }
 
         }, true);
@@ -79,9 +83,8 @@ public:
 
                 if(this->sonic_body->on_ground()) {
                     this->sonic_body->jump();
-                    sonic_model->change_animation("roll_1");
+                    sonic_model->change_animation("roll_1", sonic_model->get_facing());
                     engine->mixer->play_effect("jump");
-
                 }
 
             }
@@ -106,11 +109,13 @@ public:
 
                 this->sonic_body->set_speed(spd);
 
+                sonic_model->set_facing(true);
+
                 if(this->sonic_body->on_ground()){
                     if(spd.x >= 6){
-                        sonic_model->change_animation("run");
+                        sonic_model->change_animation("run", sonic_model->get_facing());
                     } else {
-                        sonic_model->change_animation("walk");
+                        sonic_model->change_animation("walk", sonic_model->get_facing());
                     }
                 }
 
@@ -129,12 +134,12 @@ public:
                 }
 
                 this->sonic_body->set_speed(spd);
-
+                sonic_model->set_facing(false);
                 if(this->sonic_body->on_ground()){
                     if(spd.x <= -6){
-                        sonic_model->change_animation("run");
+                        sonic_model->change_animation("run", sonic_model->get_facing());
                     } else {
-                        sonic_model->change_animation("walk");
+                        sonic_model->change_animation("walk", sonic_model->get_facing());
                     }
                 }
 
@@ -195,14 +200,12 @@ public:
         add("sonic",  sonic_model);
 
         for(int i = 0; i<ground_models.size(); i++){
-            add("ground", ground_models[i]);
+            add("ground_" + std::to_string(i), ground_models[i]);
 
             for(auto mapping : ground_models[i]->get_rigid_bodies()){
                 engine->physics->add_rigid_body(mapping.second);
             }
         }
-
-
     }
 
     virtual void update(double delta) override {

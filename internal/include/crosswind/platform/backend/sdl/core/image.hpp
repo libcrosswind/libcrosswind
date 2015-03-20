@@ -56,7 +56,7 @@ public:
 
     void load_texture(const std::string& name, const std::string& path){
 
-	    if ( texture_list.count(name) < 0 ) {
+	    if ( texture_list.find(name) == texture_list.end()) {
 		    auto surface = std::make_unique<video::surface>(platform::filesystem::get_file_path(path));
 
 		    texture_list[name] = std::make_shared<simulation::gl::gl_texture>
@@ -107,6 +107,8 @@ public:
 						 s_props->value()[3].as<double>());
 
 			std::cout << "Sprite: " << name << std::endl;
+			std::cout << "Texture id: " << load_texture(texture)->id << std::endl;
+
 			std::cout << "X: " << uv.x << " Y: " << uv.y << " Z: " << uv.z << " W: " << uv.w << std::endl;
 
 			sprites[name] = std::make_shared<simulation::sprite>(origin, size, uv, load_texture(texture)->id);

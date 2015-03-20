@@ -41,5 +41,22 @@ public:
 
 	}
 
+    void flip(){
+
+        auto tr = vertices[0];  // top right
+        auto tl = vertices[1];  // top left
+
+        vertices[0] = tl;       // flip
+        vertices[1] = tr;       // flip
+        vertices[5] = tl;       // flip
+
+        auto br = vertices[4];  // bottom right
+        auto bl = vertices[3];  // bottom left
+
+        vertices[2] = br;       // flip
+        vertices[3] = br;       // flip
+        vertices[4] = bl;       // flip
+    }
+
     uint32_t texture_id;
 };// class sprite
