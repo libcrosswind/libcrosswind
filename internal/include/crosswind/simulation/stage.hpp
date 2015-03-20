@@ -72,6 +72,42 @@ public:
         }
 	}
 
+	virtual void detect_collisions(){
+		//1
+	/*	int numManifolds = _world->getDispatcher()->getNumManifolds();
+		for (int i=0;i<numManifolds;i++)
+		{
+			//2
+			btPersistentManifold* contactManifold =  _world->getDispatcher()->getManifoldByIndexInternal(i);
+
+			//3
+			int numContacts = contactManifold->getNumContacts();
+			if (numContacts > 0)
+			{
+				//4
+				[[RWDirector sharedInstance] playPopEffect];
+
+				//5
+				const btCollisionObject* obA = contactManifold->getBody0();
+				const btCollisionObject* obB = contactManifold->getBody1();
+
+				//6
+				PNode* pnA = (__bridge PNode*)obA->getUserPointer();
+				PNode* pnB = (__bridge PNode*)obB->getUserPointer();
+
+				//7
+				if (pnA.tag == kBrickTag) {
+					[self destroyBrickAndCheckVictory:pnA];
+				}
+
+				//8
+				if (pnB.tag == kBrickTag){
+					[self destroyBrickAndCheckVictory:pnB];
+				}
+			}
+		}*/
+	}
+
 	virtual void render(){
 
         renderer->begin();
@@ -149,6 +185,7 @@ protected:
 	std::vector<std::pair<bool, std::function<void()> > > event_queue;
 
 	std::shared_ptr< platform::backend::interface::video::renderer> renderer;
+	//std::shared_ptr< physics::dynamic_world> physics;
 	std::map<std::string, bool> conditions;
 
 	std::map<std::string, std::shared_ptr<model> >  model_list;

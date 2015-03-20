@@ -55,12 +55,18 @@ public:
 	}
 
     void load_texture(const std::string& name, const std::string& path){
-        auto surface = std::make_unique<video::surface>(platform::filesystem::get_file_path(path));
 
-        texture_list[name] = std::make_shared<simulation::gl::gl_texture>
-                (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
-                        surface->data.ptr()->format->BytesPerPixel,
-                        surface->data.ptr()->pixels);
+	    if ( texture_list.count(name) < 0 ) {
+		    auto surface = std::make_unique<video::surface>(platform::filesystem::get_file_path(path));
+
+		    texture_list[name] = std::make_shared<simulation::gl::gl_texture>
+				    (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
+						    surface->data.ptr()->format->BytesPerPixel,
+						    surface->data.ptr()->pixels);
+
+
+	    }
+
     }
 
     std::shared_ptr<simulation::gl::gl_texture> load_texture(const std::string& name){
