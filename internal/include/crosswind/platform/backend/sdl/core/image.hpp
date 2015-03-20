@@ -90,6 +90,24 @@ public:
 			load_texture(t->name(), t->value().as<std::string>());
 		}
 
+		std::map<std::string, glm::vec3> sprite_sheet_sizes;
+
+		for (auto s = raw_json["spritesheets"].begin_members(); s != raw_json["spritesheets"].end_members(); ++s)
+		{
+			std::string name    = s->name();                        // spritesheet name
+
+			auto s_props = s->value().begin_members();
+
+			std::string sprite_size_prop = s_props->name();  // property name.
+
+			glm::vec3 sprite_size(s_props->value()[0].as<double>(), // sprite size.
+					 	          s_props->value()[1].as<double>(),
+			                      0.0);
+
+			sprite_sheet_sizes[name] = sprite_size;
+		}
+
+
 		std::map<std::string, std::shared_ptr<simulation::sprite> > sprites;
 
 		for (auto s = raw_json["sprites"].begin_members(); s != raw_json["sprites"].end_members(); ++s)
@@ -111,7 +129,7 @@ public:
 
 			std::cout << "X: " << uv.x << " Y: " << uv.y << " Z: " << uv.z << " W: " << uv.w << std::endl;
 
-			sprites[name] = std::make_shared<simulation::sprite>(origin, size, uv, load_texture(texture)->id);
+			sprites[name] = std::make_shared<simulation::sprite>(origin, sprite_sheet_sizes[texture], uv, load_texture(texture)->id);
 		}
 
 		std::map<std::string, std::shared_ptr<simulation::sprite_animation> > animations;

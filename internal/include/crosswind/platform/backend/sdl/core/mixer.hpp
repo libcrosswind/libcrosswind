@@ -40,7 +40,7 @@ public:
 
 	virtual void load_music(const std::string& name, const std::string& path){
 
-		bgm_info[name] = std::make_pair(-1, false); // channel, playing.
+		bgm_info[name]   = std::make_pair(-1, false); // channel, playing.
         bgm_tracks[name] = std::make_shared<audio::music>(cw::platform::filesystem::get_file_path(path));
 
 	}

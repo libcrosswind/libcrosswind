@@ -10,6 +10,11 @@
 		"ground"	: "sonic_the_hedgehog/graphics/bg/ghz/chunks/60.png"
 	},
 
+	"spritesheets":
+	{
+		"ground" : {"sprite-size" : [256.00, 256.00] }
+	},
+
 	"sprites":
 	{
 		"ground"    : { "ground"  : [0.00, 0.0, 1.0, 1.00] }

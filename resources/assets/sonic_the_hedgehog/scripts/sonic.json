@@ -18,10 +18,13 @@
 
 	"spritesheets":
 	{
-		"SonAni_Wait_intro" : {"sprite-size" : [32.00, 40.00]},
-		"SonAni_Walk" 		: {"sprite-size" : [42.00, 42.00]},
-		"SonAni_Run" 		: {"sprite-size" : [32.00, 40.00]},
-		"SonAni_Roll" 		: {"sprite-size" : [32.00, 32.00]}
+		"SonAni_Wait_intro" : {"sprite-size" : [32.00, 40.00] },
+		"SonAni_LookUp" 	: {"sprite-size" : [32.00, 40.00] },
+		"SonAni_Duck" 		: {"sprite-size" : [40.00, 32.00] },
+		"SonAni_Walk" 		: {"sprite-size" : [42.00, 42.00] },
+		"SonAni_Run" 		: {"sprite-size" : [32.00, 40.00] },
+		"SonAni_Stop" 		: {"sprite-size" : [40.00, 40.00] },
+		"SonAni_Roll" 		: {"sprite-size" : [32.00, 32.00] }
 	},
 
 	"sprites":
