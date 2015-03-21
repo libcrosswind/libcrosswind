@@ -61,8 +61,10 @@ public:
         this->sonic_body->set_jump_speed(6.5f + (224.0f / 480.0f * 6.5f));
 
         sonic_model->set_facing(true);
+        sonic_model->conditions["moving"]  = false;
         sonic_model->conditions["braking"]  = false;
-        sonic_model->conditions["spinning"] = false;
+        sonic_model->conditions["rolling"] = false;
+        sonic_model->conditions["jumping"]  = false;
 
         // ground animations
         post_event([this, engine, sonic_model](){
@@ -75,70 +77,88 @@ public:
                         sonic_model->set_facing(false);
                     }
 
-                    if(glm::sign(this->sonic_body->get_speed().x) * this->sonic_body->get_speed().x >=  0.53125f){
+                    if(engine->input_listener->is_key_down("Up")) {
 
-                        if(engine->input_listener->is_key_down("Down")){
+                        if(this->sonic_body->get_speed().x == 0.0f){
+                            sonic_model->change_animation("look_up", sonic_model->get_facing());
+                        }
 
-                            if(this->sonic_body->on_ground()) {
-                                if(!sonic_model->conditions["spinning"]){
+                    } else if(engine->input_listener->is_key_down("Down")){
 
-                                    sonic_model->conditions["spinning"] = true;
-                                    sonic_model->change_animation("roll_1", sonic_model->get_facing());
+                        if(glm::abs(this->sonic_body->get_speed().x) >=  0.53125f){
 
-                                    if(!engine->mixer->is_playing_effect("stop")){
-                                        engine->mixer->play_effect("spin");
-
-                                    }
-
-                                }
-
+                            if(!sonic_model->conditions["rolling"]){
+                                sonic_model->change_animation("roll_1", sonic_model->get_facing());
+                                engine->mixer->play_effect("spin");
+                                sonic_model->conditions["rolling"] = true;
                             }
 
-                        }
-                    }
-
-                    if(glm::sign(this->sonic_body->get_speed().x) * this->sonic_body->get_speed().x >= 6.0f){
-
-                        if(!sonic_model->conditions["spinning"])
-                            sonic_model->change_animation("run", sonic_model->get_facing());
-
-                    } else {
-
-                        if(!sonic_model->conditions["spinning"])
-                            sonic_model->change_animation("walk", sonic_model->get_facing());
-
-                    }
-
-                    if(this->sonic_body->get_speed().x == 0.0f){
-
-                        if(engine->input_listener->is_key_down("Up")){
-
-                            sonic_model->change_animation("look_up", sonic_model->get_facing());
-
-                        } else if(engine->input_listener->is_key_down("Down")){
-
+                        } else if(this->sonic_body->get_speed().x == 0){
                             sonic_model->change_animation("duck", sonic_model->get_facing());
+                        }
+
+
+                    } else if(engine->input_listener->is_key_down("Left") != engine->input_listener->is_key_down("Right")){
+
+                        if(glm::abs(this->sonic_body->get_speed().x) >= 6.0f){
+                            if(!sonic_model->conditions["rolling"] &&
+                                    !sonic_model->conditions["braking"]){
+
+                                sonic_model->change_animation("run", sonic_model->get_facing());
+                            }
 
                         } else {
+                            if(!sonic_model->conditions["rolling"] &&
+                                    !sonic_model->conditions["braking"]){
 
-                            sonic_model->conditions["braking"] = false;
-                            sonic_model->conditions["spinning"] = false;
-                            sonic_model->change_animation("stand", sonic_model->get_facing());
+                                sonic_model->change_animation("walk", sonic_model->get_facing());
 
+                            }
                         }
 
-                    }
+                        if(glm::abs(this->sonic_body->get_speed().x) >= 4.5f){
+                            bool should_brake = false;
 
-                    if(sonic_model->conditions["braking"]){
-
-                        sonic_model->change_animation("stop", sonic_model->get_facing());
-
-                        if(!engine->mixer->is_playing_effect("stop")){
-
-                            if(engine->input_listener->is_key_down("Left") || engine->input_listener->is_key_down("Right")){
-                                engine->mixer->play_effect("stop");
+                            if(sonic_model->get_facing() && engine->input_listener->is_key_down("Left")){
+                                should_brake = true;
+                            } else if(!sonic_model->get_facing() && engine->input_listener->is_key_down("Right")){
+                                should_brake = true;
                             }
 
+                            if(should_brake && !sonic_model->conditions["braking"] && !sonic_model->conditions["rolling"]){
+                                sonic_model->change_animation("stop", sonic_model->get_facing());
+                                engine->mixer->play_effect("stop");
+                                sonic_model->conditions["braking"] = true;
+                            }
+                        }
+
+
+                        if(sonic_model->conditions["braking"]){
+
+                            if(engine->input_listener->is_key_down("Left") && this->sonic_body->get_speed().x <= 0.0f){
+                                sonic_model->conditions["braking"] = false;
+                            } else if(engine->input_listener->is_key_down("Right") && this->sonic_body->get_speed().x >= 0.0f){
+                                sonic_model->conditions["braking"] = false;
+                            }
+                        }
+
+
+                        if(sonic_model->conditions["rolling"]){
+
+                            if(sonic_model->get_facing() && this->sonic_body->get_speed().x <= 0.0f){
+                                sonic_model->conditions["rolling"] = false;
+                            } else if(!sonic_model->get_facing() && this->sonic_body->get_speed().x >= 0.0f){
+                                sonic_model->conditions["rolling"] = false;
+                            }
+                        }
+
+
+                    } else{
+
+                        if(this->sonic_body->get_speed().x == 0) {
+                            sonic_model->conditions["rolling"] = false;
+                            sonic_model->conditions["braking"] = false;
+                            sonic_model->change_animation("stand", sonic_model->get_facing());
                         }
 
                     }
@@ -173,7 +193,7 @@ public:
 
                 if(this->sonic_body->on_ground()) {
                     this->sonic_body->jump();
-                    sonic_model->conditions["spinning"] = false;
+                    sonic_model->conditions["rolling"] = false;
                     sonic_model->change_animation("roll_1", sonic_model->get_facing());
                     engine->mixer->play_effect("jump");
                 }
@@ -185,56 +205,38 @@ public:
         // movement
         post_event([this, engine, sonic_model](){
 
-            if(engine->input_listener->is_key_down("Right")){
+            if(engine->input_listener->is_key_down("Right") != engine->input_listener->is_key_down("Left")){
 
                 float acc = 0.046875;
                 float dec = 0.5f;
 
                 auto spd = this->sonic_body->get_speed();
 
-                if(sonic_model->get_facing() == false){
-                    if(spd.x <= -4.5f)
-                        sonic_model->conditions["braking"] = true;
+                if(engine->input_listener->is_key_down("Left")){
+                    acc *= -1.0f;
+                    dec *= -1.0f;
+                }
 
+                if(sonic_model->conditions["braking"]){
                     spd.x += dec;
+                } else if(sonic_model->conditions["rolling"]){
+
+                    if(glm::abs(spd.x) > 16.0f){
+                        spd.x = 16.0f * glm::sign(spd.x);
+                    }
+
                 } else {
+
                     spd.x += acc;
-                }
 
-                if(spd.x > 6){
-                    spd.x = 6;
-                }
+                    if(glm::abs(spd.x) > 6.0f){
+                        spd.x = 6.0f * glm::sign(spd.x);
+                    }
 
-                if(spd.x >= 0){
-                    sonic_model->conditions["braking"] = false;
                 }
 
                 this->sonic_body->set_speed(spd);
-            } else if(engine->input_listener->is_key_down("Left")){
 
-                float acc = -0.046875;
-                float dec = -0.5f;
-
-                auto spd = this->sonic_body->get_speed();
-
-                if(sonic_model->get_facing() == true){
-                    if(spd.x >= 4.5f)
-                        sonic_model->conditions["braking"] = true;
-
-                    spd.x += dec;
-                } else {
-                    spd.x += acc;
-                }
-
-                if(spd.x < -6){
-                    spd.x = -6;
-                }
-
-                if(spd.x <= 0){
-                    sonic_model->conditions["braking"] = false;
-                }
-
-                this->sonic_body->set_speed(spd);
             }
 
         }, true);
@@ -275,20 +277,6 @@ public:
         post_event([this, engine](){
 
             auto c = this->camera_list["current"];
-
-/*            if(glm::abs(this->sonic_body->get_origin().x) > engine->window->size.get().x * 0.45f ||
-                    glm::abs(this->sonic_body->get_origin().x) > engine->window->size.get().x * 0.50f){
-
-                c->set_position(this->sonic_body->get_origin());
-
-            }
-
-            if(glm::abs(this->sonic_body->get_origin().y) > engine->window->size.get().y * 0.45){
-                c->set_position(this->sonic_body->get_origin());
-            }
-
-*/
-
             c->set_position(this->sonic_body->get_origin());
 
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <functional>
 
 #include <SDL2/SDL_mixer.h>
 
@@ -24,7 +25,36 @@ namespace core{
 }// namespace platform
 }// namespace cw
 
+
+
 class cw::platform::backend::sdl::core::mixer: public cw::platform::backend::interface::core::mixer{
+
+class audio_callback{
+public:
+
+
+	static void channel_ended(int channel) {
+
+		for (auto &bgm : data->bgm_info) {
+			if (bgm.second.first == channel) {
+				bgm.second.first = -2;
+				bgm.second.second = false;
+			}
+		}
+
+		for (auto &sfx : data->sfx_info) {
+			if (sfx.second.first == channel) {
+				sfx.second.first = -2;
+				sfx.second.second = false;
+			}
+		}
+
+	}
+
+	static sdl::core::mixer* data;
+
+};
+
 public:
 	template<typename... Args>
 	mixer(Args... args) {
@@ -32,15 +62,21 @@ public:
 		if (Mix_OpenAudio(args...) < 0)
 		 throw exception("SDL_mixer could not initialize! SDL_mixer Error: %s\n");//, Mix_GetError());
 
+
+		audio_callback::data = this;
+
+		Mix_ChannelFinished(audio_callback::channel_ended);
+
 	}
 
 	~mixer() {
     	Mix_Quit();
 	}
 
+
 	virtual void load_music(const std::string& name, const std::string& path){
 
-		bgm_info[name]   = std::make_pair(-1, false); // channel, playing.
+		bgm_info[name]   = std::make_pair(-21, false); // channel, playing.
         bgm_tracks[name] = std::make_shared<audio::music>(cw::platform::filesystem::get_file_path(path));
 
 	}
@@ -102,7 +138,7 @@ public:
 
     virtual void load_effect(const std::string& name, const std::string& path){
 
-	    sfx_info[name] = std::make_pair(-1, false); // channel, playing.
+	    sfx_info[name] = std::make_pair(-2, false); // channel, playing.
 	    sfx_tracks[name] = std::make_shared<audio::chunk>(cw::platform::filesystem::get_file_path(path));
 
     }
@@ -112,13 +148,29 @@ public:
 	    sfx_info[name].first = Mix_PlayChannel(-1, sfx_tracks[name]->data.ptr(), 0); // Play the effect
 	    sfx_info[name].second = true;
 
+
+	    std::cout << "Channel: " << sfx_info[name].first <<std::endl;
+
     }
+
 
 	virtual bool is_playing_effect(const std::string& name){
 
-		sfx_info[name].second = Mix_Playing(sfx_info[name].first);
-		return sfx_info[name].second;
+/*		bool playing = sfx_info[name].second;
 
+		if(playing){
+
+		}
+		*/
+
+		if(sfx_info[name].second){
+			sfx_info[name].second  = Mix_Playing(sfx_info[name].first);
+		} else {
+			sfx_info[name].first = -2;
+			sfx_info[name].second = false;
+		}
+
+		return sfx_info[name].second;
 	}
 
 private:
@@ -142,3 +194,5 @@ private:
 
 
 };// class mixer
+
+cw::platform::backend::sdl::core::mixer* cw::platform::backend::sdl::core::mixer::audio_callback::data = nullptr;
