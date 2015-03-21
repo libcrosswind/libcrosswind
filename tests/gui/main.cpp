@@ -1,19 +1,25 @@
 #include <crosswind/platform/application.hpp>
 
+class graphical_chunk{
+public:
 
-// USAGE:
-//btRigidBody* tgtBody /* = ... */;
-//YourContext foo;
-//ContactSensorCallback callback(*tgtBody/*, foo*/);
-//world->contactTest(tgtBody,callback);
+
+private:
+};
+
+
+class sonic_actor{
+public:
+
+
+private:
+};
 
 
 class green_hill_zone: public cw::simulation::stage{
 public:
     green_hill_zone(){
-
         this->name = "green_hill_zone";
-
     }
 
     virtual void init(std::shared_ptr<cw::platform::backend::interface::engine> engine){
@@ -26,6 +32,9 @@ public:
         engine->mixer->load_effect("spin", "Spin.wav");
 
         auto sonic_model  = engine->image->load_model(glm::vec3(0, 80, 0), glm::vec3( 40,  42, 10), "sonic.json");
+
+        // default gravity is 0.21875 per frame, we have 60 frames. 0.21875.0f * 60.0f = 13.125f
+        engine->physics->set_gravity(glm::vec3(0.0f, -13.125f, 0.0f));
 
         int chunk_size = 256;
         int offset = 0;
@@ -52,13 +61,10 @@ public:
         this->sonic_body =
                 engine->physics->create_character(glm::vec3(0, 80, 0), glm::vec2(26, 24), 0.35);
 
-      //  sonic_body->set_activation_policy(DISABLE_DEACTIVATION);
-      //  sonic_body->set_linear_factor(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-
-
         sonic_model->attach_character("sonic_body", sonic_body, true);
 
-        this->sonic_body->set_jump_speed(6.5f + (224.0f / 480.0f * 6.5f));
+        this->sonic_body->set_jump_speed(6.5f);
+
 
         sonic_model->set_facing(true);
         sonic_model->conditions["moving"]  = false;
@@ -76,7 +82,6 @@ public:
                     } else if(this->sonic_body->get_speed().x < 0){
                         sonic_model->set_facing(false);
                     }
-
 
                     if(engine->input_listener->is_key_down("Down")){
 
@@ -126,7 +131,6 @@ public:
                             }
                         }
 
-
                         if(sonic_model->conditions["braking"]){
 
                             if(engine->input_listener->is_key_down("Left") && this->sonic_body->get_speed().x <= 0.0f){
@@ -136,7 +140,6 @@ public:
                             }
                         }
 
-
                         if(sonic_model->conditions["rolling"]){
 
                             if(sonic_model->get_facing() && this->sonic_body->get_speed().x <= 0.0f){
@@ -145,11 +148,7 @@ public:
                                 sonic_model->conditions["rolling"] = false;
                             }
                         }
-
-
                     }
-
-
 
                     if(this->sonic_body->get_speed().x == 0) {
                         sonic_model->conditions["rolling"] = false;
@@ -178,7 +177,6 @@ public:
                     frame_duration *= 1.0f / 60.0f;
                     sonic_model->get_animations()["roll_1"]->duration =
                             frame_duration * sonic_model->get_animations()["roll_1"]->frames.size();
-
                 }
 
         }, true);
@@ -220,8 +218,6 @@ public:
                     dec *= -1.0f;
                 }
 
-
-
                 if(sonic_model->conditions["braking"]){
                     spd.x += dec;
                 } else if(sonic_model->conditions["rolling"]){
@@ -232,7 +228,6 @@ public:
                         spd.x += dec;
 
                     }
-
 
                     if(glm::abs(spd.x) > 16.0f){
                         spd.x = 16.0f * glm::sign(spd.x);
@@ -290,12 +285,10 @@ public:
                     }
                 }
 
-
                 this->sonic_body->set_speed(spd);
             }
 
         }, true);
-
 
         // camera
         post_event([this, engine](){
@@ -303,10 +296,7 @@ public:
             c->set_position(this->sonic_body->get_origin());
         }, true);
 
-
-
         engine->physics->add_character(sonic_body);
-
 
         add("sonic",  sonic_model);
 
@@ -318,18 +308,6 @@ public:
             }
         }
     }
-
-    virtual void update(double delta) override {
-
-        for(auto& element: standard_queue){
-            element->update(delta);
-        }
-
-//        ContactSensorCallback callback(sonic_body->physic_body.get());
- //       physics->contact_test(sonic_body, callback);
-
-    }
-
 
     virtual void deinit(std::shared_ptr<cw::platform::backend::interface::engine> engine){
         engine->physics->remove_character(sonic_body);
@@ -351,13 +329,21 @@ int main(int argc, char **argv) {
 
     cw::platform::filesystem::add_directory("assets", true);
 
-    auto window_bounds = glm::vec4(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480);
-    auto app = std::make_shared<cw::platform::application>("Main Window", window_bounds);
+    auto window_settings   = glm::vec2(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+    auto default_resolution = glm::vec2(320.0f, 224.0f);
+    auto window_resolution = glm::vec2(640.0f, 480.0f);
+    auto world_scale =
+            glm::vec3(window_resolution[0] / default_resolution[0], window_resolution[1]/default_resolution[1], 1.0);
+
+    auto app = std::make_shared<cw::platform::application>("Main Window",
+                                                           window_settings,
+                                                           default_resolution,
+                                                           window_resolution,
+                                                           world_scale);
 
     app->add_stage(std::make_shared<green_hill_zone>());
     app->swap_stage("current", "green_hill_zone");
     app->run();
-
 
     return 0;
 }
