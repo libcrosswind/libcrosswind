@@ -6,4 +6,4 @@ Current status:
 - [x] Unstable
 - [ ] Stable
 
-Broken. Use release 0.2
+Broken. Use the tag 0.2 version.
