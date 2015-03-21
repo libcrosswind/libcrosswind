@@ -82,10 +82,11 @@ public:
 
                         if(glm::abs(this->sonic_body->get_speed().x) >=  0.53125f){
 
-                            if(!sonic_model->conditions["rolling"] && !sonic_model->conditions["braking"]){
+                            if(!sonic_model->conditions["rolling"]){
                                 sonic_model->change_animation("roll_1", sonic_model->get_facing());
                                 engine->mixer->play_effect("spin");
                                 sonic_model->conditions["rolling"] = true;
+                                sonic_model->conditions["braking"] = false;
                             }
 
                         }
