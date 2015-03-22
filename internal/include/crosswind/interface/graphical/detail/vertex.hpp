@@ -3,16 +3,18 @@
 #include <glm/glm.hpp>
 
 namespace cw{
-namespace geometry{
+namespace interface{
+namespace graphical{
 namespace detail{
 
 	struct vertex;
 
 }// namespace detail
-}// namespace geometry
+}// namespace graphical
+}// namespace interface
 }// namespace cw
 
-struct cw::geometry::detail::vertex{
+struct cw::interface::graphical::detail::vertex{
 	glm::vec4 position;
 	glm::vec4 color;	
     glm::vec2 uv;

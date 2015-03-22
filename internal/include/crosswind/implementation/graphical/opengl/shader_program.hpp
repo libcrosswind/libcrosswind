@@ -6,21 +6,23 @@
 
 #include <GL/glew.h>
 
-#include <crosswind/platform/backend/interface/core/exception.hpp>
+#include <crosswind/implementation/platform/exception.hpp>
 
 namespace cw{
-namespace simulation{
-namespace gl{
+namespace implementation{
+namespace graphical{
+namespace opengl{
 
-	class glsl_program;
+	class shader_program;
 
-}// namespace gl
-}// namespace simulation
+}// namespace opengl
+}// namespace graphical
+}// namespace implementation
 }// namespace cw
 
-class cw::simulation::gl::glsl_program{
+class cw::implementation::graphical::opengl::shader_program{
 public:
-    glsl_program(): 
+    shader_program(): 
     attributes_number(0), 
     program_id(0), 
     vertex_shader_id(0), 
@@ -28,7 +30,7 @@ public:
 
     }
 
-    ~glsl_program(){
+    virtual ~shader_program(){
 
     }
 
@@ -36,11 +38,11 @@ public:
 		program_id = glCreateProgram();
 
 	    if ((vertex_shader_id = glCreateShader(GL_VERTEX_SHADER)) == 0) {
-	            throw platform::backend::interface::core::exception("Could not create vertex shader");
+	            throw platform::exception("Could not create vertex shader");
 	    }
 
 	    if ((fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER)) == 0) {
-	            throw platform::backend::interface::core::exception("Could not create fragment shader");
+	            throw platform::exception("Could not create fragment shader");
 	    }	    
 
     	//Compile shaders
@@ -71,7 +73,7 @@ public:
 	        glDeleteShader(fragment_shader_id);
 
 	        std::printf("%s\n", &(error_log[0]));
-            throw platform::backend::interface::core::exception("Faled to link shaders");
+            throw platform::exception("Faled to link shaders");
 	    }
 
 	    glDetachShader(program_id, vertex_shader_id);
@@ -87,7 +89,7 @@ public:
 	int32_t get_uniform_location(const std::string& uniform_name) {
 		auto location = glGetUniformLocation(program_id, uniform_name.c_str());
 		if (location == GL_INVALID_INDEX) {
-			throw platform::backend::interface::core::exception("Uniform " + uniform_name + " not found in shader");
+			throw platform::exception("Uniform " + uniform_name + " not found in shader");
 		}
 		return location;
 	}
@@ -115,7 +117,7 @@ private:
 	    std::ifstream shader_file(shader_filepath);
 	    if (shader_file.fail()) {
 	        perror(shader_filepath.c_str());
-	       	throw platform::backend::interface::core::exception("Failed to open " + shader_filepath);
+	       	throw platform::exception("Failed to open " + shader_filepath);
 	    }
 
 	    std::string file_contents = "";
@@ -146,7 +148,7 @@ private:
 
 	        glDeleteShader(shader_id); 
 	        std::printf("%s\n", &(error_log[0]));
-            throw platform::backend::interface::core::exception("Faled to compile shader: " + shader_filepath);
+            throw platform::exception("Faled to compile shader: " + shader_filepath);
 	    }
 	}
 
@@ -157,5 +159,5 @@ private:
 
     uint32_t vertex_shader_id;
     uint32_t fragment_shader_id;
-    
-};// class glsl_program
+
+};// class shader_program

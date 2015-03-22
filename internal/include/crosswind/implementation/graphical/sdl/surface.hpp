@@ -2,24 +2,22 @@
 
 #include <SDL2/SDL_image.h>
 
-#include <crosswind/functional/resource_property.hpp>
+#include <crosswind/modules/functional/resource_property.hpp>
 
 namespace cw{
-namespace platform{
-namespace backend{
+namespace implementation{
+namespace graphical{
 namespace sdl{
-namespace video{
 
 	class surface;
 
-}// namespace video
 }// namespace sdl
-}// namespace backend
-}// namespace platform
+}// namespace graphical
+}// namespace implementation
 }// namespace cw
 
 
-class cw::platform::backend::sdl::video::surface{
+class cw::implementation::graphical::sdl::surface{
 public:
 	surface(const std::string& file_path): data(IMG_Load, SDL_FreeSurface, file_path.c_str()){
 

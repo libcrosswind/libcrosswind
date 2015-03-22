@@ -15,7 +15,7 @@ namespace detail{
 }// namespace physics
 }// namespace cw
 
-#include <iostream>
+//#include <iostream>
 
 
 struct ContactSensorCallback : public btCollisionWorld::ContactResultCallback {
@@ -56,7 +56,7 @@ struct ContactSensorCallback : public btCollisionWorld::ContactResultCallback {
 			pt = cp.m_localPointB;
 		}
 
-		std::cout << "Collision X: " << pt.getX() / scale << " Y: " << pt.getY() / scale << " Z: " << pt.getZ() / scale << std::endl;
+//		std::cout << "Collision X: " << pt.getX() / scale << " Y: " << pt.getY() / scale << " Z: " << pt.getZ() / scale << std::endl;
 		// do stuff with the collision point
 		return 0; // There was a planned purpose for the return value of addSingleResult, but it is not used so you can ignore it.
 	}

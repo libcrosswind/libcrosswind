@@ -1,15 +1,9 @@
 #pragma once
 
-#include <memory>
 
 #include <btBulletDynamicsCommon.h>
-#include <glm/glm.hpp>
 
-#include <crosswind/physics/detail/rigid_body.hpp>
-#include <crosswind/physics/kinematic_character.hpp>
-
-#include <crosswind/physics/debug/physics_debug_drawer.hpp>
-#include <crosswind/physics/box.hpp>
+#include <crosswind/interface/simulation/physics.hpp>
 
 namespace cw{
 namespace implementation{
@@ -20,8 +14,6 @@ namespace simulation{
 }// namespace simulation
 }// namespace implementation
 }// namespace cw
-
-
 
 class cw::implementation::simulation::physics: public cw::interface::simulation::physics{
 public:
@@ -55,7 +47,6 @@ public:
 
 	void set_gravity(const glm::vec3& g){
 		glm::vec3 gravity = g * scale;
-		std::cout << scale.x << " " << scale.y << " " << scale.z << std::endl;
 		world->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
 	}
 
@@ -109,12 +100,7 @@ public:
 
 	}
 
-
-	void contact_test(std::shared_ptr<detail::rigid_body> body, btCollisionWorld::ContactResultCallback& resultCallback){
-		world->contactTest(body->physic_body.get(), resultCallback);
-	}
-
-	void debug_draw_world(){
+	void draw_world(){
 		world->debugDrawWorld();
 	}
 

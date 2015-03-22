@@ -2,29 +2,32 @@
 
 #include <glm/glm.hpp>
 
-#include <crosswind/geometry/rectangle.hpp>
+#include <crosswind/interface/graphical/detail/mesh.hpp>
 
 namespace cw{
-namespace simulation{
+namespace interface{
+namespace graphical{
+namespace detail{
 
 	class sprite;
 
-}// namespace simulation
+}// namespace detail
+}// namespace graphical
+}// namespace interface
 }// namespace cw
 
-
-class cw::simulation::sprite: public cw::geometry::mesh {
+class cw::interface::graphical::detail::sprite: public cw::interface::graphical::detail::mesh {
 public:
 	sprite(const glm::vec3& o, 
-           const glm::vec3& s, 
-           const glm::vec4& c = glm::vec4(1.0,1.0,1.0,1.0),
-           const glm::vec4& uv,
-           const uint32_t& t_id):
+           const glm::vec3& s,
+           const glm::vec4& c  = glm::vec4(1.0,1.0,1.0,1.0),
+           const glm::vec4& uv = glm::vec4(0.0, 0.0, 1.0, 1.0),
+           const uint32_t& t_id = 0): cw::interface::graphical::detail::mesh(o, s),
             texture_id(t_id){
 
-            auto px = p.x - s.x/2;
-            auto py = p.y - s.y/2;
-            auto pz = p.z - s.z/2;
+            auto px = o.x - s.x/2;
+            auto py = o.y - s.y/2;
+            auto pz = o.z - s.z/2;
             auto pw = 1.0f;
 
             auto dx = s.x;
@@ -48,20 +51,20 @@ public:
                 top_right
             };
 
-        // first triangle
-        vertices[0].set_uv(uv.z, uv.w); // top right
-        vertices[1].set_uv(uv.x, uv.w); // top left
-        vertices[2].set_uv(uv.x, uv.y); // bottom left
+            // first triangle
+            vertices[0].set_uv(uv.z, uv.w); // top right
+            vertices[1].set_uv(uv.x, uv.w); // top left
+            vertices[2].set_uv(uv.x, uv.y); // bottom left
 
-        // second triangle
-        vertices[3].set_uv(uv.x, uv.y); // bottom left
-        vertices[4].set_uv(uv.z, uv.y); // bottom right
-        vertices[5].set_uv(uv.z, uv.w); // top right
+            // second triangle
+            vertices[3].set_uv(uv.x, uv.y); // bottom left
+            vertices[4].set_uv(uv.z, uv.y); // bottom right
+            vertices[5].set_uv(uv.z, uv.w); // top right
 
-//        set_origin(o);
+            set_origin(o);
 	}
 
-    virtual glm::vec3 set_origin(const glm::vec3& new_origin) override {
+    virtual void set_origin(const glm::vec3& new_origin) override {
 
         auto px = new_origin.x - size.x/2;
         auto py = new_origin.y - size.y/2;
@@ -108,4 +111,5 @@ public:
     }
 
     uint32_t texture_id;
+    
 };// class sprite

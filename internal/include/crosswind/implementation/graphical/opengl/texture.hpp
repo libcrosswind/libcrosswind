@@ -1,24 +1,25 @@
 #pragma once
 
-#include <vector>
-
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-#include <SDL2/SDL_image.h>
+
+#include <crosswind/interface/graphical/detail/texture.hpp>
 
 namespace cw{
-namespace simulation{
-namespace gl{
+namespace implementation{
+namespace graphical{
+namespace opengl{
 
-	class gl_texture;
+	class texture;
 
-}// namespace gl
-}// namespace simulation
+}// namespace opengl
+}// namespace graphical
+}// namespace implementation
 }// namespace cw
 
-class cw::simulation::gl::gl_texture{
+class cw::implementation::graphical::opengl::texture: public cw::interface::graphical::detail::texture{
 public:
-	gl_texture(const glm::vec2& size, unsigned char bpp, void* pixels): id(0){
+	texture(const glm::vec2& size, unsigned char bpp, void* pixels): cw::interface::graphical::detail::texture(0){
 
         glGenTextures(1, &id);
 		glBindTexture(GL_TEXTURE_2D, id);
@@ -48,5 +49,8 @@ public:
 		glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-	uint32_t id;
-};
+    virtual ~texture(){
+
+    }
+
+};// class texture

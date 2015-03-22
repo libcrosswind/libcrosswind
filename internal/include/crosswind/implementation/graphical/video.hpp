@@ -2,11 +2,12 @@
 
 #include <memory>
 
-#include <SDL2/SDL_image.h>
-
 #include <crosswind/interface/graphical/video.hpp>
 #include <crosswind/implementation/platform/exception.hpp>
 #include <crosswind/implementation/graphical/opengl/window.hpp>
+#include <crosswind/implementation/graphical/opengl/renderer.hpp>
+#include <crosswind/implementation/graphical/opengl/texture.hpp>
+#include <crosswind/implementation/graphical/sdl/surface.hpp>
 
 namespace cw{
 namespace implementation{
@@ -36,39 +37,30 @@ public:
 		                                          fps,
 		                                          window_flags);
 
-//		renderer = std::make_shared<detail::renderer>();
+		renderer = std::make_shared<opengl::renderer>();
 	}
 
 	virtual ~video() {
 		IMG_Quit();
 	}
 
-/*    void load_texture(const std::string& name, const std::string& path){
+    void load_texture(const std::string& name, const std::string& path){
 
         if ( texture_list.find(name) == texture_list.end()) {
-            auto surface = std::make_unique<video::surface>(platform::filesystem::get_file_path(path));
+            auto surface = std::make_unique<sdl::surface>(path);
 
-            texture_list[name] = std::make_shared<simulation::gl::gl_texture>
+            texture_list[name] = std::make_shared<opengl::texture>
                     (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
                             surface->data.ptr()->format->BytesPerPixel,
                             surface->data.ptr()->pixels);
-
         }
 
     }
 
-    std::shared_ptr<simulation::gl::gl_texture> load_texture(const std::string& name){
+    std::shared_ptr<interface::graphical::detail::texture> load_texture(const std::string& name){
         
         return texture_list[name];
-
+        
     }
-*/
-private:
-	int init_more(int flags) {
-		int ret;
-			if (((ret = IMG_Init(flags)) & flags) != flags)
-		  		throw platform::exception("IMG_Init");
-		return ret;
-	}
 
 };// class video

@@ -29,7 +29,6 @@ public:
             glm::vec2 s_size = size * glm::vec2(s.x, s.y);
 
 
-
             btTransform start_transform;
             start_transform.setIdentity ();
             start_transform.setOrigin (btVector3(s_origin.x, s_origin.y, s_origin.z));

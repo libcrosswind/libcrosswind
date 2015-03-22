@@ -1,23 +1,24 @@
 #pragma once
 
 #include <vector>
-#include <utility>
 
 #include <glm/glm.hpp>
 
-#include <crosswind/geometry/detail/vertex.hpp>
+#include <crosswind/interface/graphical/detail/vertex.hpp>
 
 namespace cw{
-namespace geometry{
+namespace interface{
+namespace graphical{
 namespace detail{
 
     class mesh;
 
 }// namespace detail
-}// namespace geometry
+}// namespace graphical
+}// namespace interface
 }// namespace cw
 
-class cw::geometry::detail::mesh{
+class cw::interface::graphical::detail::mesh{
 public:
     mesh(const glm::vec3& o, const glm::vec3& s):
         origin(o), size(s){
@@ -30,8 +31,8 @@ public:
     virtual void set_origin(const glm::vec3& new_origin){ origin = new_origin; }
     virtual glm::vec3 get_origin(){ return origin; }
 
-    virtual void set_vertices(const std::vector& new_vertices){ vertices = new_vertices; }
-    virtual std::vector<vertex> get_vertices(){ return vertices; }
+    virtual void set_vertices(const std::vector<vertex>& new_vertices){ vertices = new_vertices; }
+    virtual std::vector<vertex>& get_vertices(){ return vertices; }
 
 protected:
     glm::vec3 origin;
