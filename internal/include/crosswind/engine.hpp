@@ -11,7 +11,7 @@
 #include <crosswind/implementation/platform/input.hpp>
 #include <crosswind/implementation/graphical/video.hpp>
 #include <crosswind/implementation/sound/mixer.hpp>
-//#include <crosswind/implementation/simulation/physics.hpp>
+#include <crosswind/implementation/simulation/physics.hpp>
 
 namespace cw{
     
@@ -109,9 +109,9 @@ public:
                                                                      engine_settings.audio.channels,
                                                                      engine_settings.audio.chunk_size);
 
-/*        physics     = std::make_shared<implementation::simulation::physics>(engine_settings.physics.gravity,
+        physics     = std::make_shared<implementation::simulation::physics>(engine_settings.physics.gravity,
                                                                             engine_settings.physics.scale,
-                                                                            engine_settings.physics.unit_value);*/
+                                                                            engine_settings.physics.unit_value);
 
 /*
             //We wil treat centimeters as pixels where 1 millimeter = 3.78 pixels
@@ -161,7 +161,7 @@ private:
         application->update();
         input->update();
 //        stages["current"]->update();
-//    	physics->update(1/60.0);
+    	physics->update(1/60.0);
 //        stages["current"]->update(1/60.0/*video->window->fps_limiter->get_delta()*/);
     }
 
@@ -178,7 +178,7 @@ public:
     std::shared_ptr< interface::platform::input       >	input;
     std::shared_ptr< interface::graphical::video 	  >	video;
     std::shared_ptr< interface::sound::mixer          > mixer;
-//    std::shared_ptr< interface::simulation::physics   >	physics;
+    std::shared_ptr< interface::simulation::physics   >	physics;
 
 
 //    std::shared_ptr<  backend::interface::simulation::loader 	>	loader;
