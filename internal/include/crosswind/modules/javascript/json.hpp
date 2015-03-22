@@ -4,31 +4,31 @@
 #include <string>
 #include <jsoncons/json.hpp>
 
-#include <crosswind/platform/filesystem.hpp>
-
 namespace cw{
+namespace modules{
 namespace javascript{
 
     class json;
 
 }// namespace javascript
+}// namespace modules
 }// namespace cw
 
-class cw::javascript::json{
+class cw::modules::javascript::json{
 public:
     json(){
     }
 
     json& from_file(const std::string& filename){
 
-        data = jsoncons::json::parse_file(platform::filesystem::get_file_path(filename));
+        data = jsoncons::json::parse_file(filename);
 
         return *this;
     }
 
     json& from_string(const std::string& json_string){
 
-        data = jsoncons::json::parse_string(platform::filesystem::get_file_path(json_string));
+        data = jsoncons::json::parse_string(json_string);
         return *this;
     }
 

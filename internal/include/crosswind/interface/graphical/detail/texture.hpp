@@ -16,10 +16,10 @@ namespace detail{
 
 class cw::interface::graphical::detail::texture{
 public:
-	texture(const uint32_t& i): id(i){
+	texture(const uint32_t& c_id): id(c_id){
 	}
 
-protected:
+public:
 	uint32_t id;
 
 };// class texture

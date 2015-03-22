@@ -6,12 +6,10 @@
 
 #include <glm/glm.hpp>
 
-//#include <crosswind/simulation/model.hpp>
-//#include <crosswind/simulation/gl/gl_texture.hpp>
-
 #include <crosswind/interface/graphical/detail/texture.hpp>
 #include <crosswind/interface/graphical/detail/window.hpp>
 #include <crosswind/interface/graphical/detail/renderer.hpp>
+#include <crosswind/interface/graphical/object/model.hpp>
 
 namespace cw{
 namespace interface{
@@ -35,9 +33,9 @@ public:
     virtual void load_texture(const std::string& name, const std::string& path) = 0;
 	virtual std::shared_ptr<detail::texture> load_texture(const std::string& name) = 0;
 
-/*	virtual std::shared_ptr<simulation::model>
+	virtual std::shared_ptr<object::model>
 			load_model(const glm::vec3& origin, const glm::vec3& size, const std::string& template_file) = 0;
-*/
+
 	std::shared_ptr< detail::window   >	window;
     std::shared_ptr< detail::renderer >	renderer;
 

@@ -73,7 +73,7 @@ public:
 		world->debugDrawWorld();
 	}
 
-	virtual void update(double dt){
+	virtual void update(float dt){
 		world->stepSimulation(dt);
 	}
 

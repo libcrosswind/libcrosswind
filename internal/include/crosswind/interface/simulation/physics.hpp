@@ -34,7 +34,7 @@ public:
 
 	virtual void debug_draw_world(const glm::mat4& projection_matrix) = 0;
 
-	virtual void update(double dt) = 0;
+	virtual void update(float dt) = 0;
 
 	template<typename T>
 	auto create_character(const glm::vec3& origin, const glm::vec2& size, const float& step_height){

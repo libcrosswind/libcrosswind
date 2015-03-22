@@ -20,14 +20,14 @@ class cw::interface::graphical::detail::sprite: public cw::interface::graphical:
 public:
 	sprite(const glm::vec3& o, 
            const glm::vec3& s,
-           const glm::vec4& c  = glm::vec4(1.0,1.0,1.0,1.0),
-           const glm::vec4& uv = glm::vec4(0.0, 0.0, 1.0, 1.0),
+           const glm::vec4& c  = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+           const glm::vec4& uv = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
            const uint32_t& t_id = 0): cw::interface::graphical::detail::mesh(o, s),
             texture_id(t_id){
 
-            auto px = o.x - s.x/2;
-            auto py = o.y - s.y/2;
-            auto pz = o.z - s.z/2;
+            auto px = o.x - s.x/2.0f;
+            auto py = o.y - s.y/2.0f;
+            auto pz = o.z - s.z/2.0f;
             auto pw = 1.0f;
 
             auto dx = s.x;
@@ -35,10 +35,10 @@ public:
             auto dz = s.z;
 
 
-            detail::vertex top_right(glm::vec4(px + dx, py + dy, pz, pw), c, glm::vec2(0.0, 0.0));
-            detail::vertex top_left(glm::vec4(px, py + dy, pz, pw), c, glm::vec2(0.0));
-            detail::vertex bottom_right(glm::vec4(px + dx, py, pz, pw), c, glm::vec2(0.0));
-            detail::vertex bottom_left(glm::vec4(px, py, pz, pw), c, glm::vec2(0.0));
+            detail::vertex top_right(glm::vec4(px + dx, py + dy, pz, pw), c, glm::vec2(0.0f, 0.0f));
+            detail::vertex top_left(glm::vec4(px, py + dy, pz, pw), c, glm::vec2(0.0f));
+            detail::vertex bottom_right(glm::vec4(px + dx, py, pz, pw), c, glm::vec2(0.0f));
+            detail::vertex bottom_left(glm::vec4(px, py, pz, pw), c, glm::vec2(0.0f));
 
             vertices = {
                 // First triangle
@@ -66,9 +66,9 @@ public:
 
     virtual void set_origin(const glm::vec3& new_origin) override {
 
-        auto px = new_origin.x - size.x/2;
-        auto py = new_origin.y - size.y/2;
-        auto pz = new_origin.z - size.z/2;
+        auto px = new_origin.x - size.x/2.0f;
+        auto py = new_origin.y - size.y/2.0f;
+        auto pz = new_origin.z - size.z/2.0f;
         auto pw = 1.0f;
 
         auto dx = size.x;

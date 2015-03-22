@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SDL2/SDL.h>
+
 #include <crosswind/interface/platform/application.hpp>
 #include <crosswind/implementation/platform/exception.hpp>
 

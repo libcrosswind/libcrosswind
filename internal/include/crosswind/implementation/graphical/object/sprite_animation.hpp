@@ -2,26 +2,28 @@
 
 #include <memory>
 #include <vector>
-#include <string>
-#include <crosswind/simulation/sprite.hpp>
+
+#include <crosswind/interface/graphical/object/sprite_animation.hpp>
 
 namespace cw{
-namespace simulation{
+namespace implementation{
+namespace graphical{
+namespace object{
 
-class sprite_animation;
+    class sprite_animation;
 
-}// namespace simulation	
+}// namespace object
+}// namespace graphical
+}// namespace implementation
 }// namespace cw
 
-class cw::simulation::sprite_animation{
+class cw::implementation::graphical::object::sprite_animation: public cw::interface::graphical::object::sprite_animation{
 public:
-
     sprite_animation(){
-        current_frame = 0;
-        x_orientation = true;
+
     }
 
-    void flip(bool default_x){
+    virtual void flip(bool default_x){
 
         if(x_orientation){
             if(!default_x){
@@ -44,9 +46,4 @@ public:
         }
     }
 
-    bool x_orientation;
-
-    double duration;
-    unsigned int current_frame;
-    std::vector<std::shared_ptr<sprite> > frames;
 };// class sprite_animation
