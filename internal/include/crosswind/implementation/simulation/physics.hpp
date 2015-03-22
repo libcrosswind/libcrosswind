@@ -29,8 +29,13 @@ public:
 		btVector3 world_max(1000,1000,1000);
 		btAxisSweep3* sweepBP = new btAxisSweep3(world_min,world_max);
 
-		collision_config.reset(new btDefaultCollisionConfiguration());
-        dispatcher.reset(new btCollisionDispatcher(collision_config.get()));
+		btDefaultCollisionConstructionInfo construction_info = btDefaultCollisionConstructionInfo();
+		construction_info.m_defaultMaxCollisionAlgorithmPoolSize = 1024;
+		construction_info.m_defaultMaxPersistentManifoldPoolSize = 1024;
+
+		collision_config.reset(new btDefaultCollisionConfiguration(construction_info));
+
+		dispatcher.reset(new btCollisionDispatcher(collision_config.get()));
 		broad_phase.reset(new btAxisSweep3(world_min, world_max));
         solver.reset(new btSequentialImpulseConstraintSolver());
         world.reset(new btDiscreteDynamicsWorld(dispatcher.get(), broad_phase.get(), solver.get(), collision_config.get()));
