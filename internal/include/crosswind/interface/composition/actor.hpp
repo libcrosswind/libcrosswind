@@ -1,6 +1,9 @@
 #pragma once
 
-#include <>
+#include <map>
+#include <string>
+
+#include <crosswind/interface/graphical/object/model.hpp>
 
 namespace cw{
 namespace interface{
@@ -13,6 +16,7 @@ namespace composition{
 }// namespace cw
 
 class cw::interface::composition::actor{
+	typedef std::map<std::string, std::shared_ptr<interface::graphical::object::model> > model_map;
 public:
 	actor(){
 
@@ -22,7 +26,11 @@ public:
 
 	}
 
+	virtual model_map& get_model_map(){
+		return models;
+	}
+
 
 protected:
-
+	model_map models;
 };// class actor

@@ -71,13 +71,12 @@ private:
                 stage->get_scene("current")->get_camera("current")->get_camera_matrix());
 
         for(auto& actor_mapping: stage->get_scene("current")->get_actor_map()){
-/*            for(auto& sprite_mapping = actor_mapping.second->get_render_sprite_list()){
-                core->video->renderer->upload(actor_mapping.second->get_render_sprite_list());
-            }*/
-       }
+            for(auto& model_mapping : actor_mapping.second->get_model_map()){
+                core->video->renderer->upload(model_mapping.second->get_render_sprite_list());
+            }
+        }
 
         core->video->renderer->draw();
-
         core->video->renderer->end();
 
 //        physics->draw_world();
