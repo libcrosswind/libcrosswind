@@ -7,16 +7,11 @@
 #include <glm/glm.hpp>
 
 #include <crosswind/interface/settings.hpp>
-#include <crosswind/implementation/platform/application.hpp>
-#include <crosswind/implementation/platform/filesystem.hpp>
-#include <crosswind/implementation/platform/input.hpp>
-#include <crosswind/implementation/graphical/video.hpp>
-#include <crosswind/implementation/sound/mixer.hpp>
-#include <crosswind/implementation/simulation/physics.hpp>
+#include <crosswind/interface/core.hpp>
 #include <crosswind/implementation/composition/stage.hpp>
 
 namespace cw{
-    
+
     class engine;
 
 }// namespace cw
@@ -24,26 +19,9 @@ namespace cw{
 class cw::engine{
 public:
 	engine(interface::settings engine_settings = interface::settings()){
-        application = std::make_shared<implementation::platform::application>(engine_settings.application.flags);
-        filesystem  = std::make_shared<implementation::platform::filesystem>();
 
-        input       = std::make_shared<implementation::platform::input>();
-        video       = std::make_shared<implementation::graphical::video>(engine_settings.video.window_title,
-                                                                         engine_settings.video.window_position,
-                                                                         engine_settings.video.window_resolution,
-                                                                         engine_settings.video.fps,
-                                                                         engine_settings.video.image_flags,
-                                                                         engine_settings.video.window_flags);
 
-        mixer       = std::make_shared<implementation::sound::mixer>(engine_settings.audio.frequency,
-                                                                     engine_settings.audio.format,
-                                                                     engine_settings.audio.channels,
-                                                                     engine_settings.audio.chunk_size);
-
-        physics     = std::make_shared<implementation::simulation::physics>(engine_settings.physics.gravity,
-                                                                            engine_settings.physics.scale,
-                                                                            engine_settings.physics.unit_value);
-
+        core = std::make_shared<interface::composition::core>(engine_settings);
         stage       = std::make_shared<implementation::composition::stage>();
 
 /*
@@ -60,16 +38,16 @@ public:
 
 	void run(){
 
-   		application->start();
+   		core->application->start();
 
-        while (application->alive()) {
+        while (core->application->alive()) {
 
-            video->window->begin_frame();
+            core->video->window->begin_frame();
 
             update();
             render();
 
-            float fps = video->window->end_frame();
+            float fps = core->video->window->end_frame();
 
         }
 
@@ -78,44 +56,36 @@ public:
 
 private:
     void update(){
-        application->update();
-        input->update();
-    	physics->update(1.0f/60.0f);
+        core->application->update();
+        core->input->update();
+        core->physics->update(1.0f/60.0f);
         stage->update(1.0f/60.0f);
     }
 
     void render(){
-        video->window->clear();
+        core->video->window->clear();
 
-        video->renderer->begin();
+        core->video->renderer->begin();
 
-        video->renderer->set_uniform_matrix("projection_matrix",
+        core->video->renderer->set_uniform_matrix("projection_matrix",
                 stage->get_scene("current")->get_camera("current")->get_camera_matrix());
 
         for(auto& actor_mapping: stage->get_scene("current")->get_actor_map()){
-            for(auto& sprite_mapping = actor_mapping.second->get_render_sprite_list()){
-               // video->renderer->upload(actor_mapping.second->get_render_sprite_list());
-            }
+/*            for(auto& sprite_mapping = actor_mapping.second->get_render_sprite_list()){
+                core->video->renderer->upload(actor_mapping.second->get_render_sprite_list());
+            }*/
        }
 
-        video->renderer->draw();
+        core->video->renderer->draw();
 
-        video->renderer->end();
+        core->video->renderer->end();
 
 //        physics->draw_world();
-        video->window->present();
+        core->video->window->present();
     }
 
 public:
-    std::shared_ptr< interface::platform::application > application;
-    std::shared_ptr< interface::platform::filesystem  > filesystem;
-    std::shared_ptr< interface::platform::input       >	input;
-    std::shared_ptr< interface::graphical::video 	  >	video;
-    std::shared_ptr< interface::sound::mixer          > mixer;
-    std::shared_ptr< interface::simulation::physics   >	physics;
-    std::shared_ptr< interface::composition::stage    > stage;
-
-private:
-//
+    std::shared_ptr< interface::composition::core  > core;
+    std::shared_ptr< interface::composition::stage > stage;
 
 };// class engine

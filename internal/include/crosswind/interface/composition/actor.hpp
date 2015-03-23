@@ -1,5 +1,7 @@
 #pragma once
 
+#include <>
+
 namespace cw{
 namespace interface{
 namespace composition{
@@ -16,5 +18,11 @@ public:
 
 	}
 
+	virtual void update(const float& dt){
+
+	}
+
+
+protected:
 
 };// class actor

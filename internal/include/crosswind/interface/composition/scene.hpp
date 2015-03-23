@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include <crosswind/engine.hpp>
+#include <crosswind/interface/core.hpp>
 
 #include <crosswind/interface/composition/actor.hpp>
 #include <crosswind/interface/composition/camera.hpp>
@@ -44,18 +44,18 @@ protected:
 	
 public:
 
-/*    virtual void init(std::shared_ptr<engine> engine) = 0;
-    virtual void deinit(std::shared_ptr<engine> engine) = 0;
+    virtual void init(std::shared_ptr<core> core) = 0;
+    virtual void deinit(std::shared_ptr<core> core) = 0;
 
-	void setup(std::shared_ptr<engine> engine){
-
-		camera_list["main_camera"] = std::make_shared<camera>(engine->window->size.get());
+	void setup(std::shared_ptr<core> core){
+/*
+		camera_list["main_camera"] = std::make_shared<camera>(engine->video->window->size.get());
 		camera_list["current"] = camera_list["main_camera"];
 
 		add(camera_list["current"]);
-
-	}
 */
+	}
+
 	virtual void update(float delta){
 		handle_events();
 
