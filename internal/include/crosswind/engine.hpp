@@ -20,8 +20,6 @@ namespace cw{
 
 }// namespace cw
 
-
-
 class cw::engine{
 public:
 	engine(interface::settings engine_settings = interface::settings()){
@@ -79,13 +77,29 @@ private:
     void update(){
         application->update();
         input->update();
-    	physics->update(1/60.0f);
-//        scene->update(1/60.0f);
+    	physics->update(1.0f/60.0f);
+        stage->update(1.0f/60.0f);
     }
 
     void render(){
         video->window->clear();
-//        stages["current"]->render();
+
+        video->renderer->begin();
+
+        video->renderer->set_uniform_matrix("projection_matrix",
+                stage->get_scene("current")->get_camera("current")->get_camera_matrix());
+
+        for(auto& actor_mapping: stage->get_scene("current")->get_actors()){
+            for(auto& model_mapping){
+
+            }
+            video->renderer->upload(actor_mapping.second->get_render_sprite_list());
+        }
+
+        video->renderer->draw();
+
+        video->renderer->end();
+
 //        physics->draw_world();
         video->window->present();
     }
@@ -97,7 +111,7 @@ public:
     std::shared_ptr< interface::graphical::video 	  >	video;
     std::shared_ptr< interface::sound::mixer          > mixer;
     std::shared_ptr< interface::simulation::physics   >	physics;
-//    std::shared_ptr< interface::composition::scene    > scene;
+    std::shared_ptr< interface::composition::stage    > stage;
 
 private:
 //

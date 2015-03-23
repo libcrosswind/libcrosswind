@@ -3,17 +3,17 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <crosswind/simulation/detail/standard_actor.hpp>
-
 namespace cw{
-namespace simulation{
+namespace interface{
+namespace composition{
 
 		class camera;
 
-}// namespace simulation
+}// namespace composition
+}// namespace interface
 }// namespace cw
 
-class cw::simulation::camera: public detail::standard_actor{
+class cw::interface::composition::camera{
 public: 
 	camera(const glm::vec2& screen_size):
     needs_matrix_update(true),
@@ -51,7 +51,7 @@ public:
 	
 	}
 
-	void update(double delta){
+	void update(float delta){
 		if(needs_matrix_update){
             glm::vec3 translate(-position.x + screen_dimension.x / 2, -position.y + screen_dimension.y/ 2, 0.0f);
             camera_matrix = glm::translate(ortho_matrix, translate);

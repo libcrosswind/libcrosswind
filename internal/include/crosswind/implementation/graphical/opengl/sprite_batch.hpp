@@ -7,10 +7,9 @@
 #include <glm/glm.hpp>
 
 #include <crosswind/interface/graphical/detail/vertex.hpp>
-//#include <crosswind/simulation/model.hpp>
 #include <crosswind/interface/graphical/detail/sprite.hpp>
+#include <crosswind/interface/graphical/detail/sprite_batch.hpp>
 #include <crosswind/implementation/graphical/opengl/render_batch.hpp>
-
 
 namespace cw{
 namespace implementation{
@@ -24,7 +23,7 @@ namespace opengl{
 }// namespace implementation
 }// namespace cw
 
-class cw::implementation::graphical::opengl::sprite_batch{
+class cw::implementation::graphical::opengl::sprite_batch: public cw::interface::graphical::detail::sprite_batch{
 public:
 	sprite_batch(): vao_id(0), vbo_id(0){
 		create_vertex_array();
@@ -35,13 +34,13 @@ public:
 	    sprite_list.clear();
 	}
 
-/*	void upload(std::shared_ptr<model> m){
+	void upload(const sprite_map& render_list){
 
-		for(auto& sprite: m->get_render_sprite_list()){
+		for(auto& sprite: render_list){
 			sprite_list.push_back(sprite.second);
 		}
 
-	}*/
+	}
 
 	void create(){
     	std::stable_sort(sprite_list.begin(), sprite_list.end(), [](auto a, auto b){
@@ -146,7 +145,4 @@ private:
 private:
 	uint32_t vao_id;
 	uint32_t vbo_id;
-
-	std::vector<std::shared_ptr<render_batch> > 					    batch_list;
-	std::vector<std::shared_ptr<interface::graphical::detail::sprite> > sprite_list;
 };
