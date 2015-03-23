@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstdint>
+#include <crosswind/interface/graphical/detail/render_batch.hpp>
+
 
 namespace cw{
 namespace implementation{
@@ -14,16 +16,14 @@ namespace opengl{
 }// namespace implementation
 }// namespace cw
 
-class cw::implementation::graphical::opengl::render_batch {
+class cw::implementation::graphical::opengl::render_batch: public cw::interface::graphical::detail::render_batch {
 public:
     render_batch(uint32_t v_offset, uint32_t v_count, uint32_t t_id) : 
-    vertex_offset(v_offset), 
-    vertex_count(v_count), 
-    texture_id(t_id) {
+    cw::interface::graphical::detail::render_batch(v_offset, v_count, t_id){
 
     }
 
-    uint32_t vertex_offset;
-    uint32_t vertex_count;
-    uint32_t texture_id;
+    virtual ~render_batch(){
+
+    }
 };

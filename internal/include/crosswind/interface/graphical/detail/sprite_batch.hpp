@@ -1,5 +1,8 @@
 #pragma once
 
+#include <map>
+#include <memory>
+#include <string>
 #include <vector>
 
 #include <crosswind/interface/graphical/detail/sprite.hpp>
@@ -18,23 +21,21 @@ namespace detail{
 }// namespace cw
 
 class cw::interface::graphical::detail::sprite_batch{
-	typedef std::map<std::string, std::shared_ptr<interface::graphical::detail::sprite> > sprite_map;
 public:
 	sprite_batch(){
-		create_vertex_array();
 	}
 
-	void clear() = 0;
+	virtual void clear() = 0;
 
-	virtual void upload(const sprite_map& render_list) = 0;
+	virtual void upload(const std::map<std::string, std::shared_ptr<sprite> >& sprite_map) = 0;
 	virtual void create() = 0;
 	virtual void draw() = 0;
 
-private:
+protected:
 	virtual void create_vertex_array() = 0;
 
 	virtual void create_batch_list() = 0;
 
-	std::vector<std::shared_ptr<interface::graphical::detail::render_batch> > 	batch_list;
-	std::vector<std::shared_ptr<interface::graphical::detail::sprite> > 		sprite_list;
+	std::vector<std::shared_ptr<render_batch> > batch_list;
+	std::vector<std::shared_ptr<sprite> > 		sprite_list;
 };

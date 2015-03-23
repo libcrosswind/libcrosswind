@@ -9,12 +9,12 @@ namespace detail{
 
 	class render_batch;
 
-}// namespace opengl
+}// namespace detail
 }// namespace graphical
 }// namespace interface
 }// namespace cw
 
-class cw::interface::graphical::opengl::render_batch {
+class cw::interface::graphical::detail::render_batch {
 public:
     render_batch(uint32_t v_offset, uint32_t v_count, uint32_t t_id) : 
     vertex_offset(v_offset), 

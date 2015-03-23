@@ -36,7 +36,7 @@ public:
         
 	}
 
-	void begin(){
+    virtual void begin(){
 
         shader_program->use();
 
@@ -49,26 +49,25 @@ public:
 
 	}
 
-	void set_uniform_matrix(const std::string& uniform_matrix_name, const glm::mat4& value){
+    virtual void set_uniform_matrix(const std::string& uniform_matrix_name, const glm::mat4& value){
 
         auto uniform_matrix_location = shader_program->get_uniform_location(uniform_matrix_name);
         glUniformMatrix4fv(uniform_matrix_location, 1, GL_FALSE, glm::value_ptr(value));
 
 	}
 
+    virtual void upload(const std::map<std::string, std::shared_ptr<interface::graphical::detail::sprite> >& sprite_map){
+        sprite_batch->upload(sprite_map);
+    }
 
-/*	void upload(std::shared_ptr<cw::simulation::model> model){
-		batch->upload(model);
-	}*/
-
-    void draw(){
+    virtual void draw(){
 
         sprite_batch->create();
         sprite_batch->draw();
 
     }
 
-	void end(){
+    virtual void end(){
 
 		shader_program->unuse();
         
@@ -76,5 +75,4 @@ public:
 
 private:
     std::shared_ptr<shader_program> shader_program;
-    std::shared_ptr<sprite_batch>   sprite_batch;
 };

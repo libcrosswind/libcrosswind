@@ -7,7 +7,7 @@ namespace cw{
 namespace interface{
 namespace composition{
 
-		class camera;
+	class camera;
 
 }// namespace composition
 }// namespace interface
@@ -25,48 +25,19 @@ public:
 		ortho_matrix = glm::ortho(0.0f, screen_dimension.x, 0.0f, screen_dimension.y);
 	}
 
-	void set_position(const glm::vec3& new_position){	
-		position = new_position;
-        needs_matrix_update = true;
-    }
+	virtual void set_position(const glm::vec3& new_position) = 0;
 	
-	glm::vec3 get_position(){
-		return position;
-	}
+	virtual glm::vec3 get_position() = 0;
 
-	void set_scale(float new_scale){ 	
-		scale.x = new_scale;
-		scale.y = new_scale;	
-		scale.z = 0.0f;
-        needs_matrix_update = true;
-    }
+	virtual void set_scale(float new_scale) = 0;
 
-	float get_scale(){
-		return scale.x;	// whichever works
-	}
+	virtual float get_scale() = 0;
 
-    glm::mat4 get_camera_matrix(){
-	
-		return camera_matrix;	
-	
-	}
+    virtual glm::mat4 get_camera_matrix() = 0;
 
-	void update(float delta){
-		if(needs_matrix_update){
-            glm::vec3 translate(-position.x + screen_dimension.x / 2, -position.y + screen_dimension.y/ 2, 0.0f);
-            camera_matrix = glm::translate(ortho_matrix, translate);
-            camera_matrix = glm::scale(glm::mat4(1.0f), scale) * camera_matrix;
-            needs_matrix_update = false;
-		}
-	}
+	virtual void update(float delta) = 0;
 
-    glm::vec2 convert_screen_to_world(glm::vec2 screen_coordinates) {
-        screen_coordinates.y = screen_dimension.y - screen_coordinates.y;
-        screen_coordinates -= glm::vec2(screen_dimension.x / 2, screen_dimension.y / 2);
-        screen_coordinates /= glm::vec2(scale.x, scale.y);
-        screen_coordinates += glm::vec2(position.x, position.y);
-        return screen_coordinates;
-    }
+    virtual glm::vec2 convert_screen_to_world(glm::vec2 screen_coordinates) = 0;
 
 private:
     bool needs_matrix_update;

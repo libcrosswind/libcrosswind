@@ -4,6 +4,9 @@
 
 #include <crosswind/engine.hpp>
 
+#include <crosswind/interface/composition/actor.hpp>
+#include <crosswind/interface/composition/camera.hpp>
+
 namespace cw{
 namespace interface{
 namespace composition{
@@ -41,28 +44,28 @@ protected:
 	
 public:
 
-    virtual void init(std::shared_ptr<engine> engine) = 0;
+/*    virtual void init(std::shared_ptr<engine> engine) = 0;
     virtual void deinit(std::shared_ptr<engine> engine) = 0;
 
-	void setup(std::shared_ptr<cw::engine> engine){
+	void setup(std::shared_ptr<engine> engine){
 
-/*		camera_list["main_camera"] = std::make_shared<camera>(engine->window->size.get());
+		camera_list["main_camera"] = std::make_shared<camera>(engine->window->size.get());
 		camera_list["current"] = camera_list["main_camera"];
 
 		add(camera_list["current"]);
-*/
-	}
 
-	virtual void update(double delta){
+	}
+*/
+	virtual void update(float delta){
 		handle_events();
 
-		for(auto& camera: cameras){
+/*		for(auto& camera: cameras){
            camera.second->update(delta);
         }
 
 		for(auto& actor: actors){
            actor.second->update(delta);
-        }
+        }*/
 	}
 
 
@@ -100,7 +103,7 @@ public:
 	}
 
 	virtual std::shared_ptr<camera> get_camera(const std::string& camera_name){
-		return camera_list[name];
+		return cameras[name];
 	}
 
 	virtual void set_name(const std::string& new_name){ name = new_name; }

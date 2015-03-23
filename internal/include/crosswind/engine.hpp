@@ -13,6 +13,7 @@
 #include <crosswind/implementation/graphical/video.hpp>
 #include <crosswind/implementation/sound/mixer.hpp>
 #include <crosswind/implementation/simulation/physics.hpp>
+#include <crosswind/implementation/composition/stage.hpp>
 
 namespace cw{
     
@@ -42,6 +43,8 @@ public:
         physics     = std::make_shared<implementation::simulation::physics>(engine_settings.physics.gravity,
                                                                             engine_settings.physics.scale,
                                                                             engine_settings.physics.unit_value);
+
+        stage       = std::make_shared<implementation::composition::stage>();
 
 /*
             //We wil treat centimeters as pixels where 1 millimeter = 3.78 pixels
@@ -89,12 +92,11 @@ private:
         video->renderer->set_uniform_matrix("projection_matrix",
                 stage->get_scene("current")->get_camera("current")->get_camera_matrix());
 
-        for(auto& actor_mapping: stage->get_scene("current")->get_actors()){
-            for(auto& model_mapping){
-
+        for(auto& actor_mapping: stage->get_scene("current")->get_actor_map()){
+            for(auto& sprite_mapping = actor_mapping.second->get_render_sprite_list()){
+               // video->renderer->upload(actor_mapping.second->get_render_sprite_list());
             }
-            video->renderer->upload(actor_mapping.second->get_render_sprite_list());
-        }
+       }
 
         video->renderer->draw();
 

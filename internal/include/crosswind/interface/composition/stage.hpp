@@ -1,27 +1,39 @@
 #pragma once
 
+#include <crosswind/interface/composition/scene.hpp>
+
 namespace cw{
 namespace interface{
 namespace composition{
 
-	class scene;
+	class stage;
 
 }// namespace composition
 }// namespace implementation
 }// namespace cw
 
-class cw::interface::composition::scene{
+class cw::interface::composition::stage{
+protected:
+	typedef std::map<std::string, std::shared_ptr<scene> > scene_map;
 public:
-	scene(){
+	stage(){
 		
 	}
 
-	virtual void add_stage(std::shared_ptr<detail::stage> stage) = 0;
-	virtual void swap_stage(const std::string& previous_stage, const std::string& new_stage) = 0;
-	virtual void remove_stage(const std::string& stage_name) = 0;
+	virtual void add_scene(std::shared_ptr<scene> scene) = 0;
+	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene) = 0;
+	virtual void remove_scene(const std::string& scene_name) = 0;
 
 	virtual void update(float dt) = 0;
 
-	std::map<std::string, std::shared_ptr<detail::stage> > stages;
+	virtual void set_scene_map(const scene_map& new_scene_map) = 0;
+
+	virtual scene_map& get_scene_map() = 0;
+
+	virtual std::shared_ptr<scene> get_scene(const std::string& scene_name) = 0;
+
+
+protected:
+	scene_map scenes;
 
 };// class scene
