@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include <crosswind/interface/graphical/object/model.hpp>
@@ -22,14 +23,16 @@ public:
 
 	}
 
-	virtual void update(const float& dt){
+	virtual void init(std::shared_ptr<core> core) = 0;
+	virtual void deinit(std::shared_ptr<core> core) = 0;
 
-	}
+	virtual void update(const float& dt) = 0;
 
 	virtual model_map& get_model_map(){
 		return models;
 	}
 
+	std::shared_ptr<core> core;
 
 protected:
 	model_map models;

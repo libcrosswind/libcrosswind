@@ -44,31 +44,20 @@ protected:
 	
 public:
 
-    virtual void init(std::shared_ptr<core> core) = 0;
-    virtual void deinit(std::shared_ptr<core> core) = 0;
+    virtual void init()   = 0;
+    virtual void deinit() = 0;
 
-	void setup(std::shared_ptr<core> core){
-/*
-		camera_list["main_camera"] = std::make_shared<camera>(engine->video->window->size.get());
-		camera_list["current"] = camera_list["main_camera"];
-
-		add(camera_list["current"]);
-*/
-	}
-
-	virtual void update(float delta){
+	virtual void update(const float& delta){
 		handle_events();
 
-/*		for(auto& camera: cameras){
+		for(auto& camera: cameras){
            camera.second->update(delta);
         }
 
 		for(auto& actor: actors){
            actor.second->update(delta);
-        }*/
+        }
 	}
-
-
 
 	void post_event(const std::function<void()>& event, const bool& continuous = false){
 		event_queue.push_back(std::make_pair(continuous, event));
@@ -82,7 +71,8 @@ public:
 		return actors;
 	}
 
-	virtual void set_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
+	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
+		actor->core = core;
 		actors[actor_name] = actor;
 	}
 
@@ -149,6 +139,8 @@ public:
 		}
 	}
 */
+
+	std::shared_ptr<core> core;
 
 protected:
     std::string name;

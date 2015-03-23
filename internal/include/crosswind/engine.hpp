@@ -21,8 +21,8 @@ public:
 	engine(interface::settings engine_settings = interface::settings()){
 
 
-        core = std::make_shared<interface::composition::core>(engine_settings);
-        stage       = std::make_shared<implementation::composition::stage>();
+        core    = std::make_shared<interface::composition::core>(engine_settings);
+        stage   = std::make_shared<implementation::composition::stage>(core);
 
 /*
             //We wil treat centimeters as pixels where 1 millimeter = 3.78 pixels

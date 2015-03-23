@@ -59,7 +59,7 @@ public:
 
 	}
 
-	virtual void update(float delta){
+	virtual void update(const float& delta){
 
         delta_count += delta;
 

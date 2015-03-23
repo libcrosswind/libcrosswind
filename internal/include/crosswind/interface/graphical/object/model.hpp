@@ -28,7 +28,7 @@ public:
 
 	virtual void change_animation(const std::string& new_animation, const bool& x_orientation = true) = 0;
 
-	virtual void update(float delta) = 0;
+	virtual void update(const float& delta) = 0;
 
 	virtual std::map<std::string, std::shared_ptr<detail::sprite> >& get_render_sprite_list() = 0;
 

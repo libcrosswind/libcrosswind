@@ -29,17 +29,17 @@ public:
 	
 	virtual glm::vec3 get_position() = 0;
 
-	virtual void set_scale(float new_scale) = 0;
+	virtual void set_scale(const float& new_scale) = 0;
 
 	virtual float get_scale() = 0;
 
     virtual glm::mat4 get_camera_matrix() = 0;
 
-	virtual void update(float delta) = 0;
+	virtual void update(const float& delta) = 0;
 
     virtual glm::vec2 convert_screen_to_world(glm::vec2 screen_coordinates) = 0;
 
-private:
+protected:
     bool needs_matrix_update;
     glm::vec2 screen_dimension;
 	glm::vec3 scale;
