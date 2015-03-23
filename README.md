@@ -6,4 +6,4 @@ Current status:
 - [x] Unstable
 - [ ] Stable
 
-Working with the production-ready version, meanwhile you can use the tag 0.2 version.
+Working on the production-ready version, meanwhile you can use the tag 0.2 version.
