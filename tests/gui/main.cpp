@@ -14,9 +14,9 @@ int main(int argc, char **argv) {
     auto actor = std::make_shared<cw::implementation::composition::actor>();
 
     scene->set_name("my_scene");
+    engine->stage->add_scene(scene);
     scene->add_actor("default", actor);
 
-    engine->stage->add_scene(scene);
     engine->stage->swap_scene("current", "my_scene");
     engine->run();
 

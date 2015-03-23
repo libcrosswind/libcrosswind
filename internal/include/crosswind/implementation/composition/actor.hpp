@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include <glm/glm.hpp>
 
 #include <crosswind/interface/core.hpp>
 #include <crosswind/interface/composition/actor.hpp>
@@ -32,7 +33,7 @@ public:
 
 	}
 
-	virtual void update(const float& dt){
+	virtual void logic(const float& dt){
 
 	}
 

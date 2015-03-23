@@ -26,7 +26,16 @@ public:
 	virtual void init() = 0;
 	virtual void deinit() = 0;
 
-	virtual void update(const float& dt) = 0;
+	virtual void update(const float& dt){
+		logic(dt);
+
+		for(auto& model_mapping : models){
+			model_mapping.second->update(dt);
+		}
+
+	}
+
+	virtual void logic(const float& dt) = 0;
 
 	virtual model_map& get_model_map(){
 		return models;

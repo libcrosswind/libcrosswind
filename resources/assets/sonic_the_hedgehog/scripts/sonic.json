@@ -7,13 +7,13 @@
 
 	"textures":
 	{
-		"SonAni_Wait_intro"	:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Wait_intro.png",
-		"SonAni_LookUp"		:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_LookUp.png",
-		"SonAni_Duck"		:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Duck.png",
-		"SonAni_Walk"		:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Walk.png",
-		"SonAni_Run"		:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Run.png",
-		"SonAni_Stop"		:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Stop.png",
-		"SonAni_Roll"		:"sonic_the_hedgehog/graphics/characters/sonic/SonAni_Roll.png"
+		"SonAni_Wait_intro"	:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Wait_intro.png",
+		"SonAni_LookUp"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_LookUp.png",
+		"SonAni_Duck"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Duck.png",
+		"SonAni_Walk"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Walk.png",
+		"SonAni_Run"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Run.png",
+		"SonAni_Stop"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Stop.png",
+		"SonAni_Roll"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Roll.png"
 	},
 
 	"spritesheets":
