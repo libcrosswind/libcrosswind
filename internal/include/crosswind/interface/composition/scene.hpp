@@ -74,6 +74,7 @@ public:
 	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
 		actor->core = core;
 		actors[actor_name] = actor;
+		actor->init();
 	}
 
 	virtual std::shared_ptr<actor> get_actor(const std::string& actor_name){
@@ -93,7 +94,7 @@ public:
 	}
 
 	virtual std::shared_ptr<camera> get_camera(const std::string& camera_name){
-		return cameras[name];
+		return cameras[camera_name];
 	}
 
 	virtual void set_name(const std::string& new_name){ name = new_name; }

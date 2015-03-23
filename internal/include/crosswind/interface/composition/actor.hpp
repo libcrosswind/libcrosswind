@@ -23,8 +23,8 @@ public:
 
 	}
 
-	virtual void init(std::shared_ptr<core> core) = 0;
-	virtual void deinit(std::shared_ptr<core> core) = 0;
+	virtual void init() = 0;
+	virtual void deinit() = 0;
 
 	virtual void update(const float& dt) = 0;
 

@@ -23,7 +23,9 @@ public:
 	}
 
 	virtual void init(){
-
+		models["sonic_model"] = core->video->load_model(glm::vec3(0.0f, 0.0f, 0.0f),
+				                                        glm::vec3(40.0f, 42.0f, 0.0f),
+				                                        core->filesystem->get_file_path("sonic.json"));
 	}
 
 	virtual void deinit(){
