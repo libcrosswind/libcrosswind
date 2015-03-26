@@ -35,6 +35,9 @@ public:
 
 	virtual void logic(const float& dt){
 
+/*		if(core->input->is_key_down("k")){
+			models["sonic_model"]->change_animation("walk");
+		}*/
 	}
 
 

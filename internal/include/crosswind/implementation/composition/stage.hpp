@@ -23,8 +23,14 @@ public:
 	virtual void add_scene(std::shared_ptr<interface::composition::scene> scene){
 
 		scene->core = core;
+
+		if(scenes.empty()){
+			scenes["current"] = scene;
+		}
+
 		scenes[scene->get_name()] = scene;
-		scene->init();
+
+		scenes[scene->get_name()]->enable();
 
 	}
 
@@ -33,13 +39,25 @@ public:
 	}
 
 	virtual void remove_scene(const std::string& scene_name){
+		if(scenes.find(scene_name) != scenes.end()){
+			scenes[scene_name]->dispose();
+		}
+
 		scenes[scene_name]->deinit();
 		scenes.erase(scene_name);
 	}
 
 	virtual void update(float dt){
+
 		for(auto& scene_mapping : scenes){
-			scene_mapping.second->update(dt);
+			if(scene_mapping.second->enabled()){
+				scene_mapping.second->init();
+			} else if(scene_mapping.second->disposed()){
+				scene_mapping.second->deinit();
+			} else{
+				scene_mapping.second->update(dt);
+			}
+
 		}
 	}
 

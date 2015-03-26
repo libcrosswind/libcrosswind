@@ -20,6 +20,9 @@ public:
 		
 	}
 
+	virtual void create_scene() = 0;
+	virtual void create_actor() = 0;
+
 	virtual void add_scene(std::shared_ptr<scene> scene) = 0;
 	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene) = 0;
 	virtual void remove_scene(const std::string& scene_name) = 0;
