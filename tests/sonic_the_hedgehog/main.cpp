@@ -1,5 +1,8 @@
 #include <crosswind/engine.hpp>
 
+#include <characters/sonic.hpp>
+#include <zones/green_hill.hpp>
+
 int main(int argc, char **argv) {
 
     auto engine = std::make_shared<cw::engine>();
