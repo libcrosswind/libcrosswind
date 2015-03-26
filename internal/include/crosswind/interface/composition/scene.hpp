@@ -72,9 +72,8 @@ public:
 	}
 
 	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
-		actor->core = core;
 		actors[actor_name] = actor;
-		actor->init();
+
 	}
 
 	virtual std::shared_ptr<actor> get_actor(const std::string& actor_name){
@@ -99,9 +98,6 @@ public:
 
 	virtual void set_name(const std::string& new_name){ name = new_name; }
 	virtual std::string get_name(){ return name; }
-
-
-
 
 /*
 	virtual void handle_collisions(){
@@ -146,6 +142,7 @@ public:
 protected:
     std::string name;
 	actor_map actors;
+
 	camera_map cameras;
 	std::vector<std::pair<bool, std::function<void()> > > event_queue;
 

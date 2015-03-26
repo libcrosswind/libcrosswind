@@ -20,8 +20,11 @@ public:
 		
 	}
 
-	virtual void create_scene() = 0;
-	virtual void create_actor() = 0;
+	virtual void handle_events() = 0;
+	virtual void post_event(const std::function<void()>& event) = 0;
+
+	virtual void load_scene(const std::string& name) = 0;
+	virtual void unload_scene(const std::string& name) = 0;
 
 	virtual void add_scene(std::shared_ptr<scene> scene) = 0;
 	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene) = 0;
@@ -38,5 +41,6 @@ public:
 
 protected:
 	scene_map scenes;
+	std::vector<std::function<void()> > event_queue;
 
 };// class scene

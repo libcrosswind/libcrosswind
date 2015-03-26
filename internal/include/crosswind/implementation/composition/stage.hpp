@@ -20,44 +20,70 @@ public:
 		core = core_ptr;
 	}
 
-	virtual void add_scene(std::shared_ptr<interface::composition::scene> scene){
+	virtual void handle_events(){
 
-		scene->core = core;
-
-		if(scenes.empty()){
-			scenes["current"] = scene;
+		for(auto& event : event_queue){
+			event();
 		}
 
-		scenes[scene->get_name()] = scene;
+		event_queue.clear();
+	}
 
-		scenes[scene->get_name()]->enable();
+	void post_event(const std::function<void()>& event){
+		event_queue.push_back(event);
+	}
+
+	virtual void load_scene(const std::string& name){
+
+		post_event([this, name](){
+		    this->scenes[name]->init();
+		});
+
+	}
+
+	virtual void unload_scene(const std::string& name){
+
+		post_event([this, name](){
+		    this->scenes[name]->deinit();
+		});
+
+	}
+
+	virtual void add_scene(std::shared_ptr<interface::composition::scene> scene){
+
+		post_event([this, scene](){
+		    scene->core = core;
+
+		    if(scenes.empty()){
+			    this->scenes["current"] = scene;
+		    }
+
+		    this->scenes[scene->get_name()] = scene;
+		});
 
 	}
 
 	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene){
-		scenes[previous_scene] = scenes[new_scene];
+
+		post_event([this, previous_scene, new_scene](){
+		    scenes[previous_scene] = scenes[new_scene];
+		});
+
 	}
 
 	virtual void remove_scene(const std::string& scene_name){
-		if(scenes.find(scene_name) != scenes.end()){
-			scenes[scene_name]->dispose();
-		}
 
-		scenes[scene_name]->deinit();
-		scenes.erase(scene_name);
+		post_event([this, scene_name](){
+		    scenes.erase(scene_name);
+		});
+
 	}
 
 	virtual void update(float dt){
+		handle_events();
 
 		for(auto& scene_mapping : scenes){
-			if(scene_mapping.second->enabled()){
-				scene_mapping.second->init();
-			} else if(scene_mapping.second->disposed()){
-				scene_mapping.second->deinit();
-			} else{
 				scene_mapping.second->update(dt);
-			}
-
 		}
 	}
 

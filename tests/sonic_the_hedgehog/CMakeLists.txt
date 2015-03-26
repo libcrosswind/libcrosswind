@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.4)
-project(gui)
+project(sonic_the_hedgehog)
 
 
 set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}/../../internal/include"
@@ -28,9 +28,9 @@ endif()
 
 set(PROJECT_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/../../output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
 file(GLOB sources main.cpp)
-add_executable(gui ${sources})
+add_executable(sonic_the_hedgehog ${sources})
 
-set_target_properties(gui
+set_target_properties(sonic_the_hedgehog
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/lib"
@@ -46,7 +46,7 @@ set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
 set(opengl_libs      glu32 opengl32)
 set(opengl_ext_libs  glew)
 
-target_link_libraries (gui LINK_PUBLIC mingw32
+target_link_libraries (sonic_the_hedgehog LINK_PUBLIC mingw32
                                                 ${SDL2_libs}
                                                 ${SDL2_image_libs}
                                                 ${SDL2_ttf_libs}
