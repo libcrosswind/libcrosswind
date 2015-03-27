@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdexcept>
+
 #include <crosswind/interface/core.hpp>
 #include <crosswind/interface/composition/stage.hpp>
 #include <crosswind/interface/composition/scene.hpp>
@@ -96,7 +98,12 @@ public:
 	}
 
 	virtual std::shared_ptr<interface::composition::scene> get_scene(const std::string& scene_name){
-		return scenes[scene_name];
+		if(scenes.find(scene_name) != scenes.end()){
+			return scenes[scene_name];
+		} else {
+			throw std::runtime_error("Could not find: " + scene_name);
+		}
+
 	}
 
 private:

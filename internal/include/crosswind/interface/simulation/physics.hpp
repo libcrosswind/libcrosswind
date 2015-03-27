@@ -36,12 +36,9 @@ public:
 
 	virtual void update(float dt) = 0;
 
-	template<typename T>
-	auto create_character(const glm::vec3& origin, const glm::vec2& size, const float& step_height){
-		auto character = std::make_shared<T>(origin, size, step_height);
-		add_character(character);
-		return character;
-	}
+	virtual std::shared_ptr<detail::character>
+			create_character(const glm::vec3& origin, const glm::vec2& size, const float& step_height) = 0;
+
 
 	virtual void add_character(std::shared_ptr<detail::character> character_ptr) = 0;
 	virtual void remove_character(std::shared_ptr<detail::character> character_ptr) = 0;

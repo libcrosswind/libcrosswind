@@ -10,7 +10,6 @@
 #include <crosswind/implementation/sound/mixer.hpp>
 #include <crosswind/implementation/simulation/physics.hpp>
 
- 
 namespace cw{
 namespace interface{
 namespace composition{

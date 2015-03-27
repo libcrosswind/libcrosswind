@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.8.4)
 project(sonic_the_hedgehog)
 
 
-set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}/../../internal/include"
+set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
+                            "${PROJECT_SOURCE_DIR}/../../internal/include"
                             "${PROJECT_SOURCE_DIR}/../../external/CImg-1.6.0/include"
                             "${PROJECT_SOURCE_DIR}/../../external/asio_standalone/asio/include"
                             "${PROJECT_SOURCE_DIR}/../../external/jsoncons/src"

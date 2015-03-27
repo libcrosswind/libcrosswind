@@ -77,9 +77,9 @@ public:
 		world->stepSimulation(dt);
 	}
 
-	template<typename T>
-	auto create_character(const glm::vec3& origin, const glm::vec2& size, const float& step_height){
-		auto character = std::make_shared<T>(origin, size, step_height);
+	virtual std::shared_ptr<interface::simulation::detail::character>
+	create_character(const glm::vec3& origin, const glm::vec2& size, const float& step_height){
+		auto character = std::make_shared<detail::character>(origin, size, scale, unit_value, step_height);
 		add_character(character);
 		return character;
 	}
@@ -117,6 +117,10 @@ public:
 	virtual void remove_body(std::shared_ptr<interface::simulation::detail::body> body_ptr){
 		auto body = std::dynamic_pointer_cast<detail::body>(body_ptr);
 		world->removeRigidBody(body->physic_body.get());
+	}
+
+	virtual int get_collision_manifolds_amount(){
+		return dispatcher->getNumManifolds();
 	}
 
 private:

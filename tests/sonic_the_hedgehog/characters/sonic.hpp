@@ -7,19 +7,17 @@
 #include <crosswind/interface/core.hpp>
 #include <crosswind/interface/composition/actor.hpp>
 
-namespace cw{
-namespace implementation{
-namespace composition{
+namespace game{
+namespace characters{
 	
-	class actor;
+	class sonic;
 
-}// namespace composition
-}// namespace implementation
-}// namespace cw
+}// namespace characters
+}// namespace game
 
-class cw::implementation::composition::actor: public cw::interface::composition::actor{
+class game::characters::sonic: public cw::interface::composition::actor{
 public:
-	actor(){
+	sonic(){
 
 	}
 
@@ -27,6 +25,9 @@ public:
 		models["sonic_model"] = core->video->load_model(glm::vec3(0.0f, 0.0f, 0.0f),
 				                                        glm::vec3(40.0f, 42.0f, 0.0f),
 				                                        core->filesystem->get_file_path("sonic.json"));
+
+		add_character("sonic_character", glm::vec3(0, 80, 0), glm::vec2(26, 24), 0.35f);
+
 	}
 
 	virtual void deinit(){
@@ -35,9 +36,10 @@ public:
 
 	virtual void logic(const float& dt){
 
-/*		if(core->input->is_key_down("k")){
+		if(core->input->is_key_down("k")){
 			models["sonic_model"]->change_animation("walk");
-		}*/
+		}
+
 	}
 
 

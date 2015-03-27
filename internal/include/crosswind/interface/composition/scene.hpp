@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <memory>
+#include <stdexcept>
 
 #include <crosswind/interface/core.hpp>
 
@@ -73,11 +74,16 @@ public:
 
 	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
 		actors[actor_name] = actor;
-
 	}
 
 	virtual std::shared_ptr<actor> get_actor(const std::string& actor_name){
-		return actors[actor_name];
+
+		if(actors.find(actor_name) != actors.end()){
+			return actors[actor_name];
+		} else {
+			throw std::runtime_error("Could not find: " + actor_name);
+		}
+
 	}
 
 	virtual void set_camera_map(const camera_map& new_camera_map){
@@ -89,11 +95,20 @@ public:
 	}
 
 	virtual void set_camera(const std::string& camera_name, std::shared_ptr<camera> camera){
+		if(cameras.empty()){
+			cameras["current"] = camera;
+		}
 		cameras[camera_name] = camera;
 	}
 
 	virtual std::shared_ptr<camera> get_camera(const std::string& camera_name){
-		return cameras[camera_name];
+
+		if(cameras.find(camera_name) != cameras.end()){
+			return cameras[camera_name];
+		} else {
+			throw std::runtime_error("Could not find: " + camera_name);
+		}
+
 	}
 
 	virtual void set_name(const std::string& new_name){ name = new_name; }
@@ -102,11 +117,11 @@ public:
 /*
 	virtual void handle_collisions(){
 		//1
-		int numManifolds = _world->getDispatcher()->getNumManifolds();
+		int numManifolds = core->physics->get_collision_manifolds_amount();
 		for (int i=0;i<numManifolds;i++)
 		{
 			//2
-			btPersistentManifold* contactManifold =  _world->getDispatcher()->getManifoldByIndexInternal(i);
+			btPersistentManifold* contactManifold =  core->physics->getDispatcher()->getManifoldByIndexInternal(i);
 
 			//3
 			int numContacts = contactManifold->getNumContacts();
