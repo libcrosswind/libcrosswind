@@ -28,7 +28,11 @@ public:
 	}
 
 	virtual ~actor(){
-		for(auto character_mapping: characters){
+		for(auto& body_mapping: bodies){
+			core->physics->remove_body(body_mapping.second);
+		}
+
+		for(auto& character_mapping: characters){
 			core->physics->remove_character(character_mapping.second);
 		}
 	}
@@ -48,33 +52,57 @@ public:
 	virtual void logic(const float& dt) = 0;
 
 
-	virtual void add_model(){
+	virtual void add_model(const std::string& model_name,
+			               const glm::vec3& origin,
+			               const glm::vec3& size,
+	                       const std::string& template_file){
 
-	}
-
-	virtual void remove_model(){
-
-	}
-
-	virtual void add_character(const std::string& name,
-							   const glm::vec3& origin,
-							   const glm::vec2& size,
-			                   const float& step_height){
-
-		if(characters.find(name) == characters.end()){
-			characters[name]  = core->physics->create_character(origin, size, step_height);
+		if(models.find(model_name) == models.end()){
+			models[model_name] = core->video->load_model(origin,
+					size,
+					core->filesystem->get_file_path(template_file));
 		} else {
-			throw std::runtime_error(name + " already exists, remove it first before adding one with the same name");
+			throw std::runtime_error(model_name + " already exists, remove it first before adding one with the same name");
 		}
 
 	}
 
-	virtual void remove_character(const std::string& name){
-
-		if(characters.find(name) != characters.end()){
-			  core->physics->remove_character(characters[name]);
+	virtual std::shared_ptr<graphical::object::model> get_model(const std::string& model_name){
+		if(models.find(model_name) != models.end()){
+			return models[model_name];
 		} else {
-			throw std::runtime_error(name + " does not exist or was already removed");
+			throw std::runtime_error(model_name + " does not exist");
+		}
+	}
+
+	virtual void remove_model(const std::string& model_name){
+		if(models.find(model_name) != models.end()){
+			models.erase(model_name);
+		} else {
+			throw std::runtime_error(model_name + " does not exist or was already removed");
+		}
+	}
+
+	virtual void add_character(const std::string& character_name,
+							   const glm::vec3& origin,
+							   const glm::vec2& size,
+			                   const float& step_height){
+
+		if(characters.find(character_name) == characters.end()){
+			characters[character_name]  = core->physics->create_character(origin, size, step_height);
+		} else {
+			throw std::runtime_error(character_name + " already exists, remove it first before adding one with the same name");
+		}
+
+	}
+
+	virtual void remove_character(const std::string& character_name){
+
+		if(characters.find(character_name) != characters.end()){
+			  core->physics->remove_character(characters[character_name]);
+			  characters.erase(character_name);
+		} else {
+			throw std::runtime_error(character_name + " does not exist or was already removed");
 		}
 
 	}
@@ -85,7 +113,7 @@ public:
 
 	std::shared_ptr<core> core;
 
-protected:
+private:
 	model_map       models;
 	body_map        bodies;
 	character_map   characters;
