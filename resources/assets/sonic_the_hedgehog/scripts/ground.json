@@ -7,7 +7,7 @@
 
 	"textures":
 	{
-		"ground"	: "sonic_the_hedgehog/graphics/bg/ghz/chunks/60.png"
+		"ground"	: "assets/sonic_the_hedgehog/graphics/bg/ghz/chunks/60.png"
 	},
 
 	"spritesheets":
@@ -17,7 +17,7 @@
 
 	"sprites":
 	{
-		"ground"    : { "ground"  : [0.00, 0.0, 1.0, 1.00] }
+		"ground"    : { "ground"  : [0.00, 0.00, 1.00, 1.00] }
 	},
 
 	"animations":

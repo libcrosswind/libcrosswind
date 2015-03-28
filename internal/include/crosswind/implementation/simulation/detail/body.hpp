@@ -25,9 +25,11 @@ class cw::implementation::simulation::detail::body: public cw::interface::simula
 public:
 	body(const glm::vec3& c_origin, 
 		 const glm::vec3& c_scale      = glm::vec3(1.0f, 1.0f, 1.0f), 
-		 const glm::vec3& c_unit_value = glm::vec3(1.0f, 1.0f, 1.0f)): 
-	cw::interface::simulation::detail::body(c_origin, c_scale, c_unit_value){
-		origin *= scale;
+		 const glm::vec3& c_unit_value = glm::vec3(1.0f, 1.0f, 1.0f)):
+	interface::simulation::detail::body(c_origin, c_scale, c_unit_value){
+
+			origin *= scale;
+
 	}
 
 	void init(const float& mass, btMotionState* state, btCollisionShape* shape){

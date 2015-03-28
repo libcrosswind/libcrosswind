@@ -24,7 +24,7 @@ public:
 	virtual void init(){
 
 		add_model("sonic_model", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(40.0f, 42.0f, 0.0f), "sonic.json");
-		add_character("sonic_character", glm::vec3(0, 80, 0), glm::vec2(26, 24), 0.35f);
+	//	add_character("sonic_character", glm::vec3(0, 80, 0), glm::vec2(26, 24), 0.35f);
 
 	}
 

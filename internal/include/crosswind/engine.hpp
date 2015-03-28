@@ -20,7 +20,6 @@ class cw::engine{
 public:
 	engine(interface::settings engine_settings = interface::settings()){
 
-
         core    = std::make_shared<interface::composition::core>(engine_settings);
         stage   = std::make_shared<implementation::composition::stage>(core);
 

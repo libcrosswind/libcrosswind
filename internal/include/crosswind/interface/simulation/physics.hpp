@@ -17,6 +17,13 @@ namespace simulation{
 
 class cw::interface::simulation::physics{
 public:
+
+	enum PRIMITIVE_PROXY{
+		BOX    = 0,
+		SPHERE = 1,
+		PLANE  = 2
+	};
+
 	physics(const glm::vec3& c_gravity,
 			const glm::vec3& c_scale,
 			const glm::vec3& c_unit_value):
@@ -43,15 +50,16 @@ public:
 	virtual void add_character(std::shared_ptr<detail::character> character_ptr) = 0;
 	virtual void remove_character(std::shared_ptr<detail::character> character_ptr) = 0;
 
-	template<typename T>
-	auto create_body(const glm::vec3& origin, const glm::vec3& size, const float& mass){
-		auto body = std::make_shared<T>(origin, size, mass, scale, unit_value);
-		add_rigid_body(body);
-		return body;
-	}
+	virtual std::shared_ptr<detail::body> create_primitive(const PRIMITIVE_PROXY& proxy_type,
+			   									           const glm::vec3& origin,
+			                                               const glm::vec3& size,
+			                                               const float& mass) = 0;
 
-	virtual void add_body(std::shared_ptr<detail::body> body_ptr) = 0;
-	virtual void remove_body(std::shared_ptr<detail::body> body_ptr) = 0;
+	virtual void add_rigid_body(std::shared_ptr<detail::body> body_ptr) = 0;
+	virtual void remove_rigid_body(std::shared_ptr<detail::body> body_ptr) = 0;
+
+	virtual int get_collision_manifolds_number() = 0;
+	virtual btPersistentManifold* get_manifold_by_index(const int& index) = 0;
 
 protected:
 	glm::vec3 gravity;

@@ -114,27 +114,27 @@ public:
 	virtual void set_name(const std::string& new_name){ name = new_name; }
 	virtual std::string get_name(){ return name; }
 
-/*
+
 	virtual void handle_collisions(){
 		//1
-		int numManifolds = core->physics->get_collision_manifolds_amount();
+		int numManifolds = core->physics->get_collision_manifolds_number();
 		for (int i=0;i<numManifolds;i++)
 		{
 			//2
-			btPersistentManifold* contactManifold =  core->physics->getDispatcher()->getManifoldByIndexInternal(i);
+			btPersistentManifold* contactManifold = core->physics->get_manifold_by_index(i);
 
 			//3
 			int numContacts = contactManifold->getNumContacts();
 			if (numContacts > 0)
 			{
 				//4
-				[[RWDirector sharedInstance] playPopEffect];
+//				[[RWDirector sharedInstance] playPopEffect];
 
 				//5
 				const btCollisionObject* obA = contactManifold->getBody0();
 				const btCollisionObject* obB = contactManifold->getBody1();
 
-				//6
+/*				//6
 				PNode* pnA = (__bridge PNode*)obA->getUserPointer();
 				PNode* pnB = (__bridge PNode*)obB->getUserPointer();
 
@@ -146,11 +146,11 @@ public:
 				//8
 				if (pnB.tag == kBrickTag){
 					[self destroyBrickAndCheckVictory:pnB];
-				}
+				}*/
 			}
 		}
 	}
-*/
+
 
 	std::shared_ptr<core> core;
 

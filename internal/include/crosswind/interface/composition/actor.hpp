@@ -28,8 +28,9 @@ public:
 	}
 
 	virtual ~actor(){
+
 		for(auto& body_mapping: bodies){
-			core->physics->remove_body(body_mapping.second);
+			core->physics->remove_rigid_body(body_mapping.second);
 		}
 
 		for(auto& character_mapping: characters){
@@ -81,6 +82,22 @@ public:
 		} else {
 			throw std::runtime_error(model_name + " does not exist or was already removed");
 		}
+	}
+
+	void add_rigid_body(const std::string& body_name,
+			            const glm::vec3& origin,
+			            const glm::vec3& size,
+			            const float& mass){
+
+		if(bodies.find(body_name) == bodies.end()){
+			bodies[body_name]  = core->physics->create_primitive(simulation::physics::PRIMITIVE_PROXY::BOX,
+					                                             origin,
+					                                             size,
+					                                             mass);
+		} else {
+			throw std::runtime_error(body_name + " already exists, remove it first before adding one with the same name");
+		}
+
 	}
 
 	virtual void add_character(const std::string& character_name,

@@ -1,11 +1,13 @@
 #pragma once
 
+#include <stdexcept>
 
 #include <btBulletDynamicsCommon.h>
 
 #include <crosswind/interface/simulation/physics.hpp>
 #include <crosswind/implementation/simulation/detail/character.hpp>
 #include <crosswind/implementation/simulation/detail/body.hpp>
+#include <crosswind/implementation/simulation/box.hpp>
 
 
 namespace cw{
@@ -99,14 +101,38 @@ public:
 		world->removeCollisionObject(character->ghost_object.get());
 	}
 
-	template<typename T>
-	auto create_body(const glm::vec3& origin, const glm::vec3& size, const float& mass){
-		auto body = std::make_shared<T>(origin, size, mass, scale, unit_value);
+	virtual std::shared_ptr<interface::simulation::detail::body> create_primitive(const PRIMITIVE_PROXY& proxy_type,
+																				  const glm::vec3& origin,
+											                                      const glm::vec3& size,
+																				  const float& mass){
+
+		std::shared_ptr<interface::simulation::detail::body> body;
+
+		switch(proxy_type){
+			case PRIMITIVE_PROXY::BOX:
+				body = std::make_shared<box>(origin, size, mass, scale, unit_value);
+			break;
+
+			case PRIMITIVE_PROXY::SPHERE:
+//				body = std::make_shared<box>(origin, size, mass, scale, unit_value);
+			break;
+
+			case PRIMITIVE_PROXY::PLANE:
+//				body = std::make_shared<box>(origin, size, mass, scale, unit_value);
+			break;
+
+			default:
+				throw std::runtime_error("No proxy type specified");
+		}
+
 		add_rigid_body(body);
+
 		return body;
+
 	}
 
-	virtual void add_body(std::shared_ptr<interface::simulation::detail::body> body_ptr){
+
+	virtual void add_rigid_body(std::shared_ptr<interface::simulation::detail::body> body_ptr){
 		auto body = std::dynamic_pointer_cast<detail::body>(body_ptr);
 		auto st = body->physic_body->getLinearSleepingThreshold();
 		st *= (scale.x +scale.y + scale.z / 3.0f);
@@ -114,13 +140,17 @@ public:
 		world->addRigidBody(body->physic_body.get());
 	}
 
-	virtual void remove_body(std::shared_ptr<interface::simulation::detail::body> body_ptr){
+	virtual void remove_rigid_body(std::shared_ptr<interface::simulation::detail::body> body_ptr){
 		auto body = std::dynamic_pointer_cast<detail::body>(body_ptr);
 		world->removeRigidBody(body->physic_body.get());
 	}
 
-	virtual int get_collision_manifolds_amount(){
+	virtual int get_collision_manifolds_number(){
 		return dispatcher->getNumManifolds();
+	}
+
+	virtual btPersistentManifold* get_manifold_by_index(const int& index){
+		return dispatcher->getManifoldByIndexInternal(index);
 	}
 
 private:
