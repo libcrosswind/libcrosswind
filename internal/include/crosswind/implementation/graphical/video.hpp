@@ -153,6 +153,9 @@ public:
 
 	    model->change_animation(raw_json["properties"]["default-animation"].as<std::string>());
 
+		model->get_render_sprite_list()["current"] =
+				model->get_animations()["current"]->frames[model->get_animations()["current"]->current_frame];
+
 	    model->set_origin(origin);
 	    model->set_size(size);
 

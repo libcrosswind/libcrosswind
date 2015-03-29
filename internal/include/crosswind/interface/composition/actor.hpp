@@ -42,11 +42,10 @@ public:
 	virtual void deinit() = 0;
 
 	virtual void update(const float& dt){
-		logic(dt);
-
 		for(auto& model_mapping : models){
 			model_mapping.second->update(dt);
 		}
+		logic(dt);
 
 	}
 
@@ -113,6 +112,16 @@ public:
 
 	}
 
+	virtual std::shared_ptr<simulation::detail::character> get_character(const std::string& character_name){
+
+		if(characters.find(character_name) != characters.end()){
+			return characters[character_name];
+		} else {
+			throw std::runtime_error(character_name + " does not exist");
+		}
+
+	}
+
 	virtual void remove_character(const std::string& character_name){
 
 		if(characters.find(character_name) != characters.end()){
@@ -130,6 +139,7 @@ public:
 
 	std::shared_ptr<core> core;
 
+	std::map<std::string, bool> conditions;
 private:
 	model_map       models;
 	body_map        bodies;

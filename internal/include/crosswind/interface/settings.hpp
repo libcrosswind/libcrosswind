@@ -79,7 +79,13 @@ struct cw::interface::settings{
 
         physics.gravity         = glm::vec3(0.0f, -10.0f, 0.0f);
         physics.scale           = glm::vec3(0.01f, 0.01f, 0.01f);
-        physics.unit_value      = glm::vec3(1.0f * world_scale[0], 1.0f * world_scale[1], 1.0f * world_scale[2]);
+
+        glm::vec3 unit_value(1.0f, 1.0f, 1.0f);
+        unit_value.x *= world_scale.x;
+        unit_value.y *= world_scale.y;
+        unit_value.z *= world_scale.z;
+
+        physics.unit_value      = unit_value;
 
     }
 

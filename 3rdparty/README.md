@@ -36,3 +36,7 @@ tar --lzma -xvf libregex-1.20090805-2-msys-1.0.13-dll-1.tar.lzma
 tar --lzma -xvf libtermcap-0.20050421_1-2-msys-1.0.13-dll-0.tar.lzma
 
 Once you downloaded and extracted the packages copy the content from the extracted folders folder into their respective place in platform/windows/support/msys/1.0 (or your specified MSYS path) and replace the files when prompted.
+
+Perl dependencies. 
+
+You need to download dmake from http://search.cpan.org/CPAN/authors/id/S/SH/SHAY/dmake-4.12.2.2.zip in order to build perl for the Win32 platform

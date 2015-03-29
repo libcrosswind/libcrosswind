@@ -23,16 +23,6 @@ public:
         core    = std::make_shared<interface::composition::core>(engine_settings);
         stage   = std::make_shared<implementation::composition::stage>(core);
 
-/*
-            //We wil treat centimeters as pixels where 1 millimeter = 3.78 pixels
-
-            std::vector<glm::vec3> physics_settings{
-                    glm::vec3(0.0f, -10.0f, 0.0f),// gravity
-                    glm::vec3(0.01f, 0.01f, 0.01f),// scale
-                    glm::vec3(1.0f * world_scale[0], 1.0f * world_scale[1], 1.0f * world_scale[2])    // unit value
-            };// 1 pixel represents 0.00026458 meters. We set this property to ensure correct graphical calculations.
-
-*/
 	}
 
 	void run(){
@@ -78,7 +68,7 @@ private:
         core->video->renderer->draw();
         core->video->renderer->end();
 
-        physics->debug_draw_world(stage->get_scene("current")->get_camera("current")->get_camera_matrix());
+       // core->physics->debug_draw_world(stage->get_scene("current")->get_camera("current")->get_camera_matrix());
         core->video->window->present();
     }
 

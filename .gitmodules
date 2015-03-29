@@ -1,6 +1,3 @@
-[submodule "external/asio_standalone"]
-	path = external/asio_standalone
-	url = https://github.com/chriskohlhoff/asio.git
 [submodule "external/StandardRTC"]
 	path = external/StandardRTC
 	url = https://github.com/VictorJL/StandardRTC.git
@@ -25,3 +22,6 @@
 [submodule "external/glm"]
 	path = external/glm
 	url = https://github.com/g-truc/glm
+[submodule "external/perl5"]
+	path = external/perl5
+	url = https://github.com/Perl/perl5.git

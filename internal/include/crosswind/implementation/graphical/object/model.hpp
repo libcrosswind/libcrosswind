@@ -56,7 +56,6 @@ public:
 
 		animations["current"] = animations[new_animation];
 		animations["current"]->flip(x_orientation);
-
 	}
 
 	virtual void update(const float& delta){
