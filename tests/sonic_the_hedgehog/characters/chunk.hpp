@@ -19,24 +19,18 @@ namespace characters{
 
 class game::characters::chunk: public cw::interface::composition::actor{
 public:
-	chunk(const std::vector<std::string>& c_templates,
+	chunk(const glm::vec3& c_origin,
+			const std::vector<std::string>& c_templates,
 			const std::vector<glm::vec3>& c_positions,
 			const std::vector<glm::vec3>& c_sizes){
 
+		origin = c_origin;
 		templates = c_templates;
 		positions = c_positions;
 		sizes    = c_sizes;
 	}
 
-	void load_models(const std::vector<std::string>& model_vector,
-			const std::vector<glm::vec3>& positions,
-			const std::vector<glm::vec3>& sizes){
 
-		for(int i = 0; i<model_vector.size(); ++i){
-			add_model("model_" + std::to_string(i), positions[i], sizes[i], model_vector[i]);
-		}
-
-	}
 
 	virtual void init(){
 
@@ -52,6 +46,7 @@ public:
 
 	}
 
+
 	virtual void logic(const float& dt){
 
 /*		if(core->input->is_key_down("k")){
@@ -61,8 +56,20 @@ public:
 	}
 
 
-//	model_map models;
-//	std::shared_ptr<core> core;
+	glm::vec3 origin;
+
+
+protected:
+
+	void load_models(const std::vector<std::string>& model_vector,
+			const std::vector<glm::vec3>& positions,
+			const std::vector<glm::vec3>& sizes){
+
+		for(int i = 0; i<model_vector.size(); ++i){
+			add_model("model_" + std::to_string(i), positions[i], sizes[i], model_vector[i]);
+		}
+
+	}
 
 	std::vector<std::string> templates;
 	std::vector<glm::vec3> positions;

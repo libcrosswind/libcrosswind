@@ -44,7 +44,10 @@ public:
         world.reset(new btDiscreteDynamicsWorld(dispatcher.get(), broad_phase.get(), solver.get(), collision_config.get()));
 		physics_debug_drawer.reset(new debug::physics_debug_drawer());
 
-		scale *= unit_value;
+		scale.x *= unit_value.x;
+		scale.y *= unit_value.y;
+		scale.z *= unit_value.z;
+
 		set_gravity(c_gravity);
 
 		world->setDebugDrawer(physics_debug_drawer.get());
