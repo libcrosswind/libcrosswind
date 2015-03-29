@@ -32,6 +32,8 @@ public:
 		this->conditions["jumping"] = false;
 		this->set_facing(true);
 
+		this->get_character("sonic")->set_jump_speed(6.5f);
+
 	}
 
 	virtual void deinit(){
