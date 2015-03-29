@@ -48,6 +48,14 @@ public:
 		return facing;
 	}
 
+	void calculate_facing(){
+		if(this->get_character("sonic")->get_speed().x > 0){
+			this->set_facing(true);
+		} else if(this->get_character("sonic")->get_speed().x < 0){
+			this->set_facing(false);
+		}
+	}
+
 	void calculate_jumping(){
 
 	    if(core->input->is_key_down("k")){
@@ -64,12 +72,6 @@ public:
 
 	void calculate_ground_animations(){
 		if(this->get_character("sonic")->on_ground()) {
-
-			    if(this->get_character("sonic")->get_speed().x > 0){
-				    this->set_facing(true);
-			    } else if(this->get_character("sonic")->get_speed().x < 0){
-				    this->set_facing(false);
-			    }
 
 			    if(core->input->is_key_down("Down")){
 				    if(glm::abs(this->get_character("sonic")->get_speed().x) >= 0.53125f){
@@ -147,7 +149,7 @@ public:
 
 			    }
 
-			    float frame_duration = glm::max(8.0f - glm::abs(this->get_character("sonic")->get_speed().x), 3.0f);
+			    float frame_duration = glm::max(12.0f - glm::abs(this->get_character("sonic")->get_speed().x), 6.0f);
 			    frame_duration *= 1.0f / 60.0f; // 1 second / 60 frames;
 
 				this->get_model("sonic")->get_animations()["walk"]->duration =
@@ -156,7 +158,7 @@ public:
 				this->get_model("sonic")->get_animations()["run"]->duration =
 					    frame_duration * this->get_model("sonic")->get_animations()["run"]->frames.size();
 
-			    frame_duration = glm::max(8.0f - glm::abs(this->get_character("sonic")->get_speed().x), 1.0f);
+			    frame_duration = glm::max(12.0f - glm::abs(this->get_character("sonic")->get_speed().x), 6.0f);
 			    frame_duration *= 1.0f / 60.0f;
 
 				this->get_model("sonic")->get_animations()["roll_1"]->duration =
@@ -243,6 +245,7 @@ public:
 	}
 
 	virtual void logic(const float& dt){
+		calculate_facing();
 		calculate_movement();
 		calculate_friction();
 		calculate_jumping();

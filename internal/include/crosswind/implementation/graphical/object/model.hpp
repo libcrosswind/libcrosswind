@@ -29,13 +29,14 @@ public:
 
 		animations["current"] = animations[new_animation];
 		animations["current"]->flip(x_orientation);
+
 	}
 
 	virtual void update(const float& delta){
 
         delta_count += delta;
 
-        if(delta_count >= animations["current"]->duration / animations["current"]->frames.size()){
+        if(delta_count >= animations["current"]->duration / (float) animations["current"]->frames.size()){
 
             delta_count = 0;
 
