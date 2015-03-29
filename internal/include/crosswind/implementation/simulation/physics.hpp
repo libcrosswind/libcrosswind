@@ -9,7 +9,6 @@
 #include <crosswind/implementation/simulation/detail/body.hpp>
 #include <crosswind/implementation/simulation/box.hpp>
 
-
 namespace cw{
 namespace implementation{
 namespace simulation{
@@ -109,6 +108,7 @@ public:
 		std::shared_ptr<interface::simulation::detail::body> body;
 
 		switch(proxy_type){
+
 			case PRIMITIVE_PROXY::BOX:
 				body = std::make_shared<box>(origin, size, mass, scale, unit_value);
 			break;
@@ -123,6 +123,7 @@ public:
 
 			default:
 				throw std::runtime_error("No proxy type specified");
+
 		}
 
 		add_rigid_body(body);

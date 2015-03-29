@@ -1,53 +1,61 @@
 #pragma once
 
-#include "LinearMath/btIDebugDraw.h"
+#include <stdio.h> 
 
-
-#include <stdio.h> //printf debugging
-
+#include <LinearMath/btIDebugDraw.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <crosswind/simulation/camera.hpp>
-#include <crosswind/simulation/gl/gl_vbo.hpp>
-#include <crosswind/simulation/gl/glsl_program.hpp>
+#include <crosswind/implementation/simulation/debug/opengl/shader_program.hpp>
+#include <crosswind/interface/simulation/debug/drawer.hpp>
 
 namespace cw{
-namespace interface{
-namespace graphical{
+namespace implementation{
+namespace simulation{
 namespace debug{
 
 	class physics_debug_drawer;
 
 }// namespace debug
-}// namespace graphical
-}// namespace interface
+}// namespace simulation
+}// namespace implementation
 }// namespace cw
 
-
-class cw::physics::debug::physics_debug_drawer : public btIDebugDraw, public cw::simulation::gl::gl_vbo {
+class cw::implementation::simulation::debug::physics_debug_drawer : public btIDebugDraw, 
+																	public cw::interface::simulation::debug::drawer{
 public:
 
 	physics_debug_drawer(): debug_mode(btIDebugDraw::DBG_DrawWireframe){
 
-		glsl_program = std::make_shared<cw::simulation::gl::glsl_program>();
+		shader_program = std::make_shared<opengl::shader_program>();
 		std::string vertex_shader   = "assets/default/graphics/shaders/primitive_shading.vert";
 		std::string fragment_shader = "assets/default/graphics/shaders/primitive_shading.frag";
 
-		glsl_program->compile(vertex_shader, fragment_shader);
-		glsl_program->add_attribute("vertex_position");
-		glsl_program->add_attribute("vertex_color");
-		glsl_program->link();
+		shader_program->compile(vertex_shader, fragment_shader);
+		shader_program->add_attribute("vertex_position");
+		shader_program->add_attribute("vertex_color");
+		shader_program->link();
 
+		glGenBuffers(1, &vbo_id);
 	}
 
 	virtual ~physics_debug_drawer(){
-
+		glDeleteBuffers(1, &vbo_id);
 	}
 
-	void init(std::shared_ptr<cw::simulation::camera> cam, const glm::vec3& s){
-		camera = cam;
-		scale = s;
+	void upload_vertex_array(const std::vector<interface::simulation::debug::vertex>& vertex_array){
+		glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
+		glBufferData(GL_ARRAY_BUFFER,
+		sizeof(interface::simulation::debug::vertex)*vertex_array.size(),
+		vertex_array.data(),
+		GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
+
+	virtual void update(const glm::mat4& f_perspective, const glm::vec3& f_scale){
+		perspective = f_perspective;
+		scale 		= f_scale;
+	}
+
 
 	virtual void drawLine(const btVector3& from,const btVector3& to,const btVector3& fromColor, const btVector3& toColor){
 
@@ -59,27 +67,26 @@ public:
 		btVector3 to(t.getX() / scale.x, t.getY() / scale.y, t.getZ() / scale.z);
 
 
-		glsl_program->use();
+		shader_program->use();
 
-		auto projection_matrix_location = glsl_program->get_uniform_location("projection_matrix");
-		auto camera_matrix = camera->get_camera_matrix();
+		auto projection_matrix_location = shader_program->get_uniform_location("projection_matrix");
 
-		glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE, glm::value_ptr(camera_matrix));
+		glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE, glm::value_ptr(perspective));
 
 		glm::vec4 n_from(from.getX(), from.getY(), from.getZ(), 1.0);
 		glm::vec4 n_to(to.getX(), to.getY(), to.getZ(),1.0);
 		glm::vec4 c(color.getX(), color.getY(), color.getZ(), 1.0);
 		glm::vec2 u(0.0, 0.0);
 
-		std::vector<cw::geometry::detail::vertex> vertex_array;
-		cw::geometry::detail::vertex a(n_from, c, u);
-		cw::geometry::detail::vertex b(n_to, c, u);
+		std::vector<interface::simulation::debug::vertex> vertex_array;
+		interface::simulation::debug::vertex a(n_from, c, u);
+		interface::simulation::debug::vertex b(n_to, c, u);
 		vertex_array.push_back(a);
 		vertex_array.push_back(b);
 
 		upload_vertex_array(vertex_array);
 
-		glBindBuffer(GL_ARRAY_BUFFER, id);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
 
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
@@ -102,12 +109,12 @@ public:
 		glDrawArrays( GL_LINES, 0, vertex_array.size() );
 
 
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		glsl_program->unuse();
+		shader_program->unuse();
 	}
 
 	virtual void	drawSphere (const btVector3& p, btScalar radius, const btVector3& color){
@@ -170,7 +177,6 @@ public:
 		glVertex3d(to.getX(), to.getY(), to.getZ());
 		glEnd();
 
-
 //		glRasterPos3f(from.x(),  from.y(),  from.z());
 //		char buf[12];
 //		sprintf(buf," %d",lifeTime);
@@ -195,12 +201,7 @@ public:
 	}
 
 
-
 private:
-    std::shared_ptr<cw::simulation::gl::glsl_program> glsl_program;
-
-	std::shared_ptr<cw::simulation::camera> camera;
-	glm::vec3 scale;
 	int debug_mode;
+	uint32_t vbo_id;
 };
-
