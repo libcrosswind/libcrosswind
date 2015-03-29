@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
     auto engine = std::make_shared<cw::engine>();
     engine->core->filesystem->add_directory("assets", true);
 
-    auto scene = std::make_shared<game::scenes::green_hill_zone>();
+    auto scene = engine->stage->create_scene<game::scenes::green_hill_zone>();
     scene->set_name("my_scene");
 
     engine->stage->add_scene(scene);

@@ -26,6 +26,13 @@ public:
 	virtual void load_scene(const std::string& name) = 0;
 	virtual void unload_scene(const std::string& name) = 0;
 
+	template<typename T>
+	std::shared_ptr<scene> create_scene(){
+		auto scene = std::make_shared<T>();
+		scene->core = core;
+		return scene;
+	}
+
 	virtual void add_scene(std::shared_ptr<scene> scene) = 0;
 	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene) = 0;
 	virtual void remove_scene(const std::string& scene_name) = 0;

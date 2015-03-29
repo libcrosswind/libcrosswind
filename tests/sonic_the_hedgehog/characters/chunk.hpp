@@ -31,7 +31,6 @@ public:
 	}
 
 
-
 	virtual void init(){
 
 		glm::vec3 ground_offset = glm::vec3(0.0f, 0.0f, 0.0f);
