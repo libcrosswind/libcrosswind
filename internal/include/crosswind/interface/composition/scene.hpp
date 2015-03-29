@@ -73,16 +73,14 @@ public:
 	}
 
 	template<typename T>
-	virtual std::shared_ptr<actor> create_actor(){
+	std::shared_ptr<T> create_actor(){
 		auto actor = std::make_shared<T>();
 		actor->core = core;
-
 		return actor;
 	}
 
 	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
 		actors[actor_name] = actor;
-		actors[actor_name]->core = core;
 	}
 
 	virtual std::shared_ptr<actor> get_actor(const std::string& actor_name){

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+
+#include <crosswind/interface/core.hpp>
 #include <crosswind/interface/composition/scene.hpp>
 
 namespace cw{
@@ -16,7 +19,7 @@ class cw::interface::composition::stage{
 protected:
 	typedef std::map<std::string, std::shared_ptr<scene> > scene_map;
 public:
-	stage(){
+	stage(std::shared_ptr<interface::composition::core> c_core): core(c_core){
 		
 	}
 
@@ -47,6 +50,8 @@ public:
 
 
 protected:
+	std::shared_ptr<interface::composition::core> core;
+
 	scene_map scenes;
 	std::vector<std::function<void()> > event_queue;
 
