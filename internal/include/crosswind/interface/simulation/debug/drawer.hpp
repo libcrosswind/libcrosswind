@@ -28,7 +28,7 @@ public:
 	virtual void update(const glm::mat4& f_perspective, const glm::vec3& f_scale) = 0;
 
 
-private:
+protected:
     std::shared_ptr<shader_program> shader_program;
 	glm::mat4 perspective;
 	glm::vec3 scale;

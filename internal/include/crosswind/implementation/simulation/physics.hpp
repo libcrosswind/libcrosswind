@@ -9,6 +9,8 @@
 #include <crosswind/implementation/simulation/detail/body.hpp>
 #include <crosswind/implementation/simulation/box.hpp>
 
+#include <crosswind/implementation/simulation/debug/physics_debug_drawer.hpp>
+
 namespace cw{
 namespace implementation{
 namespace simulation{
@@ -40,12 +42,12 @@ public:
 		broad_phase.reset(new btAxisSweep3(world_min, world_max));
         solver.reset(new btSequentialImpulseConstraintSolver());
         world.reset(new btDiscreteDynamicsWorld(dispatcher.get(), broad_phase.get(), solver.get(), collision_config.get()));
-//		physics_debug_drawer.reset(new debug::physics_debug_drawer());
+		physics_debug_drawer.reset(new debug::physics_debug_drawer());
 
 		scale *= unit_value;
 		set_gravity(c_gravity);
 
-//		world->setDebugDrawer(physics_debug_drawer.get());
+		world->setDebugDrawer(physics_debug_drawer.get());
 
 		world->getDispatchInfo().m_allowedCcdPenetration=0.0001f;
 		broad_phase->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
@@ -71,6 +73,7 @@ public:
 	}
 
 	virtual void debug_draw_world(const glm::mat4& projection_matrix){
+		physics_debug_drawer->update(projection_matrix, scale);
 		world->debugDrawWorld();
 	}
 
@@ -160,6 +163,6 @@ private:
 	std::unique_ptr<btBroadphaseInterface> 		broad_phase;
 	std::unique_ptr<btDispatcher>    			dispatcher;
 	std::unique_ptr<btCollisionConfiguration>	collision_config;
-//	std::unique_ptr<debug::physics_debug_drawer> physics_debug_drawer;
+	std::unique_ptr<debug::physics_debug_drawer> physics_debug_drawer;
 
 };// class dynamic_world

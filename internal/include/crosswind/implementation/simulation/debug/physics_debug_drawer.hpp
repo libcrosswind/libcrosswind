@@ -7,6 +7,7 @@
 
 #include <crosswind/implementation/simulation/debug/opengl/shader_program.hpp>
 #include <crosswind/interface/simulation/debug/drawer.hpp>
+#include <crosswind/interface/simulation/debug/vertex.hpp>
 
 namespace cw{
 namespace implementation{
@@ -95,15 +96,15 @@ public:
 				4,
 				GL_FLOAT,
 				GL_FALSE,
-				sizeof(cw::geometry::detail::vertex),
-				(void*)offsetof(cw::geometry::detail::vertex, cw::geometry::detail::vertex::position));
+				sizeof(interface::simulation::debug::vertex),
+				(void*)offsetof(interface::simulation::debug::vertex, interface::simulation::debug::vertex::position));
 
 		glVertexAttribPointer(1,
 				4,
 				GL_FLOAT,
 				GL_FALSE,
-				sizeof(cw::geometry::detail::vertex),
-				(void*)offsetof(cw::geometry::detail::vertex, cw::geometry::detail::vertex::color));
+				sizeof(interface::simulation::debug::vertex),
+				(void*)offsetof(interface::simulation::debug::vertex, interface::simulation::debug::vertex::color));
 
 		glDrawArrays( GL_POINTS, 0, vertex_array.size() );
 		glDrawArrays( GL_LINES, 0, vertex_array.size() );
@@ -204,4 +205,5 @@ public:
 private:
 	int debug_mode;
 	uint32_t vbo_id;
-};
+	
+};// class physics_debug_drawer
