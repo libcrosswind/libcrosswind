@@ -7,10 +7,12 @@
 #include <crosswind/implementation/composition/camera.hpp>
 
 
-#include <characters/title/logo.hpp>
-#include <characters/title/sonic.hpp>
-#include <characters/title/backgrond.hpp>
+#include <characters/title/sega_logo.hpp>
+//#include <characters/title/sonic_team_logo.hpp>
 
+//#include <characters/title/title_background.hpp>
+//#include <characters/title/title_logo.hpp>
+//#include <characters/title/title_animation.hpp>
 
 namespace game{
 namespace scenes{
@@ -35,19 +37,21 @@ public:
 	    core->mixer->load_music("title_bgm", core->filesystem->get_file_path("title_bgm.ogg"));
 
 
-	    auto sega_logo        = this->create_actor<game::characters::title::logo>();
-	    auto sonic_team_logo  = this->create_actor<game::characters::title::logo>();
+	    auto sega_logo        = this->create_actor<characters::title::sega_logo>();
+//	    auto sonic_team_logo  = this->create_actor<game::characters::title::logo>();
 
 
-	    auto title_animation  = this->create_actor<game::characters::title::sonic_animation>();
-	    auto title_logo       = this->create_actor<game::characters::title::logo>();
-	    auto title_background = this->create_actor<game::characters::title::background>();
+//	    auto title_background = this->create_actor<game::characters::title::background>();
+//	    auto title_logo       = this->create_actor<game::characters::title::logo>();
+//	    auto title_animation  = this->create_actor<game::characters::title::sonic_animation>();
 
 	    add_actor("sega_logo", sega_logo);
-	    add_actor("sonic_team_logo", sonic_team_logo);
-	    add_actor("title_animation", title_animation);
-	    add_actor("title_logo", title_logo);
-	    add_actor("title_background", title_background);
+//	    add_actor("sonic_team_logo", sonic_team_logo);
+
+//	    add_actor("title_background", title_background);
+//	    add_actor("title_logo", title_logo);
+//	    add_actor("title_animation", title_animation);
+
 
 	    for(auto& actor: actors){
 		    actor.second->init();

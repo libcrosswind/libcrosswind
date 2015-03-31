@@ -104,6 +104,9 @@ public:
 	                              s_props->value()[1].as<double>(),
 	                              0.0f);
 
+		    sprite_size.x *= size.x/sprite_size.x ;
+		    sprite_size.y *= size.y/sprite_size.y ;
+
 	        sprite_sheet_sizes[name] = sprite_size;
 	    }
 
