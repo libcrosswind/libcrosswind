@@ -50,16 +50,18 @@ public:
 
 	}
 
-	virtual void add_scene(std::shared_ptr<interface::composition::scene> scene){
+	virtual void add_scene(const std::string& scene_name, std::shared_ptr<interface::composition::scene> scene){
 
-		post_event([this, scene](){
+		post_event([this, scene, scene_name](){
 		    scene->core = core;
+
+			scene->set_name(scene_name);
 
 		    if(scenes.empty()){
 			    this->scenes["current"] = scene;
 		    }
 
-		    this->scenes[scene->get_name()] = scene;
+		    this->scenes[scene_name] = scene;
 		});
 
 	}
