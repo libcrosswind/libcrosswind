@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['filesystem_2ehpp',['filesystem.hpp',['../implementation_2platform_2filesystem_8hpp.html',1,'']]],
-  ['filesystem_2ehpp',['filesystem.hpp',['../interface_2platform_2filesystem_8hpp.html',1,'']]]
+  ['vertex_2ehpp',['vertex.hpp',['../graphical_2detail_2vertex_8hpp.html',1,'']]]
 ];

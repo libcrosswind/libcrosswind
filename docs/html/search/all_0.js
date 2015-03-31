@@ -1,8 +1,8 @@
 var searchData=
 [
   ['acquire',['acquire',['../classcw_1_1functional_1_1resource__property.html#a5e80c2492bc146d7383c2e7552edf38b',1,'cw::functional::resource_property']]],
-  ['actor',['actor',['../classcw_1_1interface_1_1composition_1_1actor.html#aad82a4702e8a3eee21e78ee88bb126d8',1,'cw::interface::composition::actor']]],
   ['actor',['actor',['../classcw_1_1interface_1_1composition_1_1actor.html',1,'cw::interface::composition']]],
+  ['actor',['actor',['../classcw_1_1interface_1_1composition_1_1actor.html#aad82a4702e8a3eee21e78ee88bb126d8',1,'cw::interface::composition::actor']]],
   ['actor_2ehpp',['actor.hpp',['../actor_8hpp.html',1,'']]],
   ['actors',['actors',['../classcw_1_1interface_1_1composition_1_1scene.html#af9c099a664bafd1d7c98b6996803cdb9',1,'cw::interface::composition::scene']]],
   ['add_5factor',['add_actor',['../classcw_1_1interface_1_1composition_1_1scene.html#af6c8fba9910b94232cf9edca168ec104',1,'cw::interface::composition::scene']]],
@@ -14,11 +14,9 @@ var searchData=
   ['add_5fscene',['add_scene',['../classcw_1_1implementation_1_1composition_1_1stage.html#a8391a5066a290684f618cba5d17e2c3d',1,'cw::implementation::composition::stage::add_scene()'],['../classcw_1_1interface_1_1composition_1_1stage.html#a755e1f66422dc0f1f92fcb90d01be277',1,'cw::interface::composition::stage::add_scene()']]],
   ['alive',['alive',['../classcw_1_1interface_1_1platform_1_1application.html#ad685c9d79631ab15882bec7bfb8d33d5',1,'cw::interface::platform::application']]],
   ['animations',['animations',['../classcw_1_1interface_1_1graphical_1_1object_1_1model.html#acd5dbcf1ac1aebe22c75ecb4b1497e54',1,'cw::interface::graphical::object::model']]],
-  ['application',['application',['../classcw_1_1interface_1_1platform_1_1application.html',1,'cw::interface::platform']]],
   ['application',['application',['../classcw_1_1interface_1_1composition_1_1core.html#a388545a95c98de97d88b888f4745bf74',1,'cw::interface::composition::core::application()'],['../structcw_1_1interface_1_1settings.html#a05f32f5930fdf4df273d57cca45a15a3',1,'cw::interface::settings::application()'],['../classcw_1_1implementation_1_1platform_1_1application.html#ada7366c9fa9b58a8076c2e9224d788e6',1,'cw::implementation::platform::application::application()'],['../classcw_1_1interface_1_1platform_1_1application.html#a281b3dde895236aac8f0c64787edf99c',1,'cw::interface::platform::application::application()']]],
+  ['application',['application',['../classcw_1_1interface_1_1platform_1_1application.html',1,'cw::interface::platform']]],
   ['application',['application',['../classcw_1_1implementation_1_1platform_1_1application.html',1,'cw::implementation::platform']]],
-  ['application_2ehpp',['application.hpp',['../interface_2platform_2application_8hpp.html',1,'']]],
-  ['application_2ehpp',['application.hpp',['../implementation_2platform_2application_8hpp.html',1,'']]],
   ['apply_5fforce',['apply_force',['../classcw_1_1implementation_1_1simulation_1_1detail_1_1body.html#a514366d806c7dc05b511dbc4034ad7d0',1,'cw::implementation::simulation::detail::body::apply_force()'],['../classcw_1_1interface_1_1simulation_1_1detail_1_1body.html#a45711148eaa422280d9d11fdf87bd44a',1,'cw::interface::simulation::detail::body::apply_force()']]],
   ['attributes_5fnumber',['attributes_number',['../classcw_1_1interface_1_1simulation_1_1debug_1_1shader__program.html#a6ac1df65121e9830f99a322b73b8290e',1,'cw::interface::simulation::debug::shader_program']]],
   ['audio',['audio',['../structcw_1_1interface_1_1settings.html#a418309c0f2439943cbb30509c689bee7',1,'cw::interface::settings']]],
