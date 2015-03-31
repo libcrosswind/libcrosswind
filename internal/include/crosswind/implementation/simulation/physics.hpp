@@ -98,6 +98,7 @@ public:
 				btBroadphaseProxy::StaticFilter|btBroadphaseProxy::DefaultFilter);
 
 		world->addAction(character->character_object.get());
+
 	}
 
 	virtual void remove_character(std::shared_ptr<interface::simulation::detail::character> character_ptr){

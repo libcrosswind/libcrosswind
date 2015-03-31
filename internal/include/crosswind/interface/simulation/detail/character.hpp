@@ -43,6 +43,8 @@ public:
 
     virtual bool on_ground() = 0;
 
+    virtual void* get_character_object() = 0;
+
 protected:
     glm::vec3 origin;
     glm::vec2 size;

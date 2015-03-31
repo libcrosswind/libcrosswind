@@ -34,6 +34,10 @@ public:
 
 	virtual void apply_force(const glm::vec3& f) = 0;
 
+	std::unique_ptr<btMotionState> motion_state;
+	std::unique_ptr<btCollisionShape> collision_shape;
+	std::unique_ptr<btRigidBody> physic_body;
+
 protected:
     glm::vec3 origin;
     glm::vec3 scale;

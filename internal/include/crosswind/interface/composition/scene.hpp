@@ -21,9 +21,11 @@ namespace composition{
 class cw::interface::composition::scene{
 	typedef std::map<std::string, std::shared_ptr<actor> > actor_map;
 	typedef std::map<std::string, std::shared_ptr<camera> > camera_map;
+	typedef std::map<std::string, std::vector<std::pair<glm::vec3, glm::vec3> > > actor_collision_map;
+
 public:
 	scene(){
-
+		collisions["undefined"] = actor_collision_map();
 	}
 
 protected:
@@ -47,9 +49,57 @@ public:
 
     virtual void init()   = 0;
     virtual void deinit() = 0;
+	virtual void logic(const float& delta) = 0;
+
+	virtual void check_collisions(){
+
+		int numManifolds = core->physics->get_collision_manifolds_number();
+		for (int i=0;i<numManifolds;i++)
+		{
+			btPersistentManifold* contactManifold = core->physics->get_manifold_by_index(i);
+
+			int num_contacts = contactManifold->getNumContacts();
+			if (num_contacts){
+
+				const btCollisionObject* obA = contactManifold->getBody0();
+				const btCollisionObject* obB = contactManifold->getBody1();
+
+
+				auto& a_name = static_cast<actor*>(obA->getUserPointer())->get_name();
+				auto& b_name = static_cast<actor*>(obB->getUserPointer())->get_name();
+
+				for(int j = 0; j<num_contacts; j++){
+					btManifoldPoint& contact = contactManifold->getContactPoint(j);
+
+					glm::vec3 a(contact.m_localPointA.x(), contact.m_localPointA.y(), contact.m_localPointA.z());
+					glm::vec3 b(contact.m_localPointB.x(), contact.m_localPointB.y(), contact.m_localPointB.z());
+
+					collisions[a_name][b_name].push_back(std::make_pair(a,b));
+
+				}
+			}
+		}
+	}
+
+
+	actor_collision_map& get_collision_map(const std::string& actor_a){
+
+		if(collisions.find(actor_a) != collisions.end()){
+			return collisions[actor_a];
+		} else {
+			return collisions["undefined"];
+		}
+
+	}
+
+
+	typedef std::map<std::string, actor_collision_map> scene_collision_map;
+
+	scene_collision_map collisions;
 
 	virtual void update(const float& delta){
 		handle_events();
+		check_collisions();
 
 		for(auto& camera: cameras){
            camera.second->update(delta);
@@ -58,6 +108,10 @@ public:
 		for(auto& actor: actors){
            actor.second->update(delta);
         }
+
+		logic(delta);
+
+		collisions.clear();
 	}
 
 	void post_event(const std::function<void()>& event, const bool& continuous = false){
@@ -80,6 +134,7 @@ public:
 	}
 
 	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
+		actor->set_name(actor_name);
 		actors[actor_name] = actor;
 	}
 
@@ -122,42 +177,6 @@ public:
 	virtual std::string get_name(){ return name; }
 
 
-	virtual void handle_collisions(){
-		//1
-		int numManifolds = core->physics->get_collision_manifolds_number();
-		for (int i=0;i<numManifolds;i++)
-		{
-			//2
-			btPersistentManifold* contactManifold = core->physics->get_manifold_by_index(i);
-
-			//3
-			int numContacts = contactManifold->getNumContacts();
-			if (numContacts > 0)
-			{
-				//4
-//				[[RWDirector sharedInstance] playPopEffect];
-
-				//5
-				const btCollisionObject* obA = contactManifold->getBody0();
-				const btCollisionObject* obB = contactManifold->getBody1();
-
-/*				//6
-				PNode* pnA = (__bridge PNode*)obA->getUserPointer();
-				PNode* pnB = (__bridge PNode*)obB->getUserPointer();
-
-				//7
-				if (pnA.tag == kBrickTag) {
-					[self destroyBrickAndCheckVictory:pnA];
-				}
-
-				//8
-				if (pnB.tag == kBrickTag){
-					[self destroyBrickAndCheckVictory:pnB];
-				}*/
-			}
-		}
-	}
-
 
 	std::shared_ptr<core> core;
 
@@ -170,11 +189,6 @@ protected:
 
 	//std::vector<std::pair<std::function<void()> > > continuous_event_queue;
 	//std::vector<std::pair<std::function<void()> > > unique_event_queue;
-
-
-	//std::shared_ptr< physics::dynamic_world> physics;
-
-
 
 
 };// class stage

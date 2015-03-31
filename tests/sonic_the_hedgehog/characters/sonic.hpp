@@ -245,6 +245,7 @@ public:
 	}
 
 	virtual void logic(const float& dt){
+
 		calculate_facing();
 		calculate_movement();
 		calculate_friction();

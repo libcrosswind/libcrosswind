@@ -161,6 +161,5 @@ public:
 
 	    return model;
 	}
-	
 
 };// class video

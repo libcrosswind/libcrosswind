@@ -90,6 +90,10 @@ public:
         return character_object->onGround();
     }
 
+    void* get_character_object(){
+        return character_object.get();
+    }
+
 public:
     std::unique_ptr<btKinematicCharacterController> character_object;
     std::unique_ptr<btPairCachingGhostObject> ghost_object;

@@ -8,10 +8,10 @@ int main(int argc, char **argv) {
     engine->core->filesystem->add_directory("assets", true);
 
     auto scene = engine->stage->create_scene<game::scenes::green_hill_zone>();
-    scene->set_name("my_scene");
+    scene->set_name("green_hill");
 
     engine->stage->add_scene(scene);
-    engine->stage->load_scene("my_scene");
+    engine->stage->load_scene("green_hill");
 
     engine->run();
 

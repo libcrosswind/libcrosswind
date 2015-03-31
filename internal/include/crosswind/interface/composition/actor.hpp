@@ -23,7 +23,7 @@ class cw::interface::composition::actor{
 	typedef std::map<std::string, std::shared_ptr<simulation::detail::body> >       body_map;
 	typedef std::map<std::string, std::shared_ptr<simulation::detail::character> >  character_map;
 public:
-	actor(){
+	actor(): name("undefined"){
 
 	}
 
@@ -36,6 +36,16 @@ public:
 		for(auto& character_mapping: characters){
 			core->physics->remove_character(character_mapping.second);
 		}
+	}
+
+	std::string name;
+
+	virtual void set_name(const std::string& f_name){
+		name = f_name;
+	}
+
+	virtual std::string& get_name(){
+		return name;
 	}
 
 	virtual void init() = 0;
@@ -93,6 +103,9 @@ public:
 					                                             origin,
 					                                             size,
 					                                             mass);
+
+			bodies[body_name]->physic_body->setUserPointer(this);
+
 		} else {
 			throw std::runtime_error(body_name + " already exists, remove it first before adding one with the same name");
 		}
@@ -106,6 +119,8 @@ public:
 
 		if(characters.find(character_name) == characters.end()){
 			characters[character_name]  = core->physics->create_character(origin, size, step_height);
+			static_cast<btKinematicCharacterController*>(characters[character_name]->get_character_object())->
+					getGhostObject()->setUserPointer(this);
 		} else {
 			throw std::runtime_error(character_name + " already exists, remove it first before adding one with the same name");
 		}
@@ -140,11 +155,6 @@ public:
 	std::shared_ptr<core> core;
 
 	std::map<std::string, bool> conditions;
-	std::map<std::string, std::pair<bool, glm::vec3> > collisions;
-
-	virtual std::pair<bool, glm::vec3> collides_with(const std::string& actor_name, const std::string& body_name){
-
-	}
 
 private:
 	model_map       models;
