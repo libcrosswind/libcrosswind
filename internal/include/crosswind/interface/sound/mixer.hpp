@@ -19,7 +19,7 @@ public:
 	}
 
 	virtual void load_music(const std::string& name, const std::string& path) = 0;
-	virtual void play_music(const std::string& name) = 0;
+	virtual void play_music(const std::string& name, const int& loops = -1) = 0;
 	virtual bool is_playing_music(const std::string& name) = 0;
 	virtual void pause_music() = 0;
 

@@ -72,17 +72,17 @@ public:
 
 	}
 
-	virtual void play_music(const std::string& name){
+	virtual void play_music(const std::string& name, const int& loops = -1){
 
 		if(Mix_PlayingMusic() == 0){ 							// If there is no music playing
 
-			bgm_info[name].first = Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
+			bgm_info[name].first = Mix_PlayMusic(bgm_tracks[name]->data.ptr(),loops);	// Play the music
 			bgm_info[name].second = true;
 
 		} else {												// There is music playing
 
 			stop_music();										// Stop the music
-			bgm_info[name].first = Mix_PlayMusic(bgm_tracks[name]->data.ptr(), -1);	// Play the music
+			bgm_info[name].first = Mix_PlayMusic(bgm_tracks[name]->data.ptr(), loops);	// Play the music
 			bgm_info[name].second = true;
 
 		}
