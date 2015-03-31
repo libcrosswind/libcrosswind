@@ -23,11 +23,11 @@ public:
 
 	virtual void init(){
 
-		this->add_model("sonic_monitor", 
+		this->add_model("monitor",
 			            glm::vec3(0.0f, 0.0f, 0.0f), 
 			            glm::vec3(30.0f, 30.0f, 0.0f), "monitors.json");
 
-		this->add_rigid_body("sonic_monitor",
+		this->add_rigid_body("monitor",
 							 glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(30.0f, 30.0f, 10.0f), 1.0f);
 
 		this->conditions["broken"] = false;
@@ -39,7 +39,7 @@ public:
 
 	void destroy(){
 		this->conditions["broken"] = true;
-		this->remove_rigid_body("sonic_monitor");
+		this->remove_rigid_body("monitor");
 	}
 
 	void set_content(const std::string& content){
@@ -49,12 +49,11 @@ public:
 	void map_positions(){
 
 		if(!this->conditions["broken"]){
-			glm::vec3 b_origin(this->get_rigid_body("sonic_monitor")->get_origin().x,
-					this->get_rigid_body("sonic_monitor")->get_origin().y,
-					this->get_rigid_body("sonic_monitor")->get_origin().z);
+			glm::vec3 b_origin(this->get_rigid_body("monitor")->get_origin().x,
+					this->get_rigid_body("monitor")->get_origin().y,
+					this->get_rigid_body("monitor")->get_origin().z);
 			this->get_model("monitor")->get_render_sprite_list()["current"]->set_origin(b_origin);
 		}
-
 
 	}
 
