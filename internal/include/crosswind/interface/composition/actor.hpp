@@ -112,6 +112,16 @@ public:
 
 	}
 
+	virtual std::shared_ptr<simulation::detail::body> get_rigid_body(const std::string& body_name){
+
+		if(bodies.find(body_name) != bodies.end()){
+			return bodies[body_name];
+		} else {
+			throw std::runtime_error(body_name + " does not exist");
+		}
+
+	}
+
 	virtual void remove_rigid_body(const std::string& body_name){
 
 		if(bodies.find(body_name) != bodies.end()){

@@ -46,11 +46,25 @@ public:
 		this->get_model("monitor")->change_animation(content);
 	}
 
+	void map_positions(){
+
+		if(!this->conditions["broken"]){
+			glm::vec3 b_origin(this->get_rigid_body("sonic_monitor")->get_origin().x,
+					this->get_rigid_body("sonic_monitor")->get_origin().y,
+					this->get_rigid_body("sonic_monitor")->get_origin().z);
+			this->get_model("monitor")->get_render_sprite_list()["current"]->set_origin(b_origin);
+		}
+
+
+	}
+
 	virtual void logic(const float& dt){
 
 		if(this->conditions["broken"]){
 			this->get_model("monitor")->change_animation("monitor_broken");
 		}
+
+		map_positions();
 
 	}
 
