@@ -34,6 +34,16 @@ public:
 
 	virtual void apply_force(const glm::vec3& f) = 0;
 
+
+	void set_activation_policy(auto state){
+		physic_body->setActivationState(state);
+	}
+
+	void set_linear_factor(const glm::vec3& position, const glm::vec3& rotation){
+		physic_body->setLinearFactor(btVector3(position.x, position.y, position.z));
+		physic_body->setAngularFactor(btVector3(rotation.x, rotation.y, rotation.z));
+	}
+
 	std::unique_ptr<btMotionState> motion_state;
 	std::unique_ptr<btCollisionShape> collision_shape;
 	std::unique_ptr<btRigidBody> physic_body;

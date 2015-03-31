@@ -28,7 +28,11 @@ public:
 			            glm::vec3(30.0f, 30.0f, 0.0f), "monitors.json");
 
 		this->add_rigid_body("monitor",
-							 glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(30.0f, 30.0f, 10.0f), 1.0f);
+							 glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(30.0f, 30.0f, 5.0f), 1.0f);
+
+		this->get_rigid_body("monitor")->set_activation_policy(DISABLE_DEACTIVATION);
+		this->get_rigid_body("monitor")->set_linear_factor(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+
 
 		this->conditions["broken"] = false;
 	}
