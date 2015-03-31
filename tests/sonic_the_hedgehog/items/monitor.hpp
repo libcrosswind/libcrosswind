@@ -43,10 +43,11 @@ public:
 
 	void destroy(){
 
-		this->conditions["broken"] = true;
-		this->get_model("monitor")->change_animation("monitor_broken");
 
-		map_positions();
+		this->get_model("monitor")->change_animation("monitor_broken");
+		update(1.0f/60.0f);
+
+		this->conditions["broken"] = true;
 		this->remove_rigid_body("monitor");
 
 	}
