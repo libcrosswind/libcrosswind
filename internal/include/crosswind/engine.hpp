@@ -68,7 +68,7 @@ private:
         core->video->renderer->draw();
         core->video->renderer->end();
 
-       // core->physics->debug_draw_world(stage->get_scene("current")->get_camera("current")->get_camera_matrix());
+        core->physics->debug_draw_world(stage->get_scene("current")->get_camera("current")->get_camera_matrix());
         core->video->window->present();
     }
 

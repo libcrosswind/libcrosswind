@@ -140,6 +140,12 @@ public:
 	std::shared_ptr<core> core;
 
 	std::map<std::string, bool> conditions;
+	std::map<std::string, std::pair<bool, glm::vec3> > collisions;
+
+	virtual std::pair<bool, glm::vec3> collides_with(const std::string& actor_name, const std::string& body_name){
+
+	}
+
 private:
 	model_map       models;
 	body_map        bodies;
