@@ -112,6 +112,17 @@ public:
 
 	}
 
+	virtual void remove_rigid_body(const std::string& body_name){
+
+		if(bodies.find(body_name) != bodies.end()){
+			core->physics->remove_rigid_body(bodies[body_name]);
+			bodies.erase(body_name);
+		} else {
+			throw std::runtime_error(body_name + " does not exist or was already removed");
+		}
+
+	}
+
 	virtual void add_character(const std::string& character_name,
 							   const glm::vec3& origin,
 							   const glm::vec2& size,
