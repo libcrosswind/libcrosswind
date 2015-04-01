@@ -1,0 +1,32 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"team_logo"	: "assets/sonic_the_hedgehog/graphics/title/team_logo.png"
+	},
+
+	"spritesheets":
+	{
+		"team_logo" : {"sprite-size" : [1447.00, 552.00] }
+	},
+
+	"sprites":
+	{
+		"team_logo" :{ "team_logo"  : [0.00, 0.00, 1.00, 1.00] }
+	},
+
+	"animations":
+	{
+   		"team_logo"    :{ "time": 0.125,  "frames": ["team_logo"] }
+	},
+
+	"properties":
+	{
+		"default-animation"	: "team_logo"
+	}
+}

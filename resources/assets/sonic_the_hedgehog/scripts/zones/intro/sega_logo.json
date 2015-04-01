@@ -12,7 +12,7 @@
 
 	"spritesheets":
 	{
-		"sega_logo" : {"sprite-size" : [320.00, 224.00] }
+		"sega_logo" : {"sprite-size" : [167.00, 58.00] }
 	},
 
 	"sprites":

@@ -148,6 +148,15 @@ public:
 
 	}
 
+	virtual void remove_actor(const std::string& actor_name){
+		if(actors.find(actor_name) != actors.end()){
+			actors.erase(actor_name);
+		} else {
+			throw std::runtime_error(actor_name + " does not exist or was already removed");
+		}
+	}
+
+
 	virtual void set_camera_map(const camera_map& new_camera_map){
 		cameras = new_camera_map;
 	}

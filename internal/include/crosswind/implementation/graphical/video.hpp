@@ -103,9 +103,23 @@ public:
 	        glm::vec3 sprite_size(s_props->value()[0].as<double>(), // sprite size.
 	                              s_props->value()[1].as<double>(),
 	                              0.0f);
+		    if(size.x < 0){
+			    sprite_size.x *= glm::abs(size.x / 100.0f);
+		    } else{
+			    sprite_size.x *= size.x/sprite_size.x ;
+		    }
 
-		    sprite_size.x *= size.x/sprite_size.x ;
-		    sprite_size.y *= size.y/sprite_size.y ;
+		    if(size.y < 0){
+			    sprite_size.y *= glm::abs(size.y / 100.0f);
+		    } else{
+			    sprite_size.y *= size.y/sprite_size.y ;
+		    }
+
+/*		    if(size.z < 0){
+			    size.z = glm::abs(size.z / 100.0f);
+		    }
+*/
+
 
 	        sprite_sheet_sizes[name] = sprite_size;
 	    }

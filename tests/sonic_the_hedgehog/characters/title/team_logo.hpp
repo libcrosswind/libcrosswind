@@ -9,16 +9,16 @@ namespace game {
 namespace characters {
 namespace title{
 
-	class sega_logo;
+	class team_logo;
 
 }// namespace title
 }// namespace characters
 }// namespace game
 
-class game::characters::title::sega_logo: public cw::interface::composition::actor{
+class game::characters::title::team_logo: public cw::interface::composition::actor{
 public:
 
-	sega_logo(){
+	team_logo(){
 
 	}
 
@@ -26,10 +26,14 @@ public:
 
 		auto window_size = core->video->window->get_size();
 
-		this->add_model("sega_logo",
+		const float x_scale = window_size.x / 1920.0f;
+		const float y_scale = window_size.y / 1080.0f;
+
+
+		this->add_model("team_logo",
 				        glm::vec3(0.0f, 0.0f, 0.0f),
-				        glm::vec3(-100.0f * 640.0f/320.0f, -100.0f*480.0f/224.0f, 0.0f),
-				        "sega_logo.json");
+				        glm::vec3(-100.0f * x_scale, -100.0f * y_scale, 0.0f),
+				        "team_logo.json");
 
 	}
 
