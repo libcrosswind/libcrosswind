@@ -52,7 +52,9 @@ public:
 
     virtual void show() = 0;
     virtual void hide() = 0;
-    
+
+    virtual void set_icon(SDL_Surface *surface) = 0;
+
     virtual void set_clear_color(const glm::vec4& color) = 0;
     virtual void clear() = 0;
     virtual void present() = 0;

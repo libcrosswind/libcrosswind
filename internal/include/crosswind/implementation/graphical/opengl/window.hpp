@@ -165,6 +165,10 @@ public:
         SDL_HideWindow(this->window_resource.ptr());
     }
 
+    virtual void set_icon(SDL_Surface *surface){
+        SDL_SetWindowIcon(window, surface);
+    }
+
     virtual void set_clear_color(const glm::vec4& color){
         glClearColor(color.r, color.g, color.b, color.a);
     }

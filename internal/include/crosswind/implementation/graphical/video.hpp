@@ -54,10 +54,15 @@ public:
 		IMG_Quit();
 	}
 
+	void set_window_icon(const std::string& path){
+		auto surface = std::make_unique<sdl::surface>(path);
+		window->set_icon(surface.get());
+
+	}
+
     void load_texture(const std::string& name, const std::string& path){
 
         if ( texture_list.find(name) == texture_list.end()) {
-	        std::cout<< path << std::endl;
             auto surface = std::make_unique<sdl::surface>(path);
 
             texture_list[name] = std::make_shared<opengl::texture>

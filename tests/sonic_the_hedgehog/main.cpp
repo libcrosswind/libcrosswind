@@ -10,6 +10,7 @@ int main(int argc, char **argv) {
 
     auto engine = std::make_shared<cw::engine>(settings);
     engine->core->filesystem->add_directory("assets", true);
+    engine->core->video->set_window_icon(engine->core->filesystem->get_file_path("sonic_icon.png"));
 
     auto title = engine->stage->create_scene<game::scenes::title>();
 
