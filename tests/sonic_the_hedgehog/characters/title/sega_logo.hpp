@@ -27,7 +27,11 @@ public:
 	virtual void init(){
 
 		auto window_size = core->video->window->get_size();
-		this->add_model("sega_logo", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(window_size.x, window_size.y, 0.0f), "sega_logo.json");
+
+		this->add_model("sega_logo",
+				        glm::vec3(0.0f, 0.0f, 0.0f),
+				        glm::vec3(120.0f, 60.0f, 0.0f),
+				        "sega_logo.json");
 
 	}
 

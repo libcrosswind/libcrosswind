@@ -2,10 +2,11 @@
 
 #include <memory>
 
+#include <glm/glm.hpp>
+
 #include <crosswind/interface/core.hpp>
 #include <crosswind/interface/composition/scene.hpp>
 #include <crosswind/implementation/composition/camera.hpp>
-
 
 #include <characters/title/sega_logo.hpp>
 //#include <characters/title/sonic_team_logo.hpp>
@@ -56,7 +57,11 @@ public:
 	    for(auto& actor: actors){
 		    actor.second->init();
 	    }
+	    time_to_intro = false;
+	    time_count = 0.0f;
 
+	    core->video->window->set_clear_color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		get_actor("sega_logo")->set_alpha(0.0f);
     }
 
     virtual void deinit(){
@@ -68,10 +73,15 @@ public:
 		time_count+=dt;
 
 		//Sega logo music is 2 seconds long + 2 seconds from the startup animation.
+        if(time_count <= 2.0f){
+	        get_actor("sega_logo")->set_alpha(time_count/2.0f);
+        }
 
-		if(time_count >= 60.0f * 2.0f){
 
-		} else if(time_count >= 60.0f * 4.0f){
+		if(time_count >=  2.0f && !time_to_intro){
+			time_to_intro = true;
+			core->mixer->play_music("logo_bgm", 0);
+		} else {
 
 		}
 
@@ -91,5 +101,11 @@ public:
 
 private:
 	float time_count;
+	enum phase{
+		sega_logo = 0,
+		team_logo,
+		intro
+	};
+	bool time_to_intro;
 
 };// class title

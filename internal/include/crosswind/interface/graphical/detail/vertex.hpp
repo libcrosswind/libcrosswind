@@ -35,12 +35,20 @@ struct cw::interface::graphical::detail::vertex{
 		position = p;
 	}
 
-    void set_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a){
+    void set_color(const float&  r, const float& g, const float& b, const float& a){
     	color.r = r;
     	color.g = g;
     	color.b = b;
     	color.a = a;
     }
+
+	void set_alpha(const float& alpha) {
+		color.a = alpha;
+	}
+
+	float& get_alpha(){
+		return color.a;
+	}
 
     void set_uv(float u, float v){
     	uv.x = u;

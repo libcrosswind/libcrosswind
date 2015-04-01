@@ -36,9 +36,12 @@ public:
 		for(auto& character_mapping: characters){
 			core->physics->remove_character(character_mapping.second);
 		}
+
+		alpha = 1.0f;
 	}
 
 	std::string name;
+	float alpha;
 
 	virtual void set_name(const std::string& f_name){
 		name = f_name;
@@ -46,6 +49,21 @@ public:
 
 	virtual std::string& get_name(){
 		return name;
+	}
+
+	virtual void set_alpha(const float& f_alpha){
+		alpha = f_alpha;
+		for(auto& model : models){
+			for(auto& sprite : model.second->get_render_sprite_list()){
+				for(auto& vertex : sprite.second->get_vertices()){
+					vertex.set_alpha(alpha);
+				}
+			}
+		}
+	}
+
+	virtual float& get_alpha(){
+		return alpha;
 	}
 
 	virtual void init() = 0;
