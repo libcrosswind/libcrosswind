@@ -56,7 +56,7 @@ public:
 
 	void set_window_icon(const std::string& path){
 		auto surface = std::make_unique<sdl::surface>(path);
-		window->set_icon(surface.get());
+		window->set_icon(surface->data.ptr());
 
 	}
 

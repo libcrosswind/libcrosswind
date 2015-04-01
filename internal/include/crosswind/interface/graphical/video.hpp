@@ -33,7 +33,9 @@ public:
     virtual void load_texture(const std::string& name, const std::string& path) = 0;
 	virtual std::shared_ptr<detail::texture> load_texture(const std::string& name) = 0;
 
-	virtual std::shared_ptr<object::model>
+	virtual void set_window_icon(const std::string& path) = 0;
+
+		virtual std::shared_ptr<object::model>
 			load_model(const glm::vec3& origin, const glm::vec3& size, const std::string& template_file) = 0;
 
 	std::shared_ptr< detail::window   >	window;

@@ -166,7 +166,7 @@ public:
     }
 
     virtual void set_icon(SDL_Surface *surface){
-        SDL_SetWindowIcon(window, surface);
+        SDL_SetWindowIcon(this->window_resource.ptr(), surface);
     }
 
     virtual void set_clear_color(const glm::vec4& color){
