@@ -57,6 +57,8 @@ public:
 		    actor.second->init();
 	    }
 
+	    sega_sound_ongoing = false;
+
 	    sega_logo_duration = 8.0f;
 	    team_logo_duration = 8.0f;
 	    time_count = 0.0f;
@@ -79,7 +81,8 @@ public:
 			if(time_count <= 2.0f){
 				float alpha_blending = glm::sin(time_count / 2.0f * 90.0f);
 				get_actor("sega_logo")->set_alpha(alpha_blending);
-			} else if(time_count == 2.0f) {
+			} else if(!sega_sound_ongoing) {
+				sega_sound_ongoing = true;
 				core->mixer->play_music("logo_bgm", 0);
 			} else if(time_count >= 6.0f && time_count <= 8.0f){
 				float alpha_blending = glm::sin((time_count / 8.0f * 90.0f) + 90.0f);
@@ -109,11 +112,12 @@ public:
 	}
 
 	void draw_intro(const float& delta){
-
+		time_count = 0.0f;
 	}
 
 	virtual void logic(const float& delta){
 
+		time_count += delta;
 
 		switch(phase){
 			case scene_phase::sega_logo:
@@ -133,6 +137,7 @@ public:
 
 private:
 	float time_count;
+	bool sega_sound_ongoing;
 	float sega_logo_duration;
 	float team_logo_duration;
 	float intro_duration;
