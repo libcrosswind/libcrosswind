@@ -6,7 +6,7 @@
 int main(int argc, char **argv) {
 
     auto settings = cw::interface::settings();
-    settings.video.window_title = "Sonic the Hedgehog";
+    settings.video.window_title = "Sonic the Hedgehog HD";
 
     auto engine = std::make_shared<cw::engine>(settings);
     engine->core->filesystem->add_directory("assets", true);

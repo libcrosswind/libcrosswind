@@ -53,59 +53,96 @@ public:
 //	    add_actor("title_logo", title_logo);
 //	    add_actor("title_animation", title_animation);
 
-
 	    for(auto& actor: actors){
 		    actor.second->init();
 	    }
-	    time_to_team = false;
-	    time_to_intro = false;
 
+	    sega_logo_duration = 8.0f;
+	    team_logo_duration = 8.0f;
 	    time_count = 0.0f;
 
 	    core->video->window->set_clear_color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		get_actor("sega_logo")->set_alpha(0.0f);
 	    get_actor("team_logo")->set_alpha(0.0f);
+
+	    phase = scene_phase::sega_logo;
     }
 
     virtual void deinit(){
 
     }
 
-	virtual void logic(const float& delta){
+	void draw_sega_logo(const float& delta){
 
-		//Sega logo music is 2 seconds long + 2 seconds from the startup animation.
-		if(time_count <= 2.0f){
+		if(time_count <= sega_logo_duration){
 
-			get_actor("sega_logo")->set_alpha(time_count/2.0f);
+			if(time_count <= 2.0f){
+				float alpha_blending = glm::sin(time_count / 2.0f * 90.0f);
+				get_actor("sega_logo")->set_alpha(alpha_blending);
+			} else if(time_count == 2.0f) {
+				core->mixer->play_music("logo_bgm", 0);
+			} else if(time_count >= 6.0f && time_count <= 8.0f){
+				float alpha_blending = glm::sin((time_count / 8.0f * 90.0f) + 90.0f);
+				get_actor("sega_logo")->set_alpha(alpha_blending);
+				core->video->window->set_clear_color(glm::vec4(alpha_blending, alpha_blending, alpha_blending, 1.0f));
+			}
 
-		} else if (time_count >= 6.0f && time_count <= 8.0f){
-
-			const float blend_alpha = (8.0f - time_count) / 2.0f;
-			get_actor("sega_logo")->set_alpha(blend_alpha);
-			core->video->window->set_clear_color(glm::vec4(blend_alpha, blend_alpha, blend_alpha, 1.0f));
-
-		} else if(time_count >= 10.0f && time_count <= 14.0f){
-
-			const float blend_alpha = (4.0f - (14.0f - time_count)) / 4.0f;
-			get_actor("team_logo")->set_alpha(blend_alpha);
-
+		} else {
+			time_count = 0.0f;
+			phase = scene_phase::team_logo;
 		}
 
-		if(time_count >=  2.0f && !time_to_team){
-			time_to_team = true;
-			core->mixer->play_music("logo_bgm", 0);
-		} else if(time_count >= 10.0f && !time_to_intro){
-			time_to_intro = true;
-			remove_actor("sega_logo");
+	}
+
+	void draw_team_logo(const float& delta){
+
+		if(time_count <= sega_logo_duration){
+
+			float alpha_blending = glm::sin(time_count / sega_logo_duration * 180.0f);
+			get_actor("team_logo")->set_alpha(alpha_blending);
+
 		} else {
-			time_count+=delta;
+			time_count = 0.0f;
+			phase = scene_phase::intro;
+		}
+
+	}
+
+	void draw_intro(const float& delta){
+
+	}
+
+	virtual void logic(const float& delta){
+
+
+		switch(phase){
+			case scene_phase::sega_logo:
+				draw_sega_logo(delta);
+				break;
+
+			case scene_phase::team_logo:
+				draw_team_logo(delta);
+				break;
+
+			case scene_phase::intro:
+				draw_intro(delta);
+				break;
 		}
 
 	}
 
 private:
 	float time_count;
-	bool time_to_intro;
-	bool time_to_team;
+	float sega_logo_duration;
+	float team_logo_duration;
+	float intro_duration;
+
+	int phase;
+
+	enum scene_phase{
+		sega_logo = 0,
+		team_logo,
+		intro
+	};
 
 };// class title
