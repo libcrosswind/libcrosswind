@@ -26,7 +26,7 @@
 
 	"animations":
 	{
-   		"water"       :{ "time": 0.125,  "frames": ["water_1", "water_2", "water_3", "water_4"]   }
+   		"water"       :{ "time": 0.800,  "frames": ["water_1", "water_2", "water_3", "water_4"]   }
 	},
 
 	"properties":

@@ -7,7 +7,7 @@
 
 	"textures":
 	{
-		"sega_logo"	: "assets/sonic_the_hedgehog/graphics/title/sega_logo.png"
+		"sega_logo"	: "assets/sonic_the_hedgehog/graphics/zones/title/sega_logo.png"
 	},
 
 	"spritesheets":

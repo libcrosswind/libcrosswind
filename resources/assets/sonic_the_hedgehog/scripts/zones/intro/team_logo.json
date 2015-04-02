@@ -7,7 +7,7 @@
 
 	"textures":
 	{
-		"team_logo"	: "assets/sonic_the_hedgehog/graphics/title/team_logo.png"
+		"team_logo"	: "assets/sonic_the_hedgehog/graphics/zones/title/team_logo.png"
 	},
 
 	"spritesheets":
