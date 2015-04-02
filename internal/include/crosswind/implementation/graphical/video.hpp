@@ -93,6 +93,7 @@ public:
 	    }
 
 	    std::map<std::string, glm::vec3> sprite_sheet_sizes;
+		glm::vec3 final_size;
 
 	    for (auto s = raw_json["spritesheets"].begin_members(); s != raw_json["spritesheets"].end_members(); ++s)
 	    {
@@ -122,6 +123,7 @@ public:
 		    }
 */
 
+		    final_size = sprite_size;
 
 	        sprite_sheet_sizes[name] = sprite_size;
 	    }
@@ -176,7 +178,7 @@ public:
 				model->get_animations()["current"]->frames[model->get_animations()["current"]->current_frame];
 
 	    model->set_origin(origin);
-	    model->set_size(size);
+	    model->set_size(final_size);
 
 	    return model;
 	}

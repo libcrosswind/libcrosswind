@@ -42,6 +42,7 @@ public:
 
 	std::string name;
 	float alpha;
+	glm::vec3 size;
 
 	virtual void set_name(const std::string& f_name){
 		name = f_name;
@@ -54,9 +55,12 @@ public:
 	virtual void set_alpha(const float& f_alpha){
 		alpha = f_alpha;
 		for(auto& model : models){
-			for(auto& sprite : model.second->get_render_sprite_list()){
-				for(auto& vertex : sprite.second->get_vertices()){
-					vertex.set_alpha(alpha);
+			for(auto& sprite : model.second->get_animations()){
+
+				for(auto& frame : sprite.second->frames){
+					for(auto& vertex : frame->get_vertices()){
+						vertex.set_alpha(alpha);
+					}
 				}
 			}
 		}
@@ -65,6 +69,7 @@ public:
 	virtual float& get_alpha(){
 		return alpha;
 	}
+
 
 	virtual void init() = 0;
 	virtual void deinit() = 0;
@@ -192,7 +197,6 @@ public:
 	}
 
 	std::shared_ptr<core> core;
-
 	std::map<std::string, bool> conditions;
 
 private:

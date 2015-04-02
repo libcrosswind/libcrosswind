@@ -3,7 +3,7 @@
 #include <crosswind/engine.hpp>
 
 #include <scenes/title.hpp>
-#include <scenes/green_hill_zone.hpp>
+//#include <scenes/green_hill_zone.hpp>
 
 int main(int argc, char **argv) {
 

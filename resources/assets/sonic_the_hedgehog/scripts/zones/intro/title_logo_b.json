@@ -1,0 +1,32 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"intro_logo_b"	: "assets/sonic_the_hedgehog/graphics/zones/title/intro_logo_b.png"
+	},
+
+	"spritesheets":
+	{
+		"intro_logo_b" : {"sprite-size" : [255.00, 144.00] }
+	},
+
+	"sprites":
+	{
+		"intro_logo_b" :{ "intro_logo_b"  : [0.00, 0.00, 1.00, 1.00] }
+	},
+
+	"animations":
+	{
+   		"intro_logo_b"    :{ "time": 0.125,  "frames": ["intro_logo_b"] }
+	},
+
+	"properties":
+	{
+		"default-animation"	: "intro_logo_b"
+	}
+}

@@ -70,6 +70,11 @@ public:
 
 	virtual void set_origin(const glm::vec3& new_origin){
 		origin = new_origin;
+		for(auto& animation : animations){
+			for(auto& frame : animation.second->frames){
+				frame->set_origin(origin);
+			}
+		}
 	}
 
 	virtual glm::vec3 get_origin(){
