@@ -74,18 +74,18 @@ public:
 
     }
 
-	void draw_sega_logo(const float& delta){
+	void draw_sega_logo(){
 
 		if(time_count <= sega_logo_duration){
 
 			if(time_count <= 2.0f){
-				float alpha_blending = glm::sin(time_count / 2.0f * 90.0f);
+				float alpha_blending = glm::sin(glm::radians(time_count / 2.0f * 90.0f));
 				get_actor("sega_logo")->set_alpha(alpha_blending);
 			} else if(!sega_sound_ongoing) {
 				sega_sound_ongoing = true;
 				core->mixer->play_music("logo_bgm", 0);
 			} else if(time_count >= 6.0f && time_count <= 8.0f){
-				float alpha_blending = glm::sin((time_count / 8.0f * 90.0f) + 90.0f);
+				float alpha_blending = glm::sin(glm::radians((time_count / 8.0f * 90.0f) + 90.0f));
 				get_actor("sega_logo")->set_alpha(alpha_blending);
 				core->video->window->set_clear_color(glm::vec4(alpha_blending, alpha_blending, alpha_blending, 1.0f));
 			}
@@ -97,11 +97,11 @@ public:
 
 	}
 
-	void draw_team_logo(const float& delta){
+	void draw_team_logo(){
 
 		if(time_count <= sega_logo_duration){
 
-			float alpha_blending = glm::sin(time_count / sega_logo_duration * 180.0f);
+			float alpha_blending = glm::sin(glm::radians(time_count / sega_logo_duration * 180.0f));
 			get_actor("team_logo")->set_alpha(alpha_blending);
 
 		} else {
@@ -111,7 +111,7 @@ public:
 
 	}
 
-	void draw_intro(const float& delta){
+	void draw_intro(){
 		time_count = 0.0f;
 	}
 
@@ -121,15 +121,15 @@ public:
 
 		switch(phase){
 			case scene_phase::sega_logo:
-				draw_sega_logo(delta);
+				draw_sega_logo();
 				break;
 
 			case scene_phase::team_logo:
-				draw_team_logo(delta);
+				draw_team_logo();
 				break;
 
 			case scene_phase::intro:
-				draw_intro(delta);
+				draw_intro();
 				break;
 		}
 

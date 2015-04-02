@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <crosswind/engine.hpp>
 
 #include <scenes/title.hpp>

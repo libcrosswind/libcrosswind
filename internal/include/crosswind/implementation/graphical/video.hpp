@@ -16,9 +16,6 @@
 #include <crosswind/implementation/graphical/opengl/texture.hpp>
 #include <crosswind/implementation/graphical/sdl/surface.hpp>
 
-
-#include <iostream>
-
 namespace cw{
 namespace implementation{
 namespace graphical{
