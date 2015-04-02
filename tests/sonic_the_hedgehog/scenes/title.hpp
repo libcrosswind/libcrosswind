@@ -41,7 +41,6 @@ public:
 	    auto sega_logo  = this->create_actor<characters::title::sega_logo>();
 	    auto team_logo  = this->create_actor<characters::title::team_logo>();
 
-
 //	    auto title_background = this->create_actor<game::characters::title::background>();
 //	    auto title_logo       = this->create_actor<game::characters::title::logo>();
 //	    auto title_animation  = this->create_actor<game::characters::title::sonic_animation>();

@@ -1,0 +1,32 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"ground"	: "assets/sonic_the_hedgehog/graphics/zones/gh/60.png"
+	},
+
+	"spritesheets":
+	{
+		"ground" : {"sprite-size" : [256.00, 256.00] }
+	},
+
+	"sprites":
+	{
+		"ground"    : { "ground"  : [0.00, 0.00, 1.00, 1.00] }
+	},
+
+	"animations":
+	{
+   		"ground"    :{ "time": 0.125,  "frames": ["ground"]   }
+	},
+
+	"properties":
+	{
+		"default-animation"	: "ground"
+	}
+}

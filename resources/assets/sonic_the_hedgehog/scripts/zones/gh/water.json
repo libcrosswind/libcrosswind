@@ -1,0 +1,36 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"water" : "assets/sonic_the_hedgehog/graphics/zones/gh/gh_background.png"
+	},
+
+	"spritesheets":
+	{
+		"water" : {"sprite-size" : [256.00, 256.00] }
+	},
+
+	"sprites":
+	{
+		"water_1" 		  : { "water"  : [0.00, 0.00, 0.25, 0.20] },
+		"water_2"    	  : { "water"  : [0.25, 0.00, 0.50, 0.20] },
+		"water_3"    	  : { "water"  : [0.50, 0.00, 0.75, 0.20] },
+		"water_4"         : { "water"  : [0.75, 0.00, 1.00, 0.20] }
+		
+	},
+
+	"animations":
+	{
+   		"water"       :{ "time": 0.125,  "frames": ["water_1", "water_2", "water_3", "water_4"]   },
+	},
+
+	"properties":
+	{
+		"default-animation"	: "water"
+	}
+}
