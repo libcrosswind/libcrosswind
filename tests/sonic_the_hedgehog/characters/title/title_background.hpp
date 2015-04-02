@@ -78,22 +78,20 @@ public:
 		get_model("gh_background_3")->change_animation("waterfal_c");
 
 
-		this->add_model("intro_logo_a",
+		this->add_model("title_logo_a",
 		                glm::vec3(0.0f, 0.0f, 0.0f),
 		                glm::vec3(-100.0f * 640.0f/320.0f, -100.0f*480.0f/224.0f, 0.0f),
-		                "intro_logo_a.json");
-
-
-		this->add_model("intro_logo_b",
-		                glm::vec3(0.0f, 0.0f, 0.0f),
-		                glm::vec3(-100.0f * 640.0f/320.0f, -100.0f*480.0f/224.0f, 0.0f),
-		                "intro_logo_b.json");
-
+		                "title_logo_a.json");
 
 		this->add_model("title_sonic",
 		                glm::vec3(0.0f, 0.0f, 0.0f),
 		                glm::vec3(-100.0f * 640.0f/320.0f, -100.0f*480.0f/224.0f, 0.0f),
 		                "title_sonic.json");
+
+		this->add_model("title_logo_b",
+		                glm::vec3(0.0f, 0.0f, 0.0f),
+		                glm::vec3(-100.0f * 640.0f/320.0f, -100.0f*480.0f/224.0f, 0.0f),
+		                "title_logo_b.json");
 
 	}
 

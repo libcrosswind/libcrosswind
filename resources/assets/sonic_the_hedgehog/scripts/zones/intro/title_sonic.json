@@ -32,8 +32,11 @@
 
 	"animations":
 	{
-   		"title_sonic_a"    :{ "time": 0.900,  "frames": ["title_sonic_1", "title_sonic_2", "title_sonic_3", "title_sonic_4", "title_sonic_5", "title_sonic_6"] },
-   		"title_sonic_b"    :{ "time": 0.300,  "frames": ["title_sonic_7", "title_sonic_8"] }
+		"title_sonic_a"    :{ "time": 0.125,  "frames": ["title_sonic_1"] },
+   		"title_sonic_b"    :{ "time": 1.000,  "frames": ["title_sonic_2", "title_sonic_3", "title_sonic_4", "title_sonic_5", "title_sonic_6"] },
+   		"title_sonic_c"    :{ "time": 0.500,  "frames": ["title_sonic_7", "title_sonic_8"] },
+   		"title_sonic_d"    :{ "time": 0.250,  "frames": ["title_sonic_7"] }
+
 	},
 
 	"properties":

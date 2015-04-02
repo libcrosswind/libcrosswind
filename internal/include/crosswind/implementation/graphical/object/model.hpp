@@ -27,8 +27,11 @@ public:
 
 	virtual void change_animation(const std::string& new_animation, const bool& x_orientation = true){
 
-		animations["current"] = animations[new_animation];
-		animations["current"]->flip(x_orientation);
+		if(animations["current"] != animations[new_animation]){
+			animations["current"] = animations[new_animation];
+			animations["current"]->flip(x_orientation);
+		}
+
 
 	}
 

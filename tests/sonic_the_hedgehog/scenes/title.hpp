@@ -55,23 +55,29 @@ public:
 		    actor.second->init();
 	    }
 
-	    sega_sound_ongoing  = false;
-	    title_sound_ongoing = false;
-	    sega_logo_duration  = 8.0f;
-	    team_logo_duration  = 8.0f;
-	    time_count = 0.0f;
-
-	    core->video->window->set_clear_color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-		get_actor("sega_logo")->set_alpha(0.0f);
-	    get_actor("team_logo")->set_alpha(0.0f);
-	    get_actor("title_background")->set_alpha(1.0f);
-
-	    phase = scene_phase::sega_logo;
+	    reset();
     }
 
     virtual void deinit(){
 
     }
+
+	void reset(){
+		get_camera("main_camera")->set_position(glm::vec3(0.0f, 0.0f, 0.0f));
+
+		sega_sound_ongoing  = false;
+		title_sound_ongoing = false;
+		sega_logo_duration  = 8.0f;
+		team_logo_duration  = 8.0f;
+		time_count = 0.0f;
+
+		core->video->window->set_clear_color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		get_actor("sega_logo")->set_alpha(0.0f);
+		get_actor("team_logo")->set_alpha(0.0f);
+		get_actor("title_background")->set_alpha(0.0f);
+		phase = scene_phase::sega_logo;
+
+	}
 
 	void draw_sega_logo(){
 
@@ -94,7 +100,6 @@ public:
 
 		} else {
 			time_count = 0.0f;
-			remove_actor("sega_logo");
 			phase = scene_phase::team_logo;
 		}
 
@@ -109,24 +114,77 @@ public:
 
 		} else {
 			time_count = 0.0f;
-			remove_actor("team_logo");
 			phase = scene_phase::title_logo;
 		}
 
 	}
 
+	void change_sonic_animation(const std::string& new_animation){
+		post_event([this, new_animation](){
+		    this->get_actor("title_background")->get_model("title_sonic")->change_animation(new_animation);
+
+		}, false);
+	}
+
 	void draw_title(){
 
 		if(time_count <= 2.0f) {
-	//		float alpha_blending = glm::sin(glm::radians(time_count / 2.0f * 90.0f));
-	//		this->get_actor("title_background")->set_alpha(alpha_blending);
-		} else if(!title_sound_ongoing) {
+			this->get_actor("title_background")->get_model("title_logo_a")->set_origin(glm::vec3(0.0f, 0.0f, 0.0f));
+			this->get_actor("title_background")->get_model("title_sonic")->set_origin(glm::vec3(-2000.0f, -41.0f, 0.0f));
+			this->get_actor("title_background")->get_model("title_logo_b")->set_origin(glm::vec3(0.0f, 0.0f, 0.0f));
+
+			float alpha_blending = glm::sin(glm::radians(time_count / 2.0f * 90.0f));
+			this->get_actor("title_background")->set_alpha(alpha_blending);
+		} else if(time_count >= 2.0f && time_count <= 3.5f){
+
+		} else if(time_count >= 3.5f && time_count <= 4.0f ) {
+
+			const float sonic_y = this->get_actor("title_background")->get_model("title_sonic")->get_origin().y;
+			const float movement_time = 4.05f; //3.0f - (4.0f - time_count);
+
+			const float movement = glm::clamp(sonic_y + movement_time, -41.0f, 82.0f);
+			this->get_actor("title_background")->get_model("title_sonic")->set_origin(glm::vec3(0.0f, movement, 0.0f));
+
+		} else if(time_count >= 4.0f && time_count <= 16.0f) {
+
+			if(time_count - 4.0f < 0.9f){
+				change_sonic_animation("title_sonic_b");
+			} else {
+				change_sonic_animation("title_sonic_c");
+			}
+
+			const float sonic_x = this->get_actor("title_background")->get_model("title_sonic")->get_origin().x +
+			                      1.2;
+
+			this->get_actor("title_background")->get_model("title_logo_a")->set_origin(glm::vec3(sonic_x, 0.0f, 0.0f));
+			this->get_actor("title_background")->get_model("title_sonic")->set_origin(glm::vec3(sonic_x, 82.0f, 0.0f));
+			this->get_actor("title_background")->get_model("title_logo_b")->set_origin(glm::vec3(sonic_x, 0.0f, 0.0f));
+		} else if(time_count >= 16.0f && time_count <= 18.0f){
+			change_sonic_animation("title_sonic_d");
+
+			const float time_range = 2.0f - (18.0f - time_count);
+
+			float alpha_blending = glm::sin(glm::radians((time_range/2 * 90.0f) + 90.0f));
+			get_actor("title_background")->set_alpha(alpha_blending);
+			core->video->window->set_clear_color(glm::vec4(alpha_blending, alpha_blending, alpha_blending, 1.0f));
+
+		} else if(time_count >= 18.0f && time_count <= 19.0f){
+
+		} else{
+			time_count = 0.0f;
+			reset();
+		}
+
+		if(!title_sound_ongoing && time_count >= 2.0f) {
 			title_sound_ongoing = true;
 			core->mixer->play_music("title_bgm", 0);
-		} else if(time_count >= 3.0f){
+		}
 
-		} else {
-			time_count = 0.0f;
+		if(time_count >= 3.5f){
+			const float sonic_x = this->get_actor("title_background")->get_model("title_sonic")->get_origin().x;
+
+			get_camera("main_camera")->set_position(glm::vec3(sonic_x, 0.0f, 0.0f));
+
 		}
 
 	}
@@ -136,27 +194,18 @@ public:
 		time_count += delta;
 
 		switch(phase){
-/*			case scene_phase::sega_logo:
+			case scene_phase::sega_logo:
 				draw_sega_logo();
 				break;
 
 			case scene_phase::team_logo:
 				draw_team_logo();
-				break;*/
+				break;
 
 			case scene_phase::title_logo:
-//				draw_title();
+				draw_title();
 				break;
 		}
-
-		if(core->input->is_key_down("Right")){
-			get_camera("main_camera")->set_position(glm::vec3(get_camera("main_camera")->get_position().x + 10, 0.0f, 0.0f));
-		} else if(core->input->is_key_down("Left")){
-			get_camera("main_camera")->set_position(glm::vec3(get_camera("main_camera")->get_position().x - 10, 0.0f, 0.0f));
-		}
-
-		draw_title();
-
 	}
 
 private:
