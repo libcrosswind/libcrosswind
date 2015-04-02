@@ -85,7 +85,10 @@ public:
 				sega_sound_ongoing = true;
 				core->mixer->play_music("logo_bgm", 0);
 			} else if(time_count >= 6.0f && time_count <= 8.0f){
-				float alpha_blending = glm::sin(glm::radians((time_count / 8.0f * 90.0f) + 90.0f));
+
+				const float time_range = 2.0f - (8.0f - time_count);
+
+				float alpha_blending = glm::sin(glm::radians((time_range / 2.0f * 90.0f) + 90.0f));
 				get_actor("sega_logo")->set_alpha(alpha_blending);
 				core->video->window->set_clear_color(glm::vec4(alpha_blending, alpha_blending, alpha_blending, 1.0f));
 			}
