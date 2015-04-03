@@ -159,6 +159,7 @@ public:
 			this->get_actor("title_background")->get_model("title_logo_a")->set_origin(glm::vec3(sonic_x, 0.0f, 0.0f));
 			this->get_actor("title_background")->get_model("title_sonic")->set_origin(glm::vec3(sonic_x, 82.0f, 0.0f));
 			this->get_actor("title_background")->get_model("title_logo_b")->set_origin(glm::vec3(sonic_x, 0.0f, 0.0f));
+
 		} else if(time_count >= 16.0f && time_count <= 18.0f){
 			change_sonic_animation("title_sonic_d");
 
@@ -184,7 +185,6 @@ public:
 			const float sonic_x = this->get_actor("title_background")->get_model("title_sonic")->get_origin().x;
 
 			get_camera("main_camera")->set_position(glm::vec3(sonic_x, 0.0f, 0.0f));
-
 		}
 
 	}
