@@ -87,6 +87,9 @@ int main(int argc, char **argv) {
     chai.add(chaiscript::fun(&cw::interface::composition::actor::set_deinit), "set_deinit");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::set_logic), "set_logic");
 
+    chai.add(chaiscript::fun(&cw::interface::composition::actor::init), "init");
+    chai.add(chaiscript::fun(&cw::interface::composition::actor::deinit), "deinit");
+
     chai.add(chaiscript::fun(&cw::interface::composition::actor::add_model), "add_model");
 
     chai.add(chaiscript::fun(&cw::interface::composition::actor::set_name), "set_name");

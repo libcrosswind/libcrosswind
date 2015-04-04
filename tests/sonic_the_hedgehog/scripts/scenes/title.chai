@@ -1,12 +1,14 @@
-var title = g_nucleus.stage.create_scene()
+var title := g_nucleus.stage.create_scene()
 
 var init = fun[title](){
 
-    auto main_camera = title.create_camera(g_nucleus.core.video.window.get_size())
+	auto window_size := g_nucleus.core.video.window.get_size()
+
+    auto main_camera := title.create_camera(window_size)
     title.set_camera("main_camera", main_camera)
 
 
-    auto sega_logo = title.create_actor()
+    auto sega_logo := title.create_actor()
 
     var sega_init = fun[sega_logo](){
         auto window_size = g_nucleus.core.video.window.get_size();
