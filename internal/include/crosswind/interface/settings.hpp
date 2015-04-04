@@ -34,7 +34,7 @@ struct cw::interface::settings{
 
     } audio;
 
-    struct {
+    struct video_settings{
 
         std::string window_title;
         glm::i32vec2  window_position;

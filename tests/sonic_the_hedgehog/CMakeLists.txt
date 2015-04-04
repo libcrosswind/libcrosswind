@@ -17,11 +17,11 @@ include_directories(${INCLUDE_LIBRARY_PATH})
 
 if( CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC)
+add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS)
 
 else( CMAKE_BUILD_TYPE STREQUAL "Release")
 
-add_compile_options(-std=gnu++1y -O3 -DGLEW_STATIC)
+add_compile_options(-std=gnu++1y -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS)
 
 endif()
 

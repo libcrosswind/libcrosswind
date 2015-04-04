@@ -34,7 +34,7 @@ public:
             core->video->window->begin_frame();
 
             update();
-            render();
+            //render();
 
             core->video->window->end_frame();
 
@@ -48,7 +48,7 @@ private:
         core->application->update();
         core->input->update();
         core->physics->update(1.0f/60.0f);
-        stage->update(1.0f/60.0f);
+       // stage->update(1.0f/60.0f);
     }
 
     void render(){

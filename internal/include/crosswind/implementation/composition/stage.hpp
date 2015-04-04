@@ -19,6 +19,7 @@ namespace composition{
 class cw::implementation::composition::stage: public cw::interface::composition::stage{
 public:
 	stage(std::shared_ptr<interface::composition::core> c_core): interface::composition::stage(c_core){
+
 	}
 
 	virtual void handle_events(){
