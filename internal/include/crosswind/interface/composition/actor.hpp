@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <functional>
 
 #include <crosswind/interface/graphical/object/model.hpp>
 #include <crosswind/interface/simulation/detail/character.hpp>
@@ -18,13 +19,13 @@ namespace composition{
 }// namespace interface
 }// namespace cw
 
-class cw::interface::composition::actor{
+class cw::interface::composition::actor: public std::enable_shared_from_this<cw::interface::composition::actor>{
 	typedef std::map<std::string, std::shared_ptr<graphical::object::model> >       model_map;
 	typedef std::map<std::string, std::shared_ptr<simulation::detail::body> >       body_map;
 	typedef std::map<std::string, std::shared_ptr<simulation::detail::character> >  character_map;
 public:
 	actor(): name("undefined"){
-
+		alpha = 1.0f;
 	}
 
 	virtual ~actor(){
@@ -36,13 +37,23 @@ public:
 		for(auto& character_mapping: characters){
 			core->physics->remove_character(character_mapping.second);
 		}
-
-		alpha = 1.0f;
 	}
 
-	std::string name;
-	float alpha;
-	glm::vec3 size;
+	void set_init(const std::function<void()>& fun){
+		init = fun;
+	}
+
+	void set_deinit(const std::function<void()>& fun){
+		deinit = fun;
+	}
+
+	void set_logic(const std::function<void(const float&)>& fun){
+		logic = fun;
+	}
+
+	std::function<void()> init;
+	std::function<void()> deinit;
+	std::function<void(const float&)> logic;
 
 	virtual void set_name(const std::string& f_name){
 		name = f_name;
@@ -70,10 +81,6 @@ public:
 		return alpha;
 	}
 
-
-	virtual void init() = 0;
-	virtual void deinit() = 0;
-
 	virtual void update(const float& dt){
 		for(auto& model_mapping : models){
 			model_mapping.second->update(dt);
@@ -82,7 +89,6 @@ public:
 
 	}
 
-	virtual void logic(const float& dt) = 0;
 
 
 	virtual void add_model(const std::string& model_name,
@@ -203,4 +209,9 @@ private:
 	model_map       models;
 	body_map        bodies;
 	character_map   characters;
+
+	std::string name;
+	glm::vec3 size;
+	float alpha;
+
 };// class actor

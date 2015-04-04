@@ -2,11 +2,12 @@
 
 #include <memory>
 #include <stdexcept>
+#include <functional>
 
 #include <crosswind/interface/core.hpp>
 
 #include <crosswind/interface/composition/actor.hpp>
-#include <crosswind/interface/composition/camera.hpp>
+#include <crosswind/implementation/composition/camera.hpp>
 
 namespace cw{
 namespace interface{
@@ -28,7 +29,23 @@ public:
 		collisions["undefined"] = actor_collision_map();
 	}
 
-protected:
+	void set_init(const std::function<void()>& fun){
+		init = fun;
+	}
+
+	void set_deinit(const std::function<void()>& fun){
+		deinit = fun;
+	}
+
+	void set_logic(const std::function<void(const float&)>& fun){
+		logic = fun;
+	}
+
+	std::function<void()> init;
+	std::function<void()> deinit;
+	std::function<void(const float&)> logic;
+
+private:
 	virtual void handle_events(){
 		std::vector<std::pair<bool, std::function<void()> > > continuous_events;
 
@@ -46,11 +63,6 @@ protected:
 	}
 	
 public:
-
-    virtual void init()   = 0;
-    virtual void deinit() = 0;
-	virtual void logic(const float& delta) = 0;
-
 	virtual void check_collisions(){
 
 		int numManifolds = core->physics->get_collision_manifolds_number();
@@ -126,9 +138,8 @@ public:
 		return actors;
 	}
 
-	template<typename T>
-	std::shared_ptr<T> create_actor(){
-		auto actor = std::make_shared<T>();
+	std::shared_ptr<actor> create_actor(){
+		auto actor = std::make_shared<class actor>();
 		actor->core = core;
 		return actor;
 	}
@@ -165,6 +176,10 @@ public:
 		return cameras;
 	}
 
+	virtual std::shared_ptr<camera> create_camera(const glm::vec2& f_size){
+		return std::make_shared<implementation::composition::camera>(f_size);
+	}
+
 	virtual void set_camera(const std::string& camera_name, std::shared_ptr<camera> camera){
 		if(cameras.empty()){
 			cameras["current"] = camera;
@@ -185,9 +200,12 @@ public:
 	virtual void set_name(const std::string& new_name){ name = new_name; }
 	virtual std::string get_name(){ return name; }
 
-
-
 	std::shared_ptr<core> core;
+
+
+	std::map<std::string, bool> conditions;
+	std::map<std::string, float> float_values;
+	std::map<std::string, int> int_value;
 
 protected:
     std::string name;

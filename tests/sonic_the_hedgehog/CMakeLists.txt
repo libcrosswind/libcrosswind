@@ -64,3 +64,6 @@ file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libc
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libstl_extra.dll
      DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+
+file(COPY ${PROJECT_SOURCE_DIR}/scripts
+     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)

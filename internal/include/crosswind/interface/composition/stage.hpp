@@ -30,9 +30,8 @@ public:
 	virtual void load_scene(const std::string& name) = 0;
 	virtual void unload_scene(const std::string& name) = 0;
 
-	template<typename T>
 	std::shared_ptr<scene> create_scene(){
-		auto scene = std::make_shared<T>();
+		auto scene = std::make_shared<class scene>();
 		scene->core = core;
 		return scene;
 	}
@@ -48,7 +47,6 @@ public:
 	virtual scene_map& get_scene_map() = 0;
 
 	virtual std::shared_ptr<scene> get_scene(const std::string& scene_name) = 0;
-
 
 protected:
 	std::shared_ptr<interface::composition::core> core;

@@ -1,0 +1,53 @@
+var title = g_nucleus.stage.create_scene()
+
+var init = fun[title](){
+
+    auto main_camera = title.create_camera(g_nucleus.core.video.window.get_size())
+    title.set_camera("main_camera", main_camera)
+
+
+    auto sega_logo = title.create_actor()
+
+    var sega_init = fun[sega_logo](){
+        auto window_size = g_nucleus.core.video.window.get_size();
+
+        sega_logo.add_model("sega_logo",
+                        vec3(0.0f, 0.0f, 0.0f),
+                        vec3(-100.0f * 640.0f/320.0f, -100.0f*480.0f/224.0f, 0.0f),
+                        "sega_logo.json");
+    }
+
+    var sega_deinit = fun[sega_logo](){
+
+    }
+
+    var sega_logic  = fun[sega_logo](delta){
+
+    }
+
+    sega_logo.set_init(sega_init)
+    sega_logo.set_deinit(sega_deinit)
+	sega_logo.set_logic(sega_logic)
+
+    title.add_actor("sega_logo", sega_logo)
+
+    sega_logo.init()
+
+}
+
+var deinit = fun[title](){
+    
+}
+
+var logic  = fun[title](delta){
+    
+}
+
+
+title.set_init(init)
+title.set_deinit(deinit)
+title.set_logic(logic)
+
+
+g_nucleus.stage.add_scene("title", title)
+g_nucleus.stage.load_scene("title")
