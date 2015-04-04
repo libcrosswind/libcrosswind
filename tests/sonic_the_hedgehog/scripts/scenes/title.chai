@@ -27,13 +27,15 @@ var init = fun[title](){
 
     }
 
-    sega_logo.set_init(sega_init)
-    sega_logo.set_deinit(sega_deinit)
-	sega_logo.set_logic(sega_logic)
+    sega_logo.construct(sega_init, sega_deinit, sega_logic)
 
     title.add_actor("sega_logo", sega_logo)
 
     sega_logo.init()
+
+    title.get_camera("main_camera").set_position(vec3(0.0f, 0.0f, 0.0f));
+    g_nucleus.core.video.window.set_clear_color(vec4(1.0f, 1.0f, 1.0f, 1.0f0))
+
 
 }
 
@@ -45,11 +47,7 @@ var logic  = fun[title](delta){
     
 }
 
-
-title.set_init(init)
-title.set_deinit(deinit)
-title.set_logic(logic)
-
+title.construct(init, deinit, logic)
 
 g_nucleus.stage.add_scene("title", title)
 g_nucleus.stage.load_scene("title")

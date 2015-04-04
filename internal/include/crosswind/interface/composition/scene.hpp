@@ -29,16 +29,12 @@ public:
 		collisions["undefined"] = actor_collision_map();
 	}
 
-	void set_init(const std::function<void()>& fun){
-		init = fun;
-	}
-
-	void set_deinit(const std::function<void()>& fun){
-		deinit = fun;
-	}
-
-	void set_logic(const std::function<void(const float&)>& fun){
-		logic = fun;
+	void construct(const std::function<void()>& f_init,
+	               const std::function<void()>& f_deinit,
+	               const std::function<void(const float&)>& f_logic){
+		init = f_init;
+		deinit = f_deinit;
+		logic = f_logic;
 	}
 
 	std::function<void()> init;
