@@ -82,12 +82,10 @@ public:
 
 	}
 
-	virtual void update(float dt){
+	virtual void update(const float& dt){
 		handle_events();
 
-		for(auto& scene_mapping : scenes){
-				scene_mapping.second->update(dt);
-		}
+		scenes["current"]->update(dt);
 	}
 
 	virtual void set_scene_map(const scene_map& new_scene_map){

@@ -18,6 +18,7 @@ namespace composition{
 class cw::interface::composition::stage{
 protected:
 	typedef std::map<std::string, std::shared_ptr<scene> > scene_map;
+	typedef std::shared_ptr<scene> scene_ptr;
 public:
 	stage(std::shared_ptr<interface::composition::core> c_core): core(c_core){
 		
@@ -40,7 +41,7 @@ public:
 	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene) = 0;
 	virtual void remove_scene(const std::string& scene_name) = 0;
 
-	virtual void update(float dt) = 0;
+	virtual void update(const float& dt) = 0;
 
 	virtual void set_scene_map(const scene_map& new_scene_map) = 0;
 

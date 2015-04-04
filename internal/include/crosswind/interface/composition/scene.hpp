@@ -196,8 +196,4 @@ protected:
 	camera_map cameras;
 	std::vector<std::pair<bool, std::function<void()> > > event_queue;
 
-	//std::vector<std::pair<std::function<void()> > > continuous_event_queue;
-	//std::vector<std::pair<std::function<void()> > > unique_event_queue;
-
-
 };// class stage

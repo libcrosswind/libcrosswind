@@ -5,24 +5,25 @@ project(sonic_the_hedgehog)
 set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
                             "${PROJECT_SOURCE_DIR}/../../internal/include"
                             "${PROJECT_SOURCE_DIR}/../../external/CImg-1.6.0/include"
-                            "${PROJECT_SOURCE_DIR}/../../external/asio_standalone/asio/include"
                             "${PROJECT_SOURCE_DIR}/../../external/jsoncons/src"
                             "${PROJECT_SOURCE_DIR}/../../external/bullet3/src"
-                            "${PROJECT_SOURCE_DIR}/../../platform/windows/build/include")
+                            "${PROJECT_SOURCE_DIR}/../../platform/windows/build/include"
+                            "${PROJECT_SOURCE_DIR}/../../platform/windows/support/perl/lib/CORE")
 
 
-LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib)
+LINK_DIRECTORIES(   ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib
+                    ${PROJECT_SOURCE_DIR}/../../platform/windows/support/perl/lib/CORE)
 
 
 include_directories(${INCLUDE_LIBRARY_PATH})
 
 if( CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-add_compile_options(-std=gnu++1y  -DGLEW_STATIC -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION -D_WIN32_WINNT=0x0501 -g -Og)
+add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC)
 
 else( CMAKE_BUILD_TYPE STREQUAL "Release")
 
-add_compile_options( -std=gnu++1y -DGLEW_STATIC -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION -D_WIN32_WINNT=0x0501 -O3 )
+add_compile_options(-std=gnu++1y -O3 -DGLEW_STATIC)
 
 endif()
 
@@ -46,6 +47,7 @@ set(win32_libs       winmm imm32 version)
 set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
 set(opengl_libs      glu32 opengl32)
 set(opengl_ext_libs  glew)
+set(perl_libs perl520)
 
 target_link_libraries (sonic_the_hedgehog LINK_PUBLIC mingw32
                                                 ${SDL2_libs}
@@ -55,6 +57,7 @@ target_link_libraries (sonic_the_hedgehog LINK_PUBLIC mingw32
                                                 ${win32_libs}
                                                 ${bullet3_libbs}
                                                 ${opengl_ext_libs}
-                                                ${opengl_libs})
+                                                ${opengl_libs}
+                                                ${perl_libs})
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)

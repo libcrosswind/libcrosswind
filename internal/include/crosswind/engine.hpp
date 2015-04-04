@@ -36,7 +36,7 @@ public:
             update();
             render();
 
-            float fps = core->video->window->end_frame();
+            core->video->window->end_frame();
 
         }
 

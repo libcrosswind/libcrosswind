@@ -113,24 +113,25 @@ private:
     	uint32_t offset = 0;
 	    for(auto& sprite : sprite_list){
 
+			auto& sprite_vertices = sprite->get_vertices();
 
 	    	if(sprite->texture_id != current_texture_id){
 	    		current_texture_id = sprite->texture_id;
 
 	    		auto render_batch = 
-	    		std::make_shared<class render_batch>(offset, 
-    											     sprite->get_vertices().size(),
+	    		std::make_shared<class render_batch>(offset,
+			                                         sprite_vertices.size(),
     											     current_texture_id);
 	    		
 	    		batch_list.emplace_back(render_batch);
 
 	    	} else {
-                batch_list.back()->vertex_count += sprite->get_vertices().size();
+                batch_list.back()->vertex_count += sprite_vertices.size();
 	    	}
 
-	    	vertices.insert(vertices.end(), sprite->get_vertices().begin(), sprite->get_vertices().end());
+	    	vertices.insert(vertices.end(), sprite_vertices.begin(), sprite_vertices.end());
 
-    		offset += sprite->get_vertices().size();
+    		offset += sprite_vertices.size();
 
 	    }
 

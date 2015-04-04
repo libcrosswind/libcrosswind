@@ -48,6 +48,5 @@ protected:
 
 private:
     std::mutex property_mutex;
-
 	std::shared_ptr<Resource> resource;
 };// class resource_property
