@@ -34,7 +34,7 @@ var init = fun[title](){
     sega_logo.init()
 
     title.get_camera("main_camera").set_position(vec3(0.0f, 0.0f, 0.0f));
-    g_nucleus.core.video.window.set_clear_color(vec4(1.0f, 1.0f, 1.0f, 1.0f0))
+    g_nucleus.core.video.window.set_clear_color(vec4(1.0f, 1.0f, 1.0f, 1.0f))
 
 
 }
