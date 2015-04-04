@@ -10,13 +10,12 @@ var init = fun[title](){
 
     auto sega_logo := title.create_actor()
 
-    var sega_init = fun[sega_logo](){
-        auto window_size = g_nucleus.core.video.window.get_size();
 
+    var sega_init = fun[sega_logo](){
         sega_logo.add_model("sega_logo",
                         vec3(0.0f, 0.0f, 0.0f),
                         vec3(-100.0f * 640.0f/320.0f, -100.0f*480.0f/224.0f, 0.0f),
-                        "sega_logo.json");
+                        "sega_logo.json")
     }
 
     var sega_deinit = fun[sega_logo](){
@@ -31,7 +30,7 @@ var init = fun[title](){
 
     title.add_actor("sega_logo", sega_logo)
 
-    sega_logo.init()
+    sega_init()
 
     title.get_camera("main_camera").set_position(vec3(0.0f, 0.0f, 0.0f));
     g_nucleus.core.video.window.set_clear_color(vec4(1.0f, 1.0f, 1.0f, 1.0f))
