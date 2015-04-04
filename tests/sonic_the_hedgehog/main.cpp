@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 /*
 #include <crosswind/engine.hpp>
@@ -7,9 +8,43 @@
 #include <scenes/green_hill_zone.hpp>
 */
 
-#include <EXTERN.h>
+#include <chaiscript/chaiscript.hpp>
+
+class object{
+
+public:
+    object(){
+
+    }
+
+    void print(){
+        std::cout << "Hello world" << std::endl;
+    }
+};
+
+double function(int i, double j)
+{
+    return i * j;
+}
+
+std::shared_ptr<object> get_object(){
+    return std::make_shared<object>();
+}
 
 int main(int argc, char **argv) {
+
+    chaiscript::ChaiScript chai;
+    chai.add(chaiscript::fun(&function), "function");
+
+    chai.add(chaiscript::fun(&get_object), "get_object");
+
+
+    std::cout <<  chai.eval<double>("function(3, 4.75);") << std::endl;
+
+    chai.eval("get_object().print();");
+
+    auto ptr = chai.eval<std::shared_ptr<object> > ("get_object();");
+    ptr->print();
 
 /*    auto settings = cw::interface::settings();
     settings.video.window_title = "Sonic the Hedgehog HD";

@@ -7,12 +7,10 @@ set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
                             "${PROJECT_SOURCE_DIR}/../../external/CImg-1.6.0/include"
                             "${PROJECT_SOURCE_DIR}/../../external/jsoncons/src"
                             "${PROJECT_SOURCE_DIR}/../../external/bullet3/src"
-                            "${PROJECT_SOURCE_DIR}/../../platform/windows/build/include"
-                            "${PROJECT_SOURCE_DIR}/../../platform/windows/support/perl/lib/CORE")
+                            "${PROJECT_SOURCE_DIR}/../../platform/windows/build/include")
 
 
-LINK_DIRECTORIES(   ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib
-                    ${PROJECT_SOURCE_DIR}/../../platform/windows/support/perl/lib/CORE)
+LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib)
 
 
 include_directories(${INCLUDE_LIBRARY_PATH})
@@ -47,7 +45,7 @@ set(win32_libs       winmm imm32 version)
 set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
 set(opengl_libs      glu32 opengl32)
 set(opengl_ext_libs  glew)
-set(perl_libs perl520)
+set(perl_libs )
 
 target_link_libraries (sonic_the_hedgehog LINK_PUBLIC mingw32
                                                 ${SDL2_libs}
@@ -61,3 +59,8 @@ target_link_libraries (sonic_the_hedgehog LINK_PUBLIC mingw32
                                                 ${perl_libs})
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libchaiscript_stdlib-5.7.0.dll
+     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+
+file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libstl_extra.dll
+     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
