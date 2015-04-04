@@ -59,14 +59,16 @@ int main(int argc, char **argv) {
     chai.add(chaiscript::fun(&cw::interface::composition::core::filesystem), "filesystem");
     chai.add(chaiscript::fun(&cw::interface::composition::core::video), "video");
 
+    // video
     chai.add(chaiscript::fun(&cw::interface::graphical::video::window), "window");
-    chai.add(chaiscript::fun(&cw::interface::graphical::detail::window::get_size), "get_size");
-    chai.add(chaiscript::fun(&cw::interface::graphical::detail::window::set_clear_color), "set_clear_color");
-
-
     chai.add(chaiscript::fun(&cw::interface::graphical::video::set_window_icon), "set_window_icon");
     chai.add(chaiscript::fun(&cw::interface::graphical::video::load_model), "load_model");
 
+    // window
+    chai.add(chaiscript::fun(&cw::interface::graphical::detail::window::get_size), "get_size");
+    chai.add(chaiscript::fun(&cw::interface::graphical::detail::window::set_clear_color), "set_clear_color");
+
+    // filesystem
     chai.add(chaiscript::fun(&cw::interface::platform::filesystem::add_directory), "add_directory");
     chai.add(chaiscript::fun(&cw::interface::platform::filesystem::get_file_path), "get_file_path");
 
@@ -80,24 +82,22 @@ int main(int argc, char **argv) {
 
     // scene
     chai.add(chaiscript::fun(&cw::interface::composition::scene::construct), "construct");
-
     chai.add(chaiscript::fun(&cw::interface::composition::scene::create_actor), "create_actor");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::add_actor), "add_actor");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::get_actor), "get_actor");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::remove_actor), "remove_actor");
-
     chai.add(chaiscript::fun(&cw::interface::composition::scene::create_camera), "create_camera");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::set_camera), "set_camera");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::get_camera), "get_camera");
 
+    // camera
+    chai.add(chaiscript::fun(&cw::interface::composition::camera::set_position), "set_position");
+
     // actor
     chai.add(chaiscript::fun(&cw::interface::composition::actor::construct), "construct");
-
     chai.add(chaiscript::fun(&cw::interface::composition::actor::init), "init");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::deinit), "deinit");
-
     chai.add(chaiscript::fun(&cw::interface::composition::actor::add_model), "add_model");
-
     chai.add(chaiscript::fun(&cw::interface::composition::actor::set_name), "set_name");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::get_name), "get_name");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::set_alpha), "set_alpha");
