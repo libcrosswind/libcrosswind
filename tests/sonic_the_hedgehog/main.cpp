@@ -4,6 +4,15 @@
 
 #include <crosswind/engine.hpp>
 
+float c_sin(const float& value){
+    return glm::sin(value);
+}
+
+
+float c_radians(const float& degrees){
+    return glm::radians(degrees);
+}
+
 int main(int argc, char **argv) {
 
     chaiscript::ChaiScript chai;
@@ -34,6 +43,10 @@ int main(int argc, char **argv) {
     chai.add(chaiscript::fun(&glm::vec4::z), "z");
     chai.add(chaiscript::fun(&glm::vec4::w), "w");
 
+    chai.add(chaiscript::fun(&c_sin), "sin");
+    chai.add(chaiscript::fun(&c_radians), "radians");
+
+
     // constructor
     chai.add(chaiscript::user_type<cw::interface::settings>(), "settings" );
     chai.add(chaiscript::constructor<cw::interface::settings()>(), "settings");
@@ -58,6 +71,11 @@ int main(int argc, char **argv) {
     // core
     chai.add(chaiscript::fun(&cw::interface::composition::core::filesystem), "filesystem");
     chai.add(chaiscript::fun(&cw::interface::composition::core::video), "video");
+    chai.add(chaiscript::fun(&cw::interface::composition::core::mixer), "mixer");
+
+    // filesystem
+    chai.add(chaiscript::fun(&cw::interface::platform::filesystem::add_directory), "add_directory");
+    chai.add(chaiscript::fun(&cw::interface::platform::filesystem::get_file_path), "get_file_path");
 
     // video
     chai.add(chaiscript::fun(&cw::interface::graphical::video::window), "window");
@@ -68,9 +86,13 @@ int main(int argc, char **argv) {
     chai.add(chaiscript::fun(&cw::interface::graphical::detail::window::get_size), "get_size");
     chai.add(chaiscript::fun(&cw::interface::graphical::detail::window::set_clear_color), "set_clear_color");
 
-    // filesystem
-    chai.add(chaiscript::fun(&cw::interface::platform::filesystem::add_directory), "add_directory");
-    chai.add(chaiscript::fun(&cw::interface::platform::filesystem::get_file_path), "get_file_path");
+    // mixer
+    chai.add(chaiscript::fun(&cw::interface::sound::mixer::load_music), "load_music");
+    chai.add(chaiscript::fun(&cw::interface::sound::mixer::play_music), "play_music");
+    chai.add(chaiscript::fun(&cw::interface::sound::mixer::load_effect), "load_effect");
+    chai.add(chaiscript::fun(&cw::interface::sound::mixer::play_effect), "play_effect");
+
+
 
     // stage
     chai.add(chaiscript::fun(&cw::interface::composition::stage::create_scene), "create_scene");
@@ -82,6 +104,15 @@ int main(int argc, char **argv) {
 
     // scene
     chai.add(chaiscript::fun(&cw::interface::composition::scene::construct), "construct");
+    chai.add(chaiscript::fun(&cw::interface::composition::scene::set_bool), "set_bool");
+    chai.add(chaiscript::fun(&cw::interface::composition::scene::get_bool), "get_bool");
+
+    chai.add(chaiscript::fun(&cw::interface::composition::scene::set_float), "set_float");
+    chai.add(chaiscript::fun(&cw::interface::composition::scene::get_float), "get_float");
+
+    chai.add(chaiscript::fun(&cw::interface::composition::scene::set_int), "set_int");
+    chai.add(chaiscript::fun(&cw::interface::composition::scene::get_int), "get_int");
+
     chai.add(chaiscript::fun(&cw::interface::composition::scene::create_actor), "create_actor");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::add_actor), "add_actor");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::get_actor), "get_actor");

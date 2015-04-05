@@ -8,7 +8,8 @@ nucleus.core.filesystem.add_directory("assets", true)
 
 nucleus.core.video.set_window_icon(nucleus.core.filesystem.get_file_path("sonic_icon.png"))
 
-add_global(nucleus, "g_nucleus")
+add_global(nucleus.core, "core")
+add_global(nucleus.stage, "stage")
 
 use("scripts/scenes/title.chai")
 

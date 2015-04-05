@@ -198,10 +198,33 @@ public:
 
 	std::shared_ptr<core> core;
 
+	void set_bool(const std::string item_name, const bool& value){
+		conditions[item_name] = value;
+	}
+
+	bool& get_bool(const std::string item_name){
+		return conditions[item_name];
+	}
+
+	void set_float(const std::string item_name, const float& value){
+		float_values[item_name] = value;
+	}
+
+	float& get_float(const std::string item_name){
+		return float_values[item_name];
+	}
+
+	void set_int(const std::string item_name, const int& value){
+		int_values[item_name] = value;
+	}
+
+	int& get_int(const std::string item_name){
+		return int_values[item_name];
+	}
 
 	std::map<std::string, bool> conditions;
 	std::map<std::string, float> float_values;
-	std::map<std::string, int> int_value;
+	std::map<std::string, int> int_values;
 
 protected:
     std::string name;

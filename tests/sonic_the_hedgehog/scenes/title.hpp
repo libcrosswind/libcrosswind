@@ -17,16 +17,7 @@ public:
     title(){
     }
     virtual void init(){
-
-        auto main_camera = std::make_shared<cw::implementation::composition::camera>(core->video->window->get_size());
-        set_camera("main_camera", main_camera);
-        core->mixer->load_music("logo_bgm", core->filesystem->get_file_path("logo_bgm.ogg"));
-        core->mixer->load_music("title_bgm", core->filesystem->get_file_path("title_bgm.ogg"));
-        auto sega_logo = this->create_actor<characters::title::sega_logo>();
-        auto team_logo = this->create_actor<characters::title::team_logo>();
-        auto title_background = this->create_actor<game::characters::title::title_background>();
-// add_actor("sega_logo", sega_logo);
-// add_actor("team_logo", team_logo);
+ 
         add_actor("title_background", title_background);
         for(auto& actor: actors){
             actor.second->init();
@@ -36,47 +27,7 @@ public:
     virtual void deinit(){
     }
     
-    void reset(){
-        get_camera("main_camera")->set_position(glm::vec3(0.0f, 0.0f, 0.0f));
-        sega_sound_ongoing = false;
-        title_sound_ongoing = false;
-        sega_logo_duration = 8.0f;
-        team_logo_duration = 8.0f;
-        time_count = 0.0f;
-        core->video->window->set_clear_color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-// get_actor("sega_logo")->set_alpha(0.0f);
-// get_actor("team_logo")->set_alpha(0.0f);
-        get_actor("title_background")->set_alpha(0.0f);
-        phase = scene_phase::sega_logo;
-    }
-    void draw_sega_logo(){
-        if(time_count <= sega_logo_duration){
-            if(time_count <= 2.0f){
-                float alpha_blending = glm::sin(glm::radians(time_count / 2.0f * 90.0f));
-                get_actor("sega_logo")->set_alpha(alpha_blending);
-            } else if(!sega_sound_ongoing) {
-                sega_sound_ongoing = true;
-                core->mixer->play_music("logo_bgm", 0);
-            } else if(time_count >= 6.0f && time_count <= 8.0f){
-                const float time_range = 2.0f - (8.0f - time_count);
-                float alpha_blending = glm::sin(glm::radians((time_range / 2.0f * 90.0f) + 90.0f));
-                get_actor("sega_logo")->set_alpha(alpha_blending);
-                core->video->window->set_clear_color(glm::vec4(alpha_blending, alpha_blending, alpha_blending, 1.0f));
-            }
-        } else {
-            time_count = 0.0f;
-            phase = scene_phase::team_logo;
-        }
-    }
-    void draw_team_logo(){
-        if(time_count <= sega_logo_duration){
-            float alpha_blending = glm::sin(glm::radians(time_count / sega_logo_duration * 180.0f));
-            get_actor("team_logo")->set_alpha(alpha_blending);
-        } else {
-            time_count = 0.0f;
-            phase = scene_phase::title_logo;
-        }
-    }
+    
     void draw_title(){
         if(time_count <= 1.0f) {
             this->get_actor("title_background")->get_model("title_sonic")->change_animation("title_sonic_a");
