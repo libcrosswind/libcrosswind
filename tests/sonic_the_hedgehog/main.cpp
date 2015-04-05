@@ -4,14 +4,20 @@
 
 #include <crosswind/engine.hpp>
 
+
+float c_clamp(const float& value, const float& min_value, const float& max_value){
+    return glm::clamp(value, min_value, max_value);
+}
+
+float c_radians(const float& degrees){
+    return glm::radians(degrees);
+}
+
 float c_sin(const float& value){
     return glm::sin(value);
 }
 
 
-float c_radians(const float& degrees){
-    return glm::radians(degrees);
-}
 
 int main(int argc, char **argv) {
 
@@ -43,8 +49,11 @@ int main(int argc, char **argv) {
     chai.add(chaiscript::fun(&glm::vec4::z), "z");
     chai.add(chaiscript::fun(&glm::vec4::w), "w");
 
-    chai.add(chaiscript::fun(&c_sin), "sin");
+    // functions
+    chai.add(chaiscript::fun(&c_clamp), "clamp");
     chai.add(chaiscript::fun(&c_radians), "radians");
+    chai.add(chaiscript::fun(&c_sin), "sin");
+
 
 
     // constructor
@@ -114,6 +123,9 @@ int main(int argc, char **argv) {
     chai.add(chaiscript::fun(&cw::interface::composition::scene::get_int), "get_int");
 
     chai.add(chaiscript::fun(&cw::interface::composition::scene::create_actor), "create_actor");
+    chai.add(chaiscript::fun(&cw::interface::composition::scene::load_actor), "load_actor");
+    chai.add(chaiscript::fun(&cw::interface::composition::scene::unload_actor), "unload_actor");
+
     chai.add(chaiscript::fun(&cw::interface::composition::scene::add_actor), "add_actor");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::get_actor), "get_actor");
     chai.add(chaiscript::fun(&cw::interface::composition::scene::remove_actor), "remove_actor");
@@ -126,13 +138,18 @@ int main(int argc, char **argv) {
 
     // actor
     chai.add(chaiscript::fun(&cw::interface::composition::actor::construct), "construct");
-    chai.add(chaiscript::fun(&cw::interface::composition::actor::init), "init");
-    chai.add(chaiscript::fun(&cw::interface::composition::actor::deinit), "deinit");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::add_model), "add_model");
+    chai.add(chaiscript::fun(&cw::interface::composition::actor::get_model), "get_model");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::set_name), "set_name");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::get_name), "get_name");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::set_alpha), "set_alpha");
     chai.add(chaiscript::fun(&cw::interface::composition::actor::get_alpha), "get_alpha");
+
+    // model
+    chai.add(chaiscript::fun(&cw::interface::graphical::object::model::set_origin), "set_origin");
+    chai.add(chaiscript::fun(&cw::interface::graphical::object::model::get_origin), "get_origin");
+    chai.add(chaiscript::fun(&cw::interface::graphical::object::model::get_size), "get_size");
+
 
     try
     {

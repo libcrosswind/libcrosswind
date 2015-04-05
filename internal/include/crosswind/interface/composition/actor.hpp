@@ -19,7 +19,7 @@ namespace composition{
 }// namespace interface
 }// namespace cw
 
-class cw::interface::composition::actor: public std::enable_shared_from_this<cw::interface::composition::actor>{
+class cw::interface::composition::actor{
 	typedef std::map<std::string, std::shared_ptr<graphical::object::model> >       model_map;
 	typedef std::map<std::string, std::shared_ptr<simulation::detail::body> >       body_map;
 	typedef std::map<std::string, std::shared_ptr<simulation::detail::character> >  character_map;

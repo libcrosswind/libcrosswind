@@ -41,6 +41,15 @@ public:
 	std::function<void()> deinit;
 	std::function<void(const float&)> logic;
 
+	virtual void load_actor(const std::string& actor_name){
+		get_actor(actor_name)->init();
+	}
+
+	virtual void unload_actor(const std::string& actor_name){
+		get_actor(actor_name)->deinit();
+	}
+
+
 private:
 	virtual void handle_events(){
 		std::vector<std::pair<bool, std::function<void()> > > continuous_events;

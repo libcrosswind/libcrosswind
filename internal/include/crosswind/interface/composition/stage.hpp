@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <functional>
 
 #include <crosswind/interface/core.hpp>
 #include <crosswind/interface/composition/scene.hpp>

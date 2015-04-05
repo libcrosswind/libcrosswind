@@ -29,49 +29,7 @@ public:
     
     
     void draw_title(){
-        if(time_count <= 1.0f) {
-            this->get_actor("title_background")->get_model("title_sonic")->change_animation("title_sonic_a");
-            this->get_actor("title_background")->get_model("title_logo_a")->set_origin(glm::vec3(0.0f, 0.0f, 0.0f));
-            this->get_actor("title_background")->get_model("title_sonic")->set_origin(glm::vec3(-2000.0f, -41.0f, 0.0f));
-            this->get_actor("title_background")->get_model("title_logo_b")->set_origin(glm::vec3(0.0f, 0.0f, 0.0f));
-            float alpha_blending = glm::sin(glm::radians(time_count / 1.0f * 90.0f));
-            this->get_actor("title_background")->set_alpha(alpha_blending);
-        } else if(time_count >= 1.0f && time_count <= 2.0f){
-        } else if(time_count >= 2.0f && time_count <= 2.5f ) {
-            const float sonic_y = this->get_actor("title_background")->get_model("title_sonic")->get_origin().y;
-            const float movement_time = 4.05f; //3.0f - (4.0f - time_count);
-            const float movement = glm::clamp(sonic_y + movement_time, -41.0f, 82.0f);
-            this->get_actor("title_background")->get_model("title_sonic")->set_origin(glm::vec3(0.0f, movement, 0.0f));
-        } else if(time_count >= 2.5f && time_count <= 9.0f) {
-            if(time_count - 3.0f < 0.9f){
-                this->get_actor("title_background")->get_model("title_sonic")->change_animation("title_sonic_b");
-            } else {
-                this->get_actor("title_background")->get_model("title_sonic")->change_animation("title_sonic_c");
-            }
-            const float sonic_x = this->get_actor("title_background")->get_model("title_sonic")->get_origin().x +
-                                  2.2;
-            this->get_actor("title_background")->get_model("title_logo_a")->set_origin(glm::vec3(sonic_x, 0.0f, 0.0f));
-            this->get_actor("title_background")->get_model("title_sonic")->set_origin(glm::vec3(sonic_x, 82.0f, 0.0f));
-            this->get_actor("title_background")->get_model("title_logo_b")->set_origin(glm::vec3(sonic_x, 0.0f, 0.0f));
-        } else if(time_count >= 9.0f && time_count <= 10.0f){
-            this->get_actor("title_background")->get_model("title_sonic")->change_animation("title_sonic_d");
-            const float time_range = 2.0f - (10.0f - time_count);
-            float alpha_blending = glm::sin(glm::radians((time_range/2 * 90.0f) + 90.0f));
-            get_actor("title_background")->set_alpha(alpha_blending);
-            core->video->window->set_clear_color(glm::vec4(alpha_blending, alpha_blending, alpha_blending, 1.0f));
-        } else if(time_count >= 10.0f && time_count <= 12.0f){
-        } else{
-            time_count = 0.0f;
-            reset();
-        }
-        if(!title_sound_ongoing && time_count >= 1.0f) {
-            title_sound_ongoing = true;
-            core->mixer->play_music("title_bgm", 0);
-        }
-        if(time_count >= 3.0f){
-            const float sonic_x = this->get_actor("title_background")->get_model("title_sonic")->get_origin().x;
-            get_camera("main_camera")->set_position(glm::vec3(sonic_x, 0.0f, 0.0f));
-        }
+       
     }
     virtual void logic(const float& delta){
         time_count += delta;
