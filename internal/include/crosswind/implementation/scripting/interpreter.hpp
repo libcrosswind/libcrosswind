@@ -84,7 +84,7 @@ public:
 		chai->add(chaiscript::constructor<cw::interface::settings()>(), "settings");
 
 		// members
-		chai->add(chaiscript::fun(&cw::interface::settings::window), "video");
+		chai->add(chaiscript::fun(&cw::interface::settings::window), "window");
 		chai->add(chaiscript::fun(&cw::interface::settings::window_settings::title), "title");
 //		chai->add(chaiscript::fun(&cw::interface::settings::video_settings::window_position), "window_position");
 //		chai->add(chaiscript::fun(&cw::interface::settings::video_settings::window_resolution), "window_resolution");
