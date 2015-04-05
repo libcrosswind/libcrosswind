@@ -33,16 +33,24 @@ public:
 		  const glm::i32vec2 window_resolution,
 		  const float& fps,
 		  const int& image_flags,
-		  const int& window_flags) {
+		  const int& window_flags,
+	      const bool& resizable) {
 
 		if ((IMG_Init(image_flags) & image_flags) != image_flags)
 		  throw platform::exception("IMG_Init");
+
+
+		int final_flags = window_flags;
+
+		if(resizable){
+			final_flags |= SDL_WINDOW_RESIZABLE;
+		}
 
         window = std::make_shared<opengl::window>(title,
 		                                          window_position,
 		                                          window_resolution,
 		                                          fps,
-		                                          window_flags);
+												  final_flags);
 
 		renderer = std::make_shared<opengl::renderer>();
 	}

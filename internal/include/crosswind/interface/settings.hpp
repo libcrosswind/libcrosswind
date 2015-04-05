@@ -25,7 +25,7 @@ struct cw::interface::settings{
 
     } application;
 
-    struct{
+    struct audio_settings{
 
         int frequency;
         uint16_t format;
@@ -34,17 +34,17 @@ struct cw::interface::settings{
 
     } audio;
 
-    struct video_settings{
-
-        std::string window_title;
-        glm::i32vec2  window_position;
-        glm::i32vec2  default_resolution;
-        glm::i32vec2  window_resolution;
-
-        int image_flags;
-        int window_flags;
+    struct window_settings{
+        std::string title;
+        glm::i32vec2  position;
+        glm::i32vec2  resolution;
+        int flags;
         float fps;
+        bool resizable;
+    } window;
 
+    struct video_settings{
+        int flags;
     } video;
 
     struct{
@@ -65,26 +65,19 @@ struct cw::interface::settings{
         audio.channels           = 2;
         audio.chunk_size         = 2048;
 
-        video.window_title       = "Main";
-        video.window_position    = glm::i32vec2(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-        video.default_resolution = glm::i32vec2(320, 224);
-        video.window_resolution  = glm::i32vec2(640, 480);
-        video.image_flags        = IMG_INIT_PNG;
-        video.window_flags       = SDL_WINDOW_OPENGL;
-        video.fps                = 60.0f;
+        video.flags        = IMG_INIT_PNG;
 
-        auto world_scale =
-                glm::vec3(video.window_resolution[0] / video.default_resolution[0],
-                          video.window_resolution[1] / video.default_resolution[1], 1.0);
+        window.title       = "Main";
+        window.position    = glm::i32vec2(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+        window.resolution  = glm::i32vec2(640, 480);
+        window.flags       = SDL_WINDOW_OPENGL;
+        window.resizable   = false;
+        window.fps         = 60.0f;
 
         physics.gravity         = glm::vec3(0.0f, -10.0f, 0.0f);
         physics.scale           = glm::vec3(0.01f, 0.01f, 0.01f);
 
         glm::vec3 unit_value(1.0f, 1.0f, 1.0f);
-        unit_value.x *= world_scale.x;
-        unit_value.y *= world_scale.y;
-        unit_value.z *= world_scale.z;
-
         physics.unit_value      = unit_value;
 
     }

@@ -1,0 +1,16 @@
+auto configuration := settings()
+
+configuration.window.title = "libcrosswind engine 0.2"
+
+auto nucleus := engine(configuration)
+
+nucleus.core.filesystem.add_directory("assets", true)
+
+nucleus.core.video.set_window_icon(nucleus.core.filesystem.get_file_path("icon.png"))
+
+add_global(nucleus.core, "core")
+add_global(nucleus.stage, "stage")
+
+//use("scripts/scenes/main_scene.chai")
+
+nucleus.run()
