@@ -22,11 +22,11 @@ add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS)
 else( CMAKE_BUILD_TYPE STREQUAL "Release")
 
 add_compile_options(-std=gnu++1y -mwindows -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -DNDEBUG)
+SET( GCC_COVERAGE_LINK_FLAGS    "-mwindows")
+SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
 
 endif()
 
-SET( GCC_COVERAGE_LINK_FLAGS    "-mwindows")
-SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
 
 set(PROJECT_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/../../output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
 file(GLOB sources main.cpp)
@@ -61,11 +61,10 @@ target_link_libraries (Engine LINK_PUBLIC mingw32
                                                 ${perl_libs})
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+file(COPY ${PROJECT_SOURCE_DIR}/scripts DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+
 file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libchaiscript_stdlib-5.7.0.dll
      DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libstl_extra.dll
-     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
-
-file(COPY ${PROJECT_SOURCE_DIR}/scripts
      DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)

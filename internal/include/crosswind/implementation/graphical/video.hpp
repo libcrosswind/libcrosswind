@@ -32,11 +32,11 @@ public:
 		  const glm::i32vec2 window_position,
 		  const glm::i32vec2 window_resolution,
 		  const float& fps,
-		  const int& image_flags,
+		  const int& video_flags,
 		  const int& window_flags,
 	      const bool& resizable) {
 
-		if ((IMG_Init(image_flags) & image_flags) != image_flags)
+		if ((IMG_Init(video_flags) & video_flags) != video_flags)
 		  throw platform::exception("IMG_Init");
 
 
@@ -146,7 +146,6 @@ public:
 	        auto s_props = s->value().begin_members();
 
 	        std::string texture = s_props->name();  // mapped texture.
-
 
 	        glm::vec4 uv(s_props->value()[0].as<double>(), // uv coordinates.
 	                     s_props->value()[1].as<double>(),

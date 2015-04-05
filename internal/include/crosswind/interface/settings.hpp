@@ -34,18 +34,19 @@ struct cw::interface::settings{
 
     } audio;
 
+    struct video_settings{
+        std::string window_title;
+        glm::i32vec2  window_position;
+        glm::i32vec2  window_resolution;
+        float fps;
+        bool resizable_window;
+        int video_flags;
+        int window_flags;
+    } video;
+
     struct window_settings{
         std::string title;
-        glm::i32vec2  position;
-        glm::i32vec2  resolution;
-        int flags;
-        float fps;
-        bool resizable;
     } window;
-
-    struct video_settings{
-        int flags;
-    } video;
 
     struct{
 
@@ -65,14 +66,16 @@ struct cw::interface::settings{
         audio.channels           = 2;
         audio.chunk_size         = 2048;
 
-        video.flags        = IMG_INIT_PNG;
+        video.window_title      = "Main";
+        video.window_position   = glm::i32vec2(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+        video.window_resolution = glm::i32vec2(640, 480);
+        video.fps               = 60.0f;
+        video.resizable_window  = false;
+        video.video_flags       = IMG_INIT_PNG;
+        video.window_flags      = SDL_WINDOW_OPENGL;
 
-        window.title       = "Main";
-        window.position    = glm::i32vec2(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-        window.resolution  = glm::i32vec2(640, 480);
-        window.flags       = SDL_WINDOW_OPENGL;
-        window.resizable   = false;
-        window.fps         = 60.0f;
+        window.title            = "Main";
+
 
         physics.gravity         = glm::vec3(0.0f, -10.0f, 0.0f);
         physics.scale           = glm::vec3(0.01f, 0.01f, 0.01f);

@@ -1,16 +1,43 @@
-auto configuration := settings()
+puts("Init\n")
+var configuration := settings()
 
+puts("Settings\n")
 configuration.window.title = "libcrosswind engine 0.2"
 
-auto nucleus := engine(configuration)
+puts("Nucleus\n")
+var nucleus := engine(configuration)
 
+puts("Filesystem\n")
 nucleus.core.filesystem.add_directory("assets", true)
 
-nucleus.core.video.set_window_icon(nucleus.core.filesystem.get_file_path("icon.png"))
+//nucleus.core.video.set_window_icon(nucleus.core.filesystem.get_file_path("icon.png"))
 
 add_global(nucleus.core, "core")
 add_global(nucleus.stage, "stage")
 
-//use("scripts/scenes/main_scene.chai")
+puts("Globals\n")
+var main_scene := stage.create_scene()
+
+var init = fun[main_scene](){
+    auto window_size := core.video.window.get_size()
+
+    auto main_camera := main_scene.create_camera(window_size)
+    main_scene.set_camera("main_camera", main_camera)
+
+}
+
+var deinit = fun[main_scene](){
+}
+
+var logic  = fun[main_scene](delta){
+
+}
+
+main_scene.construct(init, deinit, logic)
+
+stage.add_scene("main_scene", main_scene)
+stage.load_scene("main_scene")
+
+puts("Before run\n")
 
 nucleus.run()

@@ -29,12 +29,12 @@ public:
 
         input       = std::make_shared<implementation::platform::input>();
         video       = std::make_shared<implementation::graphical::video>(engine_settings.window.title,
-                                                                         engine_settings.window.position,
-                                                                         engine_settings.window.resolution,
-                                                                         engine_settings.window.fps,
-                                                                         engine_settings.video.flags,
-                                                                         engine_settings.window.flags,
-                                                                         engine_settings.window.resizable);
+                                                                         engine_settings.video.window_position,
+                                                                         engine_settings.video.window_resolution,
+                                                                         engine_settings.video.fps,
+                                                                         engine_settings.video.video_flags,
+                                                                         engine_settings.video.window_flags,
+                                                                         engine_settings.video.resizable_window);
 
         mixer       = std::make_shared<implementation::sound::mixer>(engine_settings.audio.frequency,
                                                                      engine_settings.audio.format,
