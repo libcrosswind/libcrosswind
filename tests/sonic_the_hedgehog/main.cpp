@@ -146,6 +146,7 @@ int main(int argc, char **argv) {
     chai.add(chaiscript::fun(&cw::interface::composition::actor::get_alpha), "get_alpha");
 
     // model
+    chai.add(chaiscript::fun(&cw::interface::graphical::object::model::change_animation), "change_animation");
     chai.add(chaiscript::fun(&cw::interface::graphical::object::model::set_origin), "set_origin");
     chai.add(chaiscript::fun(&cw::interface::graphical::object::model::get_origin), "get_origin");
     chai.add(chaiscript::fun(&cw::interface::graphical::object::model::get_size), "get_size");

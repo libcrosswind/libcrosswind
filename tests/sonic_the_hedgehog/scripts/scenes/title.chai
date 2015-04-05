@@ -208,7 +208,7 @@ var logic  = fun[title](delta){
 
         } else if(time >= 1.0f && time <= 2.0f){
         } else if(time >= 2.0f && time <= 2.5f ) {
-        
+
             auto sonic_y = title_logo.get_model("title_sonic").get_origin().y
             auto movement_time = 4.05f; //3.0f - (4.0f - time)
             auto movement = clamp(sonic_y + movement_time, -41.0f, 82.0f)
@@ -238,13 +238,17 @@ var logic  = fun[title](delta){
         }
         */
 
-        if(!title_sound_ongoing && time_count >= 1.0f) {
+        var title_sound_ongoing := title.get_bool("title_sound_ongoing")
+
+
+        if(!title_sound_ongoing && time >= 1.0f) {
             title_sound_ongoing = true;
-            core->mixer->play_music("title_bgm", 0);
+            core.mixer.play_music("title_bgm", 0);
         }
-        if(time_count >= 3.0f){
-            const float sonic_x = this->get_actor("title_background")->get_model("title_sonic")->get_origin().x;
-            get_camera("main_camera")->set_position(glm::vec3(sonic_x, 0.0f, 0.0f));
+
+        if(time >= 3.0f){
+            auto sonic_x = title_logo.get_model("title_sonic").get_origin().x
+            title.get_camera("main_camera").set_position(vec3(sonic_x, 0.0f, 0.0f))
         }
 
 
