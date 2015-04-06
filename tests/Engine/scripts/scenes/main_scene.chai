@@ -2,13 +2,24 @@ var main_scene := stage.create_scene()
 
 var init = fun[main_scene](){
     auto window_size := core.video.window.get_size()
-
     auto main_camera := main_scene.create_camera(window_size)
     main_scene.set_camera("main_camera", main_camera)
+
+    var preview_panel = main_scene.create_actor()
+
+
+    preview_panel.add_model(core.video.load_model(vec3(0.0f, 0.0f, 0.0f), 
+    				     						  vec3(20.0f, 2.0f, 0.0f), 
+        										  "cristal_panel.json"))
+
+    main_scene.add_actor("preview_panel", preview_panel)
+    main_scene.load_actor("preview_panel")
+
 
 }
 
 var deinit = fun[main_scene](){
+
 }
 
 var logic  = fun[main_scene](delta){

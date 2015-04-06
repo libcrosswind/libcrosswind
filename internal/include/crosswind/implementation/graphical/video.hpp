@@ -95,47 +95,10 @@ public:
 
 	    auto model = std::make_shared<implementation::graphical::object::model>();
 
-	    for (auto t = raw_json["textures"].begin_members(); t != raw_json["textures"].end_members(); ++t)
+	    for (auto t = raw_json["texture"].begin_members(); t != raw_json["textures"].end_members(); ++t)
 	    {
 	        load_texture(t->name(), t->value().as<std::string>());
 	    }
-
-	    std::map<std::string, glm::vec3> sprite_sheet_sizes;
-		glm::vec3 final_size;
-
-	    for (auto s = raw_json["spritesheets"].begin_members(); s != raw_json["spritesheets"].end_members(); ++s)
-	    {
-	        std::string name    = s->name();                        // spritesheet name
-
-	        auto s_props = s->value().begin_members();
-
-	        std::string sprite_size_prop = s_props->name();  // property name.
-
-	        glm::vec3 sprite_size(s_props->value()[0].as<double>(), // sprite size.
-	                              s_props->value()[1].as<double>(),
-	                              0.0f);
-		    if(size.x < 0){
-			    sprite_size.x *= glm::abs(size.x / 100.0f);
-		    } else{
-			    sprite_size.x *= size.x/sprite_size.x ;
-		    }
-
-		    if(size.y < 0){
-			    sprite_size.y *= glm::abs(size.y / 100.0f);
-		    } else{
-			    sprite_size.y *= size.y/sprite_size.y ;
-		    }
-
-/*		    if(size.z < 0){
-			    size.z = glm::abs(size.z / 100.0f);
-		    }
-*/
-
-		    final_size = sprite_size;
-
-	        sprite_sheet_sizes[name] = sprite_size;
-	    }
-
 
 	    std::map<std::string, std::shared_ptr<interface::graphical::detail::sprite> > sprites;
 
@@ -153,7 +116,7 @@ public:
 	                     s_props->value()[3].as<double>());
 
 	        sprites[name] = std::make_shared<interface::graphical::detail::sprite>(origin,
-			                                                                       sprite_sheet_sizes[texture],
+																				   size,
 																				   glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 																			       uv,
 			                                                                       load_texture(texture)->id);
@@ -185,7 +148,7 @@ public:
 				model->get_animations()["current"]->frames[model->get_animations()["current"]->current_frame];
 
 	    model->set_origin(origin);
-	    model->set_size(final_size);
+	    model->set_size(size);
 
 	    return model;
 	}

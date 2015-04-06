@@ -1,8 +1,7 @@
 #pragma once
 
 #include <map>
-//#include <crosswind/physics/detail/rigid_body.hpp>
-//#include <crosswind/physics/kinematic_character.hpp>
+
 #include <crosswind/interface/graphical/detail/sprite.hpp>
 #include <crosswind/interface/graphical/object/sprite_animation.hpp>
 #include <crosswind/interface/graphical/object/model.hpp>
@@ -31,7 +30,6 @@ public:
 			animations["current"] = animations[new_animation];
 			animations["current"]->flip(x_orientation);
 		}
-
 
 	}
 

@@ -75,8 +75,6 @@ public:
 		chai->add(chaiscript::fun(&c_radians), "radians");
 		chai->add(chaiscript::fun(&c_sin), "sin");
 
-
-
 		// constructor
 		chai->add(chaiscript::user_type<cw::interface::settings>(), "settings" );
 		chai->add(chaiscript::constructor<cw::interface::settings()>(), "settings");

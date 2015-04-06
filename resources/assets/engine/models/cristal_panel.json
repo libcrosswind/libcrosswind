@@ -1,0 +1,21 @@
+{
+	"texture":
+	{
+		"ui_atlas"	: "assets/engine/graphics/ui/ui_atlas.png"
+	},
+
+	"sprites":
+	{
+		"cristal_panel" :{ "ui_atlas"  : [0.5859375, 0.806640625, 0.78125, 1.00] }
+	},
+
+	"animations":
+	{
+   		"cristal_panel" :{ "time": 0,  "frames" : ["cristal_panel"] }
+	},
+
+	"properties":
+	{
+		"default-animation"	: "cristal_panel"
+	}
+}

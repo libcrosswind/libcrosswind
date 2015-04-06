@@ -34,7 +34,6 @@ public:
             auto dy = s.y;
             auto dz = s.z;
 
-
             detail::vertex top_right(glm::vec4(px + dx, py + dy, pz, pw), c, glm::vec2(0.0f, 0.0f));
             detail::vertex top_left(glm::vec4(px, py + dy, pz, pw), c, glm::vec2(0.0f));
             detail::vertex bottom_right(glm::vec4(px + dx, py, pz, pw), c, glm::vec2(0.0f));
