@@ -95,7 +95,7 @@ public:
 
 	    auto model = std::make_shared<implementation::graphical::object::model>();
 
-	    for (auto t = raw_json["texture"].begin_members(); t != raw_json["textures"].end_members(); ++t)
+	    for (auto t = raw_json["texture"].begin_members(); t != raw_json["texture"].end_members(); ++t)
 	    {
 	        load_texture(t->name(), t->value().as<std::string>());
 	    }

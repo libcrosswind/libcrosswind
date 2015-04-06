@@ -43,6 +43,13 @@ public:
 
 	}
 
+	std::shared_ptr<actor> create_actor(){
+		auto actor = std::make_shared<class actor>();
+		actor->core = core;
+		return actor;
+	}
+
+
 	virtual void load_scene(const std::string& name){
 
 		post_event([this, name](){

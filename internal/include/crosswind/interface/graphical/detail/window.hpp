@@ -40,10 +40,10 @@ public:
     virtual float get_brightness() = 0;
 
     virtual void        set_position(const glm::vec2& new_position) = 0;
-    virtual glm::vec2   get_position() = 0;
+    virtual glm::i32vec2   get_position() = 0;
 
     virtual void        set_size(const glm::vec2& new_size) = 0;
-    virtual glm::vec2   get_size() = 0;
+    virtual glm::i32vec2   get_size() = 0;
 
     virtual void maximize() = 0;
     virtual void minimize() = 0;
@@ -62,8 +62,8 @@ public:
 protected:
     std::string title;
     float brightness;
-    glm::vec2 position;
-    glm::vec2 size;
+    glm::i32vec2 position;
+    glm::i32vec2 size;
 
     float ticks_per_frame;
     float fps;

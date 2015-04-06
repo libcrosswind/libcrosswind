@@ -36,6 +36,9 @@ public:
                    window_position[0], window_position[1], window_resolution[0], window_resolution[1],
                    flags){
 
+        position = window_position;
+        size = window_resolution;
+
         set_fps(window_fps);
 
         context = SDL_GL_CreateContext(this->window_resource.ptr());
@@ -121,11 +124,8 @@ public:
         SDL_SetWindowPosition(this->window_resource.ptr(), new_position.x, new_position.y);
     }
 
-    virtual glm::vec2   get_position(){
-        int x, y;
-        SDL_GetWindowPosition(this->window_resource.ptr(), &x, &y);
-        position.x = x;
-        position.y = y;
+    virtual glm::i32vec2   get_position(){
+        SDL_GetWindowPosition(this->window_resource.ptr(), &position.x, &position.y);
         return position;
     }
 
@@ -133,11 +133,8 @@ public:
         SDL_SetWindowSize(this->window_resource.ptr(), new_size.x, new_size.y);
     }
 
-    virtual glm::vec2 get_size(){
-        int w, h;
-        SDL_GetWindowSize(this->window_resource.ptr(), &w, &h);
-        size.x = w;
-        size.y = h;
+    virtual glm::i32vec2 get_size(){
+        SDL_GetWindowSize(this->window_resource.ptr(), &size.x, &size.y);
         return size;
     }
 

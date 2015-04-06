@@ -47,12 +47,12 @@ public:
 		chai->add(chaiscript::fun(&glm::vec2::y), "y");
 
 		// vec3
-/*		chai->add(chaiscript::user_type<glm::vec3>(), "vec3" );
+		chai->add(chaiscript::user_type<glm::vec3>(), "vec3" );
 		chai->add(chaiscript::constructor<glm::vec3()>(), "vec3");
 		chai->add(chaiscript::constructor<glm::vec3(float, float, float)>(), "vec3");
 		chai->add(chaiscript::fun(&glm::vec3::x), "x");
 		chai->add(chaiscript::fun(&glm::vec3::y), "y");
-		chai->add(chaiscript::fun(&glm::vec3::z), "z");*/
+		chai->add(chaiscript::fun(&glm::vec3::z), "z");
 
 		// vec4
 /*		chai->add(chaiscript::user_type<glm::vec4>(), "vec4" );
@@ -64,11 +64,11 @@ public:
 		chai->add(chaiscript::fun(&glm::vec4::w), "w");*/
 
 		// i32vec2
-/*		chai->add(chaiscript::user_type<glm::i32vec2>(), "i32vec2" );
+		chai->add(chaiscript::user_type<glm::i32vec2>(), "i32vec2" );
 		chai->add(chaiscript::constructor<glm::i32vec2()>(), "i32vec2");
 		chai->add(chaiscript::constructor<glm::i32vec2(int, int)>(), "i32vec2");
 		chai->add(chaiscript::fun(&glm::i32vec2::x), "x");
-		chai->add(chaiscript::fun(&glm::i32vec2::y), "y");*/
+		chai->add(chaiscript::fun(&glm::i32vec2::y), "y");
 
 		// functions
 		chai->add(chaiscript::fun(&c_clamp), "clamp");
@@ -108,7 +108,7 @@ public:
 		// video
 		chai->add(chaiscript::fun(&cw::interface::composition::core::video), "video");
 		chai->add(chaiscript::fun(&cw::interface::graphical::video::set_window_icon), "set_window_icon");
-//		chai->add(chaiscript::fun(&cw::interface::graphical::video::load_model), "load_model");
+		chai->add(chaiscript::fun(&cw::interface::graphical::video::load_model), "load_model");
 		chai->add(chaiscript::fun(&cw::interface::graphical::video::window), "window");
 		chai->add(chaiscript::fun(&cw::interface::graphical::detail::window::get_size), "get_size");
 //		chai->add(chaiscript::fun(&cw::interface::graphical::detail::window::set_clear_color), "set_clear_color");
@@ -123,6 +123,7 @@ public:
 
 		// stage
 		chai->add(chaiscript::fun(&cw::interface::composition::stage::create_scene), "create_scene");
+		chai->add(chaiscript::fun(&cw::interface::composition::stage::create_actor), "create_actor");
 		chai->add(chaiscript::fun(&cw::interface::composition::stage::add_scene), "add_scene");
 //		chai->add(chaiscript::fun(&cw::interface::composition::stage::remove_scene), "remove_scene");
 //		chai->add(chaiscript::fun(&cw::interface::composition::stage::swap_scene), "swap_scene");
@@ -140,7 +141,6 @@ public:
 		chai->add(chaiscript::fun(&cw::interface::composition::scene::set_int), "set_int");
 		chai->add(chaiscript::fun(&cw::interface::composition::scene::get_int), "get_int");
 */
-		chai->add(chaiscript::fun(&cw::implementation::composition::scene::create_actor), "create_actor");
 		chai->add(chaiscript::fun(&cw::implementation::composition::scene::load_actor), "load_actor");
 /*		chai->add(chaiscript::fun(&cw::interface::composition::scene::unload_actor), "unload_actor");
 */

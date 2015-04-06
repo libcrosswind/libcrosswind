@@ -154,12 +154,6 @@ public:
 		return actors;
 	}
 
-	std::shared_ptr<actor> create_actor(){
-		auto actor = std::make_shared<class actor>();
-		actor->core = core;
-		return actor;
-	}
-
 	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
 		actor->set_name(actor_name);
 		actors[actor_name] = actor;
@@ -192,7 +186,7 @@ public:
 		return cameras;
 	}
 
-	virtual std::shared_ptr<camera> create_camera(const glm::vec2& f_size){
+	virtual std::shared_ptr<camera> create_camera(const glm::i32vec2& f_size){
 		return std::make_shared<implementation::composition::camera>(f_size);
 	}
 
