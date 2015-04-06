@@ -6,18 +6,26 @@ var x_offset = window_size.x / 20.0f
 var y_offset = window_size.x / 20.0f
 
 var panel_size   := vec3(window_size.x/3.0f, window_size.y/2.0f, 0.0f)
-
 var panel_origin := vec3(window_size.x/2.0f - panel_size.x / 2.0f, window_size.y/2.0f - panel_size.y /2.0f, 0.0f)
 
 panel_origin.x *= -1.0f
 panel_origin.x += x_offset
-
 panel_origin.y -= y_offset
 
+puts("panel_origin x: ")
+puts(panel_origin.x)
+puts("\n")
+
+puts("panel_origin w: ")
+puts(panel_size.x)
+puts("\n")
 
 preview_panel.add_model("glass_window",
                         panel_origin,
                         panel_size,
                         "cristal_panel.json")
+
+preview_panel.set_origin(panel_origin)
+preview_panel.set_size(panel_size)
 
 add_global(preview_panel, "preview_panel")

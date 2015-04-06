@@ -52,6 +52,31 @@ public:
 	std::function<void()> deinit;
 	std::function<void(const float&)> logic;
 
+
+public:
+	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
+		actor->set_name(actor_name);
+		actors[actor_name] = actor;
+	}
+
+	virtual std::shared_ptr<actor> get_actor(const std::string& actor_name){
+
+		if(actors.find(actor_name) != actors.end()){
+			return actors[actor_name];
+		} else {
+			throw std::runtime_error("Could not find: " + actor_name);
+		}
+
+	}
+
+	virtual void remove_actor(const std::string& actor_name){
+		if(actors.find(actor_name) != actors.end()){
+			actors.erase(actor_name);
+		} else {
+			throw std::runtime_error(actor_name + " does not exist or was already removed");
+		}
+	}
+
 	virtual void load_actor(const std::string& actor_name){
 		get_actor(actor_name)->init();
 	}
@@ -153,30 +178,6 @@ public:
 	virtual actor_map& get_actor_map(){
 		return actors;
 	}
-
-	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
-		actor->set_name(actor_name);
-		actors[actor_name] = actor;
-	}
-
-	virtual std::shared_ptr<actor> get_actor(const std::string& actor_name){
-
-		if(actors.find(actor_name) != actors.end()){
-			return actors[actor_name];
-		} else {
-			throw std::runtime_error("Could not find: " + actor_name);
-		}
-
-	}
-
-	virtual void remove_actor(const std::string& actor_name){
-		if(actors.find(actor_name) != actors.end()){
-			actors.erase(actor_name);
-		} else {
-			throw std::runtime_error(actor_name + " does not exist or was already removed");
-		}
-	}
-
 
 	virtual void set_camera_map(const camera_map& new_camera_map){
 		cameras = new_camera_map;

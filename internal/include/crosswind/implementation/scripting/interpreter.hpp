@@ -83,7 +83,7 @@ public:
 		chai->add(chaiscript::fun(&cw::interface::settings::window), "window");
 		chai->add(chaiscript::fun(&cw::interface::settings::window_settings::title), "title");
 //		chai->add(chaiscript::fun(&cw::interface::settings::video_settings::window_position), "window_position");
-//		chai->add(chaiscript::fun(&cw::interface::settings::video_settings::window_resolution), "window_resolution");
+		chai->add(chaiscript::fun(&cw::interface::settings::window_settings::resolution), "resolution");
 //		chai->add(chaiscript::fun(&cw::interface::settings::video_settings::fps), "fps");
 		chai->add(chaiscript::fun(&cw::interface::settings::window_settings::resizable), "resizable");
 

@@ -37,7 +37,6 @@ struct cw::interface::settings{
     struct video_settings{
         std::string window_title;
         glm::i32vec2  window_position;
-        glm::i32vec2  window_resolution;
         float fps;
         int video_flags;
         int window_flags;
@@ -45,6 +44,7 @@ struct cw::interface::settings{
 
     struct window_settings{
         std::string title;
+        glm::i32vec2  resolution;
         bool resizable;
     } window;
 
@@ -68,13 +68,13 @@ struct cw::interface::settings{
 
         video.window_title      = "Main";
         video.window_position   = glm::i32vec2(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-        video.window_resolution = glm::i32vec2(640, 480);
         video.fps               = 60.0f;
         video.video_flags       = IMG_INIT_PNG;
         video.window_flags      = SDL_WINDOW_OPENGL;
 
         window.title            = "Main";
         window.resizable        = false;
+        window.resolution       = glm::i32vec2(640, 480);
 
 
 

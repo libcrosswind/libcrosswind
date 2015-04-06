@@ -30,7 +30,7 @@ public:
         input       = std::make_shared<implementation::platform::input>();
         video       = std::make_shared<implementation::graphical::video>(engine_settings.window.title,
                                                                          engine_settings.video.window_position,
-                                                                         engine_settings.video.window_resolution,
+                                                                         engine_settings.window.resolution,
                                                                          engine_settings.video.fps,
                                                                          engine_settings.video.video_flags,
                                                                          engine_settings.video.window_flags,

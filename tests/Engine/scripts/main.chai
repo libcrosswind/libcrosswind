@@ -1,6 +1,7 @@
 var configuration := settings()
 
 configuration.window.title      = "libcrosswind engine 0.2"
+configuration.window.resolution = i32vec2(1024, 768)
 configuration.window.resizable  = false
 var nucleus := engine(configuration)
 

@@ -138,7 +138,7 @@ private:
 	    glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
 	   
 	    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(interface::graphical::detail::vertex), nullptr, GL_DYNAMIC_DRAW);
-	    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(interface::graphical::detail::vertex), vertices.data());
+	    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(interface::graphical::detail::vertex), &vertices[0]);
 	   
 	    glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}

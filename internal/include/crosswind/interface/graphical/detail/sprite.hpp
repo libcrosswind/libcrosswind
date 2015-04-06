@@ -18,16 +18,16 @@ namespace detail{
 
 class cw::interface::graphical::detail::sprite: public cw::interface::graphical::detail::mesh {
 public:
-	sprite(const glm::vec3& o, 
+	sprite(const glm::vec3& c_origin,
            const glm::vec3& s,
            const glm::vec4& c  = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
            const glm::vec4& uv = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
-           const uint32_t& t_id = 0): cw::interface::graphical::detail::mesh(o, s),
+           const uint32_t& t_id = 0): cw::interface::graphical::detail::mesh(c_origin, s),
             texture_id(t_id){
 
-            auto px = o.x - s.x/2.0f;
-            auto py = o.y - s.y/2.0f;
-            auto pz = o.z - s.z/2.0f;
+            auto px = c_origin.x - s.x/2.0f;
+            auto py = c_origin.y - s.y/2.0f;
+            auto pz = c_origin.z - s.z/2.0f;
             auto pw = 1.0f;
 
             auto dx = s.x;
@@ -60,10 +60,11 @@ public:
             vertices[4].set_uv(uv.z, uv.y); // bottom right
             vertices[5].set_uv(uv.z, uv.w); // top right
 
-            set_origin(o);
+            set_origin(origin);
 	}
 
     virtual void set_origin(const glm::vec3& new_origin) override {
+        origin = new_origin;
 
         auto px = new_origin.x - size.x/2.0f;
         auto py = new_origin.y - size.y/2.0f;
@@ -87,7 +88,6 @@ public:
         vertices[4].set_position(bottom_right);
         vertices[5].set_position(top_right);
 
-        origin = new_origin;
 
     }
 
