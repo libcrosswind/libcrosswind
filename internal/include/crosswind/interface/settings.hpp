@@ -39,13 +39,13 @@ struct cw::interface::settings{
         glm::i32vec2  window_position;
         glm::i32vec2  window_resolution;
         float fps;
-        bool resizable_window;
         int video_flags;
         int window_flags;
     } video;
 
     struct window_settings{
         std::string title;
+        bool resizable;
     } window;
 
     struct{
@@ -70,11 +70,12 @@ struct cw::interface::settings{
         video.window_position   = glm::i32vec2(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
         video.window_resolution = glm::i32vec2(640, 480);
         video.fps               = 60.0f;
-        video.resizable_window  = false;
         video.video_flags       = IMG_INIT_PNG;
         video.window_flags      = SDL_WINDOW_OPENGL;
 
         window.title            = "Main";
+        window.resizable        = false;
+
 
 
         physics.gravity         = glm::vec3(0.0f, -10.0f, 0.0f);

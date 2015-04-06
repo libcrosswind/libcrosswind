@@ -34,7 +34,7 @@ public:
                                                                          engine_settings.video.fps,
                                                                          engine_settings.video.video_flags,
                                                                          engine_settings.video.window_flags,
-                                                                         engine_settings.video.resizable_window);
+                                                                         engine_settings.window.resizable);
 
         mixer       = std::make_shared<implementation::sound::mixer>(engine_settings.audio.frequency,
                                                                      engine_settings.audio.format,
