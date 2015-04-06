@@ -4,7 +4,7 @@
 
 #include <crosswind/interface/core.hpp>
 #include <crosswind/interface/composition/stage.hpp>
-#include <crosswind/interface/composition/scene.hpp>
+#include <crosswind/implementation/composition/scene.hpp>
 
 namespace cw{
 namespace implementation{
@@ -35,6 +35,14 @@ public:
 		event_queue.push_back(event);
 	}
 
+	virtual scene_ptr create_scene(){
+
+		auto scene = std::make_shared<class scene>();
+		scene->core = core;
+		return scene;
+
+	}
+
 	virtual void load_scene(const std::string& name){
 
 		post_event([this, name](){
@@ -51,7 +59,7 @@ public:
 
 	}
 
-	virtual void add_scene(const std::string& scene_name, std::shared_ptr<interface::composition::scene> scene){
+	virtual void add_scene(const std::string& scene_name, scene_ptr scene){
 
 		post_event([this, scene, scene_name](){
 		    scene->core = core;
@@ -97,7 +105,7 @@ public:
 		return scenes;
 	}
 
-	virtual std::shared_ptr<interface::composition::scene> get_scene(const std::string& scene_name){
+	virtual scene_ptr get_scene(const std::string& scene_name){
 		if(scenes.find(scene_name) != scenes.end()){
 			return scenes[scene_name];
 		} else {

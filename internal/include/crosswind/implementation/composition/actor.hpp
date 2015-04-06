@@ -5,27 +5,40 @@
 #include <string>
 #include <functional>
 
+#include <crosswind/interface/core.hpp>
+
 #include <crosswind/interface/graphical/object/model.hpp>
 #include <crosswind/interface/simulation/detail/character.hpp>
 #include <crosswind/interface/simulation/detail/body.hpp>
 
 namespace cw{
-namespace interface{
+namespace implementation{
 namespace composition{
 
 	class actor;
 
 }// namespace composition
-}// namespace interface
+}// namespace implementation
 }// namespace cw
 
-class cw::interface::composition::actor{
-	typedef std::map<std::string, std::shared_ptr<graphical::object::model> >       model_map;
-	typedef std::map<std::string, std::shared_ptr<simulation::detail::body> >       body_map;
-	typedef std::map<std::string, std::shared_ptr<simulation::detail::character> >  character_map;
+class cw::implementation::composition::actor{
+	typedef std::map<std::string, std::shared_ptr<interface::graphical::object::model> >       model_map;
+	typedef std::map<std::string, std::shared_ptr<interface::simulation::detail::body> >       body_map;
+	typedef std::map<std::string, std::shared_ptr<interface::simulation::detail::character> >  character_map;
 public:
 	actor(): name("undefined"){
 		alpha = 1.0f;
+		init = [](){
+
+		};
+
+		deinit = [](){
+
+		};
+
+		logic = [](const float& delta){
+
+		};
 	}
 
 	virtual ~actor(){
@@ -102,7 +115,7 @@ public:
 
 	}
 
-	virtual std::shared_ptr<graphical::object::model> get_model(const std::string& model_name){
+	virtual std::shared_ptr<interface::graphical::object::model> get_model(const std::string& model_name){
 		if(models.find(model_name) != models.end()){
 			return models[model_name];
 		} else {
@@ -137,7 +150,7 @@ public:
 
 	}
 
-	virtual std::shared_ptr<simulation::detail::body> get_rigid_body(const std::string& body_name){
+	virtual std::shared_ptr<interface::simulation::detail::body> get_rigid_body(const std::string& body_name){
 
 		if(bodies.find(body_name) != bodies.end()){
 			return bodies[body_name];
@@ -173,7 +186,7 @@ public:
 
 	}
 
-	virtual std::shared_ptr<simulation::detail::character> get_character(const std::string& character_name){
+	virtual std::shared_ptr<interface::simulation::detail::character> get_character(const std::string& character_name){
 
 		if(characters.find(character_name) != characters.end()){
 			return characters[character_name];
@@ -198,7 +211,7 @@ public:
 		return models;
 	}
 
-	std::shared_ptr<core> core;
+	std::shared_ptr<interface::composition::core> core;
 	std::map<std::string, bool> conditions;
 
 private:

@@ -6,20 +6,20 @@
 
 #include <crosswind/interface/core.hpp>
 
-#include <crosswind/interface/composition/actor.hpp>
+#include <crosswind/implementation/composition/actor.hpp>
 #include <crosswind/implementation/composition/camera.hpp>
 
 namespace cw{
-namespace interface{
+namespace implementation{
 namespace composition{
 
 	class scene;
 
 }// namespace composition
-}// namespace interface
+}// namespace implementation
 }// namespace cw
 
-class cw::interface::composition::scene{
+class cw::implementation::composition::scene{
 	typedef std::map<std::string, std::shared_ptr<actor> > actor_map;
 	typedef std::map<std::string, std::shared_ptr<camera> > camera_map;
 	typedef std::map<std::string, std::vector<std::pair<glm::vec3, glm::vec3> > > actor_collision_map;
@@ -27,6 +27,17 @@ class cw::interface::composition::scene{
 public:
 	scene(){
 		collisions["undefined"] = actor_collision_map();
+		init = [](){
+
+		};
+
+		deinit = [](){
+
+		};
+
+		logic = [](const float& delta){
+
+		};
 	}
 
 	void construct(const std::function<void()>& f_init,
@@ -205,7 +216,7 @@ public:
 	virtual void set_name(const std::string& new_name){ name = new_name; }
 	virtual std::string get_name(){ return name; }
 
-	std::shared_ptr<core> core;
+	std::shared_ptr<interface::composition::core> core;
 
 	void set_bool(const std::string item_name, const bool& value){
 		conditions[item_name] = value;

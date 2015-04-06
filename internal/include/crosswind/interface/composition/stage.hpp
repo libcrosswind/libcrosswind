@@ -4,7 +4,7 @@
 #include <functional>
 
 #include <crosswind/interface/core.hpp>
-#include <crosswind/interface/composition/scene.hpp>
+#include <crosswind/implementation/composition/scene.hpp>
 
 namespace cw{
 namespace interface{
@@ -18,8 +18,8 @@ namespace composition{
 
 class cw::interface::composition::stage{
 protected:
-	typedef std::map<std::string, std::shared_ptr<scene> > scene_map;
-	typedef std::shared_ptr<scene> scene_ptr;
+	typedef std::shared_ptr<implementation::composition::scene> scene_ptr;
+	typedef std::map<std::string, scene_ptr> scene_map;
 public:
 	stage(std::shared_ptr<interface::composition::core> c_core): core(c_core){
 		
@@ -31,13 +31,9 @@ public:
 	virtual void load_scene(const std::string& name) = 0;
 	virtual void unload_scene(const std::string& name) = 0;
 
-	std::shared_ptr<scene> create_scene(){
-		auto scene = std::make_shared<class scene>();
-		scene->core = core;
-		return scene;
-	}
+	virtual scene_ptr create_scene() = 0;
 
-	virtual void add_scene(const std::string& scene_name, std::shared_ptr<scene> scene) = 0;
+	virtual void add_scene(const std::string& scene_name, scene_ptr scene) = 0;
 	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene) = 0;
 	virtual void remove_scene(const std::string& scene_name) = 0;
 
@@ -47,7 +43,7 @@ public:
 
 	virtual scene_map& get_scene_map() = 0;
 
-	virtual std::shared_ptr<scene> get_scene(const std::string& scene_name) = 0;
+	virtual scene_ptr get_scene(const std::string& scene_name) = 0;
 
 protected:
 	std::shared_ptr<interface::composition::core> core;
