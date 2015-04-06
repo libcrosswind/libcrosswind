@@ -9,31 +9,29 @@
 #include <crosswind/engine.hpp>
 
 namespace cw{
-	namespace implementation{
-		namespace scripting{
+namespace implementation{
+namespace scripting{
 
-			class interpreter;
+	class interpreter;
 
-			namespace{
+	namespace{
 
-				float c_clamp(const float& value, const float& min_value, const float& max_value){
-					return glm::clamp(value, min_value, max_value);
-				}
+		float c_clamp(const float& value, const float& min_value, const float& max_value){
+			return glm::clamp(value, min_value, max_value);
+		}
 
-				float c_radians(const float& degrees){
-					return glm::radians(degrees);
-				}
+		float c_radians(const float& degrees){
+			return glm::radians(degrees);
+		}
 
-				float c_sin(const float& value){
-					return glm::sin(value);
-				}
+		float c_sin(const float& value){
+			return glm::sin(value);
+		}
 
+	}// anonymous namespace
 
-
-			}// anonymous namespace
-
-		}// namespace scripting
-	}// namespace implementation
+}// namespace scripting
+}// namespace implementation
 }// namespace cw
 
 class cw::implementation::scripting::interpreter{
@@ -73,10 +71,10 @@ public:
 		chai->add(chaiscript::fun(&glm::i32vec2::y), "y");*/
 
 		// functions
-/*		chai->add(chaiscript::fun(&c_clamp), "clamp");
+		chai->add(chaiscript::fun(&c_clamp), "clamp");
 		chai->add(chaiscript::fun(&c_radians), "radians");
 		chai->add(chaiscript::fun(&c_sin), "sin");
-*/
+
 
 
 		// constructor
