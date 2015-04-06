@@ -1,7 +1,7 @@
 var configuration := settings()
 
 configuration.window.title      = "libcrosswind engine 0.2"
-configuration.window.resizable  = true
+configuration.window.resizable  = false
 var nucleus := engine(configuration)
 
 add_global(nucleus.core, "core")

@@ -5,7 +5,7 @@ var window_size := core.video.window.get_size()
 var x_offset = window_size.x / 20.0f
 var y_offset = window_size.x / 20.0f
 
-var panel_size   := vec3(window_size.x/4.0f, window_size.y/3.0f, 0.0f)
+var panel_size   := vec3(window_size.x/3.0f, window_size.y/2.0f, 0.0f)
 
 var panel_origin := vec3(window_size.x/2.0f - panel_size.x / 2.0f, window_size.y/2.0f - panel_size.y /2.0f, 0.0f)
 

@@ -86,9 +86,13 @@ public:
 		}
 	}
 
-	virtual float& get_alpha(){
-		return alpha;
-	}
+	virtual float get_alpha(){ return alpha; }
+
+/*	virtual void set_size(const glm::vec3& f_size){ size = f_size;	}
+	virtual glm::vec3 get_size(){ return size;	}
+
+	virtual void set_origin(const glm::vec3& f_origin){ origin = f_origin; }
+	virtual glm::vec3 get_origin(){ return origin;	}*/
 
 	virtual void update(const float& dt){
 		for(auto& model_mapping : models){
@@ -97,8 +101,6 @@ public:
 		logic(dt);
 
 	}
-
-
 
 	virtual void add_model(const std::string& model_name,
 			               const glm::vec3& origin,
@@ -109,6 +111,7 @@ public:
 			models[model_name] = core->video->load_model(origin,
 					size,
 					core->filesystem->get_file_path(template_file));
+
 		} else {
 			throw std::runtime_error(model_name + " already exists, remove it first before adding one with the same name");
 		}
@@ -221,6 +224,7 @@ private:
 
 	std::string name;
 	glm::vec3 size;
+	glm::vec3 origin;
 	float alpha;
 
 };// class actor
