@@ -72,11 +72,32 @@ public:
 		return name;
 	}
 
+	virtual void set_size(const glm::vec3& f_size){
+		size = f_size;
+		for (auto &model : models) {
+			model.second->set_size(size);
+		}
+	}
+
+	virtual glm::vec3 get_size(){
+		return size;
+	}
+
+	virtual void set_origin(const glm::vec3& f_origin) {
+		origin = f_origin;
+		for (auto &model : models) {
+			model.second->set_origin(origin);
+		}
+	}
+
+	virtual glm::vec3 get_origin(){
+		return origin;
+	}
+
 	virtual void set_alpha(const float& f_alpha){
 		alpha = f_alpha;
 		for(auto& model : models){
 			for(auto& sprite : model.second->get_animations()){
-
 				for(auto& frame : sprite.second->frames){
 					for(auto& vertex : frame->get_vertices()){
 						vertex.set_alpha(alpha);
@@ -86,13 +107,9 @@ public:
 		}
 	}
 
-	virtual float get_alpha(){ return alpha; }
-
-/*	virtual void set_size(const glm::vec3& f_size){ size = f_size;	}
-	virtual glm::vec3 get_size(){ return size;	}
-
-	virtual void set_origin(const glm::vec3& f_origin){ origin = f_origin; }
-	virtual glm::vec3 get_origin(){ return origin;	}*/
+	virtual float get_alpha(){
+		return alpha;
+	}
 
 	virtual void update(const float& dt){
 		for(auto& model_mapping : models){

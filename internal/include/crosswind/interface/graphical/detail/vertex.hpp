@@ -35,6 +35,10 @@ struct cw::interface::graphical::detail::vertex{
 		position = p;
 	}
 
+	glm::vec4& get_position(){
+		return position;
+	}
+
     void set_color(const float&  r, const float& g, const float& b, const float& a){
     	color.r = r;
     	color.g = g;

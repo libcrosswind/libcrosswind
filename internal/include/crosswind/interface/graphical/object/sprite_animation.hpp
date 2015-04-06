@@ -27,6 +27,17 @@ public:
 
     virtual void flip(bool default_x) = 0;
 
+    void set_origin(const glm::vec3& new_origin){
+        for(auto& frame : frames){
+            frame->set_origin(new_origin);
+        }
+    }
+
+    void set_size(const glm::vec3& new_size){
+        for(auto& frame : frames){
+            frame->set_size(new_size);
+        }
+    }
 
     bool x_orientation;
     float duration;

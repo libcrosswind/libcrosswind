@@ -160,6 +160,13 @@ public:
 /*		chai->add(chaiscript::fun(&cw::interface::composition::actor::get_model), "get_model");
 		chai->add(chaiscript::fun(&cw::interface::composition::actor::set_name), "set_name");
 		chai->add(chaiscript::fun(&cw::interface::composition::actor::get_name), "get_name");
+		*/
+		chai->add(chaiscript::fun(&cw::implementation::composition::actor::set_size), "set_size");
+		chai->add(chaiscript::fun(&cw::implementation::composition::actor::get_size), "get_size");
+
+		chai->add(chaiscript::fun(&cw::implementation::composition::actor::set_origin), "set_origin");
+		chai->add(chaiscript::fun(&cw::implementation::composition::actor::get_origin), "get_origin");
+/*
 		chai->add(chaiscript::fun(&cw::interface::composition::actor::set_alpha), "set_alpha");
 		chai->add(chaiscript::fun(&cw::interface::composition::actor::get_alpha), "get_alpha");
 

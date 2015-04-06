@@ -72,9 +72,7 @@ public:
 	virtual void set_origin(const glm::vec3& new_origin){
 		origin = new_origin;
 		for(auto& animation : animations){
-			for(auto& frame : animation.second->frames){
-				frame->set_origin(origin);
-			}
+			animation.second->set_origin(origin);
 		}
 	}
 
@@ -84,6 +82,9 @@ public:
 
 	virtual void set_size(const glm::vec3& new_size){
 		size = new_size;
+		for(auto& animation : animations){
+			animation.second->set_size(size);
+		}
 	}
 
 	virtual glm::vec3 get_size(){

@@ -91,6 +91,14 @@ public:
 
     }
 
+    virtual void set_size(const glm::vec3& new_size) override {
+
+        size = new_size;
+
+        set_origin(get_origin());
+
+    }
+
 
     void flip(){
 
