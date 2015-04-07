@@ -6,7 +6,7 @@
 
 	"sprites":
 	{
-		"cristal_panel" :{ "ui_atlas"  : [0.5859375, 0.806640625, 0.78125, 1.00] }
+		"cristal_panel" :{ "ui_atlas"  : [0.00, 0.806640625, 0.1953125, 1.00] }
 	},
 
 	"animations":

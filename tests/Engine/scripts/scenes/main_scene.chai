@@ -5,14 +5,19 @@ var init = fun[main_scene](){
     auto main_camera := main_scene.create_camera(window_size)
     main_scene.set_camera("main_camera", main_camera)
 
-    use("scripts/actors/main_scene/preview_panel.chai")
+    var size := core.video.window.get_size()
+
+    use("scripts/actors/main_scene/texture_panel.chai")
+    use("scripts/actors/main_scene/canvas.chai")
     use("scripts/actors/main_scene/properties_panel.chai")
 
-    main_scene.add_actor("preview_panel", preview_panel)
+    main_scene.add_actor("texture_panel", texture_panel)
     main_scene.add_actor("properties_panel", properties_panel)
+    main_scene.add_actor("canvas", canvas)
 
-    main_scene.load_actor("preview_panel")
+    main_scene.load_actor("texture_panel")
     main_scene.load_actor("properties_panel")
+    main_scene.load_actor("canvas")
 }
 
 var deinit = fun[main_scene](){

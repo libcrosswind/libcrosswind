@@ -1,0 +1,30 @@
+var canvas := stage.create_actor()
+
+var window_size := core.video.window.get_size()
+
+var preview_panel_x = texture_panel.get_origin().x
+var preview_panel_y = texture_panel.get_origin().y
+
+var preview_panel_w = texture_panel.get_size().x
+var preview_panel_h = texture_panel.get_size().y
+
+var panel_origin := vec3(preview_panel_x, preview_panel_y, 0.0f)
+var panel_size := vec3(preview_panel_w, preview_panel_h, 0.0f)
+
+//panel_origin.x = preview_panel_x + 250.0f
+//panel_origin.x += x_offset
+
+panel_origin.x +=  preview_panel_w
+
+//panel_origin.x += x_offset
+//panel_origin.y -= y_offset
+
+canvas.add_model("glass_window",
+    panel_origin,
+    panel_size,
+    "cristal_panel.json")
+
+canvas.set_origin(panel_origin)
+canvas.set_size(panel_size)
+
+add_global(canvas, "canvas")

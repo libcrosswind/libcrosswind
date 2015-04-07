@@ -1,4 +1,4 @@
-var preview_panel := stage.create_actor()
+var texture_panel := stage.create_actor()
 
 var window_size := core.video.window.get_size()
 
@@ -12,20 +12,12 @@ panel_origin.x *= -1.0f
 panel_origin.x += x_offset
 panel_origin.y -= y_offset
 
-puts("panel_origin x: ")
-puts(panel_origin.x)
-puts("\n")
-
-puts("panel_origin w: ")
-puts(panel_size.x)
-puts("\n")
-
-preview_panel.add_model("glass_window",
+texture_panel.add_model("glass_window",
                         panel_origin,
                         panel_size,
                         "cristal_panel.json")
 
-preview_panel.set_origin(panel_origin)
-preview_panel.set_size(panel_size)
+texture_panel.set_origin(panel_origin)
+texture_panel.set_size(panel_size)
 
-add_global(preview_panel, "preview_panel")
+add_global(texture_panel, "texture_panel")

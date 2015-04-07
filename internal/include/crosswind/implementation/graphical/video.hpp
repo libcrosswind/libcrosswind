@@ -29,8 +29,8 @@ namespace graphical{
 class cw::implementation::graphical::video: public cw::interface::graphical::video{
 public:
 	video(const std::string& title,
-		  const glm::i32vec2 window_position,
-		  const glm::i32vec2 window_resolution,
+		  const glm::i32vec2& window_position,
+		  const glm::i32vec2& window_resolution,
 		  const float& fps,
 		  const int& video_flags,
 		  const int& window_flags,
