@@ -26,7 +26,7 @@ public:
 	model(): origin(0.0f, 0.0f, 0.0f), delta_count(0.0f){
 	}
 
-	virtual void change_animation(const std::string& new_animation, const bool& x_orientation = true) = 0;
+	virtual void change_animation(const std::string& new_animation) = 0;
 
 	virtual void update(const float& delta) = 0;
 

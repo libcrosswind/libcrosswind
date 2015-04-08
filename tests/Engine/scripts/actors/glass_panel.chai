@@ -1,0 +1,14 @@
+return fun(origin, size){
+    var panel := stage.create_actor()
+
+    panel.add_model("glass_window",
+        origin,
+        size,
+        "cristal_panel.json")
+
+    panel.set_origin(origin)
+    panel.set_size(size)
+
+    return panel
+}
+

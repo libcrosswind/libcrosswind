@@ -7,15 +7,16 @@ var init = fun[main_scene](){
 
     var size := core.video.window.get_size()
 
-//    use("scripts/actors/main_scene/texture_panel.chai")
-//    use("scripts/actors/main_scene/canvas.chai")
-    var properties_panel := use("scripts/actors/main_scene/properties_panel.chai")
+    var button := use("scripts/actors/green_button.chai")(vec3(0.0f, 0.0f, 0.0f), vec3(120.0f, 120.0f, 0.0f))
+//    var texture := use("scripts/actors/glass_panel.chai")(vec3(120.0f, 0.0f, 0.0f), vec3(120.0f, 120.0f, 0.0f))
+//    var timeline := use("scripts/actors/glass_panel.chai")(vec3(120.0f, 0.0f, 0.0f), vec3(120.0f, 120.0f, 0.0f))
 
-//    main_scene.add_actor("texture_panel", texture_panel)
-      main_scene.add_actor("properties_panel", properties_panel)
+    main_scene.add_actor("button", button)
+//    main_scene.add_actor("properties_panel", canvas)
+//    main_scene.add_actor("properties_panel2", texture)
 //    main_scene.add_actor("canvas", canvas)
 
-//    main_scene.load_actor("texture_panel")
+    main_scene.load_actor("button")
 //    main_scene.load_actor("properties_panel")
 //    main_scene.load_actor("canvas")
 }

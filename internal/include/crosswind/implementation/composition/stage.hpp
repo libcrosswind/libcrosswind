@@ -49,6 +49,29 @@ public:
 		return actor;
 	}
 
+	virtual void add_scene(const std::string& scene_name, scene_ptr scene){
+
+		post_event([this, scene, scene_name](){
+			scene->set_name(scene_name);
+
+			if(scenes.empty()){
+				this->scenes["current"] = scene;
+			}
+
+			this->scenes[scene_name] = scene;
+		});
+
+	}
+
+	virtual scene_ptr get_scene(const std::string& scene_name){
+		if(scenes.find(scene_name) != scenes.end()){
+			return scenes[scene_name];
+		} else {
+			throw std::runtime_error("Could not find: " + scene_name);
+		}
+
+	}
+
 
 	virtual void load_scene(const std::string& name){
 
@@ -66,21 +89,6 @@ public:
 
 	}
 
-	virtual void add_scene(const std::string& scene_name, scene_ptr scene){
-
-		post_event([this, scene, scene_name](){
-		    scene->core = core;
-
-			scene->set_name(scene_name);
-
-		    if(scenes.empty()){
-			    this->scenes["current"] = scene;
-		    }
-
-		    this->scenes[scene_name] = scene;
-		});
-
-	}
 
 	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene){
 
@@ -112,13 +120,6 @@ public:
 		return scenes;
 	}
 
-	virtual scene_ptr get_scene(const std::string& scene_name){
-		if(scenes.find(scene_name) != scenes.end()){
-			return scenes[scene_name];
-		} else {
-			throw std::runtime_error("Could not find: " + scene_name);
-		}
 
-	}
 
 };// class scene

@@ -24,11 +24,10 @@ public:
 	model(){
 	}
 
-	virtual void change_animation(const std::string& new_animation, const bool& x_orientation = true){
+	virtual void change_animation(const std::string& new_animation){
 
 		if(animations["current"] != animations[new_animation]){
 			animations["current"] = animations[new_animation];
-			animations["current"]->flip(x_orientation);
 		}
 
 	}

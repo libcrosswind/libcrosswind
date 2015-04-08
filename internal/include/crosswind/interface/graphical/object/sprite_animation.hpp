@@ -22,10 +22,7 @@ public:
 
     sprite_animation(){
         current_frame = 0;
-        x_orientation = true;
     }
-
-    virtual void flip(bool default_x) = 0;
 
     void set_origin(const glm::vec3& new_origin){
         for(auto& frame : frames){
@@ -39,7 +36,6 @@ public:
         }
     }
 
-    bool x_orientation;
     float duration;
     unsigned int current_frame;
     std::vector<std::shared_ptr<detail::sprite> > frames;

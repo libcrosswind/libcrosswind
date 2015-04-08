@@ -23,27 +23,8 @@ public:
 
     }
 
-    virtual void flip(bool default_x){
+    virtual ~sprite_animation(){
 
-        if(x_orientation){
-            if(!default_x){
-                for(int i = 0; i<frames.size(); i++){
-                    frames[i]->flip();
-                }
-
-                x_orientation = default_x;
-            }
-
-        } else {
-
-            if(default_x){
-                for(int i = 0; i<frames.size(); i++){
-                    frames[i]->flip();
-                }
-
-                x_orientation = default_x;
-            }
-        }
     }
 
 };// class sprite_animation

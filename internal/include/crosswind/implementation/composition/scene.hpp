@@ -21,7 +21,7 @@ namespace composition{
 
 class cw::implementation::composition::scene{
 	typedef std::map<std::string, std::shared_ptr<actor> > actor_map;
-	typedef std::map<std::string, std::shared_ptr<camera> > camera_map;
+	typedef std::map<std::string, std::shared_ptr<interface::composition::camera> > camera_map;
 	typedef std::map<std::string, std::vector<std::pair<glm::vec3, glm::vec3> > > actor_collision_map;
 
 public:
@@ -187,18 +187,18 @@ public:
 		return cameras;
 	}
 
-	virtual std::shared_ptr<camera> create_camera(const glm::i32vec2& f_size){
-		return std::make_shared<implementation::composition::camera>(f_size);
+	virtual std::shared_ptr<interface::composition::camera> create_camera(const glm::i32vec2& f_size){
+		return std::make_shared<camera>(f_size);
 	}
 
-	virtual void set_camera(const std::string& camera_name, std::shared_ptr<camera> camera){
+	virtual void set_camera(const std::string& camera_name, std::shared_ptr<interface::composition::camera> camera){
 		if(cameras.empty()){
 			cameras["current"] = camera;
 		}
 		cameras[camera_name] = camera;
 	}
 
-	virtual std::shared_ptr<camera> get_camera(const std::string& camera_name){
+	virtual std::shared_ptr<interface::composition::camera> get_camera(const std::string& camera_name){
 
 		if(cameras.find(camera_name) != cameras.end()){
 			return cameras[camera_name];

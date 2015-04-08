@@ -25,6 +25,10 @@ public:
 		ortho_matrix = glm::ortho(0.0f, screen_dimension.x, 0.0f, screen_dimension.y);
 	}
 
+	virtual ~camera(){
+
+	}
+
 	virtual void set_position(const glm::vec3& new_position) = 0;
 	
 	virtual glm::vec3 get_position() = 0;
@@ -37,7 +41,7 @@ public:
 
 	virtual void update(const float& delta) = 0;
 
-    virtual glm::vec2 convert_screen_to_world(glm::vec2 screen_coordinates) = 0;
+    virtual glm::vec2 convert_screen_to_world(const glm::vec2& screen_coordinates) = 0;
 
 protected:
     bool needs_matrix_update;
