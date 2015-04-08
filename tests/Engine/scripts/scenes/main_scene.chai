@@ -7,7 +7,7 @@ var init = fun[main_scene](){
 
     var size := core.video.window.get_size()
 
-    var button := use("scripts/actors/green_button.chai")(vec3(0.0f, 0.0f, 0.0f), vec3(120.0f, 120.0f, 0.0f))
+    var button := use("scripts/actors/green_button.chai")(vec3(0.0f, 0.0f, 0.0f), vec3(190.0f, 100.0f, 0.0f))
 //    var texture := use("scripts/actors/glass_panel.chai")(vec3(120.0f, 0.0f, 0.0f), vec3(120.0f, 120.0f, 0.0f))
 //    var timeline := use("scripts/actors/glass_panel.chai")(vec3(120.0f, 0.0f, 0.0f), vec3(120.0f, 120.0f, 0.0f))
 

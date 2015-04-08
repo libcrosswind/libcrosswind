@@ -27,7 +27,7 @@ return fun(origin, size){
         var w = button.get_size().x
         var h = button.get_size().y
 
-        if(mouse_x >= x - w / 2.0f && mouse_x <= x + w / 2.0f && mouse_y >= y + h / 2.0f && mouse_y <= y - h / 2.0f){
+        if(mouse_x >= x - w / 2.0f && mouse_x <= x + w / 2.0f && mouse_y >= y - h / 2.0f && mouse_y <= y + h / 2.0f){
 
             if(core.input.is_key_down("mouse_left")){
                 puts("Mouse down\n")
