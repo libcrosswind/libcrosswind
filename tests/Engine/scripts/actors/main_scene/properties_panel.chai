@@ -2,11 +2,17 @@ var properties_panel := stage.create_actor()
 
 var window_size := core.video.window.get_size()
 
-var preview_panel_x = canvas.get_origin().x
-var preview_panel_y = canvas.get_origin().y
+//var preview_panel_x = canvas.get_origin().x
+//var preview_panel_y = canvas.get_origin().y
 
-var preview_panel_w = canvas.get_size().x
-var preview_panel_h = canvas.get_size().y
+//var preview_panel_w = canvas.get_size().x
+//var preview_panel_h = canvas.get_size().y
+
+var preview_panel_x = 0.0f
+var preview_panel_y = 0.0f
+
+var preview_panel_w = 120.0f
+var preview_panel_h = 120.0f
 
 var panel_origin := vec3(preview_panel_x, preview_panel_y, 0.0f)
 var panel_size := vec3(preview_panel_w, preview_panel_h, 0.0f)
@@ -15,7 +21,6 @@ var panel_size := vec3(preview_panel_w, preview_panel_h, 0.0f)
 //panel_origin.x += x_offset
 
 panel_origin.y -=  preview_panel_h
-
 
 //panel_origin.x += x_offset
 //panel_origin.y -= y_offset
@@ -28,4 +33,4 @@ panel_origin.y -=  preview_panel_h
 properties_panel.set_origin(panel_origin)
 properties_panel.set_size(panel_size)
 
-add_global(properties_panel, "properties_panel")
+return properties_panel;

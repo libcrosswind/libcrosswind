@@ -7,17 +7,17 @@ var init = fun[main_scene](){
 
     var size := core.video.window.get_size()
 
-    use("scripts/actors/main_scene/texture_panel.chai")
-    use("scripts/actors/main_scene/canvas.chai")
-    use("scripts/actors/main_scene/properties_panel.chai")
+//    use("scripts/actors/main_scene/texture_panel.chai")
+//    use("scripts/actors/main_scene/canvas.chai")
+    var properties_panel := use("scripts/actors/main_scene/properties_panel.chai")
 
-    main_scene.add_actor("texture_panel", texture_panel)
-    main_scene.add_actor("properties_panel", properties_panel)
-    main_scene.add_actor("canvas", canvas)
+//    main_scene.add_actor("texture_panel", texture_panel)
+      main_scene.add_actor("properties_panel", properties_panel)
+//    main_scene.add_actor("canvas", canvas)
 
-    main_scene.load_actor("texture_panel")
-    main_scene.load_actor("properties_panel")
-    main_scene.load_actor("canvas")
+//    main_scene.load_actor("texture_panel")
+//    main_scene.load_actor("properties_panel")
+//    main_scene.load_actor("canvas")
 }
 
 var deinit = fun[main_scene](){

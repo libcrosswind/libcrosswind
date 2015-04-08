@@ -23,4 +23,4 @@ canvas.add_model("glass_window",
 canvas.set_origin(panel_origin)
 canvas.set_size(panel_size)
 
-add_global(canvas, "canvas")
+return canvas
