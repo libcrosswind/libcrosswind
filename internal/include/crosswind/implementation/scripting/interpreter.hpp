@@ -125,6 +125,51 @@ public:
 		chai->add(chaiscript::fun(&cw::interface::sound::mixer::load_effect), "load_effect");
 		chai->add(chaiscript::fun(&cw::interface::sound::mixer::play_effect), "play_effect");*/
 
+		// inheritance
+		// logic_component
+		chai->add(chaiscript::fun(&cw::interface::composition::logic_component::construct), "construct");
+
+		// named_component
+		chai->add(chaiscript::fun(&cw::interface::composition::named_component::set_name), "set_name");
+		chai->add(chaiscript::fun(&cw::interface::composition::named_component::get_name), "get_name");
+
+		// spatial_component
+		chai->add(chaiscript::fun(&cw::interface::composition::spatial_component::set_origin), "set_origin");
+		chai->add(chaiscript::fun(&cw::interface::composition::spatial_component::get_origin), "get_origin");
+		chai->add(chaiscript::fun(&cw::interface::composition::spatial_component::set_size), "set_size");
+		chai->add(chaiscript::fun(&cw::interface::composition::spatial_component::get_size), "get_size");
+		chai->add(chaiscript::fun(&cw::interface::composition::spatial_component::set_alpha), "set_alpha");
+		chai->add(chaiscript::fun(&cw::interface::composition::spatial_component::get_alpha), "get_alpha");
+
+
+		// inheritance bindings
+		// scene
+		chai->add(chaiscript::base_class<cw::interface::composition::logic_component,
+				cw::implementation::composition::scene>());
+
+		chai->add(chaiscript::base_class<cw::interface::composition::named_component,
+				cw::implementation::composition::scene>());
+
+		// group
+		chai->add(chaiscript::base_class<cw::interface::composition::named_component,
+				cw::implementation::composition::group>());
+
+		chai->add(chaiscript::base_class<cw::interface::composition::spatial_component,
+				cw::implementation::composition::group>());
+
+		chai->add(chaiscript::base_class<cw::interface::composition::logic_component,
+				cw::implementation::composition::group>());
+
+		// actor
+		chai->add(chaiscript::base_class<cw::interface::composition::named_component,
+				cw::implementation::composition::actor>());
+
+		chai->add(chaiscript::base_class<cw::interface::composition::spatial_component,
+				cw::implementation::composition::actor>());
+
+		chai->add(chaiscript::base_class<cw::interface::composition::logic_component,
+				cw::implementation::composition::actor>());
+
 		// stage
 		chai->add(chaiscript::fun(&cw::implementation::composition::stage::create_scene), "create_scene");
 		chai->add(chaiscript::fun(&cw::implementation::composition::stage::create_camera), "create_camera");
@@ -139,7 +184,6 @@ public:
 //		chai->add(chaiscript::fun(&cw::interface::composition::stage::unload_scene), "unload_scene");
 
 		// scene
-		chai->add(chaiscript::fun(&cw::implementation::composition::scene::construct), "construct");
 	/*	chai->add(chaiscript::fun(&cw::interface::composition::scene::set_bool), "set_bool");
 		chai->add(chaiscript::fun(&cw::interface::composition::scene::get_bool), "get_bool");
 
@@ -151,6 +195,8 @@ public:
 */
 		chai->add(chaiscript::fun(&cw::implementation::composition::scene::add_camera), "add_camera");
 		chai->add(chaiscript::fun(&cw::implementation::composition::scene::get_camera), "get_camera");
+		chai->add(chaiscript::fun(&cw::implementation::composition::scene::add_group), "add_group");
+
 		chai->add(chaiscript::fun(&cw::implementation::composition::scene::add_actor), "add_actor");
 /*		chai->add(chaiscript::fun(&cw::interface::composition::scene::get_actor), "get_actor");
 		chai->add(chaiscript::fun(&cw::interface::composition::scene::remove_actor), "remove_actor");*/
@@ -165,28 +211,15 @@ public:
 		chai->add(chaiscript::fun(&cw::implementation::composition::camera::convert_screen_to_world), "convert_screen_to_world");
 
 		// group
-		chai->add(chaiscript::fun(&cw::implementation::composition::group::construct), "construct");
 		chai->add(chaiscript::fun(&cw::implementation::composition::group::add_actor), "add_actor");
 		chai->add(chaiscript::fun(&cw::implementation::composition::group::get_actor), "get_actor");
 		chai->add(chaiscript::fun(&cw::implementation::composition::group::remove_actor), "remove_actor");
 
-/*
+
 		// actor
-*/		chai->add(chaiscript::fun(&cw::implementation::composition::actor::construct), "construct");
 		chai->add(chaiscript::fun(&cw::implementation::composition::actor::add_model), "add_model");
 		chai->add(chaiscript::fun(&cw::implementation::composition::actor::get_model), "get_model");
-/*		chai->add(chaiscript::fun(&cw::interface::composition::actor::set_name), "set_name");
-		chai->add(chaiscript::fun(&cw::interface::composition::actor::get_name), "get_name");
-		*/
-		chai->add(chaiscript::fun(&cw::implementation::composition::actor::set_size), "set_size");
-		chai->add(chaiscript::fun(&cw::implementation::composition::actor::get_size), "get_size");
 
-		chai->add(chaiscript::fun(&cw::implementation::composition::actor::set_origin), "set_origin");
-		chai->add(chaiscript::fun(&cw::implementation::composition::actor::get_origin), "get_origin");
-
-/*		chai->add(chaiscript::fun(&cw::interface::composition::actor::set_alpha), "set_alpha");
-		chai->add(chaiscript::fun(&cw::interface::composition::actor::get_alpha), "get_alpha");
-*/
 		// model
 		chai->add(chaiscript::fun(&cw::interface::graphical::object::model::change_animation), "change_animation");
 /*		chai->add(chaiscript::fun(&cw::interface::graphical::object::model::set_origin), "set_origin");

@@ -1,10 +1,10 @@
 return fun(origin, size, on_trigger){
     var button := stage.create_actor()
 
-    button.add_model("button", origin, size, "green_button.json")
-
     button.set_origin(origin)
     button.set_size(size)
+
+    button.add_model("button", origin, size, "green_button.json")
 
     var mouse_down = false
 

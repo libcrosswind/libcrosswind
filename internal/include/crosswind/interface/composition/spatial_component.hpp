@@ -14,7 +14,7 @@ namespace composition{
 
 class cw::interface::composition::spatial_component{
 public:
-	spatial_component(): origin(0.0f, 0.0f, 0.0f), size(0.0f, 0.0f, 0.0f), alpha(1.0f){
+	spatial_component(): origin(0.0f, 0.0f, 0.0f), size(1.0f, 1.0f, 1.0f), alpha(1.0f){
 	
 	}
 

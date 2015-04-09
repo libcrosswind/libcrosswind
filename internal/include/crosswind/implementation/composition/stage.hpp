@@ -5,6 +5,8 @@
 #include <functional>
 #include <string>
 
+#include <glm/glm.hpp>
+
 #include <crosswind/implementation/composition/core.hpp>
 #include <crosswind/implementation/composition/scene.hpp>
 #include <crosswind/implementation/composition/camera.hpp>

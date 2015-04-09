@@ -2,8 +2,6 @@
 
 #include <functional>
 
-#include <crosswind/interface/composition/named_component.hpp>
-
 namespace cw{
 namespace interface{
 namespace composition{
