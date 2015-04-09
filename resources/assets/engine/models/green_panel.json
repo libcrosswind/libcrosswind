@@ -6,7 +6,7 @@
 
 	"sprites":
 	{
-		"green_panel" :{ "widget_atlas"  : [0.00, 0.806640625, 0.1953125, 1.00] }
+		"green_panel" :{ "widget_atlas"  : [0.00, 0.25, 0.75, 0.625] }
 	},
 
 	"animations":
