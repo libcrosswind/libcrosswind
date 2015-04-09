@@ -4,9 +4,12 @@
 #include <stdexcept>
 #include <functional>
 
-#include <crosswind/interface/core.hpp>
+#include <crosswind/interface/composition/named_component.hpp>
+#include <crosswind/interface/composition/logic_component.hpp>
 
+#include <crosswind/implementation/composition/core.hpp>
 #include <crosswind/implementation/composition/actor.hpp>
+#include <crosswind/implementation/composition/group.hpp>
 #include <crosswind/implementation/composition/camera.hpp>
 
 namespace cw{
@@ -19,88 +22,103 @@ namespace composition{
 }// namespace implementation
 }// namespace cw
 
-class cw::implementation::composition::scene{
-	typedef std::map<std::string, std::shared_ptr<actor> > actor_map;
-	typedef std::map<std::string, std::shared_ptr<interface::composition::camera> > camera_map;
+class cw::implementation::composition::scene: public cw::interface::composition::named_component,
+											  public cw::interface::composition::logic_component{
 	typedef std::map<std::string, std::vector<std::pair<glm::vec3, glm::vec3> > > actor_collision_map;
+	typedef std::map<std::string, actor_collision_map> scene_collision_map;
+	friend class stage;
 
 public:
 	scene(){
 		collisions["undefined"] = actor_collision_map();
-		init = [](){
-
-		};
-
-		deinit = [](){
-
-		};
-
-		logic = [](const float& delta){
-
-		};
 	}
 
-	void construct(const std::function<void()>& f_init,
-	               const std::function<void()>& f_deinit,
-	               const std::function<void(const float&)>& f_logic){
-		init = f_init;
-		deinit = f_deinit;
-		logic = f_logic;
+	void add_camera(const std::string& camera_name, std::shared_ptr<camera> camera){
+		if(camera_map.empty()){
+			camera_map["current"] = camera;
+		}
+		camera_map[camera_name] = camera;
 	}
 
-	std::function<void()> init;
-	std::function<void()> deinit;
-	std::function<void(const float&)> logic;
+	auto get_camera(const std::string& camera_name){
 
+		if(camera_map.find(camera_name) != camera_map.end()){
+			return camera_map[camera_name];
+		} else {
+			throw std::runtime_error("Could not find: " + camera_name);
+		}
+	}
 
-public:
-	virtual void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
+	void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor){
 		actor->set_name(actor_name);
-		actors[actor_name] = actor;
+		actor_map[actor_name] = actor;
 	}
 
-	virtual std::shared_ptr<actor> get_actor(const std::string& actor_name){
-		if(actors.find(actor_name) != actors.end()){
-			return actors[actor_name];
+	auto get_actor(const std::string& actor_name){
+		if(actor_map.find(actor_name) != actor_map.end()){
+			return actor_map[actor_name];
 		} else {
 			throw std::runtime_error("Could not find: " + actor_name);
 		}
 	}
 
-	virtual void remove_actor(const std::string& actor_name){
-		if(actors.find(actor_name) != actors.end()){
-			actors.erase(actor_name);
+	void remove_actor(const std::string& actor_name){
+		if(actor_map.find(actor_name) != actor_map.end()){
+			actor_map.erase(actor_name);
 		} else {
 			throw std::runtime_error(actor_name + " does not exist or was already removed");
 		}
 	}
 
-	virtual void load_actor(const std::string& actor_name){
+	void load_actor(const std::string& actor_name){
 		get_actor(actor_name)->init();
 	}
 
-	virtual void unload_actor(const std::string& actor_name){
+	void unload_actor(const std::string& actor_name){
 		get_actor(actor_name)->deinit();
 	}
 
-
-private:
-	virtual void handle_events(){
-		std::vector<std::pair<bool, std::function<void()> > > continuous_events;
-
-		for(auto& event_mapping : event_queue){
-
-			if(event_mapping.first == true){
-				continuous_events.push_back(event_mapping);
-			}
-
-			event_mapping.second();
-		}
-
-		event_queue.clear();
-		event_queue.insert(event_queue.end(), continuous_events.begin(), continuous_events.end());
+	void add_group(const std::string& group_name, std::shared_ptr<group> group){
+		group->set_name(group_name);
+		group_map[group_name] = group;
 	}
-	
+
+	auto get_group(const std::string& group_name){
+		if(group_map.find(group_name) != group_map.end()){
+			return group_map[group_name];
+		} else {
+			throw std::runtime_error("Could not find: " + group_name);
+		}
+	}
+
+	void remove_group(const std::string& group_name){
+		if(group_map.find(group_name) != group_map.end()){
+			group_map.erase(group_name);
+		} else {
+			throw std::runtime_error(group_name + " does not exist or was already removed");
+		}
+	}
+
+	void load_group(const std::string& group_name){
+		get_group(group_name)->init();
+	}
+
+	void unload_group(const std::string& group_name){
+		get_group(group_name)->deinit();
+	}
+
+	auto& get_camera_map(){
+		return camera_map;
+	}
+
+	auto& get_group_map(){
+		return group_map;
+	}
+
+	auto& get_actor_map(){
+		return actor_map;
+	}
+
 public:
 	virtual void check_collisions(){
 
@@ -132,8 +150,7 @@ public:
 		}
 	}
 
-
-	actor_collision_map& get_collision_map(const std::string& actor_a){
+	auto& get_collision_map(const std::string& actor_a){
 
 		if(collisions.find(actor_a) != collisions.end()){
 			return collisions[actor_a];
@@ -143,20 +160,43 @@ public:
 
 	}
 
+private:
+	virtual void handle_events(){
+		std::vector<std::pair<bool, std::function<void()> > > continuous_events;
 
-	typedef std::map<std::string, actor_collision_map> scene_collision_map;
+		for(auto& event_mapping : event_queue){
 
-	scene_collision_map collisions;
+			if(event_mapping.first == true){
+				continuous_events.push_back(event_mapping);
+			}
+
+			event_mapping.second();
+		}
+
+		event_queue.clear();
+		event_queue.insert(event_queue.end(), continuous_events.begin(), continuous_events.end());
+	}
+
+public:
+	void post_event(const std::function<void()>& event, const bool& continuous = false){
+		event_queue.push_back(std::make_pair(continuous, event));
+	}
 
 	virtual void update(const float& delta){
 		handle_events();
 		check_collisions();
 
-		for(auto& camera: cameras){
+		for(auto& camera : camera_map){
            camera.second->update(delta);
         }
 
-		for(auto& actor: actors){
+		for(auto& group : group_map){
+			for(auto& actor : group.second->get_actor_map()){
+				actor.second->update(delta);
+			}
+		}
+
+		for(auto& actor : actor_map){
            actor.second->update(delta);
         }
 
@@ -165,52 +205,10 @@ public:
 		collisions.clear();
 	}
 
-	void post_event(const std::function<void()>& event, const bool& continuous = false){
-		event_queue.push_back(std::make_pair(continuous, event));
-	}
+public:
+	std::shared_ptr<core> core;
 
-	virtual void set_actor_map(const actor_map& new_actor_map){
-		actors = new_actor_map;
-	}
-
-	virtual actor_map& get_actor_map(){
-		return actors;
-	}
-
-	virtual void set_camera_map(const camera_map& new_camera_map){
-		cameras = new_camera_map;
-	}
-
-	virtual camera_map& get_camera_map(){
-		return cameras;
-	}
-
-	virtual std::shared_ptr<interface::composition::camera> create_camera(const glm::i32vec2& f_size){
-		return std::make_shared<camera>(f_size);
-	}
-
-	virtual void set_camera(const std::string& camera_name, std::shared_ptr<interface::composition::camera> camera){
-		if(cameras.empty()){
-			cameras["current"] = camera;
-		}
-		cameras[camera_name] = camera;
-	}
-
-	virtual std::shared_ptr<interface::composition::camera> get_camera(const std::string& camera_name){
-
-		if(cameras.find(camera_name) != cameras.end()){
-			return cameras[camera_name];
-		} else {
-			throw std::runtime_error("Could not find: " + camera_name);
-		}
-
-	}
-
-	virtual void set_name(const std::string& new_name){ name = new_name; }
-	virtual std::string get_name(){ return name; }
-
-	std::shared_ptr<interface::composition::core> core;
-
+public:
 	void set_bool(const std::string item_name, const bool& value){
 		conditions[item_name] = value;
 	}
@@ -235,15 +233,17 @@ public:
 		return int_values[item_name];
 	}
 
+
+private:
 	std::map<std::string, bool> conditions;
 	std::map<std::string, float> float_values;
 	std::map<std::string, int> int_values;
 
-protected:
-    std::string name;
-	actor_map actors;
-
-	camera_map cameras;
+	std::map<std::string, std::shared_ptr<actor> > actor_map;
+	std::map<std::string, std::shared_ptr<group> > group_map;
+	std::map<std::string, std::shared_ptr<camera> > camera_map;
 	std::vector<std::pair<bool, std::function<void()> > > event_queue;
+	scene_collision_map collisions;
+
 
 };// class stage

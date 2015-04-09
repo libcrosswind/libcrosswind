@@ -11,16 +11,16 @@
 #include <crosswind/implementation/simulation/physics.hpp>
 
 namespace cw{
-namespace interface{
+namespace implementation{
 namespace composition{
 
 	class core;
 
 }// namespace composition
-}// namespace interface
+}// namespace implementation
 }// namespace cw
 
-class cw::interface::composition::core{
+class cw::implementation::composition::core{
 public:
 	core(interface::settings engine_settings = interface::settings()){
 

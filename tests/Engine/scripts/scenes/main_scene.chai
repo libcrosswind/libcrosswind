@@ -10,6 +10,11 @@ var init = fun[main_scene](){
     var button := use("scripts/actors/green_button.chai")(vec3(0.0f, 0.0f, 0.0f), vec3(190.0f, 100.0f, 0.0f), fun(){
         puts("Trigger\n")
     })
+
+    var fb := use("scripts/actors/file_browser.chai")(vec3(0.0f, 0.0f, 0.0f), vec3(190.0f, 100.0f, 0.0f), fun(){
+        puts("Trigger\n")
+    })
+
 //    var texture := use("scripts/actors/glass_panel.chai")(vec3(120.0f, 0.0f, 0.0f), vec3(120.0f, 120.0f, 0.0f))
 //    var timeline := use("scripts/actors/glass_panel.chai")(vec3(120.0f, 0.0f, 0.0f), vec3(120.0f, 120.0f, 0.0f))
 
@@ -19,6 +24,10 @@ var init = fun[main_scene](){
 //    main_scene.add_actor("canvas", canvas)
 
     main_scene.load_actor("button")
+
+    main_scene.add_group("fb", fb)
+
+    main_scene.load_group("fb", fb)
 //    main_scene.load_actor("properties_panel")
 //    main_scene.load_actor("canvas")
 }

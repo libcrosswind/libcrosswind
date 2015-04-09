@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 
 #include <crosswind/interface/settings.hpp>
-#include <crosswind/interface/core.hpp>
+#include <crosswind/implementation/composition/core.hpp>
 #include <crosswind/implementation/composition/stage.hpp>
 
 namespace cw{
@@ -20,8 +20,8 @@ class cw::engine{
 public:
 	engine(interface::settings engine_settings = interface::settings()){
 
-        core    = std::make_shared<interface::composition::core>(engine_settings);
-        stage   = std::make_shared<implementation::composition::stage>(core);
+        core    = std::make_shared<class implementation::composition::core>(engine_settings);
+        stage   = std::make_shared<class implementation::composition::stage>(core);
 
 	}
 
@@ -59,6 +59,14 @@ private:
         core->video->renderer->set_uniform_matrix("projection_matrix",
                 stage->get_scene("current")->get_camera("current")->get_camera_matrix());
 
+        for(auto& group_mapping : stage->get_scene("current")->get_group_map()){
+            for(auto& actor_mapping : group_mapping.second->get_actor_map()){
+                for(auto& model_mapping : actor_mapping.second->get_model_map()){
+                    core->video->renderer->upload(model_mapping.second->get_render_sprite_list());
+                }
+            }
+        }
+
         for(auto& actor_mapping: stage->get_scene("current")->get_actor_map()){
             for(auto& model_mapping : actor_mapping.second->get_model_map()){
                 core->video->renderer->upload(model_mapping.second->get_render_sprite_list());
@@ -73,7 +81,7 @@ private:
     }
 
 public:
-    std::shared_ptr< interface::composition::core  > core;
-    std::shared_ptr< interface::composition::stage > stage;
+    std::shared_ptr<implementation::composition::core>  core;
+    std::shared_ptr<implementation::composition::stage> stage;
 
 };// class engine

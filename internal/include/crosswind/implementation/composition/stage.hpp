@@ -1,10 +1,14 @@
 #pragma once
 
 #include <stdexcept>
+#include <memory>
+#include <functional>
+#include <string>
 
-#include <crosswind/interface/core.hpp>
-#include <crosswind/interface/composition/stage.hpp>
+#include <crosswind/implementation/composition/core.hpp>
 #include <crosswind/implementation/composition/scene.hpp>
+#include <crosswind/implementation/composition/camera.hpp>
+#include <crosswind/implementation/composition/actor.hpp>
 #include <crosswind/implementation/composition/group.hpp>
 
 namespace cw{
@@ -17,13 +21,12 @@ namespace composition{
 }// namespace implementation
 }// namespace cw
 
-class cw::implementation::composition::stage: public cw::interface::composition::stage{
+class cw::implementation::composition::stage{
 public:
-	stage(std::shared_ptr<interface::composition::core> c_core): interface::composition::stage(c_core){
-
+	stage(std::shared_ptr<core> c_core): core(c_core){
 	}
 
-	virtual void handle_events(){
+	void handle_events(){
 
 		for(auto& event : event_queue){
 			event();
@@ -36,7 +39,7 @@ public:
 		event_queue.push_back(event);
 	}
 
-	virtual scene_ptr create_scene(){
+	auto create_scene(){
 
 		auto scene = std::make_shared<class scene>();
 		scene->core = core;
@@ -44,89 +47,86 @@ public:
 
 	}
 
-	std::shared_ptr<actor> create_actor(){
+	auto create_camera(const glm::i32vec2& f_size){
+		return std::make_shared<class camera>(f_size);
+	}
+
+	auto create_actor(){
 		auto actor = std::make_shared<class actor>();
 		actor->core = core;
 		return actor;
 	}
 
-	std::shared_ptr<group> create_group(){
+	auto create_group(){
 		auto group = std::make_shared<class group>();
-		//group->core = core;
+		group->core = core;
 		return group;
 	}
 
-	virtual void add_scene(const std::string& scene_name, scene_ptr scene){
+	void add_scene(const std::string& scene_name, std::shared_ptr<scene> scene){
 
 		post_event([this, scene, scene_name](){
 			scene->set_name(scene_name);
 
-			if(scenes.empty()){
-				this->scenes["current"] = scene;
+			if(scene_map.empty()){
+				this->scene_map["current"] = scene;
 			}
 
-			this->scenes[scene_name] = scene;
+			this->scene_map[scene_name] = scene;
 		});
 
-	}
+	}	
 
-	virtual scene_ptr get_scene(const std::string& scene_name){
-		if(scenes.find(scene_name) != scenes.end()){
-			return scenes[scene_name];
+	auto get_scene(const std::string& scene_name){
+		if(scene_map.find(scene_name) != scene_map.end()){
+			return scene_map[scene_name];
 		} else {
 			throw std::runtime_error("Could not find: " + scene_name);
 		}
 
 	}
 
-
-	virtual void load_scene(const std::string& name){
-
-		post_event([this, name](){
-		    this->scenes[name]->init();
-		});
-
-	}
-
-	virtual void unload_scene(const std::string& name){
-
-		post_event([this, name](){
-		    this->scenes[name]->deinit();
-		});
-
-	}
-
-
-	virtual void swap_scene(const std::string& previous_scene, const std::string& new_scene){
-
-		post_event([this, previous_scene, new_scene](){
-		    scenes[previous_scene] = scenes[new_scene];
-		});
-
-	}
-
-	virtual void remove_scene(const std::string& scene_name){
+	void remove_scene(const std::string& scene_name){
 
 		post_event([this, scene_name](){
-		    scenes.erase(scene_name);
+			scene_map.erase(scene_name);
 		});
 
 	}
 
-	virtual void update(const float& dt){
+	void load_scene(const std::string& name){
+
+		post_event([this, name](){
+		    this->scene_map[name]->init();
+		});
+
+	}
+
+	void unload_scene(const std::string& name){
+
+		post_event([this, name](){
+		    this->scene_map[name]->deinit();
+		});
+
+	}
+
+	void swap_scene(const std::string& previous_scene, const std::string& new_scene){
+
+		post_event([this, previous_scene, new_scene](){
+			scene_map[previous_scene] = scene_map[new_scene];
+		});
+
+	}
+
+	void update(const float& dt){
 		handle_events();
 
-		scenes["current"]->update(dt);
+		scene_map["current"]->update(dt);
 	}
 
-	virtual void set_scene_map(const scene_map& new_scene_map){
-		scenes = new_scene_map;
-	}
+private:
+	std::shared_ptr<core> core;
+	std::map<std::string, std::shared_ptr<scene> > scene_map;
+	std::vector<std::function<void()> > event_queue;
 
-	virtual scene_map& get_scene_map(){
-		return scenes;
-	}
-
-
-
-};// class scene
+};// class stage

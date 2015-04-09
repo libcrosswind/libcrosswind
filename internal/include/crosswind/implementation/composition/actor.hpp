@@ -5,8 +5,11 @@
 #include <string>
 #include <functional>
 
-#include <crosswind/interface/core.hpp>
+#include <crosswind/interface/composition/named_component.hpp>
+#include <crosswind/interface/composition/spatial_component.hpp>
+#include <crosswind/interface/composition/logic_component.hpp>
 
+#include <crosswind/implementation/composition/core.hpp>
 #include <crosswind/interface/graphical/object/model.hpp>
 #include <crosswind/interface/simulation/detail/character.hpp>
 #include <crosswind/interface/simulation/detail/body.hpp>
@@ -21,27 +24,17 @@ namespace composition{
 }// namespace implementation
 }// namespace cw
 
-class cw::implementation::composition::actor{
-	typedef std::map<std::string, std::shared_ptr<interface::graphical::object::model> >       model_map;
+class cw::implementation::composition::actor: public cw::interface::composition::named_component,
+											  public cw::interface::composition::spatial_component,
+											  public cw::interface::composition::logic_component{
 	typedef std::map<std::string, std::shared_ptr<interface::simulation::detail::body> >       body_map;
 	typedef std::map<std::string, std::shared_ptr<interface::simulation::detail::character> >  character_map;
 public:
-	actor(): name("undefined"){
-		alpha = 1.0f;
-		init = [](){
+	actor(){
 
-		};
-
-		deinit = [](){
-
-		};
-
-		logic = [](const float& delta){
-
-		};
 	}
 
-	virtual ~actor(){
+	~actor(){
 
 		for(auto& body_mapping: bodies){
 			core->physics->remove_rigid_body(body_mapping.second);
@@ -52,51 +45,27 @@ public:
 		}
 	}
 
-	void construct(const std::function<void()>& f_init,
-	               const std::function<void()>& f_deinit,
-	               const std::function<void(const float&)>& f_logic){
-		init = f_init;
-		deinit = f_deinit;
-		logic = f_logic;
-	}
-
-	std::function<void()> init;
-	std::function<void()> deinit;
-	std::function<void(const float&)> logic;
-
-	virtual void set_name(const std::string& f_name){
-		name = f_name;
-	}
-
-	virtual std::string& get_name(){
-		return name;
-	}
-
-	virtual void set_size(const glm::vec3& f_size){
-		size = f_size;
-		for (auto &model : models) {
-			model.second->set_size(size);
+	virtual void set_origin(const glm::vec3& f_origin) override {
+		for (auto &model : model_map) {
+			auto translated_origin = model.second->get_origin() + f_origin - origin;
+			model.second->set_origin(translated_origin);
 		}
-	}
 
-	virtual glm::vec3 get_size(){
-		return size;
-	}
-
-	virtual void set_origin(const glm::vec3& f_origin) {
 		origin = f_origin;
-		for (auto &model : models) {
-			model.second->set_origin(origin);
+	}
+
+	virtual void set_size(const glm::vec3& f_size) override {
+		for (auto &model : model_map) {
+			auto percented_size = model.second->get_size() * f_size / size;
+			model.second->set_size(percented_size);
 		}
+
+		size = f_size;
 	}
 
-	virtual glm::vec3 get_origin(){
-		return origin;
-	}
-
-	virtual void set_alpha(const float& f_alpha){
+	virtual void set_alpha(const float& f_alpha) override {
 		alpha = f_alpha;
-		for(auto& model : models){
+		for(auto& model : model_map){
 			for(auto& sprite : model.second->get_animations()){
 				for(auto& frame : sprite.second->frames){
 					for(auto& vertex : frame->get_vertices()){
@@ -107,25 +76,21 @@ public:
 		}
 	}
 
-	virtual float get_alpha(){
-		return alpha;
-	}
-
-	virtual void update(const float& dt){
-		for(auto& model_mapping : models){
+	void update(const float& dt){
+		for(auto& model_mapping : model_map){
 			model_mapping.second->update(dt);
 		}
-		logic(dt);
 
+		logic(dt);
 	}
 
-	virtual void add_model(const std::string& model_name,
-			               const glm::vec3& origin,
-			               const glm::vec3& size,
-	                       const std::string& template_file){
+	void add_model(const std::string& model_name,
+				   const glm::vec3& origin,
+				   const glm::vec3& size,
+				   const std::string& template_file){
 
-		if(models.find(model_name) == models.end()){
-			models[model_name] = core->video->load_model(origin,
+		if(model_map.find(model_name) == model_map.end()){
+			model_map[model_name] = core->video->load_model(origin,
 					size,
 					core->filesystem->get_file_path(template_file));
 
@@ -135,17 +100,17 @@ public:
 
 	}
 
-	virtual std::shared_ptr<interface::graphical::object::model> get_model(const std::string& model_name){
-		if(models.find(model_name) != models.end()){
-			return models[model_name];
+	auto get_model(const std::string& model_name){
+		if(model_map.find(model_name) != model_map.end()){
+			return model_map[model_name];
 		} else {
 			throw std::runtime_error(model_name + " does not exist");
 		}
 	}
 
-	virtual void remove_model(const std::string& model_name){
-		if(models.find(model_name) != models.end()){
-			models.erase(model_name);
+	void remove_model(const std::string& model_name){
+		if(model_map.find(model_name) != model_map.end()){
+			model_map.erase(model_name);
 		} else {
 			throw std::runtime_error(model_name + " does not exist or was already removed");
 		}
@@ -170,7 +135,7 @@ public:
 
 	}
 
-	virtual std::shared_ptr<interface::simulation::detail::body> get_rigid_body(const std::string& body_name){
+	auto get_rigid_body(const std::string& body_name){
 
 		if(bodies.find(body_name) != bodies.end()){
 			return bodies[body_name];
@@ -191,10 +156,10 @@ public:
 
 	}
 
-	virtual void add_character(const std::string& character_name,
-							   const glm::vec3& origin,
-							   const glm::vec2& size,
-			                   const float& step_height){
+	void add_character(const std::string& character_name,
+					   const glm::vec3& origin,
+					   const glm::vec2& size,
+					   const float& step_height){
 
 		if(characters.find(character_name) == characters.end()){
 			characters[character_name]  = core->physics->create_character(origin, size, step_height);
@@ -206,7 +171,7 @@ public:
 
 	}
 
-	virtual std::shared_ptr<interface::simulation::detail::character> get_character(const std::string& character_name){
+	auto get_character(const std::string& character_name){
 
 		if(characters.find(character_name) != characters.end()){
 			return characters[character_name];
@@ -216,7 +181,7 @@ public:
 
 	}
 
-	virtual void remove_character(const std::string& character_name){
+	void remove_character(const std::string& character_name){
 
 		if(characters.find(character_name) != characters.end()){
 			  core->physics->remove_character(characters[character_name]);
@@ -227,21 +192,16 @@ public:
 
 	}
 
-	virtual model_map& get_model_map(){
-		return models;
+	auto& get_model_map(){
+		return model_map;
 	}
 
-	std::shared_ptr<interface::composition::core> core;
+	std::shared_ptr<core> core;
 	std::map<std::string, bool> conditions;
 
 private:
-	model_map       models;
+	std::map<std::string, std::shared_ptr<interface::graphical::object::model> > model_map;
 	body_map        bodies;
 	character_map   characters;
-
-	std::string name;
-	glm::vec3 size;
-	glm::vec3 origin;
-	float alpha;
 
 };// class actor

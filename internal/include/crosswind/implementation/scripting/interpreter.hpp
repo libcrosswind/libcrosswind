@@ -101,16 +101,16 @@ public:
 		//member functions
 
 		// filesystem
-		chai->add(chaiscript::fun(&cw::interface::composition::core::filesystem), "filesystem");
+		chai->add(chaiscript::fun(&cw::implementation::composition::core::filesystem), "filesystem");
 		chai->add(chaiscript::fun(&cw::interface::platform::filesystem::add_directory), "add_directory");
 		chai->add(chaiscript::fun(&cw::interface::platform::filesystem::get_file_path), "get_file_path");
 
-		chai->add(chaiscript::fun(&cw::interface::composition::core::input), "input");
+		chai->add(chaiscript::fun(&cw::implementation::composition::core::input), "input");
 		chai->add(chaiscript::fun(&cw::interface::platform::input::is_key_down), "is_key_down");
 		chai->add(chaiscript::fun(&cw::interface::platform::input::get_mouse_coordinates), "get_mouse_coordinates");
 
 		// video
-		chai->add(chaiscript::fun(&cw::interface::composition::core::video), "video");
+		chai->add(chaiscript::fun(&cw::implementation::composition::core::video), "video");
 		chai->add(chaiscript::fun(&cw::interface::graphical::video::set_window_icon), "set_window_icon");
 		chai->add(chaiscript::fun(&cw::interface::graphical::video::load_model), "load_model");
 		chai->add(chaiscript::fun(&cw::interface::graphical::video::window), "window");
@@ -126,15 +126,16 @@ public:
 		chai->add(chaiscript::fun(&cw::interface::sound::mixer::play_effect), "play_effect");*/
 
 		// stage
-		chai->add(chaiscript::fun(&cw::interface::composition::stage::create_scene), "create_scene");
-		chai->add(chaiscript::fun(&cw::interface::composition::stage::create_actor), "create_actor");
-		chai->add(chaiscript::fun(&cw::interface::composition::stage::create_group), "create_group");
-		chai->add(chaiscript::fun(&cw::interface::composition::stage::add_scene), "add_scene");
-		chai->add(chaiscript::fun(&cw::interface::composition::stage::get_scene), "get_scene");
+		chai->add(chaiscript::fun(&cw::implementation::composition::stage::create_scene), "create_scene");
+		chai->add(chaiscript::fun(&cw::implementation::composition::stage::create_camera), "create_camera");
+		chai->add(chaiscript::fun(&cw::implementation::composition::stage::create_actor), "create_actor");
+		chai->add(chaiscript::fun(&cw::implementation::composition::stage::create_group), "create_group");
+		chai->add(chaiscript::fun(&cw::implementation::composition::stage::add_scene), "add_scene");
+		chai->add(chaiscript::fun(&cw::implementation::composition::stage::get_scene), "get_scene");
 
 //		chai->add(chaiscript::fun(&cw::interface::composition::stage::remove_scene), "remove_scene");
 //		chai->add(chaiscript::fun(&cw::interface::composition::stage::swap_scene), "swap_scene");
-		chai->add(chaiscript::fun(&cw::interface::composition::stage::load_scene), "load_scene");
+		chai->add(chaiscript::fun(&cw::implementation::composition::stage::load_scene), "load_scene");
 //		chai->add(chaiscript::fun(&cw::interface::composition::stage::unload_scene), "unload_scene");
 
 		// scene
@@ -148,19 +149,27 @@ public:
 		chai->add(chaiscript::fun(&cw::interface::composition::scene::set_int), "set_int");
 		chai->add(chaiscript::fun(&cw::interface::composition::scene::get_int), "get_int");
 */
-		chai->add(chaiscript::fun(&cw::implementation::composition::scene::load_actor), "load_actor");
-/*		chai->add(chaiscript::fun(&cw::interface::composition::scene::unload_actor), "unload_actor");
-*/
+		chai->add(chaiscript::fun(&cw::implementation::composition::scene::add_camera), "add_camera");
+		chai->add(chaiscript::fun(&cw::implementation::composition::scene::get_camera), "get_camera");
 		chai->add(chaiscript::fun(&cw::implementation::composition::scene::add_actor), "add_actor");
 /*		chai->add(chaiscript::fun(&cw::interface::composition::scene::get_actor), "get_actor");
 		chai->add(chaiscript::fun(&cw::interface::composition::scene::remove_actor), "remove_actor");*/
-		chai->add(chaiscript::fun(&cw::implementation::composition::scene::create_camera), "create_camera");
-		chai->add(chaiscript::fun(&cw::implementation::composition::scene::set_camera), "set_camera");
-		chai->add(chaiscript::fun(&cw::implementation::composition::scene::get_camera), "get_camera");
+		chai->add(chaiscript::fun(&cw::implementation::composition::scene::load_actor), "load_actor");
+/*		chai->add(chaiscript::fun(&cw::interface::composition::scene::unload_actor), "unload_actor");
+*/
+
+
 
 		// camera
 //		chai->add(chaiscript::fun(&cw::interface::composition::camera::set_position), "set_position");
-		chai->add(chaiscript::fun(&cw::interface::composition::camera::convert_screen_to_world), "convert_screen_to_world");
+		chai->add(chaiscript::fun(&cw::implementation::composition::camera::convert_screen_to_world), "convert_screen_to_world");
+
+		// group
+		chai->add(chaiscript::fun(&cw::implementation::composition::group::construct), "construct");
+		chai->add(chaiscript::fun(&cw::implementation::composition::group::add_actor), "add_actor");
+		chai->add(chaiscript::fun(&cw::implementation::composition::group::get_actor), "get_actor");
+		chai->add(chaiscript::fun(&cw::implementation::composition::group::remove_actor), "remove_actor");
+
 /*
 		// actor
 */		chai->add(chaiscript::fun(&cw::implementation::composition::actor::construct), "construct");
