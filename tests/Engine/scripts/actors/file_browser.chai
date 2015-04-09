@@ -1,0 +1,18 @@
+return fun(origin, size, on_file_chosen){
+
+    var file_browser = stage.create_actor()
+
+    file_browser.add_model("panel", origin, size, "green_panel.json")
+
+    var button_size := vec3(size.x/10.0f, size.y/10.0f, 0.0f)
+    var ok_button_origin = vec3(origin.x + size.x/2.0f/5.0f, origin.y - size.y/2.0f/5.0f, 0.0f)
+
+    var ok_button     := use("scripts/actors/green_button.chai")(ok_button_origin, button_size, fun(){})
+    //var cancel_button := use("scripts/actors/green_button.chai")(fun(){})
+
+
+    button.set_origin(origin)
+    button.set_size(size)
+
+    return file_browser
+}

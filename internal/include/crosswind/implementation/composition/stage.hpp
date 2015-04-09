@@ -5,6 +5,7 @@
 #include <crosswind/interface/core.hpp>
 #include <crosswind/interface/composition/stage.hpp>
 #include <crosswind/implementation/composition/scene.hpp>
+#include <crosswind/implementation/composition/group.hpp>
 
 namespace cw{
 namespace implementation{
@@ -47,6 +48,12 @@ public:
 		auto actor = std::make_shared<class actor>();
 		actor->core = core;
 		return actor;
+	}
+
+	std::shared_ptr<group> create_group(){
+		auto group = std::make_shared<class group>();
+		//group->core = core;
+		return group;
 	}
 
 	virtual void add_scene(const std::string& scene_name, scene_ptr scene){

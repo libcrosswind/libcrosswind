@@ -6,6 +6,7 @@
 #include <crosswind/interface/core.hpp>
 #include <crosswind/implementation/composition/scene.hpp>
 #include <crosswind/implementation/composition/actor.hpp>
+#include <crosswind/implementation/composition/group.hpp>
 
 namespace cw{
 namespace interface{
@@ -21,6 +22,8 @@ class cw::interface::composition::stage{
 protected:
 	typedef std::shared_ptr<implementation::composition::scene> scene_ptr;
 	typedef std::shared_ptr<implementation::composition::actor> actor_ptr;
+	typedef std::shared_ptr<implementation::composition::group> group_ptr;
+
 	typedef std::map<std::string, scene_ptr> scene_map;
 public:
 	stage(std::shared_ptr<interface::composition::core> c_core): core(c_core){
@@ -31,6 +34,7 @@ public:
 
 	virtual scene_ptr create_scene() = 0;
 	virtual actor_ptr create_actor() = 0;
+	virtual group_ptr create_group() = 0;
 
 	virtual void load_scene(const std::string& name) = 0;
 	virtual void unload_scene(const std::string& name) = 0;

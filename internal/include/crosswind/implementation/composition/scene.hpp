@@ -60,13 +60,11 @@ public:
 	}
 
 	virtual std::shared_ptr<actor> get_actor(const std::string& actor_name){
-
 		if(actors.find(actor_name) != actors.end()){
 			return actors[actor_name];
 		} else {
 			throw std::runtime_error("Could not find: " + actor_name);
 		}
-
 	}
 
 	virtual void remove_actor(const std::string& actor_name){

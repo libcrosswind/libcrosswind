@@ -128,6 +128,7 @@ public:
 		// stage
 		chai->add(chaiscript::fun(&cw::interface::composition::stage::create_scene), "create_scene");
 		chai->add(chaiscript::fun(&cw::interface::composition::stage::create_actor), "create_actor");
+		chai->add(chaiscript::fun(&cw::interface::composition::stage::create_group), "create_group");
 		chai->add(chaiscript::fun(&cw::interface::composition::stage::add_scene), "add_scene");
 		chai->add(chaiscript::fun(&cw::interface::composition::stage::get_scene), "get_scene");
 

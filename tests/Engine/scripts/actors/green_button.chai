@@ -1,22 +1,17 @@
-return fun(origin, size){
+return fun(origin, size, on_trigger){
     var button := stage.create_actor()
 
-    button.add_model("button",
-        origin,
-        size,
-        "green_button.json")
+    button.add_model("button", origin, size, "green_button.json")
 
     button.set_origin(origin)
     button.set_size(size)
 
-    button.construct(fun(){}, fun(){}, fun[button, core](delta){
+    var mouse_down = false
+
+    button.construct(fun(){}, fun(){}, fun[button, core, mouse_down, on_trigger](delta){
 
         var current_camera := stage.get_scene("current").get_camera("current")
-        var mouse_coordinates := core.input.get_mouse_coordinates()
-        var m_x := mouse_coordinates.x
-        var m_y := mouse_coordinates.y
-
-        var world_coordinates := current_camera.convert_screen_to_world(mouse_coordinates)
+        var world_coordinates := current_camera.convert_screen_to_world(core.input.get_mouse_coordinates())
 
         var mouse_x = world_coordinates.x
         var mouse_y = world_coordinates.y
@@ -30,18 +25,23 @@ return fun(origin, size){
         if(mouse_x >= x - w / 2.0f && mouse_x <= x + w / 2.0f && mouse_y >= y - h / 2.0f && mouse_y <= y + h / 2.0f){
 
             if(core.input.is_key_down("mouse_left")){
-                puts("Mouse down\n")
-                button.get_model("button").change_animation("button_on")
-            } else {
-                puts("Mouse over\n")
+                if(!mouse_down){
+                    button.get_model("button").change_animation("button_on")
+                    mouse_down = true
+                }
 
-                button.get_model("button").change_animation("button_off")
+            } else {
+                if(mouse_down){
+                    button.get_model("button").change_animation("button_off")
+                    mouse_down = false
+                    on_trigger()
+                }
             }
         } else {
+            mouse_down = false
             button.get_model("button").change_animation("button_off")
         }
     });
 
     return button
 }
-
