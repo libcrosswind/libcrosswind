@@ -2,19 +2,31 @@ return fun(origin, size, on_file_choosen){
 
     var file_browser := stage.create_group()
 
+    file_browser.set_origin(origin)
+    file_browser.set_size(size)
+
     var panel := stage.create_actor()
 
     panel.add_model("panel", origin, size, "green_panel.json")
 
-    var button_size := vec3(size.x/10.0f, size.y/10.0f, 0.0f)
-    var ok_button_origin := vec3(origin.x + size.x/2.0f/5.0f, origin.y - size.y/2.0f/5.0f, 0.0f)
+    var button_size := vec3(size.x/5.0f, size.y/10.0f, 0.0f)
+    var ok_origin_x := origin.x + button_size.x / 2.0f
+    var ok_origin_y := origin.y - size.y/2.0f + button_size.y
 
-    var ok_button     := use("scripts/actors/green_button.chai")(ok_button_origin, button_size, on_file_choosen)
-    //var cancel_button := use("scripts/actors/green_button.chai")(fun(){})
+    var ok_origin := vec3(ok_origin_x, ok_origin_y, 0.0f)
+
+    var cancel_origin_x := ok_origin.x + button_size.x
+    var cancel_origin_y := ok_origin.y
+
+    var cancel_origin := vec3(cancel_origin_x, cancel_origin_y, 0.0f)
+
+    var ok_button     := use("scripts/actors/green_button.chai")(ok_origin, button_size, on_file_choosen)
+    var cancel_button := use("scripts/actors/green_button.chai")(cancel_origin, button_size, fun(){ })
 
 
     file_browser.add_actor("panel", panel)
     file_browser.add_actor("ok_button", ok_button)
+    file_browser.add_actor("cancel_button", cancel_button)
 
     file_browser.construct(fun[file_browser](){}, fun(){}, fun(delta){
 

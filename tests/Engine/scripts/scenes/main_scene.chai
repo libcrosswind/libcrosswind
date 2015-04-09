@@ -1,14 +1,12 @@
 var main_scene := stage.create_scene()
 
 var init = fun[main_scene](){
-    auto window_size := core.video.window.get_size()
-    auto main_camera := stage.create_camera(window_size)
+    var window_size := core.video.window.get_size()
+
+    var main_camera := stage.create_camera(window_size)
     main_scene.add_camera("main_camera", main_camera)
 
-
-    var size := core.video.window.get_size()
-
-    var fb := use("scripts/actors/file_browser.chai")(vec3(0.0f, 0.0f, 0.0f), vec3(190.0f, 100.0f, 0.0f), fun(){
+    var fb := use("scripts/actors/file_browser.chai")(vec3(0.0f, 0.0f, 0.0f), vec3(window_size.x/2.0f, window_size.y/2.0f, 0.0f), fun(){
         puts("Trigger\n")
     })
 
