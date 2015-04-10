@@ -55,13 +55,13 @@ public:
 		chai->add(chaiscript::fun(&glm::vec3::z), "z");
 
 		// vec4
-/*		chai->add(chaiscript::user_type<glm::vec4>(), "vec4" );
+		chai->add(chaiscript::user_type<glm::vec4>(), "vec4" );
 		chai->add(chaiscript::constructor<glm::vec4()>(), "vec4");
 		chai->add(chaiscript::constructor<glm::vec4(float, float, float, float)>(), "vec4");
 		chai->add(chaiscript::fun(&glm::vec4::x), "x");
 		chai->add(chaiscript::fun(&glm::vec4::y), "y");
 		chai->add(chaiscript::fun(&glm::vec4::z), "z");
-		chai->add(chaiscript::fun(&glm::vec4::w), "w");*/
+		chai->add(chaiscript::fun(&glm::vec4::w), "w");
 
 		// i32vec2
 		chai->add(chaiscript::user_type<glm::i32vec2>(), "i32vec2" );
