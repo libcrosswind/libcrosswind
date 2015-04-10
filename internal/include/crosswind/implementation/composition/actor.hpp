@@ -11,6 +11,8 @@
 
 #include <crosswind/implementation/composition/core.hpp>
 #include <crosswind/interface/graphical/object/model.hpp>
+#include <crosswind/interface/graphical/object/text.hpp>
+
 #include <crosswind/interface/simulation/detail/character.hpp>
 #include <crosswind/interface/simulation/detail/body.hpp>
 
@@ -82,6 +84,34 @@ public:
 		}
 
 		logic(dt);
+	}
+
+	void add_text(const std::string& text_name,
+				  const std::string& text,
+				  const glm::vec3& origin,
+				  const glm::vec4& color,
+				  const uint32_t& size,
+				  const std::string& font_path){
+
+		if(text_map.find(text_name) == text_map.end()){
+			text_map[text_name] = core->video->load_text(text_name,
+														 text,
+														 origin,
+														 color,
+														 size,
+														 core->filesystem->get_file_path(font_path));
+
+		} else {
+			throw std::runtime_error(text_name + " already exists, remove it first before adding one with the same name");
+		}
+	}
+
+	void remove_text(const std::string& text_name){
+		if(text_map.find(text_name) != text_map.end()){
+			text_map.erase(text_name);
+		} else {
+			throw std::runtime_error(text_name + " does not exist or was already removed");
+		}
 	}
 
 	void add_model(const std::string& model_name,
@@ -196,11 +226,17 @@ public:
 		return model_map;
 	}
 
+	auto& get_text_map(){
+		return text_map;
+	}
+
 	std::shared_ptr<core> core;
 	std::map<std::string, bool> conditions;
 
 private:
 	std::map<std::string, std::shared_ptr<interface::graphical::object::model> > model_map;
+	std::map<std::string, std::shared_ptr<interface::graphical::object::text> > text_map;
+
 	body_map        bodies;
 	character_map   characters;
 

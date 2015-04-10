@@ -20,8 +20,8 @@ return fun(origin, size, on_file_choosen){
 
     var cancel_origin := vec3(cancel_origin_x, cancel_origin_y, 0.0f)
 
-    var ok_button     := use("scripts/actors/green_button.chai")(ok_origin, button_size, on_file_choosen)
-    var cancel_button := use("scripts/actors/green_button.chai")(cancel_origin, button_size, fun(){ })
+    var ok_button     := use("scripts/actors/green_button.chai")("Ok", ok_origin, button_size, on_file_choosen)
+    var cancel_button := use("scripts/actors/green_button.chai")("Cancel", cancel_origin, button_size, fun(){ })
 
 
     file_browser.add_actor("panel", panel)

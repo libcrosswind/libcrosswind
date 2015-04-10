@@ -217,6 +217,9 @@ public:
 
 
 		// actor
+		chai->add(chaiscript::fun(&cw::implementation::composition::actor::add_text), "add_text");
+		chai->add(chaiscript::fun(&cw::implementation::composition::actor::remove_text), "remove_text");
+
 		chai->add(chaiscript::fun(&cw::implementation::composition::actor::add_model), "add_model");
 		chai->add(chaiscript::fun(&cw::implementation::composition::actor::get_model), "get_model");
 

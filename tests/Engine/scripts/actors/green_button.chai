@@ -1,10 +1,11 @@
-return fun(origin, size, on_trigger){
+return fun(text, origin, size, on_trigger){
     var button := stage.create_actor()
 
     button.set_origin(origin)
     button.set_size(size)
 
     button.add_model("button", origin, size, "green_button.json")
+    button.add_text(text, origin, vec4(1.0f, 1.0f, 1.0f, 1.0f), 24, core.filesystem.get_file_path("ui_font.ttf"))
 
     var mouse_down = false
 

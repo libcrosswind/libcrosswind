@@ -22,26 +22,16 @@ namespace object{
 
 class cw::interface::graphical::object::text{
 public:
-	text(const std::string& c_name = "undefined",
-		 const std::string& c_text = "text",
+	text(const std::string& c_text = "text",
 		 const glm::vec3& c_origin = glm::vec3(0.0f, 0.0f, 0.0f),
-		 const uint32_t& c_size = 24,
-		 const glm::vec4& c_color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)){
+		 const glm::vec4& c_color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		 const uint32_t& c_size = 24){
 
-		name = c_name;
 		text_value = c_text;
 		origin = c_origin;
-		size = c_size;
 		color = c_color;
+		size = c_size;
 
-	}
-
-	void set_name(const std::string& f_name){
-		name = f_name;
-	}
-
-	std::string& get_name(){
-		return name;
 	}
 
 	void set_text(const std::string& f_text){
@@ -97,7 +87,6 @@ public:
 
 
 private:
-	std::string name;
 	std::string text_value;
 	glm::vec3 origin;
 	glm::vec4 color;

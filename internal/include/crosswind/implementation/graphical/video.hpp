@@ -118,26 +118,32 @@ public:
 		}
 	}
 
-	void load_text(std::shared_ptr<interface::graphical::object::text> text, const std::string& font_path){
+	std::shared_ptr<interface::graphical::object::text> load_text(const std::string& text_name,
+																  const std::string& text_value,
+																  const glm::vec3& origin,
+																  const glm::vec4& color,
+																  const uint32_t& size,
+																  const std::string& font_path){
+
+		auto text = std::make_shared<interface::graphical::object::text>(text_value, origin, color, size);
 
 		auto font    = load_font(font_path, text->get_size());
 
 		auto surface = text->render(font);
 
-		if (texture_map.find(text->get_name()) == texture_map.end()) {
+		if (texture_map.find(text_name) == texture_map.end()) {
 
-			texture_map[text->get_name()] = std::make_shared<opengl::texture>(glm::vec2(surface->data.ptr()->w,
+			texture_map[text_name] = std::make_shared<opengl::texture>(glm::vec2(surface->data.ptr()->w,
 																						surface->data.ptr()->h),
-																			  surface->data.ptr()->format->BytesPerPixel,
-																			  surface->data.ptr()->pixels);
+																	   surface->data.ptr()->format->BytesPerPixel,
+																	   surface->data.ptr()->pixels);
 
 		} else {
-			remove_texture(text->get_name());
-
-			texture_map[text->get_name()] = std::make_shared<opengl::texture>(glm::vec2(surface->data.ptr()->w,
-																						surface->data.ptr()->h),
-																			  surface->data.ptr()->format->BytesPerPixel,
-																			  surface->data.ptr()->pixels);
+			remove_texture(text_name);
+			texture_map[text_name] = std::make_shared<opengl::texture>(glm::vec2(surface->data.ptr()->w,
+																				 surface->data.ptr()->h),
+																	   surface->data.ptr()->format->BytesPerPixel,
+																	   surface->data.ptr()->pixels);
 		}
 
 
@@ -149,10 +155,12 @@ public:
 												 								    text_size,
 															  						text->get_color(),
 															   						uv,
-															   						load_texture(text->get_name())->id);
+															   						load_texture(text_name)->id);
 
 
 		text->set_render_sprite(render_sprite);
+
+		return text;
 	}
 
 	std::shared_ptr<interface::graphical::object::model> load_model(const glm::vec3& origin,
