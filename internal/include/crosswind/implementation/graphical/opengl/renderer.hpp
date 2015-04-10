@@ -56,8 +56,8 @@ public:
 
 	}
 
-    virtual void upload(const std::map<std::string, std::shared_ptr<interface::graphical::detail::sprite> >& sprite_map){
-        sprite_batch->upload(sprite_map);
+    virtual void upload(std::shared_ptr<interface::graphical::detail::sprite> render_sprite){
+        sprite_batch->upload(render_sprite);
     }
 
     virtual void draw(){

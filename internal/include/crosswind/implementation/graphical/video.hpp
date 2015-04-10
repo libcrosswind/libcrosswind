@@ -2,18 +2,24 @@
 
 #include <memory>
 #include <string>
+#include <cstdint>
 
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 #include <crosswind/modules/javascript/json.hpp>
 #include <crosswind/interface/graphical/video.hpp>
+#include <crosswind/interface/graphical/object/text.hpp>
 #include <crosswind/interface/graphical/detail/sprite.hpp>
+
 #include <crosswind/implementation/platform/exception.hpp>
 #include <crosswind/implementation/graphical/object/model.hpp>
 #include <crosswind/implementation/graphical/object/sprite_animation.hpp>
 #include <crosswind/implementation/graphical/opengl/window.hpp>
 #include <crosswind/implementation/graphical/opengl/renderer.hpp>
 #include <crosswind/implementation/graphical/opengl/texture.hpp>
+
+#include <crosswind/implementation/graphical/sdl/font.hpp>
 #include <crosswind/implementation/graphical/sdl/surface.hpp>
 
 namespace cw{
@@ -39,6 +45,8 @@ public:
 		if ((IMG_Init(video_flags) & video_flags) != video_flags)
 		  throw platform::exception("IMG_Init");
 
+		if (TTF_Init() == -1 )
+			throw platform::exception("TTF_Init");
 
 		int final_flags = window_flags;
 
@@ -53,24 +61,25 @@ public:
 												  final_flags);
 
 		renderer = std::make_shared<opengl::renderer>();
+
 	}
 
 	virtual ~video() {
 		IMG_Quit();
+		TTF_Quit();
 	}
 
 	void set_window_icon(const std::string& path){
 		auto surface = std::make_unique<sdl::surface>(path);
 		window->set_icon(surface->data.ptr());
-
 	}
 
     void load_texture(const std::string& name, const std::string& path){
 
-        if ( texture_list.find(name) == texture_list.end()) {
+        if (texture_map.find(name) == texture_map.end()) {
             auto surface = std::make_unique<sdl::surface>(path);
 
-            texture_list[name] = std::make_shared<opengl::texture>
+			texture_map[name] = std::make_shared<opengl::texture>
                     (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
                             surface->data.ptr()->format->BytesPerPixel,
                             surface->data.ptr()->pixels);
@@ -80,13 +89,75 @@ public:
 
     std::shared_ptr<interface::graphical::detail::texture> load_texture(const std::string& name){
         
-        return texture_list[name];
+        return texture_map[name];
         
     }
 
+	std::shared_ptr<sdl::font> load_font(const std::string& font_path, const uint32_t& size){
+
+		std::shared_ptr<sdl::font> font;
+
+		std::string font_name =
+				font_path.substr(font_path.size() - 4, font_path.size()) + "_" + std::to_string(size);
+
+		if(font_map.find(font_name) == font_map.end()){
+			font_map[font_name] = std::make_shared<class sdl::font>(font_path, size);
+			font = font_map[font_name];
+		} else {
+			font = font_map[font_name];
+		}
+
+		return font;
+	}
+
+	void remove_texture(const std::string& texture_name){
+		if(texture_map.find(texture_name) != texture_map.end()){
+			texture_map[texture_name] = nullptr;
+		} else {
+			// throw
+		}
+	}
+
+	void load_text(std::shared_ptr<interface::graphical::object::text> text, const std::string& font_path){
+
+		auto font    = load_font(font_path, text->get_size());
+
+		auto surface = text->render(font);
+
+		if (texture_map.find(text->get_name()) == texture_map.end()) {
+
+			texture_map[text->get_name()] = std::make_shared<opengl::texture>(glm::vec2(surface->data.ptr()->w,
+																						surface->data.ptr()->h),
+																			  surface->data.ptr()->format->BytesPerPixel,
+																			  surface->data.ptr()->pixels);
+
+		} else {
+			remove_texture(text->get_name());
+
+			texture_map[text->get_name()] = std::make_shared<opengl::texture>(glm::vec2(surface->data.ptr()->w,
+																						surface->data.ptr()->h),
+																			  surface->data.ptr()->format->BytesPerPixel,
+																			  surface->data.ptr()->pixels);
+		}
+
+
+		auto text_size = glm::vec3(surface->data.ptr()->w, surface->data.ptr()->h, 0.0f);
+
+		auto uv = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
+
+		auto render_sprite = std::make_shared<interface::graphical::detail::sprite>(text->get_origin(),
+												 								    text_size,
+															  						text->get_color(),
+															   						uv,
+															   						load_texture(text->get_name())->id);
+
+
+		text->set_render_sprite(render_sprite);
+	}
+
 	std::shared_ptr<interface::graphical::object::model> load_model(const glm::vec3& origin,
-		                                      const glm::vec3& size, 
-		                                      const std::string& template_file){
+		                                      						const glm::vec3& size,
+																	const std::string& template_file){
 
 	    modules::javascript::json json;
 	    json.from_file(template_file);
@@ -144,13 +215,17 @@ public:
 
 	    model->change_animation(raw_json["properties"]["default-animation"].as<std::string>());
 
-		model->get_render_sprite_list()["current"] =
-				model->get_animations()["current"]->frames[model->get_animations()["current"]->current_frame];
+		model->set_render_sprite(model->get_animations()["current"]->
+				                 frames[model->get_animations()["current"]->current_frame]);
 
 	    model->set_origin(origin);
 	    model->set_size(size);
 
 	    return model;
 	}
+
+private:
+	std::map<std::string, std::shared_ptr<sdl::font> > font_map;
+
 
 };// class video

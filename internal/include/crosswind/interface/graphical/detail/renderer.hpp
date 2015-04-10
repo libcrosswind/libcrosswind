@@ -30,7 +30,7 @@ public:
 	virtual void begin() = 0;
 	virtual void set_uniform_matrix(const std::string& uniform_matrix_name, const glm::mat4& value) = 0;
 
-	virtual void upload(const std::map<std::string, std::shared_ptr<sprite> >& sprite_map) = 0;
+	virtual void upload(std::shared_ptr<interface::graphical::detail::sprite> render_sprite) = 0;
 
     virtual void draw() = 0;
 	virtual void end() = 0;

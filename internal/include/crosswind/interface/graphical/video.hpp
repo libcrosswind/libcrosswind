@@ -42,6 +42,6 @@ public:
     std::shared_ptr< detail::renderer >	renderer;
 
 protected:
-    std::map<std::string, std::shared_ptr<detail::texture> > texture_list;
+	std::map<std::string, std::shared_ptr<detail::texture> > texture_map;
 
 };// class image

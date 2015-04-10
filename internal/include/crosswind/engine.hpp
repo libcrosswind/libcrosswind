@@ -62,14 +62,14 @@ private:
         for(auto& group_mapping : stage->get_scene("current")->get_group_map()){
             for(auto& actor_mapping : group_mapping.second->get_actor_map()){
                 for(auto& model_mapping : actor_mapping.second->get_model_map()){
-                    core->video->renderer->upload(model_mapping.second->get_render_sprite_list());
+                    core->video->renderer->upload(model_mapping.second->get_render_sprite());
                 }
             }
         }
 
         for(auto& actor_mapping: stage->get_scene("current")->get_actor_map()){
             for(auto& model_mapping : actor_mapping.second->get_model_map()){
-                core->video->renderer->upload(model_mapping.second->get_render_sprite_list());
+                core->video->renderer->upload(model_mapping.second->get_render_sprite());
             }
         }
 

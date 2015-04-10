@@ -27,11 +27,10 @@ public:
 	}
 
 	virtual void change_animation(const std::string& new_animation) = 0;
-
 	virtual void update(const float& delta) = 0;
 
-	virtual std::map<std::string, std::shared_ptr<detail::sprite> >& get_render_sprite_list() = 0;
-
+	virtual void set_render_sprite(std::shared_ptr<detail::sprite> sprite) = 0;
+	virtual std::shared_ptr<detail::sprite> get_render_sprite() = 0;
 	virtual void set_animations(std::map<std::string, std::shared_ptr<sprite_animation> >& new_animations) = 0;
 	virtual std::map<std::string, std::shared_ptr<sprite_animation> >& get_animations() = 0;
 
@@ -48,6 +47,6 @@ protected:
 	glm::vec3 size;
 	float delta_count;
 
-	std::map<std::string, std::shared_ptr<detail::sprite>           > render_sprite_list;
-	std::map<std::string, std::shared_ptr<sprite_animation>         > animations;
+	std::shared_ptr<detail::sprite> render_sprite;
+	std::map<std::string, std::shared_ptr<sprite_animation> > animations;
 };// class model

@@ -47,12 +47,16 @@ public:
             }
         }
 
-		render_sprite_list["current"] = animations["current"]->frames[animations["current"]->current_frame];
+		set_render_sprite(animations["current"]->frames[animations["current"]->current_frame]);
 
 	}
 
-	virtual std::map<std::string, std::shared_ptr<interface::graphical::detail::sprite> >& get_render_sprite_list(){
-		return render_sprite_list;
+	virtual void set_render_sprite(std::shared_ptr<interface::graphical::detail::sprite> sprite){
+		render_sprite = sprite;
+	}
+
+	virtual std::shared_ptr<interface::graphical::detail::sprite> get_render_sprite(){
+		return render_sprite;
 	}
 
 	virtual void set_animations(std::map<std::string, std::shared_ptr<interface::graphical::object::sprite_animation> >& new_animations){

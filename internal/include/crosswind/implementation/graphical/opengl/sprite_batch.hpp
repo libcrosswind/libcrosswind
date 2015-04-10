@@ -34,12 +34,8 @@ public:
 	    sprite_list.clear();
 	}
 
-	void upload(const std::map<std::string, std::shared_ptr<interface::graphical::detail::sprite> >& render_list){
-
-		for(auto& sprite: render_list){
-			sprite_list.push_back(sprite.second);
-		}
-
+	void upload(std::shared_ptr<interface::graphical::detail::sprite> render_sprite){
+			sprite_list.push_back(render_sprite);
 	}
 
 	void create(){

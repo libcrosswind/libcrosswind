@@ -27,7 +27,8 @@ public:
 
 	virtual void clear() = 0;
 
-	virtual void upload(const std::map<std::string, std::shared_ptr<sprite> >& sprite_map) = 0;
+	virtual void upload(std::shared_ptr<sprite> render_sprite) = 0;
+
 	virtual void create() = 0;
 	virtual void draw() = 0;
 

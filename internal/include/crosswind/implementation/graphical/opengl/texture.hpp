@@ -50,7 +50,7 @@ public:
     }
 
     virtual ~texture(){
-
+        glDeleteTextures(1, &id);
     }
 
 };// class texture
