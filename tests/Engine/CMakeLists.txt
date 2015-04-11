@@ -21,7 +21,7 @@ add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS)
 
 else( CMAKE_BUILD_TYPE STREQUAL "Release")
 
-add_compile_options(-std=gnu++1y -mwindows -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -DNDEBUG)
+add_compile_options(-std=gnu++1y -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -DNDEBUG)
 SET( GCC_COVERAGE_LINK_FLAGS    "-mwindows")
 SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
 

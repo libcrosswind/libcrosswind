@@ -121,7 +121,7 @@ public:
 	std::shared_ptr<interface::graphical::object::text> load_text(const std::string& text_name,
 																  const std::string& text_value,
 																  const glm::vec3& origin,
-																  const glm::vec4& color,
+																  const glm::vec3& color,
 																  const uint32_t& size,
 																  const std::string& font_path){
 
@@ -153,7 +153,7 @@ public:
 
 		auto render_sprite = std::make_shared<interface::graphical::detail::sprite>(text->get_origin(),
 												 								    text_size,
-															  						text->get_color(),
+		                                                                            glm::vec4(text->get_color(), 1.0f),
 															   						uv,
 															   						load_texture(text_name)->id);
 

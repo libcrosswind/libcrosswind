@@ -24,7 +24,7 @@ class cw::interface::graphical::object::text{
 public:
 	text(const std::string& c_text = "text",
 		 const glm::vec3& c_origin = glm::vec3(0.0f, 0.0f, 0.0f),
-		 const glm::vec4& c_color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		 const glm::vec3& c_color = glm::vec3(1.0f, 1.0f, 1.0f),
 		 const uint32_t& c_size = 24){
 
 		text_value = c_text;
@@ -58,11 +58,11 @@ public:
 		return size;
 	}
 
-	void set_color(const glm::vec4& f_color){
+	void set_color(const glm::vec3& f_color){
 		color = f_color;
 	}
 
-	glm::vec4 get_color(){
+	glm::vec3 get_color(){
 		return color;
 	}
 
@@ -89,7 +89,7 @@ public:
 private:
 	std::string text_value;
 	glm::vec3 origin;
-	glm::vec4 color;
+	glm::vec3 color;
 	uint32_t size;
 
 	std::shared_ptr<detail::sprite> render_sprite;

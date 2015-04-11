@@ -64,6 +64,10 @@ public:
             search_result = false;
         }
 
+        if(!search_result){
+            search_result = is_file(filepath) || is_dir(filepath);
+        }
+
         return search_result;
 
     }
@@ -75,19 +79,23 @@ public:
 
         if(exists(filepath)){
 
-
             auto result = std::find_if(directories.begin(), directories.end(),
                     [&](std::string const& directory)  {
                         //TODO test with Visual Studio.
                         if(path[0] != ""){
-                            return is_file(directory + "/" + path[0] + "/" + path[1]);
+                            return is_file(directory + "/" + path[0] + "/" + path[1]) || is_file(filepath);
                         } else {
                             return is_file(directory + "/" + path[1]);
                         }
                     });
 
             if(result != std::end(directories)){
-                path_string = path[0] != "" ? *result + "/" + path[0] + "/" + path[1] : *result + "/" + path[1];
+                if(is_file(filepath)){
+                    path_string = filepath;
+                } else{
+                    path_string = path[0] != "" ? *result + "/" + path[0] + "/" + path[1] : *result + "/" + path[1];
+                }
+
             } else {
                 path_string = filepath + ": Is not a file";
             }

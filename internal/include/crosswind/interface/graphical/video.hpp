@@ -39,7 +39,7 @@ public:
 	virtual std::shared_ptr<object::text> load_text(const std::string& text_name,
 													const std::string& text,
 													const glm::vec3& origin,
-													const glm::vec4& color,
+													const glm::vec3& color,
 													const uint32_t& size,
 													const std::string& font_path) = 0;
 

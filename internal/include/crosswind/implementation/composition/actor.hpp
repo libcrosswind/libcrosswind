@@ -89,8 +89,8 @@ public:
 	void add_text(const std::string& text_name,
 				  const std::string& text,
 				  const glm::vec3& origin,
-				  const glm::vec4& color,
-				  const uint32_t& size,
+				  const glm::vec3& color,
+				  const int& size,
 				  const std::string& font_path){
 
 		if(text_map.find(text_name) == text_map.end()){
