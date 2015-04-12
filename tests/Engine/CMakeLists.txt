@@ -39,7 +39,8 @@ set_target_properties(Engine
 )
 
 set(SDL2_libs        SDL2main SDL2 winmm imm32 version)
-set(SDL2_image_libs  SDL2_image jpeg png z)
+#set(SDL2_image_libs  SDL2_image jpeg png z)
+set(SDL2_image_libs  SDL2_image png z)
 set(SDL2_ttf_libs    SDL2_ttf freetype)
 set(SDL2_mixer_libs  SDL2_mixer vorbisenc vorbisfile vorbis ogg)
 set(win32_libs       winmm imm32 version)
