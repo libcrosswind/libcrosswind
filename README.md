@@ -2,7 +2,9 @@
 A modern C++14 Multipurpose library
 
 git clone https://github.com/VictorJL/libcrosswind.git
+
 git submodule init
+
 git submodule update
 
 Requirements:
