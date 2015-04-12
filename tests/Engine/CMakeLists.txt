@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(Engine)
 
-
 set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
                             "${PROJECT_SOURCE_DIR}/../../internal/include"
                             "${PROJECT_SOURCE_DIR}/../../external/CImg-1.6.0/include"
@@ -48,6 +47,7 @@ set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
 set(opengl_libs      glu32 opengl32)
 set(opengl_ext_libs  glew)
 set(perl_libs )
+
 
 target_link_libraries (Engine LINK_PUBLIC mingw32
                                                 ${SDL2_libs}

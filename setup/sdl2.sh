@@ -199,13 +199,13 @@ function build_sdl_mixer {
 }
  
 ###########################BUILD####################################
-#clean_dir $TEMP_DIR
+clean_dir $TEMP_DIR
 set_up
-#build_sdl
-#build_sdl_image
-#build_sdl_ttf
+build_sdl
+build_sdl_image
+build_sdl_ttf
 build_sdl_mixer
-#clean_dir $TEMP_DIR
+clean_dir $TEMP_DIR
 ####################
  
 
