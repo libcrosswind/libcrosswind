@@ -9,21 +9,26 @@ Requirements:
 
 Windows:
 
-CMake
+CMake:
+
 Download and install in libcrosswind\platform\windows\support\cmake
 http://www.cmake.org/download/
 
-MSYS
+MSYS:
+
 Download and install in libcrosswind\platform\windows\support\msys\1.0
 http://downloads.sourceforge.net/mingw/MSYS-1.0.11.exe
 Answer "no" when the post install prompts.
 
-TDM-GCC
+TDM-GCC:
+
 Download and install in libcrosswind\platform\windows\compilers\x64\TDM-GCC-64
 http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%20Installer/tdm64-gcc-4.9.2-3.exe
 
-Bash upgrade for MSYS
-Download
+Bash upgrade for MSYS:
+
+Download:
+
 http://sourceforge.net/projects/mingw/files/MSYS/Base/bash/bash-3.1.23-1/bash-3.1.23-1-msys-1.0.18-bin.tar.xz
 http://sourceforge.net/projects/mingw/files/MSYS/Base/regex/regex-1.20090805-2/libregex-1.20090805-2-msys-1.0.13-dll-1.tar.lzma
 http://sourceforge.net/projects/mingw/files/MSYS/Base/termcap/termcap-0.20050421_1-2/libtermcap-0.20050421_1-2-msys-1.0.13-dll-0.tar.lzma
