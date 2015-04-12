@@ -1,6 +1,7 @@
 Requirements:
 
 Windows:
+
 CMake
 Download and install in libcrosswind\platform\windows\support\cmake
 http://www.cmake.org/download/
@@ -8,6 +9,7 @@ http://www.cmake.org/download/
 MSYS
 Download and install in libcrosswind\platform\windows\support\msys\1.0
 http://downloads.sourceforge.net/mingw/MSYS-1.0.11.exe
+Answer "no" when the post install prompts.
 
 TDM-GCC
 Download and install in libcrosswind\platform\windows\compilers\x64\TDM-GCC-64
