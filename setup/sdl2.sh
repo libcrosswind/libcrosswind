@@ -103,7 +103,9 @@ popd
 popd
 
 #Removing -XCClinker
-sed 's/-XCClinker//g' $INSTALL_DIR/bin/sdl2-config > $INSTALL_DIR/bin/sdl2-config.new 
+#sed 's/-XCClinker//g' $INSTALL_DIR/bin/sdl2-config > $INSTALL_DIR/bin/sdl2-config.new 
+
+exit
 
 rm $INSTALL_DIR/bin/sdl2-config 
 mv $INSTALL_DIR/bin/sdl2-config.new $INSTALL_DIR/bin/sdl2-config 

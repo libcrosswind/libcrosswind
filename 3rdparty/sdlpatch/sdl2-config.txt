@@ -1,9 +1,0 @@
-When building SDL_image for windows, the configure script will complain about png and jpeg not being usable, if that happens
-search for sdl-config and remove the -XCCLinker flag.
-
-
-#echo -L${exec_prefix}/lib  -lmingw32 -lSDL2main -lSDL2  -mwindows  -Wl,--no-undefined -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -XCClinker -static-libgcc
-
-echo -L${exec_prefix}/lib  -lmingw32 -lSDL2main -lSDL2  -mwindows  -Wl,--no-undefined -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc
-
-

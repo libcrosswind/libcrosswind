@@ -1,6 +1,3 @@
-copy basic_string.h to TDM-GCC-32\lib\gcc\mingw32\4.9.2\include\c++\bits\
-after installing all dependancies. 
+This is a fix for mingw to use stoul, stoi, to_string and many other string manipulation methods. Required for some modules in the framework. 
 
-This is a fix for C++11/C++14 that enables mingw32 to use stoul, stoi, to_string and many other string manipulation methods. Required for some modules in the framework. 
-
-This patch is only required for the 32 bit toolchain, the 64 bit toolchain implements those methods.
+This patch is applied automatically after installing all other dependencies and running build.bat inside the setup/win32 folder.
