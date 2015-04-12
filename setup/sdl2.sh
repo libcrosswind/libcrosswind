@@ -2,6 +2,8 @@
 
 pushd $( dirname "$0" )
 
+source standard/common.sh . 
+
 TEMP_DIR=$PWD/../temp/sdl2
 
 ###########################SDL2####################################
@@ -64,160 +66,149 @@ VORBIS_TEMP=$TEMP_DIR/vorbis_build
 #SMPEG=$SDL_MIXER/external/$SMPEG_DIR_NAME
 #SMPEG_TEMP=$TEMP_DIR/smpeg_build
 
+function set_up {
+	create_dir $TEMP_DIR
+	create_dir $SDL2_TEMP
+	create_dir $SDL_IMAGE_TEMP
+	create_dir $SDL_TTF_TEMP
+	create_dir $SDL_MIXER_TEMP
+	create_dir $ZLIB_TEMP
+	create_dir $JPG_TEMP
+	create_dir $PNG_TEMP
+	#create_dir $TIF_TEMP
+	#create_dir $WEBP_TEMP
+	create_dir $FREETYPE_TEMP
+	create_dir $OGG_TEMP
+	create_dir $VORBIS_TEMP
 
-###########################Default##################################
-INSTALL_DIR=$PWD/../platform/windows/build
+	copy_to $SDL2_TEMP 			$SDL2
+	copy_to $ZLIB_TEMP 			$ZLIB
+	copy_to $JPG_TEMP 			$JPG
+	copy_to $PNG_TEMP 			$PNG
+	copy_to $SDL_IMAGE_TEMP 	$SDL_IMAGE
+	copy_to $FREETYPE_TEMP 		$FREETYPE
+	copy_to $SDL_TTF_TEMP   	$SDL_TTF
+	copy_to $OGG_TEMP   		$OGG
+	copy_to $VORBIS_TEMP   		$VORBIS
+	copy_to $SDL_MIXER_TEMP		$SDL_MIXER
 
-############################SETUP###################################
-rm -rf $TEMP_DIR
-
-mkdir -p $TEMP_DIR
-mkdir -p $SDL2_TEMP
-mkdir -p $SDL_IMAGE_TEMP
-mkdir -p $SDL_TTF_TEMP
-mkdir -p $SDL_MIXER_TEMP
-
-mkdir -p $ZLIB_TEMP
-mkdir -p $JPG_TEMP
-mkdir -p $PNG_TEMP
-#mkdir -p $TIF_TEMP
-#mkdir -p $WEBP_TEMP
-
-mkdir -p $FREETYPE_TEMP
-
-mkdir -p $OGG_TEMP
-mkdir -p $VORBIS_TEMP
-#mkdir -p $SMPEG_TEMP
+}
 
 
+function build_sdl {
+
+	pushd $SDL2_TEMP
+	pushd $SDL2_DIR_NAME
+	sh ./configure --disable-shared --prefix=$INSTALL_DIR 
+	make clean
+	make
+	make install
+	popd
+	popd
+
+	#Removing -XCClinker
+	sed 's/-XCClinker//g' $INSTALL_DIR/bin/sdl2-config > $INSTALL_DIR/bin/sdl2-config.new 
+
+	rm $INSTALL_DIR/bin/sdl2-config 
+	mv $INSTALL_DIR/bin/sdl2-config.new $INSTALL_DIR/bin/sdl2-config 
+
+}
+
+function build_sdl_image {
+	pushd $ZLIB_TEMP
+	pushd $ZLIB_DIR_NAME
+	make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib clean
+	make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib install
+	popd
+	popd
+
+	pushd $JPG_TEMP
+	pushd $JPG_DIR_NAME
+	sh ./configure  --disable-shared --prefix=$INSTALL_DIR 
+	make clean
+	make
+	make install
+	popd
+	popd
+
+	pushd $PNG_TEMP
+	pushd $PNG_DIR_NAME
+	make -f scripts/makefile.msys clean
+	make -f scripts/makefile.msys prefix="" DESTDIR=$INSTALL_DIR ZLIBINC=$INSTALL_DIR/include ZLIBLIB=$INSTALL_DIR/lib install-static
+	popd
+	popd
+	
+	pushd $SDL_IMAGE_TEMP
+	pushd $SDL2_IMAGE_DIR_NAME
+	sh ./configure  --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
+	make clean
+	make
+	make install
+	popd
+	popd
+}
+
+function build_sdl_ttf {
+	pushd $FREETYPE_TEMP
+	pushd $FREETYPE_DIR_NAME
+	sh ./configure  --disable-shared --prefix=$INSTALL_DIR
+	make clean
+	make 
+	make install
+	popd
+	popd
+
+	pushd $SDL_TTF_TEMP
+	pushd $SDL_TTF_DIR_NAME
+	sh ./configure  --disable-sdltest --disable-shared FREETYPE_CONFIG=$INSTALL_DIR/bin/freetype-config --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
+	make clean
+	make
+	make install
+	popd
+	popd
+}
+
+function build_sdl_mixer {
+	pushd $OGG_TEMP
+	pushd $OGG_DIR_NAME
+	sh ./configure  --disable-shared --prefix=$INSTALL_DIR
+	make clean
+	make 
+	make install
+	popd
+	popd
+
+	pushd $VORBIS_TEMP
+	pushd $VORBIS_DIR_NAME
+	sh ./configure  --disable-shared --prefix=$INSTALL_DIR
+	make clean
+	make 
+	make install
+	popd
+	popd
+
+
+	pushd $SDL_MIXER_TEMP
+	pushd $SDL_MIXER_DIR_NAME
+	sh ./configure  --disable-sdltest --disable-shared SMPEG_CONFIG=$INSTALL_DIR/bin/smpeg2-config --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
+	make clean
+	make 
+	make install
+	popd
+	popd
+}
+ 
 ###########################BUILD####################################
-
-pushd $SDL2_TEMP
-cp -rp $SDL2 .
-pushd $SDL2_DIR_NAME
-sh ./configure --disable-shared --prefix=$INSTALL_DIR 
-make clean
-make
-make install
-popd
-popd
-
-#Removing -XCClinker
-sed 's/-XCClinker//g' $INSTALL_DIR/bin/sdl2-config > $INSTALL_DIR/bin/sdl2-config.new 
-
-rm $INSTALL_DIR/bin/sdl2-config 
-mv $INSTALL_DIR/bin/sdl2-config.new $INSTALL_DIR/bin/sdl2-config 
+clean_dir $TEMP_DIR
+set_up
+build_sdl
+build_sdl_image
+build_sdl_ttf
+build_sdl_mixer
+clean_dir $TEMP_DIR
 ####################
-
-pushd $ZLIB_TEMP
-cp -rp $ZLIB .
-pushd $ZLIB_DIR_NAME
-make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib clean
-make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib install
-popd
-popd
+ 
 
 
-pushd $JPG_TEMP
-cp -rp $JPG .
-pushd $JPG_DIR_NAME
-sh ./configure  --disable-shared --prefix=$INSTALL_DIR 
-make clean
-make
-make install
-popd
-popd
-
-pushd $PNG_TEMP
-cp -rp $PNG .
-pushd $PNG_DIR_NAME
-make -f scripts/makefile.msys clean
-make -f scripts/makefile.msys prefix="" DESTDIR=$INSTALL_DIR ZLIBINC=$INSTALL_DIR/include ZLIBLIB=$INSTALL_DIR/lib install-static
-popd
-popd
-
-
-pushd $SDL_IMAGE_TEMP
-cp -rp $SDL_IMAGE .
-pushd $SDL2_IMAGE_DIR_NAME
-sh ./configure   --disable-sdltest --disable-shared --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
-make clean
-make
-make install
-popd
-popd
-
-pushd $FREETYPE_TEMP
-cp -rp $FREETYPE .
-pushd $FREETYPE_DIR_NAME
-sh ./configure  --disable-shared --prefix=$INSTALL_DIR
-make clean
-make 
-make install
-popd
-popd
-
-
-pushd $SDL_TTF_TEMP
-cp -rp $SDL_TTF .
-pushd $SDL_TTF_DIR_NAME
-sh ./configure  --disable-sdltest --disable-shared FREETYPE_CONFIG=$INSTALL_DIR/bin/freetype-config --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
-make clean
-make
-make install
-popd
-popd
-
-pushd $OGG_TEMP
-cp -rp $OGG .
-pushd $OGG_DIR_NAME
-sh ./configure  --disable-shared --prefix=$INSTALL_DIR
-make clean
-make 
-make install
-popd
-popd
-
-pushd $VORBIS_TEMP
-cp -rp $VORBIS .
-pushd $VORBIS_DIR_NAME
-sh ./configure  --disable-shared --prefix=$INSTALL_DIR
-make clean
-make 
-make install
-popd
-popd
-
-#Not using smpeg
-#pushd $SMPEG_TEMP
-#cp -rp $SMPEG .
-#pushd $SMPEG_DIR_NAME
-#sh ./configure --disable-shared --prefix=$INSTALL_DIR 
-
-#Patching SMPEG dependencies
-#sed 's/-luuid/-luuid -lstdc++/g' ./libsmpeg2.la > ./libsmpeg2.la.new 
-
-#rm ./libsmpeg2.la
-#mv ./libsmpeg2.la.new ./libsmpeg2.la
-####################
-
-#make clean
-#make 
-#make install
-#popd
-#popd
-
-
-pushd $SDL_MIXER_TEMP
-cp -rp $SDL_MIXER .
-pushd $SDL_MIXER_DIR_NAME
-sh ./configure  --disable-sdltest --disable-shared SMPEG_CONFIG=$INSTALL_DIR/bin/smpeg2-config --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include 
-make clean
-make 
-make install
-popd
-popd
-
-rm -rf $TEMP_DIR
 
 popd
