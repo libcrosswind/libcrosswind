@@ -25,7 +25,3 @@
 [submodule "external/perl5"]
 	path = external/perl5
 	url = https://github.com/Perl/perl5.git
-[submodule "ChaiScript"]
-	path = ChaiScript
-	url = https://github.com/ChaiScript/ChaiScript.git
-	branch = develop
