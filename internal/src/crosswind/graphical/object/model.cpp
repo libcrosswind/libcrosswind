@@ -35,7 +35,7 @@ void cw::graphical::object::model::update(const float& delta){
 
 }
 
-void cw::graphical::object::model::set_render_sprite(auto sprite){
+void cw::graphical::object::model::set_render_sprite(std::shared_ptr<cw::graphical::object::sprite> sprite){
 
 	render_sprite = sprite;
 
@@ -47,7 +47,7 @@ std::shared_ptr<cw::graphical::object::sprite> cw::graphical::object::model::get
 
 }
 
-void cw::graphical::object::model::set_animations(const auto& new_animations){
+void cw::graphical::object::model::set_animations(const std::map<std::string, std::shared_ptr<cw::graphical::object::sprite_animation> >& new_animations){
 
 	animations.clear();
 

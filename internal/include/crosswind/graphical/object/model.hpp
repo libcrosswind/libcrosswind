@@ -31,11 +31,11 @@ public:
 
 	void update(const float& delta);
 
-	void set_render_sprite(auto sprite);
+	void set_render_sprite(std::shared_ptr<sprite> sprite);
 
 	std::shared_ptr<sprite> get_render_sprite();
 
-	void set_animations(const auto& new_animations);
+	void set_animations(const std::map<std::string, std::shared_ptr<sprite_animation> >& new_animations);
 
 	std::map<std::string, std::shared_ptr<sprite_animation> >& get_animations();
 

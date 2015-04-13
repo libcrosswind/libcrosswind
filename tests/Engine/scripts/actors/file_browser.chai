@@ -101,7 +101,7 @@ return fun(origin, size, on_file_choosen){
 
         print(cwd)
 
-        var content := core.filesystem.get_folder_content(cwd)
+/*        var content := core.filesystem.get_folder_content(cwd)
 
         print(content[0])
         print(content[1])
@@ -110,7 +110,7 @@ return fun(origin, size, on_file_choosen){
         for(auto i = 0; i<content.size(); ++i){
             print(content[i])
         }
-
+*/
         file_browser.add_actor("container", container)
         file_browser.add_actor("file_panel", file_panel)
         file_browser.add_actor("ok_button", ok_button)

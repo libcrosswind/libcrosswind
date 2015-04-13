@@ -1,5 +1,3 @@
-#pragma once
-
 #include "crosswind/sound/chunk.hpp"
 
 cw::sound::chunk::chunk(const std::string& file_path):
