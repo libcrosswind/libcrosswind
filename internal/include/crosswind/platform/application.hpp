@@ -15,6 +15,12 @@ public:
 
     void update();
 
+	void start();
+
+	bool alive();
+
+	void exit();
+
 private:
 	auto was_init(auto flags);
 	

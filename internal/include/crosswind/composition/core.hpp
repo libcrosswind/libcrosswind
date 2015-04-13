@@ -4,6 +4,42 @@
 
 #include "crosswind/configuration/settings.hpp"
 
+// forward declarations
+namespace cw{
+namespace platform{
+
+    class application;
+    class filesystem;
+    class input;
+
+}// namespace platfomrm
+}// namespace cw
+
+namespace cw{
+namespace graphical{
+
+    class video;
+
+}// namespace graphical
+}// namespace cw
+
+
+namespace cw{
+namespace sound{
+
+    class mixer;
+
+}// namespace sound
+}// namespace cw
+
+namespace cw{
+namespace simulation{
+
+    class physics;
+
+}// namespace simulation
+}// namespace cw
+
 namespace cw{
 namespace composition{
 

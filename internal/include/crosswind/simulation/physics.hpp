@@ -58,18 +58,18 @@ public:
 
 	void update(float dt);
 
-	auto create_character(const glm::vec3& origin, 
-						  const glm::vec2& size, 
-						  const float& step_height);
+	std::shared_ptr<detail::character> create_character(const glm::vec3& origin,
+														 const glm::vec2& size,
+														 const float& step_height);
 
 	void add_character(std::shared_ptr<detail::character> character_ptr);
 
 	void remove_character(std::shared_ptr<detail::character> character_ptr);
 
-	auto create_primitive(const PRIMITIVE_PROXY& proxy_type,
-						  const glm::vec3& origin,
-						  const glm::vec3& size,
-						  const float& mass);
+	std::shared_ptr<detail::body> create_primitive(const PRIMITIVE_PROXY& proxy_type,
+												   const glm::vec3& origin,
+												   const glm::vec3& size,
+												   const float& mass);
 
 
 	void add_rigid_body(std::shared_ptr<detail::body> body_ptr);
@@ -89,7 +89,7 @@ private:
 	std::unique_ptr<btBroadphaseInterface> 		broad_phase;
 	std::unique_ptr<btDispatcher>    			dispatcher;
 	std::unique_ptr<btCollisionConfiguration>	collision_config;
-	std::unique_ptr<debug::opengl::drawer>  	drawer;
+	std::shared_ptr<debug::opengl::drawer>  	drawer;
 
 };// class physics
 

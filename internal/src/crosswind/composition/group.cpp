@@ -6,7 +6,7 @@ cw::composition::group::group(){
 	
 }
 
-virtual void cw::composition::group::set_origin(const glm::vec3& f_origin) override {
+void cw::composition::group::set_origin(const glm::vec3& f_origin){
 	for (auto &actor : actor_map) {
 		auto translated_origin = actor.second->get_origin() + f_origin - origin;
 		actor.second->set_origin(translated_origin);
@@ -15,7 +15,7 @@ virtual void cw::composition::group::set_origin(const glm::vec3& f_origin) overr
 	origin = f_origin;
 }
 
-virtual void cw::composition::group::set_size(const glm::vec3& f_size) override {
+void cw::composition::group::set_size(const glm::vec3& f_size){
 	for (auto &actor : actor_map) {
 		auto percented_size = actor.second->get_size() * f_size / size;
 		actor.second->set_size(percented_size);
@@ -24,7 +24,7 @@ virtual void cw::composition::group::set_size(const glm::vec3& f_size) override 
 	size = f_size;
 }
 
-virtual void cw::composition::group::set_alpha(const float& f_alpha) override {
+void cw::composition::group::set_alpha(const float& f_alpha){
 	alpha = f_alpha;
 	for (auto &actor : actor_map) {
 		actor.second->set_alpha(alpha);
@@ -35,7 +35,7 @@ void cw::composition::group::add_actor(const std::string& actor_name, std::share
 	actor_map[actor_name] = new_actor;
 }
 
-auto cw::composition::group::get_actor(const std::string& actor_name){
+std::shared_ptr<cw::composition::actor> cw::composition::group::get_actor(const std::string& actor_name){
 	return actor_map[actor_name];
 }
 
@@ -43,7 +43,7 @@ void cw::composition::group::remove_actor(const std::string& actor_name){
 	actor_map.erase(actor_name);
 }
 
-auto& cw::composition::group::get_actor_map(){
+std::map<std::string, std::shared_ptr<cw::composition::actor> >& cw::composition::group::get_actor_map(){
 	return actor_map;
 }
 

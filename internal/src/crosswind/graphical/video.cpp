@@ -105,12 +105,12 @@ void cw::graphical::video::remove_texture(const std::string& texture_name){
 
 }
 
-auto cw::graphical::video::load_text(const std::string& text_name,
-			   						 const std::string& text_value,
-						     	     const glm::vec3& origin,
-									 const glm::vec3& color,
-									 const uint32_t& size,
-									 const std::string& font_path){
+std::shared_ptr<cw::graphical::object::text> cw::graphical::video::load_text(const std::string& text_name,
+																			 const std::string& text_value,
+																			 const glm::vec3& origin,
+																			 const glm::vec3& color,
+																			 const uint32_t& size,
+																			 const std::string& font_path){
 
 	auto text = std::make_shared<object::text>(text_value, origin, color, size);
 
@@ -150,9 +150,9 @@ auto cw::graphical::video::load_text(const std::string& text_name,
 
 }
 
-auto cw::graphical::video::load_model(const glm::vec3& origin,
-	                                  const glm::vec3& size,
-									  const std::string& template_file){
+std::shared_ptr<cw::graphical::object::model> cw::graphical::video::load_model(const glm::vec3& origin,
+														  					   const glm::vec3& size,
+																			   const std::string& template_file){
 
     modules::javascript::json json;
     json.from_file(template_file);

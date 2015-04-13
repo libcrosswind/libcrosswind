@@ -1,14 +1,18 @@
-#include <map>
 #include <memory>
 #include <string>
 #include <stdexcept>
 
 #include "glm/glm.hpp"
 
+#include "crosswind/composition/actor.hpp"
 #include "crosswind/composition/core.hpp"
+#include "crosswind/platform/filesystem.hpp"
+#include "crosswind/graphical/video.hpp"
 #include "crosswind/graphical/object/model.hpp"
 #include "crosswind/graphical/object/text.hpp"
-
+#include "crosswind/graphical/object/sprite.hpp"
+#include "crosswind/graphical/object/sprite_animation.hpp"
+#include "crosswind/simulation/physics.hpp"
 #include "crosswind/simulation/detail/character.hpp"
 #include "crosswind/simulation/detail/body.hpp"
 
@@ -18,16 +22,16 @@ cw::composition::actor::actor(){
 
 cw::composition::actor::~actor(){
 
-	for(auto& body_mapping: bodies){
+	for(auto& body_mapping: body_map){
 		core->physics->remove_rigid_body(body_mapping.second);
 	}
 
-	for(auto& character_mapping: characters){
+	for(auto& character_mapping: character_map){
 		core->physics->remove_character(character_mapping.second);
 	}
 }
 
-virtual void cw::composition::actor::set_origin(const glm::vec3& f_origin){
+void cw::composition::actor::set_origin(const glm::vec3& f_origin){
 	for (auto &model : model_map) {
 		auto translated_origin = model.second->get_origin() + f_origin - origin;
 		model.second->set_origin(translated_origin);
@@ -36,7 +40,7 @@ virtual void cw::composition::actor::set_origin(const glm::vec3& f_origin){
 	origin = f_origin;
 }
 
-virtual void cw::composition::actor::set_size(const glm::vec3& f_size){
+void cw::composition::actor::set_size(const glm::vec3& f_size){
 	for (auto &model : model_map) {
 		auto percented_size = model.second->get_size() * f_size / size;
 		model.second->set_size(percented_size);
@@ -45,7 +49,7 @@ virtual void cw::composition::actor::set_size(const glm::vec3& f_size){
 	size = f_size;
 }
 
-virtual void cw::composition::actor::set_alpha(const float& f_alpha){
+void cw::composition::actor::set_alpha(const float& f_alpha){
 	alpha = f_alpha;
 	for(auto& model : model_map){
 		for(auto& sprite : model.second->get_animations()){
@@ -110,7 +114,7 @@ void cw::composition::actor::add_model(const std::string& model_name,
 
 }
 
-auto cw::composition::actor::get_model(const std::string& model_name){
+std::shared_ptr<cw::graphical::object::model> cw::composition::actor::get_model(const std::string& model_name){
 	if(model_map.find(model_name) != model_map.end()){
 		return model_map[model_name];
 	} else {
@@ -131,13 +135,13 @@ void cw::composition::actor::add_rigid_body(const std::string& body_name,
 		            						const glm::vec3& size,
 		            						const float& mass){
 
-	if(bodies.find(body_name) == bodies.end()){
-		bodies[body_name]  = core->physics->create_primitive(simulation::physics::PRIMITIVE_PROXY::BOX,
-				                                             origin,
-				                                             size,
-				                                             mass);
+	if(body_map.find(body_name) == body_map.end()){
+		body_map[body_name]  = core->physics->create_primitive(simulation::physics::PRIMITIVE_PROXY::BOX,
+				                                               origin,
+				                                               size,
+				                                               mass);
 
-		bodies[body_name]->physic_body->setUserPointer(this);
+		body_map[body_name]->physic_body->setUserPointer(this);
 
 	} else {
 		throw std::runtime_error(body_name + " already exists, remove it first before adding one with the same name");
@@ -147,8 +151,8 @@ void cw::composition::actor::add_rigid_body(const std::string& body_name,
 
 auto cw::composition::actor::get_rigid_body(const std::string& body_name){
 
-	if(bodies.find(body_name) != bodies.end()){
-		return bodies[body_name];
+	if(body_map.find(body_name) != body_map.end()){
+		return body_map[body_name];
 	} else {
 		throw std::runtime_error(body_name + " does not exist");
 	}
@@ -157,9 +161,9 @@ auto cw::composition::actor::get_rigid_body(const std::string& body_name){
 
 void cw::composition::actor::remove_rigid_body(const std::string& body_name){
 
-	if(bodies.find(body_name) != bodies.end()){
-		core->physics->remove_rigid_body(bodies[body_name]);
-		bodies.erase(body_name);
+	if(body_map.find(body_name) != body_map.end()){
+		core->physics->remove_rigid_body(body_map[body_name]);
+		body_map.erase(body_name);
 	} else {
 		throw std::runtime_error(body_name + " does not exist or was already removed");
 	}
@@ -171,9 +175,9 @@ void cw::composition::actor::add_character(const std::string& character_name,
 				   						   const glm::vec2& size,
 				   					   	   const float& step_height){
 
-	if(characters.find(character_name) == characters.end()){
-		characters[character_name]  = core->physics->create_character(origin, size, step_height);
-		static_cast<btKinematicCharacterController*>(characters[character_name]->get_character_object())->
+	if(character_map.find(character_name) == character_map.end()){
+		character_map[character_name]  = core->physics->create_character(origin, size, step_height);
+		static_cast<btKinematicCharacterController*>(character_map[character_name]->get_character_object())->
 				getGhostObject()->setUserPointer(this);
 	} else {
 		throw std::runtime_error(character_name + " already exists, remove it first before adding one with the same name");
@@ -183,8 +187,8 @@ void cw::composition::actor::add_character(const std::string& character_name,
 
 auto cw::composition::actor::get_character(const std::string& character_name){
 
-	if(characters.find(character_name) != characters.end()){
-		return characters[character_name];
+	if(character_map.find(character_name) != character_map.end()){
+		return character_map[character_name];
 	} else {
 		throw std::runtime_error(character_name + " does not exist");
 	}
@@ -193,19 +197,19 @@ auto cw::composition::actor::get_character(const std::string& character_name){
 
 void cw::composition::actor::remove_character(const std::string& character_name){
 
-	if(characters.find(character_name) != characters.end()){
-		  core->physics->remove_character(characters[character_name]);
-		  characters.erase(character_name);
+	if(character_map.find(character_name) != character_map.end()){
+		  core->physics->remove_character(character_map[character_name]);
+		character_map.erase(character_name);
 	} else {
 		throw std::runtime_error(character_name + " does not exist or was already removed");
 	}
 
 }
 
-auto& cw::composition::actor::get_model_map(){
+std::map<std::string, std::shared_ptr<cw::graphical::object::model> >& cw::composition::actor::get_model_map(){
 	return model_map;
 }
 
-auto& cw::composition::actor::get_text_map(){
+std::map<std::string, std::shared_ptr<cw::graphical::object::text> >& cw::composition::actor::get_text_map(){
 	return text_map;
 }

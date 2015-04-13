@@ -10,6 +10,17 @@
 // forward declarations
 namespace cw{
 namespace graphical{
+namespace object{
+
+	class text;
+	class model;
+
+}// namespace object
+}// namespace graphical
+}// namespace cw
+
+namespace cw{
+namespace graphical{
 namespace opengl{
 	
 	class window;
@@ -56,16 +67,16 @@ public:
 
 	void remove_texture(const std::string& texture_name);
 
-	auto load_text(const std::string& text_name,
-				   const std::string& text_value,
-				   const glm::vec3& origin,
-				   const glm::vec3& color,
-				   const uint32_t& size,
-				   const std::string& font_path);
+	std::shared_ptr<object::text> load_text(const std::string& text_name,
+											const std::string& text_value,
+											const glm::vec3& origin,
+											const glm::vec3& color,
+											const uint32_t& size,
+											const std::string& font_path);
 
-	auto load_model(const glm::vec3& origin,
-					const glm::vec3& size,
-					const std::string& template_file);
+	std::shared_ptr<object::model> load_model(const glm::vec3& origin,
+											  const glm::vec3& size,
+											  const std::string& template_file);
 
 	std::shared_ptr< opengl::window   >	window;
     std::shared_ptr< opengl::renderer >	renderer;

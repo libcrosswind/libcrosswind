@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "crosswind/settings.hpp"
+#include "crosswind/configuration/settings.hpp"
 
 // forward declarations
 namespace cw{

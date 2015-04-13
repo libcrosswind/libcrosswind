@@ -7,6 +7,8 @@
 #include <utility>
 #include <functional>
 
+#include "glm/glm.hpp"
+
 #include "crosswind/composition/detail/named_component.hpp"
 #include "crosswind/composition/detail/logic_component.hpp"
 
@@ -25,15 +27,15 @@ namespace composition{
 namespace cw{
 namespace composition{
 
-class scene: public named_component,
-			 public logic_component{
+class scene: public detail::named_component,
+			 public detail::logic_component{
 	friend class stage;
 public:
 	scene();
 
 	void add_camera(const std::string& camera_name, std::shared_ptr<camera> camera);
 
-	auto get_camera(const std::string& camera_name);
+	std::shared_ptr<camera> get_camera(const std::string& camera_name);
 
 	void add_actor(const std::string& actor_name, std::shared_ptr<actor> actor);
 
@@ -57,9 +59,9 @@ public:
 
 	auto& get_camera_map();
 
-	auto& get_group_map();
+	std::map<std::string, std::shared_ptr<group> >& get_group_map();
 
-	auto& get_actor_map();
+	std::map<std::string, std::shared_ptr<actor> >& get_actor_map();
 
 	void check_collisions();
 
@@ -92,7 +94,7 @@ private:
 	std::vector<std::pair<bool, std::function<void()> > > event_queue;
 
 	typedef std::map<std::string, std::vector<std::pair<glm::vec3, glm::vec3> > > actor_collision_map;
-	std::map<std::string, actor_collision_map> scene_collision_map;
+	std::map<std::string, actor_collision_map> collision_map;
 
 
 };// class stage

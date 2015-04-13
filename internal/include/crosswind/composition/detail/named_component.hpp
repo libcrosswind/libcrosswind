@@ -3,16 +3,11 @@
 #include <string>
 
 namespace cw{
-namespace interface{
 namespace composition{
-	
-	class named_component;
+namespace detail{
 
-}// namespace composition
-}// namespace interface
-}// namespace cw
 
-class cw::interface::composition::named_component{
+class named_component{
 public:
 	named_component(): name("undefined"){
 
@@ -29,4 +24,9 @@ public:
 
 protected:
 	std::string name;
+
 };// class named_component
+
+}// namespace detail
+}// namespace composition
+}// namespace cw

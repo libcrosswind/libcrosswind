@@ -2,11 +2,11 @@
 
 #include "crosswind/simulation/box.hpp"
 
-class cw::simulation::box::box(const glm::vec3& c_origin,
-                               const glm::vec3& c_size,
-                               const float&     c_mass,
-                               const glm::vec3& c_scale,
-                               const glm::vec3& c_unit_value): 
+cw::simulation::box::box(const glm::vec3& c_origin,
+                         const glm::vec3& c_size,
+                         const float&     c_mass,
+                         const glm::vec3& c_scale,
+                         const glm::vec3& c_unit_value):
 body(c_origin, c_scale, c_unit_value){
 
             glm::vec3 s_size = c_size * scale;

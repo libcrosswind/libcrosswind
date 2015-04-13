@@ -1,4 +1,5 @@
 #include "crosswind/graphical/object/sprite_animation.hpp"
+#include "crosswind/graphical/object/sprite.hpp"
 
 cw::graphical::object::sprite_animation::sprite_animation(){
 

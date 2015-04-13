@@ -20,5 +20,4 @@ public:
 
 }// namespace opengl
 }// namespace graphical
-}// namespace implementation
 }// namespace cw

@@ -1,5 +1,6 @@
 #include <memory>
 
+#include "crosswind/composition/core.hpp"
 #include "crosswind/configuration/settings.hpp"
 #include "crosswind/platform/application.hpp"
 #include "crosswind/platform/filesystem.hpp"
@@ -8,7 +9,7 @@
 #include "crosswind/sound/mixer.hpp"
 #include "crosswind/simulation/physics.hpp"
 
-cw::composition::core(const cw::configuration::settings& engine_settings){
+cw::composition::core::core(const cw::configuration::settings& engine_settings){
 
     application = std::make_shared<platform::application>(engine_settings.application.flags);
     filesystem  = std::make_shared<platform::filesystem>();

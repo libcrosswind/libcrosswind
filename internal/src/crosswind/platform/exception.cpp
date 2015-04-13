@@ -11,7 +11,7 @@ cw::platform::exception::~exception() throw (){
 
 }
 
-virtual const char* cw::platform::exception::what() const throw (){
+const char* cw::platform::exception::what() const throw (){
    return msg_.c_str();
 }
  

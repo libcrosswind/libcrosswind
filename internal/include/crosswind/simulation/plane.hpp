@@ -2,12 +2,12 @@
 
 #include "glm/glm.hpp"
 
-#include "crosswind/physics/detail/rigid_body.hpp"
+#include "crosswind/simulation/detail/body.hpp"
 
 namespace cw{
-namespace physics{
+namespace simulation{
 	
-class plane: public detail::rigid_body{
+class plane: public detail::body{
 public:
 	plane(const glm::vec3& origin,
           const glm::vec3& size, 
@@ -15,5 +15,5 @@ public:
 
 };// class plane
 
-}// namespace physics
+}// namespace simulation
 }// namespace cw

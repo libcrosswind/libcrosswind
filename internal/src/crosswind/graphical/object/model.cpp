@@ -41,7 +41,7 @@ void cw::graphical::object::model::set_render_sprite(auto sprite){
 
 }
 
-auto cw::graphical::object::model::get_render_sprite(){
+std::shared_ptr<cw::graphical::object::sprite> cw::graphical::object::model::get_render_sprite(){
 
 	return render_sprite;
 
@@ -57,7 +57,7 @@ void cw::graphical::object::model::set_animations(const auto& new_animations){
 
 }
 
-auto& get_animations(){
+std::map<std::string, std::shared_ptr<cw::graphical::object::sprite_animation> >& cw::graphical::object::model::get_animations(){
 	
 	return animations;
 

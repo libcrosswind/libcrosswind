@@ -1,4 +1,4 @@
-#include "crosswind/interface/simulation/detail/body.hpp"
+#include "crosswind/simulation/detail/body.hpp"
 
 cw::simulation::detail::body::body(const glm::vec3& c_origin, 
 		 						   const glm::vec3& c_scale, 
@@ -73,7 +73,7 @@ void cw::simulation::detail::body::apply_force(const glm::vec3& new_force){
 }
 
 
-void cw::simulation::detail::body::set_activation_policy(int policy){
+void cw::simulation::detail::body::set_activation_policy(auto policy){
 	physic_body->setActivationState(policy);
 }
 

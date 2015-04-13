@@ -70,7 +70,7 @@ glm::vec3 cw::simulation::physics::get_gravity(){
 
 void cw::simulation::physics::debug_draw_world(const glm::mat4& projection_matrix){
 	
-	physics_debug_drawer->update(projection_matrix, scale);
+	drawer->update(projection_matrix, scale);
 	world->debugDrawWorld();
 
 }
@@ -81,9 +81,9 @@ void cw::simulation::physics::update(float dt){
 
 }
 
-auto cw::simulation::physics::create_character(const glm::vec3& origin, 
-															   const glm::vec2& size, 
-															   const float& step_height){
+std::shared_ptr<cw::simulation::detail::character> cw::simulation::physics::create_character(const glm::vec3& origin,
+																							 const glm::vec2& size,
+																							 const float& step_height){
 
 	auto character = std::make_shared<detail::character>(origin, size, scale, unit_value, step_height);
 	add_character(character);
@@ -110,10 +110,10 @@ void cw::simulation::physics::remove_character(std::shared_ptr<detail::character
 
 }
 
-auto cw::simulation::physics::create_primitive(const PRIMITIVE_PROXY& proxy_type,
-											   const glm::vec3& origin,
-											   const glm::vec3& size,
-											   const float& mass){
+std::shared_ptr<cw::simulation::detail::body> cw::simulation::physics::create_primitive(const PRIMITIVE_PROXY& proxy_type,
+																					    const glm::vec3& origin,
+																					    const glm::vec3& size,
+																						const float& mass){
 
 	std::shared_ptr<detail::body> body;
 

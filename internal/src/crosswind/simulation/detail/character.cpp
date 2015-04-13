@@ -1,3 +1,5 @@
+#include "btBulletDynamicsCommon.h"
+
 #include "crosswind/simulation/detail/character.hpp"
 
 cw::simulation::detail::character::character(const glm::vec3& c_origin,

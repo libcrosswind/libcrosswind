@@ -1,4 +1,4 @@
-#include "crosswind/settings.hpp"
+#include "crosswind/configuration/settings.hpp"
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"

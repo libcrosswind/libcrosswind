@@ -1,4 +1,5 @@
 #include "GL/glew.h"
+#include "SDL2/SDL.h"
 
 #include "crosswind/graphical/opengl/window.hpp"
 #include "crosswind/platform/exception.hpp"

@@ -1,5 +1,18 @@
+#include "crosswind/engine.hpp"
 #include "crosswind/composition/core.hpp"
 #include "crosswind/composition/stage.hpp"
+#include "crosswind/composition/scene.hpp"
+#include "crosswind/composition/camera.hpp"
+#include "crosswind/composition/group.hpp"
+#include "crosswind/composition/actor.hpp"
+#include "crosswind/platform/application.hpp"
+#include "crosswind/platform/input.hpp"
+#include "crosswind/graphical/video.hpp"
+#include "crosswind/graphical/object/model.hpp"
+#include "crosswind/graphical/object/text.hpp"
+#include "crosswind/graphical/opengl/renderer.hpp"
+#include "crosswind/graphical/opengl/window.hpp"
+#include "crosswind/simulation/physics.hpp"
 
 cw::engine::engine(const configuration::settings& engine_settings){
         core    = std::make_shared<class cw::composition::core>(engine_settings);

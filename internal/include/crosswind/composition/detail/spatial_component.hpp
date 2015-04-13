@@ -3,19 +3,13 @@
 #include <glm/glm.hpp>
 
 namespace cw{
-namespace interface{
 namespace composition{
-	
-	class spatial_component;
+namespace detail{
 
-}// namespace composition
-}// namespace interface
-}// namespace cw
-
-class cw::interface::composition::spatial_component{
+class spatial_component{
 public:
 	spatial_component(): origin(0.0f, 0.0f, 0.0f), size(1.0f, 1.0f, 1.0f), alpha(1.0f){
-	
+
 	}
 
 	virtual void set_origin(const glm::vec3& f_origin) {
@@ -47,4 +41,10 @@ protected:
 	glm::vec3 origin;
 	glm::vec3 size;
 	float alpha;
+
 };// class spatial_component
+
+}// namespace detail
+}// namespace composition
+}// namespace cw
+

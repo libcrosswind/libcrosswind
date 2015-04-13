@@ -14,11 +14,11 @@ class mesh{
 public:
     mesh(const glm::vec3& o, const glm::vec3& s);
 
-    void set_size(const glm::vec3& new_size);
+    virtual void set_size(const glm::vec3& new_size);
     
     glm::vec3 get_size();
 
-    void set_origin(const glm::vec3& new_origin);
+    virtual void set_origin(const glm::vec3& new_origin);
 
     glm::vec3 get_origin();
 
@@ -26,7 +26,7 @@ public:
 
     std::vector<vertex>& get_vertices();
 
-private:
+protected:
     glm::vec3 origin;
     glm::vec3 size;
     std::vector<vertex> vertices;

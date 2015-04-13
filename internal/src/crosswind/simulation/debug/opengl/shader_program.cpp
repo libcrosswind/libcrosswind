@@ -1,4 +1,5 @@
 #include <fstream>
+#include <vector>
 
 #include "GL/glew.h"
 
@@ -19,7 +20,7 @@ cw::simulation::debug::opengl::shader_program::~shader_program(){
 
 }
 
-void cw::simulation::debug::opengl::shader_program::compile(const std::string& vertex_shader_filepath, c
+void cw::simulation::debug::opengl::shader_program::compile(const std::string& vertex_shader_filepath,
 															const std::string& fragment_shader_filepath){
     program_id = glCreateProgram();
 

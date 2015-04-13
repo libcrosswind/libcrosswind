@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <cstdint>
+#include <vector>
 
 #include "LinearMath/btIDebugDraw.h"
 #include "glm/glm.hpp"

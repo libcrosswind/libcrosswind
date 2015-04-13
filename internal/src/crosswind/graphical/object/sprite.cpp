@@ -47,7 +47,7 @@ texture_id(c_id){
     set_origin(origin);
 }
 
-virtual void cw::graphical::object::sprite::set_origin(const glm::vec3& new_origin) override {
+void cw::graphical::object::sprite::set_origin(const glm::vec3& new_origin){
     origin = new_origin;
 
     auto px = new_origin.x - size.x/2.0f;
@@ -75,7 +75,7 @@ virtual void cw::graphical::object::sprite::set_origin(const glm::vec3& new_orig
 
 }
 
-virtual void cw::graphical::object::sprite::set_size(const glm::vec3& new_size) override {
+void cw::graphical::object::sprite::set_size(const glm::vec3& new_size){
 
     size = new_size;
 

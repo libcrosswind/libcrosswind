@@ -5,6 +5,17 @@
 
 #include "glm/glm.hpp"
 
+// forward declarations
+namespace cw{
+namespace graphical{
+namespace object{
+
+    class sprite;
+
+}// namespace object
+}// namespace graphical
+}// namespace cw
+
 namespace cw{
 namespace graphical{
 namespace object{

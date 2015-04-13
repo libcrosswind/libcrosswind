@@ -33,11 +33,11 @@ public:
 
 	void set_render_sprite(auto sprite);
 
-	auto get_render_sprite();
+	std::shared_ptr<sprite> get_render_sprite();
 
 	void set_animations(const auto& new_animations);
 
-	auto& get_animations();
+	std::map<std::string, std::shared_ptr<sprite_animation> >& get_animations();
 
 	void set_origin(const glm::vec3& new_origin);
 

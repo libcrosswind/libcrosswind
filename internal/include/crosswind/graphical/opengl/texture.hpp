@@ -2,11 +2,13 @@
 
 #include <cstdint>
 
+#include "glm/glm.hpp"
+
 namespace cw{
 namespace graphical{
 namespace opengl{
 
-class cw::implementation::graphical::opengl::texture: public cw::interface::graphical::detail::texture{
+class texture{
 public:
 	texture(const glm::vec2& size, unsigned char bpp, void* pixels);
 

@@ -1,14 +1,15 @@
 #include <iostream>
 
+#include "GL/glew.h"
 #include "glm/gtc/type_ptr.hpp"
 
 #include "crosswind/simulation/debug/opengl/drawer.hpp"
 #include "crosswind/simulation/debug/opengl/shader_program.hpp"
 
-cw::implementation::simulation::debug::opengl::drawer::drawer(): 
+cw::simulation::debug::opengl::drawer::drawer():
 debug_mode(btIDebugDraw::DBG_DrawWireframe){
 
-		shader_program = std::make_shared<opengl::shader_program>();
+		shader_program = std::make_shared<class shader_program>();
 		std::string vertex_shader   = "assets/engine/graphics/shaders/primitive_shading.vert";
 		std::string fragment_shader = "assets/engine/graphics/shaders/primitive_shading.frag";
 
@@ -20,22 +21,22 @@ debug_mode(btIDebugDraw::DBG_DrawWireframe){
 		glGenBuffers(1, &vbo_id);
 }
 
-cw::implementation::simulation::debug::opengl::drawer::~physics_debug_drawer(){
+cw::simulation::debug::opengl::drawer::~drawer(){
 	glDeleteBuffers(1, &vbo_id);
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::upload_vertex_array(const std::vector<vertex>& vertex_array){
+void cw::simulation::debug::opengl::drawer::upload_vertex_array(const std::vector<vertex>& vertex_array){
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
 	glBufferData(GL_ARRAY_BUFFER,
-	sizeof(interface::simulation::debug::vertex)*vertex_array.size(),
+	sizeof(vertex)*vertex_array.size(),
 	vertex_array.data(),
 	GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::update(const glm::mat4& f_perspective, 
+void cw::simulation::debug::opengl::drawer::update(const glm::mat4& f_perspective,
 														           const glm::vec3& f_scale){
 
 	perspective = f_perspective;
@@ -44,14 +45,14 @@ void cw::implementation::simulation::debug::opengl::drawer::update(const glm::ma
 }
 
 
-void cw::implementation::simulation::debug::opengl::drawer::drawLine(const btVector3& from, 
+void cw::simulation::debug::opengl::drawer::drawLine(const btVector3& from,
 																     const btVector3& to, 
 																     const btVector3& fromColor, 
 																     const btVector3& toColor){
 
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::drawLine(const btVector3& f, 
+void cw::simulation::debug::opengl::drawer::drawLine(const btVector3& f,
 															         const btVector3& t, 
 															         const btVector3& color){
 
@@ -70,9 +71,9 @@ void cw::implementation::simulation::debug::opengl::drawer::drawLine(const btVec
 	glm::vec4 c(color.getX(), color.getY(), color.getZ(), 1.0);
 	glm::vec2 u(0.0, 0.0);
 
-	std::vector<interface::simulation::debug::vertex> vertex_array;
-	interface::simulation::debug::vertex a(n_from, c, u);
-	interface::simulation::debug::vertex b(n_to, c, u);
+	std::vector<vertex> vertex_array;
+	vertex a(n_from, c, u);
+	vertex b(n_to, c, u);
 	vertex_array.push_back(a);
 	vertex_array.push_back(b);
 
@@ -87,15 +88,15 @@ void cw::implementation::simulation::debug::opengl::drawer::drawLine(const btVec
 			4,
 			GL_FLOAT,
 			GL_FALSE,
-			sizeof(interface::simulation::debug::vertex),
-			(void*)offsetof(interface::simulation::debug::vertex, interface::simulation::debug::vertex::position));
+			sizeof(vertex),
+			(void*)offsetof(vertex, vertex::position));
 
 	glVertexAttribPointer(1,
 			4,
 			GL_FLOAT,
 			GL_FALSE,
-			sizeof(interface::simulation::debug::vertex),
-			(void*)offsetof(interface::simulation::debug::vertex, interface::simulation::debug::vertex::color));
+			sizeof(vertex),
+			(void*)offsetof(vertex, vertex::color));
 
 	glDrawArrays( GL_POINTS, 0, vertex_array.size() );
 	glDrawArrays( GL_LINES, 0, vertex_array.size() );
@@ -110,9 +111,9 @@ void cw::implementation::simulation::debug::opengl::drawer::drawLine(const btVec
 
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::drawSphere(const btVector3& p, 
-																	   btScalar radius, 
-																	   const btVector3& color){
+void cw::simulation::debug::opengl::drawer::drawSphere(const btVector3& p,
+													   btScalar radius,
+													   const btVector3& color){
 
 	glColor4f (color.getX(), color.getY(), color.getZ(), btScalar(1.0f));
 	glPushMatrix ();
@@ -149,11 +150,11 @@ void cw::implementation::simulation::debug::opengl::drawer::drawSphere(const btV
 
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::drawTriangle(const btVector3& a, 
-																		 const btVector3& b, 
-																		 const btVector3& c, 
-																		 const btVector3& color, 
-																		 btScalar alpha){
+void cw::simulation::debug::opengl::drawer::drawTriangle(const btVector3& a,
+														 const btVector3& b,
+														 const btVector3& c,
+														 const btVector3& color,
+														 btScalar alpha){
 
 	{
 		const btVector3	n=btCross(b-a,c-a).normalized();
@@ -168,11 +169,11 @@ void cw::implementation::simulation::debug::opengl::drawer::drawTriangle(const b
 
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::drawContactPoint(const btVector3& PointOnB, 
-																			 const btVector3& normalOnB, 
-																			 btScalar distance, 
-																			 int lifeTime, 
-																			 const btVector3& color){
+void cw::simulation::debug::opengl::drawer::drawContactPoint(const btVector3& PointOnB,
+															 const btVector3& normalOnB,
+															 btScalar distance,
+															 int lifeTime,
+															 const btVector3& color){
 
 	btVector3 to= PointOnB+normalOnB*1;//distance;
 	const btVector3&from = PointOnB;
@@ -190,22 +191,22 @@ void cw::implementation::simulation::debug::opengl::drawer::drawContactPoint(con
 
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::reportErrorWarning(const char* warning_string){
+void cw::simulation::debug::opengl::drawer::reportErrorWarning(const char* warning_string){
 	std::cout << warning_string << std::endl;
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::draw3dText(const btVector3& location, 
-																       const char* textString){
+void cw::simulation::debug::opengl::drawer::draw3dText(const btVector3& location,
+													   const char* textString){
 
 	glRasterPos3f(location.x(),  location.y(),  location.z());
 
 }
 
-void cw::implementation::simulation::debug::opengl::drawer::setDebugMode(int mode){
+void cw::simulation::debug::opengl::drawer::setDebugMode(int mode){
 	debug_mode = mode;
 }
 
-int cw::implementation::simulation::debug::opengl::drawer::getDebugMode() const {
+int cw::simulation::debug::opengl::drawer::getDebugMode() const {
 	return debug_mode;
 }
 

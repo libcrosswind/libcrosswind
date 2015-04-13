@@ -11,8 +11,9 @@
 // forward declarations
 namespace cw{
 namespace composition{
-	
+
 	class actor;
+	class core;
 
 }// namespace cw
 }// namespace composition
@@ -20,9 +21,9 @@ namespace composition{
 namespace cw{
 namespace composition{
 
-class group: public named_component,
-			 public spatial_component,
-			 public logic_component{
+class group: public detail::named_component,
+			 public detail::spatial_component,
+			 public detail::logic_component{
 public:
 	group();
 
@@ -31,12 +32,12 @@ public:
 	virtual void set_alpha(const float& f_alpha) override;
 
 	void add_actor(const std::string& actor_name, std::shared_ptr<actor> new_actor);
-	
-	auto get_actor(const std::string& actor_name);
+
+	std::shared_ptr<actor> get_actor(const std::string& actor_name);
 	
 	void remove_actor(const std::string& actor_name);
 
-	auto& get_actor_map();
+	std::map<std::string, std::shared_ptr<actor> >& get_actor_map();
 
 	void update(const float& delta);
 

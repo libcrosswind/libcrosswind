@@ -1,12 +1,31 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "glm/glm.hpp"
 #include "chaiscript/chaiscript.hpp"
 #include "chaiscript/chaiscript_stdlib.hpp"
+#include "glm/glm.hpp"
 
 #include "crosswind/scripting/interpreter.hpp"
+
 #include "crosswind/engine.hpp"
+#include "crosswind/composition/core.hpp"
+#include "crosswind/composition/stage.hpp"
+#include "crosswind/composition/scene.hpp"
+#include "crosswind/composition/camera.hpp"
+#include "crosswind/composition/group.hpp"
+#include "crosswind/composition/actor.hpp"
+#include "crosswind/platform/application.hpp"
+#include "crosswind/platform/filesystem.hpp"
+#include "crosswind/platform/input.hpp"
+#include "crosswind/graphical/video.hpp"
+#include "crosswind/graphical/object/model.hpp"
+#include "crosswind/graphical/object/text.hpp"
+#include "crosswind/graphical/opengl/renderer.hpp"
+#include "crosswind/graphical/opengl/window.hpp"
+#include "crosswind/simulation/physics.hpp"
+
+
+
 
 namespace cw{
 namespace scripting{
@@ -160,8 +179,8 @@ void cw::scripting::interpreter::bind_video(){
 	chai->add(chaiscript::fun(&cw::graphical::video::set_window_icon), "set_window_icon");
 	chai->add(chaiscript::fun(&cw::graphical::video::load_model), "load_model");
 	chai->add(chaiscript::fun(&cw::graphical::video::window), "window");
-	chai->add(chaiscript::fun(&cw::graphical::detail::window::get_size), "get_size");
-//	chai->add(chaiscript::fun(&cw::graphical::detail::window::set_clear_color), "set_clear_color");
+	chai->add(chaiscript::fun(&cw::graphical::opengl::window::get_size), "get_size");
+//	chai->add(chaiscript::fun(&cw::graphical::opengl::window::set_clear_color), "set_clear_color");
 
 }
 
@@ -191,35 +210,35 @@ void cw::scripting::interpreter::bind_composition(){
 
 	// inheritance
 	// logic_component
-	chai->add(chaiscript::fun(&cw::composition::logic_component::construct), "construct");
+	chai->add(chaiscript::fun(&cw::composition::detail::logic_component::construct), "construct");
 
 	// named_component
-	chai->add(chaiscript::fun(&cw::composition::named_component::set_name), "set_name");
-	chai->add(chaiscript::fun(&cw::composition::named_component::get_name), "get_name");
+	chai->add(chaiscript::fun(&cw::composition::detail::named_component::set_name), "set_name");
+	chai->add(chaiscript::fun(&cw::composition::detail::named_component::get_name), "get_name");
 
 	// spatial_component
-	chai->add(chaiscript::fun(&cw::composition::spatial_component::set_origin), "set_origin");
-	chai->add(chaiscript::fun(&cw::composition::spatial_component::get_origin), "get_origin");
-	chai->add(chaiscript::fun(&cw::composition::spatial_component::set_size), "set_size");
-	chai->add(chaiscript::fun(&cw::composition::spatial_component::get_size), "get_size");
-	chai->add(chaiscript::fun(&cw::composition::spatial_component::set_alpha), "set_alpha");
-	chai->add(chaiscript::fun(&cw::composition::spatial_component::get_alpha), "get_alpha");
+	chai->add(chaiscript::fun(&cw::composition::detail::spatial_component::set_origin), "set_origin");
+	chai->add(chaiscript::fun(&cw::composition::detail::spatial_component::get_origin), "get_origin");
+	chai->add(chaiscript::fun(&cw::composition::detail::spatial_component::set_size), "set_size");
+	chai->add(chaiscript::fun(&cw::composition::detail::spatial_component::get_size), "get_size");
+	chai->add(chaiscript::fun(&cw::composition::detail::spatial_component::set_alpha), "set_alpha");
+	chai->add(chaiscript::fun(&cw::composition::detail::spatial_component::get_alpha), "get_alpha");
 
 
 	// inheritance bindings
 	// scene
-	chai->add(chaiscript::base_class<cw::composition::logic_component, cw::composition::scene>());
-	chai->add(chaiscript::base_class<cw::composition::named_component, cw::composition::scene>());
+	chai->add(chaiscript::base_class<cw::composition::detail::logic_component, cw::composition::scene>());
+	chai->add(chaiscript::base_class<cw::composition::detail::named_component, cw::composition::scene>());
 
 	// group
-	chai->add(chaiscript::base_class<cw::composition::named_component,   cw::composition::group>());
-	chai->add(chaiscript::base_class<cw::composition::spatial_component, cw::composition::group>());
-	chai->add(chaiscript::base_class<cw::composition::logic_component, cw::composition::group>());
+	chai->add(chaiscript::base_class<cw::composition::detail::named_component,   cw::composition::group>());
+	chai->add(chaiscript::base_class<cw::composition::detail::spatial_component, cw::composition::group>());
+	chai->add(chaiscript::base_class<cw::composition::detail::logic_component, cw::composition::group>());
 
 	// actor
-	chai->add(chaiscript::base_class<cw::composition::named_component, cw::composition::actor>());
-	chai->add(chaiscript::base_class<cw::composition::spatial_component, cw::composition::actor>());
-	chai->add(chaiscript::base_class<cw::composition::logic_component, cw::composition::actor>());
+	chai->add(chaiscript::base_class<cw::composition::detail::named_component, cw::composition::actor>());
+	chai->add(chaiscript::base_class<cw::composition::detail::spatial_component, cw::composition::actor>());
+	chai->add(chaiscript::base_class<cw::composition::detail::logic_component, cw::composition::actor>());
 
 	// stage
 	chai->add(chaiscript::fun(&cw::composition::stage::create_scene), "create_scene");

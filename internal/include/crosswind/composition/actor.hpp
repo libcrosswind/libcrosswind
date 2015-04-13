@@ -42,9 +42,9 @@ namespace detail{
 namespace cw{
 namespace composition{
 
-class actor: public named_component,
-			 public spatial_component,
-			 public logic_component{
+class actor: public detail::named_component,
+			 public detail::spatial_component,
+			 public detail::logic_component{
 	
 public:
 	actor();
@@ -70,7 +70,7 @@ public:
 				   const glm::vec3& size,
 				   const std::string& template_file);
 
-	auto get_model(const std::string& model_name);
+	std::shared_ptr<graphical::object::model> get_model(const std::string& model_name);
 
 	void remove_model(const std::string& model_name);
 
@@ -92,17 +92,17 @@ public:
 
 	void remove_character(const std::string& character_name);
 
-	auto& get_model_map();
+	std::map<std::string, std::shared_ptr<graphical::object::model> >& get_model_map();
 
-	auto& get_text_map();
+	std::map<std::string, std::shared_ptr<graphical::object::text> >& get_text_map();
 
 	std::shared_ptr<core> core;
 	std::map<std::string, bool> conditions;
 
 private:
-	std::map<std::string, std::shared_ptr<graphical::object::model> > model_map;
-	std::map<std::string, std::shared_ptr<graphical::object::text> > text_map;
-	std::map<std::string, std::shared_ptr<simulation::detail::body> > body_map;
+	std::map<std::string, std::shared_ptr<graphical::object::model> > 		model_map;
+	std::map<std::string, std::shared_ptr<graphical::object::text> > 		text_map;
+	std::map<std::string, std::shared_ptr<simulation::detail::body> >       body_map;
 	std::map<std::string, std::shared_ptr<simulation::detail::character> >  character_map;
 
 };// class actor

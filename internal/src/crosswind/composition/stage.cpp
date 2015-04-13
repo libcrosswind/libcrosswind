@@ -7,7 +7,7 @@
 #include "crosswind/composition/group.hpp"
 #include "crosswind/composition/actor.hpp"
 
-cw::composition::stage::stage(std::shared_ptr<core> c_core): core(c_core){
+cw::composition::stage::stage(std::shared_ptr<cw::composition::core> c_core): core(c_core){
 
 }
 
@@ -24,7 +24,7 @@ void cw::composition::stage::post_event(const std::function<void()>& event){
 	event_queue.push_back(event);
 }
 
-auto cw::composition::stage::create_scene(){
+std::shared_ptr<cw::composition::scene> cw::composition::stage::create_scene(){
 
 	auto scene = std::make_shared<class scene>();
 	scene->core = core;
@@ -32,17 +32,17 @@ auto cw::composition::stage::create_scene(){
 
 }
 
-auto cw::composition::stage::create_camera(const glm::i32vec2& f_size){
+std::shared_ptr<cw::composition::camera> cw::composition::stage::create_camera(const glm::i32vec2& f_size){
 	return std::make_shared<class camera>(f_size);
 }
 
-auto cw::composition::stage::create_group(){
+std::shared_ptr<cw::composition::group> cw::composition::stage::create_group(){
 	auto group = std::make_shared<class group>();
 	group->core = core;
 	return group;
 }
 
-auto cw::composition::stage::create_actor(){
+std::shared_ptr<cw::composition::actor> cw::composition::stage::create_actor(){
 	auto actor = std::make_shared<class actor>();
 	actor->core = core;
 	return actor;
@@ -60,9 +60,9 @@ void cw::composition::stage::add_scene(const std::string& scene_name, std::share
 		this->scene_map[scene_name] = scene;
 	});
 
-}	
+}
 
-auto cw::composition::stage::get_scene(const std::string& scene_name){
+std::shared_ptr<cw::composition::scene> cw::composition::stage::get_scene(const std::string& scene_name){
 	if(scene_map.find(scene_name) != scene_map.end()){
 		return scene_map[scene_name];
 	} else {

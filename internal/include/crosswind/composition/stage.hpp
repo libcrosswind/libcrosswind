@@ -1,8 +1,10 @@
 #pragma once
 
 #include <memory>
+#include <map>
 #include <functional>
 #include <string>
+#include <vector>
 
 #include "glm/glm.hpp"
 
@@ -12,6 +14,9 @@ namespace composition{
 	
 	class core;
 	class scene;
+	class camera;
+	class group;
+	class actor;
 
 }// namespace composition
 }// namespace cw
@@ -27,17 +32,17 @@ public:
 
 	void post_event(const std::function<void()>& event);
 
-	auto create_scene();
+	std::shared_ptr<scene> create_scene();
 
-	auto create_camera(const glm::i32vec2& f_size);
+	std::shared_ptr<camera> create_camera(const glm::i32vec2& f_size);
 
-	auto create_actor();
+	std::shared_ptr<group> create_group();
 
-	auto create_group();
+	std::shared_ptr<actor> create_actor();
 
 	void add_scene(const std::string& scene_name, std::shared_ptr<scene> scene);
 
-	auto get_scene(const std::string& scene_name);
+	std::shared_ptr<scene> get_scene(const std::string& scene_name);
 
 	void remove_scene(const std::string& scene_name);
 

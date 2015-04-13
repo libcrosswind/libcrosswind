@@ -27,9 +27,13 @@ SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAG
 
 endif()
 
+file(GLOB_RECURSE headers ${PROJECT_SOURCE_DIR}/../../internal/include/*.hpp)
+file(GLOB_RECURSE sources ${PROJECT_SOURCE_DIR}/../../internal/src/*.cpp main.cpp)
+
+
 
 set(PROJECT_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/../../output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
-file(GLOB sources main.cpp)
+#file(GLOB sources main.cpp)
 add_executable(Engine ${sources})
 
 set_target_properties(Engine

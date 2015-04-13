@@ -25,7 +25,6 @@ void cw::sound::mixer::audio_callback::channel_ended(int channel) {
 			}
 		}
 
-	}
 }
 
 cw::sound::mixer::mixer(int frequency, uint16_t format, int channels, int chunk_size) {
@@ -52,7 +51,7 @@ void cw::sound::mixer::load_music(const std::string& name, const std::string& pa
 
 }
 
-void cw::sound::mixer::play_music(const std::string& name, const int& loops = -1){
+void cw::sound::mixer::play_music(const std::string& name, const int& loops){
 
 	if(Mix_PlayingMusic() == 0){ 							// If there is no music playing
 

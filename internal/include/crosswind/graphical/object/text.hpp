@@ -22,6 +22,7 @@ namespace graphical{
 namespace sdl{
 	
 	class font;
+	class surface;
 
 }// namespace sdl
 }// namespace graphical
@@ -56,9 +57,9 @@ public:
 
 	void set_render_sprite(std::shared_ptr<sprite> sprite);
 
-	auto get_render_sprite();
+	std::shared_ptr<object::sprite> get_render_sprite();
 
-	auto render(std::shared_ptr<sdl::font> font);
+	std::shared_ptr<cw::graphical::sdl::surface> render(std::shared_ptr<sdl::font> font);
 
 private:
 	std::string text_value;

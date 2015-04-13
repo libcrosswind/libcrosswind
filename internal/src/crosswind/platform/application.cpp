@@ -26,6 +26,18 @@ void cw::platform::application::update() {
 
 }
 
+void cw::platform::application::start(){
+	running = true;
+}
+
+bool cw::platform::application::alive(){
+	return running;
+}
+
+void cw::platform::application::exit(){
+	running = false;
+}
+
 auto cw::platform::application::was_init(auto flags) {
 
 	return SDL_WasInit(flags);
