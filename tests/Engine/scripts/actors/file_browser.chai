@@ -1,52 +1,125 @@
+
+class list_header{
+    attr label
+
+    def list_header(c_label){
+        this.label = c_label
+    }
+
+    def get_label(){
+        return this.label
+    }
+}
+
+class list_item{
+    attr fields
+
+    def list_item(c_fields){
+        this.fields = c_fields
+    }
+
+    def insert_field(index, value){
+        this.fields[index] = value
+    }
+
+    def get_field(index){
+        return this.fields[index]
+    }
+
+    def get_fields(){
+        return this.fields
+    }
+}
+
+class grid_list{
+
+    // you can use attr, auto or var in this context
+    attr headers
+    attr items
+    attr panel
+
+    def grid_list(c_headers, c_items){
+        this.headers = c_headers
+        this.items = c_items
+    }
+
+    def get_headers(){
+        return this.headers
+    }
+
+}
+
+
 return fun(origin, size, on_file_choosen){
 
     var file_browser := stage.create_group()
 
-    file_browser.set_origin(origin)
-    file_browser.set_size(size)
-
-    var container := stage.create_actor()
-    container.add_model("container", origin, size, "green_panel.json")
+    var f = ["file.json"]
 
 
-    var file_panel_size := vec3(size.x /2.0f, size.y /2.0f, 0.0f)
-    var file_panel := use("scripts/actors/glass_panel.chai")(origin, file_panel_size)
+    var item   = list_item(f)
+    var name_header = list_header("Name")
 
-    var button_size := vec3(size.x/5.0f, size.y/10.0f, 0.0f)
-    var ok_origin_x := origin.x + button_size.x / 2.0f
-    var ok_origin_y := origin.y - size.y/2.0f + button_size.y
+    var items   = []
+    var headers = [name_header]
 
-    var ok_origin := vec3(ok_origin_x, ok_origin_y, 0.0f)
+    var grid = grid_list(headers, items)
 
-    var cancel_origin_x := ok_origin.x + button_size.x
-    var cancel_origin_y := ok_origin.y
+    file_browser.construct(fun[origin, size, on_file_choosen, file_browser, grid](){
 
-    var cancel_origin := vec3(cancel_origin_x, cancel_origin_y, 0.0f)
+        file_browser.set_origin(origin)
+        file_browser.set_size(size)
 
-    ok_origin.x = cancel_origin.x
-    ok_origin.y = cancel_origin.y + button_size.y
+        var container := stage.create_actor()
 
-    var button_function     = use("scripts/actors/green_button.chai")
+        container.add_model("container", origin, size, "green_panel.json")
 
-    var ok_button := button_function("load_button",
-                                     "Load",
-                                     ok_origin,
-                                     button_size,
-                                     on_file_choosen)
+        var file_panel_size := vec3(size.x /2.0f, size.y /2.0f, 0.0f)
+        var file_panel := use("scripts/actors/glass_panel.chai")(origin, file_panel_size)
 
-    var cancel_button := button_function("cancel_button",
-                                         "Cancel",
-                                         cancel_origin,
+        var button_size := vec3(size.x/5.0f, size.y/15.0f, 0.0f)
+
+        var cancel_origin := vec3(origin.x + file_panel_size.x - button_size.x, origin.y - size.y/2.0f + button_size.y, 0.0f)
+        var ok_origin := vec3(cancel_origin.x, cancel_origin.y + button_size.y, 0.0f)
+
+
+        var button_function     = eval_file("scripts/actors/green_button.chai")
+
+        var ok_button := button_function("load_button",
+                                         "Load",
+                                         ok_origin,
                                          button_size,
-                                         fun(){})
+                                         on_file_choosen)
+
+        var cancel_button := button_function("cancel_button",
+                                             "Cancel",
+                                             cancel_origin,
+                                             button_size,
+                                             fun(){})
+
+        var cwd := core.filesystem.get_cwd()
+
+        print(cwd)
+
+        var content := core.filesystem.get_folder_content(cwd)
+
+        print(content[0])
+        print(content[1])
+        print(content[2])
+
+        for(auto i = 0; i<content.size(); ++i){
+            print(content[i])
+        }
+
+        file_browser.add_actor("container", container)
+        file_browser.add_actor("file_panel", file_panel)
+        file_browser.add_actor("ok_button", ok_button)
+        file_browser.add_actor("cancel_button", cancel_button)
 
 
-    file_browser.add_actor("container", container)
-    file_browser.add_actor("file_panel", file_panel)
-    file_browser.add_actor("ok_button", ok_button)
-    file_browser.add_actor("cancel_button", cancel_button)
 
-    file_browser.construct(fun[file_browser](){}, fun(){}, fun(delta){
+
+    }, fun(){}, fun[grid](delta){
 
     })
 

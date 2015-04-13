@@ -1,32 +1,26 @@
 #pragma once
 
-#include <memory>
 #include <string>
-#include <jsoncons/json.hpp>
+
+#include "jsoncons/json.hpp"
 
 namespace cw{
 namespace modules{
 namespace javascript{
 
-    class json;
-
-}// namespace javascript
-}// namespace modules
-}// namespace cw
-
-class cw::modules::javascript::json{
+class json{
 public:
     json(){
     }
 
-    json& from_file(const std::string& filename){
+    auto& from_file(const std::string& filename){
 
         data = jsoncons::json::parse_file(filename);
 
         return *this;
     }
 
-    json& from_string(const std::string& json_string){
+    auto& from_string(const std::string& json_string){
 
         data = jsoncons::json::parse_string(json_string);
         return *this;
@@ -40,3 +34,7 @@ public:
     jsoncons::json data;
 
 };// class json
+
+}// namespace javascript
+}// namespace modules
+}// namespace cw

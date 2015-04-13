@@ -16,11 +16,12 @@ include_directories(${INCLUDE_LIBRARY_PATH})
 
 if( CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS)
+add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -ftrack-macro-expansion=0 -save-temps)
 
 else( CMAKE_BUILD_TYPE STREQUAL "Release")
 
 add_compile_options(-std=gnu++1y -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -DNDEBUG)
+#SET( GCC_COVERAGE_LINK_FLAGS    "-mwindows -Wl --large-address-aware --no-keep-memory")
 SET( GCC_COVERAGE_LINK_FLAGS    "-mwindows")
 SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
 

@@ -1,5 +1,7 @@
 var main_scene := stage.create_scene()
 
+
+
 var init = fun[main_scene](){
     var window_size := core.video.window.get_size()
 
@@ -11,6 +13,7 @@ var init = fun[main_scene](){
     })
 
     main_scene.add_group("fb", fb)
+    main_scene.load_group("fb")
 }
 
 var deinit = fun[main_scene](){
