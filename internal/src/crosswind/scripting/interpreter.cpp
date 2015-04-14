@@ -52,7 +52,7 @@ namespace {
 cw::scripting::interpreter::interpreter(): 
 chai(new chaiscript::ChaiScript(chaiscript::Std_Lib::library())){
 
-	bind_glm();
+	bind_datatypes();
 	bind_settings();
 	bind_engine();
 	bind_filesystem();
@@ -79,7 +79,7 @@ void cw::scripting::interpreter::eval_file(const std::string& filename){
 }
 
 
-void cw::scripting::interpreter::bind_glm(){
+void cw::scripting::interpreter::bind_datatypes(){
 
 	// data types
 	// vec2
@@ -117,6 +117,8 @@ void cw::scripting::interpreter::bind_glm(){
 	chai->add(chaiscript::fun(&c_clamp), "clamp");
 	chai->add(chaiscript::fun(&c_radians), "radians");
 	chai->add(chaiscript::fun(&c_sin), "sin");
+
+	chai->add(chaiscript::bootstrap::standard_library::vector_type<std::vector<std::string> >("StringVector"));
 
 }
 

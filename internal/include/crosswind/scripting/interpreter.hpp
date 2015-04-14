@@ -20,7 +20,7 @@ public:
 	void eval_file(const std::string& filename);
 
 private:
-	void bind_glm();
+	void bind_datatypes();
 
 	void bind_settings();
 

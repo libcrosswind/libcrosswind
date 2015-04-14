@@ -83,15 +83,15 @@ return fun(origin, size, on_file_choosen){
         var ok_origin := vec3(cancel_origin.x, cancel_origin.y + button_size.y, 0.0f)
 
 
-        var button_function     = eval_file("scripts/actors/green_button.chai")
+        var create_button     = eval_file("scripts/actors/button.chai")
 
-        var ok_button := button_function("load_button",
+        var ok_button := create_button("load_button",
                                          "Load",
                                          ok_origin,
                                          button_size,
                                          on_file_choosen)
 
-        var cancel_button := button_function("cancel_button",
+        var cancel_button := create_button("cancel_button",
                                              "Cancel",
                                              cancel_origin,
                                              button_size,
@@ -101,23 +101,33 @@ return fun(origin, size, on_file_choosen){
 
         print(cwd)
 
-/*        var content := core.filesystem.get_folder_content(cwd)
+        var content = core.filesystem.get_folder_content(cwd)
 
-        print(content[0])
-        print(content[1])
-        print(content[2])
+        var offset = 25.0f
 
         for(auto i = 0; i<content.size(); ++i){
+            var actor := stage.create_actor()
+
+            var t_origin := vec3(0.0f, file_panel_size.y - offset, 0.0f)
+            actor.set_origin(t_origin)
+            actor.add_text("label_" + to_string(i),
+                                content[i],
+                                t_origin ,
+                                vec3(0.0f, 0.0f, 0.0f),
+                                18,
+                                core.filesystem.get_file_path("ui_font.ttf"))
+
+            file_browser.add_actor("text_" + to_string(i), actor)
+
             print(content[i])
+
+            offset += 25.0f
         }
-*/
+
         file_browser.add_actor("container", container)
         file_browser.add_actor("file_panel", file_panel)
         file_browser.add_actor("ok_button", ok_button)
         file_browser.add_actor("cancel_button", cancel_button)
-
-
-
 
     }, fun(){}, fun[grid](delta){
 
