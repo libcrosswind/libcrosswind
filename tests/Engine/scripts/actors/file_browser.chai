@@ -49,13 +49,11 @@ class grid_list{
 
 }
 
-
 return fun(origin, size, on_file_choosen){
 
     var file_browser := stage.create_group()
 
     var f = ["file.json"]
-
 
     var item   = list_item(f)
     var name_header = list_header("Name")
@@ -81,7 +79,6 @@ return fun(origin, size, on_file_choosen){
 
         var cancel_origin := vec3(origin.x + file_panel_size.x - button_size.x, origin.y - size.y/2.0f + button_size.y, 0.0f)
         var ok_origin := vec3(cancel_origin.x, cancel_origin.y + button_size.y, 0.0f)
-
 
         var create_button     = eval_file("scripts/actors/button.chai")
 
@@ -126,8 +123,12 @@ return fun(origin, size, on_file_choosen){
 
         file_browser.add_actor("container", container)
         file_browser.add_actor("file_panel", file_panel)
-        file_browser.add_actor("ok_button", ok_button)
-        file_browser.add_actor("cancel_button", cancel_button)
+        file_browser.add_actor("ok_button", ok_button.get())
+        file_browser.add_actor("cancel_button", cancel_button.get())
+
+        add_global(ok_button, "ok_button")
+        add_global(cancel_button, "cancel_button")
+
 
     }, fun(){}, fun[grid](delta){
 
