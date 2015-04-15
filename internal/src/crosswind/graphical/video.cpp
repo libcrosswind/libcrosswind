@@ -208,7 +208,9 @@ std::shared_ptr<cw::graphical::object::model> cw::graphical::video::load_model(c
 
     model->set_animations(animations);
 
-    model->change_animation(raw_json["properties"]["default-animation"].as<std::string>());
+	auto anim = raw_json["properties"]["default-animation"].as<std::string>();
+	std::cout << anim << std::endl;
+    model->change_animation(anim);
 
 	model->set_render_sprite(model->get_animations()["current"]->
 			                 frames[model->get_animations()["current"]->current_frame]);

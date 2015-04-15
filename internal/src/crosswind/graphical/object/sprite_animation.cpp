@@ -1,7 +1,7 @@
 #include "crosswind/graphical/object/sprite_animation.hpp"
 #include "crosswind/graphical/object/sprite.hpp"
 
-cw::graphical::object::sprite_animation::sprite_animation(){
+cw::graphical::object::sprite_animation::sprite_animation(): current_frame(0){
 
 }
 
