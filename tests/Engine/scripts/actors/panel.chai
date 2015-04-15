@@ -1,17 +1,19 @@
+class panel{
+    attr widget
+
+    def panel(origin, size){
+        this.widget := stage.create_actor()
+        this.widget.set_origin(origin)
+        this.widget.set_size(size)
+        this.widget.add_model("panel", origin, size, "cristal_panel.json")
+    }
+
+    def get(){
+        return this.widget
+    }
+
+}
+
 return fun(origin, size){
-    var panel := stage.create_actor()
-
-    panel.set_origin(origin)
-    panel.set_size(size)
-
-    panel.add_model("glass_window",
-        origin,
-        size,
-        "cristal_panel.json")
-
-    panel.construct(fun(){}, fun(){}, fun(delta){
-
-    })
-
-    return panel
+    return panel(origin, size)
 }

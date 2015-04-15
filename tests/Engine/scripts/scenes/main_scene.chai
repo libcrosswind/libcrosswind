@@ -12,8 +12,9 @@ var init = fun[main_scene](){
         puts("Trigger\n")
     })
 
-    main_scene.add_group("fb", fb)
+    main_scene.add_group("fb", fb.get())
     main_scene.load_group("fb")
+    add_global(fb,"filebr")
 }
 
 var deinit = fun[main_scene](){

@@ -61,6 +61,5 @@ class button{
 
 
 return fun(name, text, origin, size, on_trigger){
-    var btn := button(name, text, origin, size, on_trigger)
-    return btn
+    return button(name, text, origin, size, on_trigger)
 }

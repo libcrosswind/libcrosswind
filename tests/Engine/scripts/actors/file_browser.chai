@@ -1,99 +1,37 @@
+class file_browser{
+    attr elements
+    attr widget
 
-class list_header{
-    attr label
-
-    def list_header(c_label){
-        this.label = c_label
+    def file_browser(origin, size, on_file_choosen){
+        this.widget := stage.create_group()
+        this.elements := Map()
+        this.widget.construct(fun[this, origin, size, on_file_choosen](){this.init(origin, size, on_file_choosen)},
+        fun(){}, fun(delta){})
     }
 
-    def get_label(){
-        return this.label
-    }
-}
+    def init(origin, size, on_file_choosen){
+        this.widget.set_origin(origin)
+        this.widget.set_size(size)
 
-class list_item{
-    attr fields
+        var create_button = eval_file("scripts/actors/button.chai")
+        var button_size := vec3(60.0f, 60.0f, 0.0f)
 
-    def list_item(c_fields){
-        this.fields = c_fields
-    }
+        var cancel_origin := vec3(0.0f, 0.0f, 0.0f)
+        var load_origin   := vec3(0.0f, 20.0f, 0.0f)
 
-    def insert_field(index, value){
-        this.fields[index] = value
-    }
+        this.elements["panel"] := eval_file("scripts/actors/panel.chai")(origin, size)
 
-    def get_field(index){
-        return this.fields[index]
-    }
+        this.elements["load_button"] := create_button("load_button",
+                                                     "Load",
+                                                     load_origin,
+                                                     button_size,
+                                                     on_file_choosen)
 
-    def get_fields(){
-        return this.fields
-    }
-}
-
-class grid_list{
-
-    // you can use attr, auto or var in this context
-    attr headers
-    attr items
-    attr panel
-
-    def grid_list(c_headers, c_items){
-        this.headers = c_headers
-        this.items = c_items
-    }
-
-    def get_headers(){
-        return this.headers
-    }
-
-}
-
-return fun(origin, size, on_file_choosen){
-
-    var file_browser := stage.create_group()
-
-    var f = ["file.json"]
-
-    var item   = list_item(f)
-    var name_header = list_header("Name")
-
-    var items   = []
-    var headers = [name_header]
-
-    var grid = grid_list(headers, items)
-
-    file_browser.construct(fun[origin, size, on_file_choosen, file_browser, grid](){
-
-        file_browser.set_origin(origin)
-        file_browser.set_size(size)
-
-        var container := stage.create_actor()
-
-        container.add_model("container", origin, size, "green_panel.json")
-
-        var file_panel_size := vec3(size.x /2.0f, size.y /2.0f, 0.0f)
-        var file_panel := use("scripts/actors/glass_panel.chai")(origin, file_panel_size)
-
-        var button_size := vec3(size.x/5.0f, size.y/15.0f, 0.0f)
-
-        var cancel_origin := vec3(origin.x + file_panel_size.x - button_size.x, origin.y - size.y/2.0f + button_size.y, 0.0f)
-        var ok_origin := vec3(cancel_origin.x, cancel_origin.y + button_size.y, 0.0f)
-
-        var create_button     = eval_file("scripts/actors/button.chai")
-
-        var ok_button := create_button("load_button",
-                                         "Load",
-                                         ok_origin,
-                                         button_size,
-                                         on_file_choosen)
-
-        var cancel_button := create_button("cancel_button",
-                                             "Cancel",
-                                             cancel_origin,
-                                             button_size,
-                                             fun(){})
-
+        this.elements["cancel_button"] := create_button("cancel_button",
+                                                       "Cancel",
+                                                       cancel_origin,
+                                                       button_size,
+                                                       fun(){})
         var cwd := core.filesystem.get_cwd()
 
         print(cwd)
@@ -102,37 +40,36 @@ return fun(origin, size, on_file_choosen){
 
         var offset = 25.0f
 
-        for(auto i = 0; i<content.size(); ++i){
+/*        for(auto i = 0; i<content.size(); ++i){
             var actor := stage.create_actor()
 
             var t_origin := vec3(0.0f, file_panel_size.y - offset, 0.0f)
             actor.set_origin(t_origin)
             actor.add_text("label_" + to_string(i),
-                                content[i],
-                                t_origin ,
-                                vec3(0.0f, 0.0f, 0.0f),
-                                18,
-                                core.filesystem.get_file_path("ui_font.ttf"))
+                           content[i],
+                           t_origin ,
+                           vec3(0.0f, 0.0f, 0.0f),
+                           18,
+                           core.filesystem.get_file_path("ui_font.ttf"))
 
             file_browser.add_actor("text_" + to_string(i), actor)
 
             print(content[i])
 
             offset += 25.0f
-        }
+        }*/
 
-        file_browser.add_actor("container", container)
-        file_browser.add_actor("file_panel", file_panel)
-        file_browser.add_actor("ok_button", ok_button.get())
-        file_browser.add_actor("cancel_button", cancel_button.get())
+        this.widget.add_actor("panel", this.elements["panel"].get())
+        this.widget.add_actor("load_button", this.elements["load_button"].get())
+        this.widget.add_actor("cancel_button", this.elements["cancel_button"].get())
 
-        add_global(ok_button, "ok_button")
-        add_global(cancel_button, "cancel_button")
+    }
 
+    def get(){
+        return this.widget
+    }
+};
 
-    }, fun(){}, fun[grid](delta){
-
-    })
-
-    return file_browser
+return fun(origin, size, on_file_choosen){
+    return file_browser(origin, size, on_file_choosen)
 }
