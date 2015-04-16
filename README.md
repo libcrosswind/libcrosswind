@@ -1,4 +1,6 @@
 # libcrosswind 0.2
+
+[![Join the chat at https://gitter.im/VictorJL/libcrosswind](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/VictorJL/libcrosswind?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A modern C++14 Multipurpose library
 
 git clone https://github.com/VictorJL/libcrosswind.git
