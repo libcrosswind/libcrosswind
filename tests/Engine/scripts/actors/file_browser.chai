@@ -44,8 +44,8 @@ class file_browser{
 
         this.groups["l_button"] := create_button(l_button_origin, cmd_button_size, "load", on_file_choosen)
 
-      //  for_each(this.groups, fun[this](i) { this.widget.add_group(i.first, i.second.get()) })
-        for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+        for_each(this.groups, fun[this](i) { this.widget.add_group(i.first, i.second.get()) })
+      //  for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
     }
 
     def get(){

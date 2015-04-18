@@ -65,6 +65,12 @@ std::map<std::string, std::shared_ptr<cw::composition::actor> >& cw::composition
 }
 
 void cw::composition::group::update(const float& delta){
+
+	for(auto& group_mapping : group_map){
+		group_mapping.second->update(delta);
+	}
+
+
 	for(auto& actor_mapping : actor_map){
 		actor_mapping.second->update(delta);
 	}

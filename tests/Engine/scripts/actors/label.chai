@@ -4,10 +4,9 @@ class label{
     def label(origin, text){
         this.widget := stage.create_actor()
         this.widget.set_origin(origin)
-        this.widget.set_size(size)
 
         var text_color := vec3(1.0f, 1.0f, 1.0f)
-        this.widget.add_text("text", text, origin, text_color, 24)
+        this.widget.add_text("text", text, origin, text_color, 24, "ui_font.ttf")
     }
 
     def set_text(new_text){

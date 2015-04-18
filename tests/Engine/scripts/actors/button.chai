@@ -16,14 +16,14 @@ class button{
         var create_label   = eval_file("scripts/actors/label.chai")
 
         this.actors["button"] := create_control(origin, size, "button", "button.json")
-        this.actors["label"] := create_control(origin, size, "button", "button.json")
+        this.actors["label"] := create_label(origin, text)
 
         this.on_trigger := on_trigger
         this.mouse_down = false
 
-
-        this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
+        this.widget.construct(fun(){}, fun(){}, fun[this](delta){this.logic(delta) })
         for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+
     }
 
     def set_text(new_text){
@@ -48,20 +48,20 @@ class button{
             if(core.input.is_key_down("mouse_left")){
 
                 if(!this.mouse_down){
-                    this.widget.get_actor("button").get_model("button").change_animation("button_on")
+                    this.actors["button"].get_model("button").change_animation("button_on")
                     this.mouse_down = true
                 }
 
             } else {
                 if(this.mouse_down){
-                    this.widget.get_actor("button").get_model("button").change_animation("button_off")
+                    this.actors["button"].get_model("button").change_animation("button_off")
                     this.mouse_down = false
                     on_trigger(this)()
                 }
             }
         } else {
             this.mouse_down = false
-            this.widget.get_actor("button").get_model("button").change_animation("button_off")
+            this.actors["button"].get_model("button").change_animation("button_off")
         }
 
     }
