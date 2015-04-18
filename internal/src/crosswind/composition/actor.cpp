@@ -77,8 +77,8 @@ void cw::composition::actor::add_text(const std::string& text_name,
 									  const int& size,
 									  const std::string& font_path){
 
-	if(text_map.find(text_name) == text_map.end()){
-		text_map[text_name] = core->video->load_text(text_name,
+	if(text_map.find(name + "_" + text_name) == text_map.end()){
+		text_map[name + "_" + text_name] = core->video->load_text(name + "_" + text_name,
 													 text,
 													 origin,
 													 color,
@@ -86,15 +86,29 @@ void cw::composition::actor::add_text(const std::string& text_name,
 													 core->filesystem->get_file_path(font_path));
 
 	} else {
-		throw std::runtime_error(text_name + " already exists, remove it first before adding one with the same name");
+		throw std::runtime_error(name + "_" + text_name + " already exists, remove it first before adding one with the same name");
+	}
+}
+
+void cw::composition::actor::set_text(const std::string& text_name, const std::string& new_text){
+
+}
+
+void cw::composition::actor::set_text_alignment(const std::string& text_name, const std::string& alignment){
+	if(alignment == "centered"){
+
+	} else if (alignment == "left"){
+
+	} else if(alignment == "right"){
+
 	}
 }
 
 void cw::composition::actor::remove_text(const std::string& text_name){
-	if(text_map.find(text_name) != text_map.end()){
-		text_map.erase(text_name);
+	if(text_map.find(name + "_" + text_name) != text_map.end()){
+		text_map.erase(name + "_" + text_name);
 	} else {
-		throw std::runtime_error(text_name + " does not exist or was already removed");
+		throw std::runtime_error(name + "_" + text_name + " does not exist or was already removed");
 	}
 }
 

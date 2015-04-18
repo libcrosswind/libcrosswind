@@ -18,27 +18,29 @@ class file_browser{
         this.elements["panel"] := eval_file("scripts/actors/panel.chai")(origin, size)
 
         var v_border_size := vec3(size.x, size.y/20.0f, 0.0f)
-        var h_border_size := vec3(size.x/20.0f, size.y, 0.0f)
+        var h_border_size := vec3(size.x/20.0f, size.y + v_border_size.y * 2.0f, 0.0f)
 
-        var r_border_origin := vec3(origin.x + size.x + h_border_size.x, origin.y, 0.0f)
-        var l_border_origin := vec3(origin.x - size.x - h_border_size.x, origin.y, 0.0f)
-        var t_border_origin := vec3(origin.y + size.x + v_border_size.y, origin.x, 0.0f)
-        var b_border_origin := vec3(origin.y - size.x - v_border_size.y, origin.x, 0.0f)
+        var create_border = eval_file("scripts/actors/border.chai")
 
-        this.elements["r_border"] := eval_file("scripts/actors/panel.chai")(r_border_origin, h_border_size)
-        this.elements["l_border"] := eval_file("scripts/actors/panel.chai")(l_border_origin, h_border_size)
-        this.elements["t_border"] := eval_file("scripts/actors/panel.chai")(t_border_origin, v_border_size)
-        this.elements["b_border"] := eval_file("scripts/actors/panel.chai")(b_border_origin, v_border_size)*/
+        var r_border_origin := vec3(origin.x + size.x / 2.0f + h_border_size.x / 2.0f, origin.y, 0.0f)
+        var l_border_origin := vec3(origin.x - size.x / 2.0f - h_border_size.x / 2.0f, origin.y, 0.0f)
+        var t_border_origin := vec3(origin.x, origin.y + size.y / 2.0f + v_border_size.y / 2.0f, 0.0f)
+        var b_border_origin := vec3(origin.x, origin.y - size.y / 2.0f - v_border_size.y / 2.0f, 0.0f)
+
+        this.elements["r_border"] := create_border(r_border_origin, h_border_size)
+        this.elements["l_border"] := create_border(l_border_origin, h_border_size)
+        this.elements["t_border"] := create_border(t_border_origin, v_border_size)
+        this.elements["b_border"] := create_border(b_border_origin, v_border_size)
 
         var cmd_button_size := vec3(100.0f, 50.0f, 0.0f)
 
-        var l_button_origin := vec3(origin.x + size.x / 2.0f - cmd_button_size, origin.y, 0.0f)
+        var l_button_origin := vec3(origin.x + size.x / 2.0f - cmd_button_size.x, origin.y - size.y / 2.0f + cmd_button_size.y, 0.0f)
 
         var create_button = eval_file("scripts/actors/button.chai")
 
-        this.elements["l_button"] := create_button("l", "text", l_button_origin, cmd_button_size, on_file_choosen)
+        this.elements["l_button"] := create_button("l", "load", l_button_origin, cmd_button_size, on_file_choosen)
 
-//        for_each(this.elements, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+        for_each(this.elements, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
 
     }
 

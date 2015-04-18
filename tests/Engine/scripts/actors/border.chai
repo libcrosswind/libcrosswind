@@ -1,0 +1,20 @@
+class border{
+    attr widget
+
+    def border(origin, size){
+        this.widget := stage.create_actor()
+        this.widget.set_origin(origin)
+        this.widget.set_size(size)
+
+        this.widget.add_model("border", origin, size, "border.json")
+    }
+
+    def get(){
+        return this.widget
+    }
+
+}
+
+return fun(origin, size){
+    return border(origin, size)
+}
