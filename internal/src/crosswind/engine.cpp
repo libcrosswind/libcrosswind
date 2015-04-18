@@ -56,13 +56,14 @@ void cw::engine::render(){
     std::function<void(std::shared_ptr<cw::composition::group>)> render_group = [this, &render_group](auto group){
         for(auto& group_mapping : group->get_group_map()){
             render_group(group_mapping.second);
-            for(auto& actor_mapping : group_mapping.second->get_actor_map()){
-                for(auto& model_mapping : actor_mapping.second->get_model_map()){
-                    this->core->video->renderer->upload(model_mapping.second->get_render_sprite());
-                }
-                for(auto& text_mapping : actor_mapping.second->get_text_map()){
-                    this->core->video->renderer->upload(text_mapping.second->get_render_sprite());
-                }
+        }
+
+        for(auto& actor_mapping : group->get_actor_map()){
+            for(auto& model_mapping : actor_mapping.second->get_model_map()){
+                this->core->video->renderer->upload(model_mapping.second->get_render_sprite());
+            }
+            for(auto& text_mapping : actor_mapping.second->get_text_map()){
+                this->core->video->renderer->upload(text_mapping.second->get_render_sprite());
             }
         }
     };
