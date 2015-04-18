@@ -31,6 +31,19 @@ void cw::composition::group::set_alpha(const float& f_alpha){
 	}
 }
 
+void cw::composition::group::add_group(const std::string& group_name, std::shared_ptr<group> new_group){
+	group_map[group_name] = new_group;
+}
+
+std::shared_ptr<cw::composition::group> cw::composition::group::get_group(const std::string& group_name){
+	return group_map[group_name];
+}
+
+void cw::composition::group::remove_group(const std::string& group_name){
+	group_map.erase(group_name);
+}
+
+
 void cw::composition::group::add_actor(const std::string& actor_name, std::shared_ptr<actor> new_actor){
 	actor_map[actor_name] = new_actor;
 }
@@ -41,6 +54,10 @@ std::shared_ptr<cw::composition::actor> cw::composition::group::get_actor(const 
 
 void cw::composition::group::remove_actor(const std::string& actor_name){
 	actor_map.erase(actor_name);
+}
+
+std::map<std::string, std::shared_ptr<cw::composition::group> >& cw::composition::group::get_group_map(){
+	return group_map;
 }
 
 std::map<std::string, std::shared_ptr<cw::composition::actor> >& cw::composition::group::get_actor_map(){

@@ -61,7 +61,9 @@ public:
 				  const glm::vec3& origin,
 				  const glm::vec3& color,
 				  const int& size,
-				  const std::string& font_path);
+				  const std::string& font_path =  "ui_font.ttf");
+
+	std::shared_ptr<graphical::object::text> get_text(const std::string& text_name);
 
 	void remove_text(const std::string& text_name);
 

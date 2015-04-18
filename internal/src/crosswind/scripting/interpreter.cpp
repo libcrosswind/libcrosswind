@@ -278,6 +278,7 @@ void cw::scripting::interpreter::bind_composition(){
 	chai->add(chaiscript::fun(&cw::composition::camera::convert_screen_to_world), "convert_screen_to_world");
 
 	// group
+	chai->add(chaiscript::fun(&cw::composition::group::add_group), "add_group");
 	chai->add(chaiscript::fun(&cw::composition::group::add_actor), "add_actor");
 	chai->add(chaiscript::fun(&cw::composition::group::get_actor), "get_actor");
 	chai->add(chaiscript::fun(&cw::composition::group::remove_actor), "remove_actor");

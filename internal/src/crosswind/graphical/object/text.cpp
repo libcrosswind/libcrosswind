@@ -28,9 +28,8 @@ std::string& cw::graphical::object::text::get_text(){
 }
 
 void cw::graphical::object::text::set_origin(const glm::vec3& f_origin){
-	
+	render_sprite->set_origin(f_origin);
 	origin = f_origin;
-
 }
 
 glm::vec3 cw::graphical::object::text::get_origin(){

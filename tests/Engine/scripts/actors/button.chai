@@ -1,21 +1,33 @@
 class button{
+    attr actors
     attr widget
+
     attr on_trigger
     attr mouse_down
 
-    def button(name, text, origin, size, on_trigger){
-        this.widget := stage.create_actor()
+    def button(origin, size, text, on_trigger){
+        this.widget := stage.create_group()
+        this.actors := Map()
+
         this.widget.set_origin(origin)
         this.widget.set_size(size)
-        this.widget.add_model("button", origin, size, "green_button.json")
 
-        var text_color := vec3(1.0f, 1.0f, 1.0f)
-        this.widget.add_text(name, text, origin, text_color, 24, "ui_font.ttf")
+        var create_control = eval_file("scripts/actors/control.chai")
+        var create_label   = eval_file("scripts/actors/label.chai")
+
+        this.actors["button"] := create_control(origin, size, "button", "button.json")
+        this.actors["label"] := create_control(origin, size, "button", "button.json")
 
         this.on_trigger := on_trigger
         this.mouse_down = false
 
+
         this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
+        for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+    }
+
+    def set_text(new_text){
+        this.actors["label"].set_text(new_text)
     }
 
     def logic(delta){
@@ -34,21 +46,22 @@ class button{
         if(mouse_x >= x - w / 2.0f && mouse_x <= x + w / 2.0f && mouse_y >= y - h / 2.0f && mouse_y <= y + h / 2.0f){
 
             if(core.input.is_key_down("mouse_left")){
+
                 if(!this.mouse_down){
-                    this.widget.get_model("button").change_animation("button_on")
+                    this.widget.get_actor("button").get_model("button").change_animation("button_on")
                     this.mouse_down = true
                 }
 
             } else {
                 if(this.mouse_down){
-                    this.widget.get_model("button").change_animation("button_off")
+                    this.widget.get_actor("button").get_model("button").change_animation("button_off")
                     this.mouse_down = false
                     on_trigger(this)()
                 }
             }
         } else {
             this.mouse_down = false
-            this.widget.get_model("button").change_animation("button_off")
+            this.widget.get_actor("button").get_model("button").change_animation("button_off")
         }
 
     }
@@ -59,7 +72,6 @@ class button{
 
 }
 
-
-return fun(name, text, origin, size, on_trigger){
-    return button(name, text, origin, size, on_trigger)
+return fun(origin, size, text, on_trigger){
+    return button(origin, size, text, on_trigger)
 }

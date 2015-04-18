@@ -1,3 +1,5 @@
+#include <functional>
+
 #include "crosswind/engine.hpp"
 #include "crosswind/composition/core.hpp"
 #include "crosswind/composition/stage.hpp"
@@ -51,15 +53,23 @@ void cw::engine::render(){
     core->video->renderer->set_uniform_matrix("projection_matrix",
             stage->get_scene("current")->get_camera("current")->get_camera_matrix());
 
-    for(auto& group_mapping : stage->get_scene("current")->get_group_map()){
-        for(auto& actor_mapping : group_mapping.second->get_actor_map()){
-            for(auto& model_mapping : actor_mapping.second->get_model_map()){
-                core->video->renderer->upload(model_mapping.second->get_render_sprite());
-            }
-            for(auto& text_mapping : actor_mapping.second->get_text_map()){
-                core->video->renderer->upload(text_mapping.second->get_render_sprite());
+    std::function<void(std::shared_ptr<cw::composition::group>)> render_group = [this, &render_group](auto group){
+        for(auto& group_mapping : group->get_group_map()){
+            render_group(group_mapping.second);
+            for(auto& actor_mapping : group_mapping.second->get_actor_map()){
+                for(auto& model_mapping : actor_mapping.second->get_model_map()){
+                    this->core->video->renderer->upload(model_mapping.second->get_render_sprite());
+                }
+                for(auto& text_mapping : actor_mapping.second->get_text_map()){
+                    this->core->video->renderer->upload(text_mapping.second->get_render_sprite());
+                }
             }
         }
+    };
+
+
+    for(auto& group_mapping : stage->get_scene("current")->get_group_map()){
+        render_group(group_mapping.second);
     }
 
     for(auto& actor_mapping: stage->get_scene("current")->get_actor_map()){

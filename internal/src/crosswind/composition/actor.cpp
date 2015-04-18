@@ -37,6 +37,11 @@ void cw::composition::actor::set_origin(const glm::vec3& f_origin){
 		model.second->set_origin(translated_origin);
 	}
 
+	for (auto &text : text_map) {
+		auto translated_origin = text.second->get_origin() + f_origin - origin;
+		text.second->set_origin(translated_origin);
+	}
+
 	origin = f_origin;
 }
 
@@ -90,17 +95,11 @@ void cw::composition::actor::add_text(const std::string& text_name,
 	}
 }
 
-void cw::composition::actor::set_text(const std::string& text_name, const std::string& new_text){
-
-}
-
-void cw::composition::actor::set_text_alignment(const std::string& text_name, const std::string& alignment){
-	if(alignment == "centered"){
-
-	} else if (alignment == "left"){
-
-	} else if(alignment == "right"){
-
+std::shared_ptr<cw::graphical::object::text> cw::composition::actor::get_text(const std::string& text_name){
+	if(text_map.find(name + "_" + text_name) != text_map.end()){
+		return text_map[name + "_" + text_name];
+	} else {
+		throw std::runtime_error(name + "_" + text_name + " does not exist");
 	}
 }
 

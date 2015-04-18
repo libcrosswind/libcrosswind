@@ -31,11 +31,19 @@ public:
 	virtual void set_size(const glm::vec3& f_size) override;
 	virtual void set_alpha(const float& f_alpha) override;
 
+	void add_group(const std::string& group_name, std::shared_ptr<group> new_group);
+
+	std::shared_ptr<group> get_group(const std::string& group_name);
+
+	void remove_group(const std::string& group_name);
+
 	void add_actor(const std::string& actor_name, std::shared_ptr<actor> new_actor);
 
 	std::shared_ptr<actor> get_actor(const std::string& actor_name);
 	
 	void remove_actor(const std::string& actor_name);
+
+	std::map<std::string, std::shared_ptr<group> >& get_group_map();
 
 	std::map<std::string, std::shared_ptr<actor> >& get_actor_map();
 
@@ -45,6 +53,7 @@ public:
 	std::shared_ptr<core> core;
 
 private:
+	std::map<std::string, std::shared_ptr<group> > group_map;
 	std::map<std::string, std::shared_ptr<actor> > actor_map;
 
 };// class group
