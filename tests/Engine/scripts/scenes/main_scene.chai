@@ -8,13 +8,13 @@ var init = fun[main_scene](){
     var main_camera := stage.create_camera(window_size)
     main_scene.add_camera("main_camera", main_camera)
 
-    var fb := use("scripts/actors/file_browser.chai")(vec3(0.0f, 0.0f, 0.0f), vec3(window_size.x/2.0f, window_size.y/2.0f, 0.0f), fun(){
+    var file_browser := use("scripts/actors/file_browser.chai")(vec3(0.0f, 0.0f, 0.0f), fun(){
         puts("Trigger\n")
     })
 
-    main_scene.add_group("fb", fb.get())
-    main_scene.load_group("fb")
-    add_global(fb,"filebr")
+    main_scene.add_group("file_browser", file_browser.get())
+    main_scene.load_group("file_browser")
+    add_global(file_browser,"f_browser")
 }
 
 var deinit = fun[main_scene](){

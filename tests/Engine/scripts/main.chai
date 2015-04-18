@@ -16,6 +16,6 @@ add_global(nucleus.stage, "stage")
 core.filesystem.add_directory("assets", true)
 core.video.set_window_icon(core.filesystem.get_file_path("icon.png"))
 
-use("scripts/scenes/main_scene.chai")
+eval_file("scripts/scenes/main_scene.chai")
 
 nucleus.run()

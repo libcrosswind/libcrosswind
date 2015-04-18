@@ -1,6 +1,6 @@
 class button{
     attr widget
-//    attr on_trigger
+    attr on_trigger
     attr mouse_down
 
     def button(name, text, origin, size, on_trigger){
@@ -12,20 +12,13 @@ class button{
         var text_color := vec3(1.0f, 1.0f, 1.0f)
         this.widget.add_text(name, text, origin, text_color, 24, "ui_font.ttf")
 
-//        var trigger = on_trigger
-//        trigger() // triggers
-
-        //this.on_trigger := on_trigger // does not trigger with this.on_trigger = on_trigger either
+        this.on_trigger := on_trigger
         this.mouse_down = false
 
-//        on_trigger()      // triggers
-//        this.on_trigger() // this does not trigger
-
-        this.widget.construct(fun(){}, fun(){}, fun[this, on_trigger](delta){ this.logic(delta, on_trigger) })
+        this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
     }
 
-//    def logic(delta){} won't be used until the trigger issue gets fixed
-    def logic(delta, on_trigger){
+    def logic(delta){
         var current_camera := stage.get_scene("current").get_camera("current")
         var world_coordinates := current_camera.convert_screen_to_world(core.input.get_mouse_coordinates())
 
@@ -50,7 +43,7 @@ class button{
                 if(this.mouse_down){
                     this.widget.get_model("button").change_animation("button_off")
                     this.mouse_down = false
-                    on_trigger()
+                    on_trigger(this)()
                 }
             }
         } else {
