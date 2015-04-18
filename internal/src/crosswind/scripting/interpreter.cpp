@@ -24,9 +24,6 @@
 #include "crosswind/graphical/opengl/window.hpp"
 #include "crosswind/simulation/physics.hpp"
 
-
-
-
 namespace cw{
 namespace scripting{
 
