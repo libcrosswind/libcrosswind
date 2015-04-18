@@ -198,18 +198,16 @@ void cw::composition::scene::update(const float& delta){
 	handle_events();
 	check_collisions();
 
-	for(auto& camera : camera_map){
-       camera.second->update(delta);
+	for(auto& camera_mapping : camera_map){
+		camera_mapping.second->update(delta);
     }
 
-	for(auto& group : group_map){
-		for(auto& actor : group.second->get_actor_map()){
-			actor.second->update(delta);
-		}
+	for(auto& group_mapping : group_map){
+		group_mapping.second->update(delta);
 	}
 
-	for(auto& actor : actor_map){
-       actor.second->update(delta);
+	for(auto& actor_mapping : actor_map){
+		actor_mapping.second->update(delta);
     }
 
 	logic(delta);
