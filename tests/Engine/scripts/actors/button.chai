@@ -50,20 +50,20 @@ class button{
             if(core.input.is_key_down("mouse_left")){
 
                 if(!this.mouse_down){
-                    this.actors["button"].get_model("button").change_animation("button_on")
+                    this.actors["button"].get().get_model("button").change_animation("button_on")
                     this.mouse_down = true
                 }
 
             } else {
                 if(this.mouse_down){
-                    this.actors["button"].get_model("button").change_animation("button_off")
+                    this.actors["button"].get().get_model("button").change_animation("button_off")
                     this.mouse_down = false
                     on_trigger(this)()
                 }
             }
         } else {
             this.mouse_down = false
-            this.actors["button"].get_model("button").change_animation("button_off")
+            this.actors["button"].get().get_model("button").change_animation("button_off")
         }
 
     }
