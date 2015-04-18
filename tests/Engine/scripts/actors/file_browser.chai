@@ -20,11 +20,19 @@ class file_browser{
         var v_border_size := vec3(size.x, size.y/20.0f, 0.0f)
         var h_border_size := vec3(size.x/20.0f, size.y, 0.0f)
 
-        this.elements["l_border"] := eval_file("scripts/actors/panel.chai")(origin, size)
-        this.elements["l_border"] := eval_file("scripts/actors/panel.chai")(origin, size)
-        this.elements["l_border"] := eval_file("scripts/actors/panel.chai")(origin, size)
-        this.elements["l_border"] := eval_file("scripts/actors/panel.chai")(origin, size)
+        var r_border_origin := vec3(origin.x + size.x + h_border_size.x, origin.y, 0.0f)
+        var l_border_origin := vec3(origin.x - size.x - h_border_size.x, origin.y, 0.0f)
+        var t_border_origin := vec3(origin.y + size.x + v_border_size.y, origin.x, 0.0f)
+        var b_border_origin := vec3(origin.y - size.x - v_border_size.y, origin.x, 0.0f)
 
+        this.elements["r_border"] := eval_file("scripts/actors/panel.chai")(r_border_origin, h_border_size)
+        this.elements["l_border"] := eval_file("scripts/actors/panel.chai")(l_border_origin, h_border_size)
+        this.elements["t_border"] := eval_file("scripts/actors/panel.chai")(t_border_origin, v_border_size)
+        this.elements["b_border"] := eval_file("scripts/actors/panel.chai")(b_border_origin, v_border_size)
+
+        var l_button_origin := origin
+
+        this.elements("l_button") := eval_file("scripts/actors/button.chai")(
 
         for_each(this.elements, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
 

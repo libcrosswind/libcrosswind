@@ -7,7 +7,7 @@ source standard/common.sh .
 TEMP_DIR=$PWD/../temp/sdl2
 
 ###########################SDL2####################################
-SDL2_DIR_NAME=SDL-2.0.4-9419
+SDL2_DIR_NAME=SDL-2.0.4-9561
 SDL2=$PWD/../external/sdl2/$SDL2_DIR_NAME
 SDL2_TEMP=$TEMP_DIR/sdl2_build
 
