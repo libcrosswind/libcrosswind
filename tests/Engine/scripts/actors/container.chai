@@ -9,7 +9,7 @@ class container{
         this.widget.set_origin(origin)
         this.widget.set_size(size)
 
-        var create_control = eval_file("scripts/actors/control.chai")
+        //var create_control = eval_file("scripts/actors/control.chai")
 
         this.actors["container"] := create_control(origin, size, "container", "container.json")
         for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })

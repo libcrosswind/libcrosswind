@@ -54,10 +54,6 @@ void cw::engine::render(){
             stage->get_scene("current")->get_camera("current")->get_camera_matrix());
 
     std::function<void(std::shared_ptr<cw::composition::group>)> render_group = [this, &render_group](auto group){
-        for(auto& group_mapping : group->get_group_map()){
-            render_group(group_mapping.second);
-        }
-
         for(auto& actor_mapping : group->get_actor_map()){
             for(auto& model_mapping : actor_mapping.second->get_model_map()){
                 this->core->video->renderer->upload(model_mapping.second->get_render_sprite());
@@ -65,6 +61,10 @@ void cw::engine::render(){
             for(auto& text_mapping : actor_mapping.second->get_text_map()){
                 this->core->video->renderer->upload(text_mapping.second->get_render_sprite());
             }
+        }
+
+        for(auto& group_mapping : group->get_group_map()){
+            render_group(group_mapping.second);
         }
     };
 

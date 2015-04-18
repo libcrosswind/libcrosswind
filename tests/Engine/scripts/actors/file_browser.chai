@@ -19,10 +19,10 @@ class file_browser{
         this.widget.set_origin(origin)
         this.widget.set_size(size)
 
-        var create_panel     = eval_file("scripts/actors/panel.chai")
-        var create_border    = eval_file("scripts/actors/border.chai")
-        var create_container = eval_file("scripts/actors/container.chai")
-        var create_button    = eval_file("scripts/actors/button.chai")
+//      var create_panel     = eval_file("scripts/actors/panel.chai")
+//      var create_border    = eval_file("scripts/actors/border.chai")
+//      var create_container = eval_file("scripts/actors/container.chai")
+//      var create_button    = eval_file("scripts/actors/button.chai")
 
         var v_border_size   := vec3(size.x, size.y/20.0f, 0.0f)
         var h_border_size   := vec3(size.x/20.0f, size.y + v_border_size.y * 2.0f, 0.0f)
@@ -36,8 +36,9 @@ class file_browser{
 
         var l_button_origin := vec3(origin.x + size.x / 2.0f - cmd_button_size.x, origin.y - size.y / 2.0f + cmd_button_size.y, 0.0f)
 
-        this.actors["panel"] := create_panel(origin, size)
         this.groups["container"] := create_container(origin, container_size)
+
+        this.actors["panel"] := create_panel(origin, size)
 
         this.actors["r_border"] := create_border(r_border_origin, h_border_size)
         this.actors["l_border"] := create_border(l_border_origin, h_border_size)

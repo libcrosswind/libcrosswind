@@ -12,8 +12,8 @@ class button{
         this.widget.set_origin(origin)
         this.widget.set_size(size)
 
-        var create_control = eval_file("scripts/actors/control.chai")
-        var create_label   = eval_file("scripts/actors/label.chai")
+//        var create_control = eval_file("scripts/actors/control.chai")
+//        var create_label   = eval_file("scripts/actors/label.chai")
 
         this.actors["button"] := create_control(origin, size, "button", "button.json")
         this.actors["label"] := create_label(origin, text)

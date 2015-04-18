@@ -16,6 +16,13 @@ add_global(nucleus.stage, "stage")
 core.filesystem.add_directory("assets", true)
 core.video.set_window_icon(core.filesystem.get_file_path("icon.png"))
 
+add_global(eval_file("scripts/actors/panel.chai"), "create_panel")
+add_global(eval_file("scripts/actors/border.chai"), "create_border")
+add_global(eval_file("scripts/actors/container.chai"), "create_container")
+add_global(eval_file("scripts/actors/button.chai"), "create_button")
+add_global(eval_file("scripts/actors/label.chai"), "create_label")
+add_global(eval_file("scripts/actors/control.chai"), "create_control")
+
 eval_file("scripts/scenes/main_scene.chai")
 
 nucleus.run()
