@@ -21,7 +21,6 @@ class button{
         this.on_trigger := on_trigger
         this.mouse_down = false
 
-        print("on before construct")
         this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
 
         for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
