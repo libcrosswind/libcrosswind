@@ -1,0 +1,29 @@
+class column{
+    attr column_label
+    attr cell_value
+
+    def column(column_label, cell_value){
+        this.column_label = column_label
+        this.cell_value = cell_value
+    }
+
+    def set_column_label(column_label){
+        this.column_label = column_label
+    }
+
+    def get_column_label(){
+        return this.column_label
+    }
+
+    def set_cell_value(cell_value){
+        this.cell_value = cell_value
+    }
+
+    def get_cell_value(){
+        return this.cell_value
+    }
+}
+
+return fun(column_label, cell_value){
+    return column(column_label, cell_value)
+}

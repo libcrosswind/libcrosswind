@@ -17,6 +17,11 @@ class button{
 
         this.actors["button"] := create_control(origin, size, "button", "button.json")
         this.actors["label"] := create_label(origin, text)
+        print(this.actors["label"].get().get_size().x)
+        print(size.x)
+
+        var text_size := vec3(size.x - size.x * 0.20f, size.y - size.y * 0.20f, 0.0f)
+        this.actors["label"].get().get_text("text").set_size(text_size)
 
         this.on_trigger := on_trigger
         this.mouse_down = false

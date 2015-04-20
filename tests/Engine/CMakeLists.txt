@@ -53,7 +53,8 @@ set(library ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/composition/actor
             ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/platform/exception.cpp
             ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/platform/filesystem.cpp
             ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/platform/input.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/scripting/interpreter.cpp
+            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/scripting/interpreter_a.cpp
+            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/scripting/interpreter_b.cpp
             ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/debug/opengl/drawer.cpp
             ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/debug/opengl/shader_program.cpp
             ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/debug/opengl/vertex.cpp

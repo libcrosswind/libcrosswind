@@ -46,9 +46,14 @@ void cw::composition::actor::set_origin(const glm::vec3& f_origin){
 }
 
 void cw::composition::actor::set_size(const glm::vec3& f_size){
-	for (auto &model : model_map) {
-		auto percented_size = model.second->get_size() * f_size / size;
-		model.second->set_size(percented_size);
+	for (auto &model_mapping : model_map) {
+		auto percented_size = model_mapping.second->get_size() * f_size / size;
+		model_mapping.second->set_size(percented_size);
+	}
+
+	for(auto& text_mapping : text_map){
+		auto percented_size = text_mapping.second->get_size() * f_size / size;
+		text_mapping.second->set_size(percented_size);
 	}
 
 	size = f_size;

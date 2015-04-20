@@ -112,9 +112,9 @@ std::shared_ptr<cw::graphical::object::text> cw::graphical::video::load_text(con
 																			 const uint32_t& size,
 																			 const std::string& font_path){
 
-	auto text = std::make_shared<object::text>(text_value, origin, color, size);
+	auto text = std::make_shared<object::text>(text_value, origin, color);
 
-	auto font    = load_font(font_path, text->get_size());
+	auto font    = load_font(font_path, size);
 
 	auto surface = text->render(font);
 

@@ -6,7 +6,7 @@
 cw::graphical::object::text::text(const std::string& c_text,
 								  const glm::vec3& c_origin,
 								  const glm::vec3& c_color,
-								  const uint32_t& c_size){
+								  const glm::vec3& c_size){
 
 	text_value = c_text;
 	origin = c_origin;
@@ -38,13 +38,14 @@ glm::vec3 cw::graphical::object::text::get_origin(){
 
 }
 
-void cw::graphical::object::text::set_size(const uint32_t& f_size){
+void cw::graphical::object::text::set_size(const glm::vec3& f_size){
 	
 	size = f_size;
+	render_sprite->set_size(size);
 
 }
 
-uint32_t cw::graphical::object::text::get_size(){
+glm::vec3 cw::graphical::object::text::get_size(){
 	
 	return size;
 
@@ -65,6 +66,7 @@ glm::vec3 cw::graphical::object::text::get_color(){
 void cw::graphical::object::text::set_render_sprite(std::shared_ptr<cw::graphical::object::sprite> sprite){
 	
 	render_sprite = sprite;
+	size = render_sprite->get_size();
 
 }
 

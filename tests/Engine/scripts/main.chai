@@ -4,8 +4,8 @@ configuration.window.title      = "libcrosswind engine 0.2"
 //configuration.window.resolution := i32vec2(1024, 768) // does not replace the value
 //configuration.window.resolution = i32vec2(1024, 768) // exits the application
 
-configuration.window.resolution.x = 640
-configuration.window.resolution.y = 480
+configuration.window.resolution.x = 1024
+configuration.window.resolution.y = 768
 
 configuration.window.resizable  = true
 var nucleus := engine(configuration)
@@ -18,7 +18,8 @@ core.video.set_window_icon(core.filesystem.get_file_path("icon.png"))
 
 add_global(eval_file("scripts/actors/panel.chai"), "create_panel")
 add_global(eval_file("scripts/actors/border.chai"), "create_border")
-add_global(eval_file("scripts/actors/container.chai"), "create_container")
+add_global(eval_file("scripts/actors/table.chai"), "create_table")
+add_global(eval_file("scripts/actors/column.chai"), "create_column")
 add_global(eval_file("scripts/actors/button.chai"), "create_button")
 add_global(eval_file("scripts/actors/label.chai"), "create_label")
 add_global(eval_file("scripts/actors/control.chai"), "create_control")

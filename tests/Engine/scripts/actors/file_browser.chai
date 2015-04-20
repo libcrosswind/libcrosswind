@@ -1,3 +1,16 @@
+class file_data{
+    attr fields
+
+    def file_data(file_name){
+        this.fields := Map()
+        this.fields["file_name"] := file_name
+    }
+
+    def get_fields(){
+        return this.fields
+    }
+}
+
 class file_browser{
     attr actors
     attr groups
@@ -26,17 +39,30 @@ class file_browser{
 
         var v_border_size   := vec3(size.x, size.y/20.0f, 0.0f)
         var h_border_size   := vec3(size.x/20.0f, size.y + v_border_size.y * 2.0f, 0.0f)
-        var container_size  := vec3(size.x / 3.0f, size.y / 3.0f, 0.0f)
-        var cmd_button_size := vec3(100.0f, 50.0f, 0.0f)
+        var container_size  := vec3(size.x * 0.90f, size.y * 0.60f, 0.0f)
+        var cmd_button_size := vec3(size.x / 5.0f, size.y / 5.0f, 0.0f)
 
         var r_border_origin := vec3(origin.x + size.x / 2.0f + h_border_size.x / 2.0f, origin.y, 0.0f)
         var l_border_origin := vec3(origin.x - size.x / 2.0f - h_border_size.x / 2.0f, origin.y, 0.0f)
         var t_border_origin := vec3(origin.x, origin.y + size.y / 2.0f + v_border_size.y / 2.0f, 0.0f)
         var b_border_origin := vec3(origin.x, origin.y - size.y / 2.0f - v_border_size.y / 2.0f, 0.0f)
 
-        var l_button_origin := vec3(origin.x + size.x / 2.0f - cmd_button_size.x, origin.y - size.y / 2.0f + cmd_button_size.y, 0.0f)
+        var l_button_origin := vec3(origin.x + size.x / 2.0f - cmd_button_size.x / 2.0f, origin.y - size.y / 2.0f + cmd_button_size.y / 2.0f, 0.0f)
 
-        this.groups["container"] := create_container(origin, container_size)
+        this.groups["table"] := create_table(origin, container_size)
+
+        var file_name_column := create_column("File", "file_name")
+
+        var columns := Vector()
+
+        columns.push_back(file_name_column)
+
+        var data := Vector()
+
+        data.push_back(file_data("sample.png"))
+
+        this.groups["table"].set_data(data)
+        this.groups["table"].add_all(columns)
 
         this.actors["panel"] := create_panel(origin, size)
 

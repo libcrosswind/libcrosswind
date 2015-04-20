@@ -1,8 +1,8 @@
 #include "crosswind/graphical/object/mesh.hpp"
 
-cw::graphical::object::mesh::mesh(const glm::vec3& o, 
-								  const glm::vec3& s):
-origin(o), size(s){
+cw::graphical::object::mesh::mesh(const glm::vec3& c_origin,
+								  const glm::vec3& c_size):
+origin(c_origin), size(c_size){
 
 }
 

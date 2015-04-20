@@ -6,7 +6,7 @@ class label{
         this.widget.set_origin(origin)
 
         var text_color := vec3(1.0f, 1.0f, 1.0f)
-        this.widget.add_text("text", text, origin, text_color, 24, "ui_font.ttf")
+        this.widget.add_text("text", text, origin, text_color, 18, "ui_font.ttf")
     }
 
     def set_text(new_text){

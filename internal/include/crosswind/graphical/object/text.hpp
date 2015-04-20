@@ -37,7 +37,7 @@ public:
 	text(const std::string& c_text = "text",
 		 const glm::vec3& c_origin = glm::vec3(0.0f, 0.0f, 0.0f),
 		 const glm::vec3& c_color = glm::vec3(1.0f, 1.0f, 1.0f),
-		 const uint32_t& c_size = 24);
+		 const glm::vec3& c_size = glm::vec3(0.0f, 0.0f, 0.0f));
 
 	void set_text(const std::string& f_text);
 
@@ -47,9 +47,9 @@ public:
 
 	glm::vec3 get_origin();
 
-	void set_size(const uint32_t& f_size);
+	void set_size(const glm::vec3& f_size);
 
-	uint32_t get_size();
+	glm::vec3 get_size();
 
 	void set_color(const glm::vec3& f_color);
 
@@ -65,7 +65,7 @@ private:
 	std::string text_value;
 	glm::vec3 origin;
 	glm::vec3 color;
-	uint32_t size;
+	glm::vec3 size;
 
 	std::shared_ptr<object::sprite> render_sprite;
 
