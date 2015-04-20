@@ -31,7 +31,7 @@ class scene: public detail::named_component,
 			 public detail::logic_component{
 	friend class stage;
 public:
-	scene();
+	scene(const std::string& c_name);
 
 	void add_camera(const std::string& camera_name, std::shared_ptr<camera> camera);
 

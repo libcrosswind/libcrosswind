@@ -9,7 +9,7 @@ namespace detail{
 
 class named_component{
 public:
-	named_component(): name("undefined"){
+	named_component(const std::string& c_name): name(c_name){
 
 	}
 

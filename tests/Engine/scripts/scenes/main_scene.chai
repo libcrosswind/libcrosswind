@@ -1,6 +1,4 @@
-var main_scene := stage.create_scene()
-
-
+var main_scene := stage.create_scene("main_scene")
 
 var init = fun[main_scene](){
     var window_size := core.video.window.get_size()

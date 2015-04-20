@@ -16,7 +16,7 @@
 #include "crosswind/simulation/detail/character.hpp"
 #include "crosswind/simulation/detail/body.hpp"
 
-cw::composition::actor::actor(){
+cw::composition::actor::actor(const std::string& c_name): named_component(c_name){
 
 }
 

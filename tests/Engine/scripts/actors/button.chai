@@ -5,8 +5,8 @@ class button{
     attr on_trigger
     attr mouse_down
 
-    def button(origin, size, text, on_trigger){
-        this.widget := stage.create_group()
+    def button(name, origin, size, text, on_trigger){
+        this.widget := stage.create_group(name)
         this.actors := Map()
 
         this.widget.set_origin(origin)
@@ -16,7 +16,7 @@ class button{
 //        var create_label   = eval_file("scripts/actors/label.chai")
 
         this.actors["button"] := create_control(origin, size, "button", "button.json")
-        this.actors["label"] := create_label(origin, text)
+        this.actors["label"] := create_label("label", origin, text)
         print(this.actors["label"].get().get_size().x)
         print(size.x)
 
@@ -78,6 +78,6 @@ class button{
 
 }
 
-return fun(origin, size, text, on_trigger){
-    return button(origin, size, text, on_trigger)
+return fun(name, origin, size, text, on_trigger){
+    return button(name, origin, size, text, on_trigger)
 }

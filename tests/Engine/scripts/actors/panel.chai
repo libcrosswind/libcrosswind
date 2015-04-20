@@ -2,7 +2,7 @@ class panel{
     attr widget
 
     def panel(origin, size){
-        this.widget := stage.create_actor()
+        this.widget := stage.create_actor("panel")
         this.widget.set_origin(origin)
         this.widget.set_size(size)
 

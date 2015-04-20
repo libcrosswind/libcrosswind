@@ -18,7 +18,7 @@ class file_browser{
     attr widget
 
     def file_browser(origin, on_file_choosen){
-        this.widget := stage.create_group()
+        this.widget := stage.create_group("file_browser")
         this.actors := Map()
         this.groups := Map()
 
@@ -37,19 +37,32 @@ class file_browser{
 //      var create_container = eval_file("scripts/actors/container.chai")
 //      var create_button    = eval_file("scripts/actors/button.chai")
 
-        var v_border_size   := vec3(size.x, size.y/20.0f, 0.0f)
-        var h_border_size   := vec3(size.x/20.0f, size.y + v_border_size.y * 2.0f, 0.0f)
-        var container_size  := vec3(size.x * 0.90f, size.y * 0.60f, 0.0f)
-        var cmd_button_size := vec3(size.x / 5.0f, size.y / 5.0f, 0.0f)
+        var t_border_size   := vec3(size.x, size.y/20.0f * 1.5f, 0.0f)
+        var b_border_size   := vec3(size.x, size.y/20.0f, 0.0f)
 
-        var r_border_origin := vec3(origin.x + size.x / 2.0f + h_border_size.x / 2.0f, origin.y, 0.0f)
-        var l_border_origin := vec3(origin.x - size.x / 2.0f - h_border_size.x / 2.0f, origin.y, 0.0f)
-        var t_border_origin := vec3(origin.x, origin.y + size.y / 2.0f + v_border_size.y / 2.0f, 0.0f)
-        var b_border_origin := vec3(origin.x, origin.y - size.y / 2.0f - v_border_size.y / 2.0f, 0.0f)
+        var h_border_size   := vec3(size.x/20.0f, size.y + t_border_size.y + b_border_size.y, 0.0f)
+        var button_size := vec3(size.x * 0.20f, size.y * 0.10f, 0.0f)
 
-        var l_button_origin := vec3(origin.x + size.x / 2.0f - cmd_button_size.x / 2.0f, origin.y - size.y / 2.0f + cmd_button_size.y / 2.0f, 0.0f)
+        var panel_center := origin.y + t_border_size.y / 2.0f - b_border_size.y / 2.0f
+        var r_border_origin := vec3(origin.x + size.x / 2.0f + h_border_size.x / 2.0f, panel_center, 0.0f)
+        var l_border_origin := vec3(origin.x - size.x / 2.0f - h_border_size.x / 2.0f, panel_center, 0.0f)
+        var t_border_origin := vec3(origin.x, origin.y + size.y / 2.0f + t_border_size.y / 2.0f, 0.0f)
+        var b_border_origin := vec3(origin.x, origin.y - size.y / 2.0f - b_border_size.y / 2.0f, 0.0f)
 
-        this.groups["table"] := create_table(origin, container_size)
+        var button_origin := vec3(origin.x + size.x * 0.45f - button_size.x / 2.0f, origin.y - size.y / 2.0f + button_size.y / 2.0f, 0.0f)
+        this.actors["panel"] := create_panel(origin, size)
+
+        this.actors["r_border"] := create_border(r_border_origin, h_border_size)
+        this.actors["l_border"] := create_border(l_border_origin, h_border_size)
+        this.actors["t_border"] := create_border(t_border_origin, t_border_size)
+        this.actors["b_border"] := create_border(b_border_origin, b_border_size)
+
+        this.groups["l_button"] := create_button("load_button", button_origin, button_size, "load", on_file_choosen)
+
+
+        var table_size  := vec3(size.x * 0.90f, size.y * 0.80f, 0.0f)
+        var table_origin    := vec3(origin.x, origin.y + button_size.y / 2.0f, 0.0f)
+        this.groups["table"] := create_table(table_origin, table_size)
 
         var file_name_column := create_column("File", "file_name")
 
@@ -63,15 +76,6 @@ class file_browser{
 
         this.groups["table"].set_data(data)
         this.groups["table"].add_all(columns)
-
-        this.actors["panel"] := create_panel(origin, size)
-
-        this.actors["r_border"] := create_border(r_border_origin, h_border_size)
-        this.actors["l_border"] := create_border(l_border_origin, h_border_size)
-        this.actors["t_border"] := create_border(t_border_origin, v_border_size)
-        this.actors["b_border"] := create_border(b_border_origin, v_border_size)
-
-        this.groups["l_button"] := create_button(l_button_origin, cmd_button_size, "load", on_file_choosen)
 
         for_each(this.groups, fun[this](i) { this.widget.add_group(i.first, i.second.get()) })
         for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })

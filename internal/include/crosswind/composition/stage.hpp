@@ -32,13 +32,13 @@ public:
 
 	void post_event(const std::function<void()>& event);
 
-	std::shared_ptr<scene> create_scene();
+	std::shared_ptr<scene> create_scene(const std::string& f_name);
 
 	std::shared_ptr<camera> create_camera(const glm::i32vec2& f_size);
 
-	std::shared_ptr<group> create_group();
+	std::shared_ptr<group> create_group(const std::string& f_name);
 
-	std::shared_ptr<actor> create_actor();
+	std::shared_ptr<actor> create_actor(const std::string& f_name);
 
 	void add_scene(const std::string& scene_name, std::shared_ptr<scene> scene);
 

@@ -1,8 +1,8 @@
 class label{
     attr widget
 
-    def label(origin, text){
-        this.widget := stage.create_actor()
+    def label(name, origin, text){
+        this.widget := stage.create_actor(name)
         this.widget.set_origin(origin)
 
         var text_color := vec3(1.0f, 1.0f, 1.0f)
@@ -21,6 +21,6 @@ class label{
 
 }
 
-return fun(origin, text){
-    return label(origin, text)
+return fun(name, origin, text){
+    return label(name, origin, text)
 }

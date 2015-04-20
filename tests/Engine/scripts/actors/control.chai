@@ -2,7 +2,7 @@ class control{
     attr widget
 
     def control(origin, size, name, model){
-        this.widget := stage.create_actor()
+        this.widget := stage.create_actor("control")
         this.widget.set_origin(origin)
         this.widget.set_size(size)
 

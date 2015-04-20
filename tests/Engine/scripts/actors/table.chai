@@ -4,7 +4,7 @@ class table{
     attr data
 
     def table(origin, size){
-        this.widget := stage.create_group()
+        this.widget := stage.create_group("table")
         this.actors := Map()
         this.data   := Vector()
 
@@ -27,8 +27,18 @@ class table{
     }
 
     def add_all(columns){
-        for_each(columns, fun[this](i){
-            print(i.get_column_label())
+
+        var ui_columns := Map()
+
+        for_each(columns, fun[this, ui_columns](i){
+
+            var size := this.actors["container"].get().get_size()
+            var origin := this.actors["container"].get().get_origin()
+
+            var column_size := vec3(size.x / this.actors.size() / 4.0f, size.y * 0.05f, 0.0f)
+            var column_origin := vec3(origin.x - size.x / 2.0f + column_size.x / 2.0f, origin.y + size.y / 2.0f - column_size.y /2.0f, 0.0f)
+            ui_columns[i.get_column_label()] := create_label(i.get_column_label(), column_origin, i.get_column_label())
+            ui_columns[i.get_column_label()].get().get_text("text").set_size(column_size)
 
             for_each(this.data, fun[this, i](j){
                 print(i.get_cell_value())
@@ -36,6 +46,12 @@ class table{
             })
 
         })
+
+        for_each(ui_columns, fun[this](i){
+            this.actors[i.first] := i.second
+            this.widget.add_actor(i.first, i.second.get())
+        })
+
 
     }
 

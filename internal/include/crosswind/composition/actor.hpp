@@ -47,7 +47,7 @@ class actor: public detail::named_component,
 			 public detail::logic_component{
 	
 public:
-	actor();
+	actor(const std::string& c_name);
 	~actor();
 
 	virtual void set_origin(const glm::vec3& f_origin) override;

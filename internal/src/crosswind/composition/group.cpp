@@ -2,7 +2,7 @@
 #include "crosswind/composition/core.hpp"
 #include "crosswind/composition/actor.hpp"
 
-cw::composition::group::group(){
+cw::composition::group::group(const std::string& c_name): named_component(c_name){
 	
 }
 

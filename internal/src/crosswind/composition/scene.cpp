@@ -7,7 +7,7 @@
 #include "crosswind/composition/actor.hpp"
 #include "crosswind/simulation/physics.hpp"
 
-cw::composition::scene::scene(){
+cw::composition::scene::scene(const std::string& c_name): named_component(c_name){
 
 	collision_map["undefined"] = actor_collision_map();
 

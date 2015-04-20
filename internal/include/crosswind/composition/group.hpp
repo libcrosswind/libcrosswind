@@ -25,7 +25,7 @@ class group: public detail::named_component,
 			 public detail::spatial_component,
 			 public detail::logic_component{
 public:
-	group();
+	group(const std::string& c_name);
 
 	virtual void set_origin(const glm::vec3& f_origin) override;
 	virtual void set_size(const glm::vec3& f_size) override;

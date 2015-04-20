@@ -24,9 +24,9 @@ void cw::composition::stage::post_event(const std::function<void()>& event){
 	event_queue.push_back(event);
 }
 
-std::shared_ptr<cw::composition::scene> cw::composition::stage::create_scene(){
+std::shared_ptr<cw::composition::scene> cw::composition::stage::create_scene(const std::string& f_name){
 
-	auto scene = std::make_shared<class scene>();
+	auto scene = std::make_shared<class scene>(f_name);
 	scene->core = core;
 	return scene;
 
@@ -36,14 +36,14 @@ std::shared_ptr<cw::composition::camera> cw::composition::stage::create_camera(c
 	return std::make_shared<class camera>(f_size);
 }
 
-std::shared_ptr<cw::composition::group> cw::composition::stage::create_group(){
-	auto group = std::make_shared<class group>();
+std::shared_ptr<cw::composition::group> cw::composition::stage::create_group(const std::string& f_name){
+	auto group = std::make_shared<class group>(f_name);
 	group->core = core;
 	return group;
 }
 
-std::shared_ptr<cw::composition::actor> cw::composition::stage::create_actor(){
-	auto actor = std::make_shared<class actor>();
+std::shared_ptr<cw::composition::actor> cw::composition::stage::create_actor(const std::string& f_name){
+	auto actor = std::make_shared<class actor>(f_name);
 	actor->core = core;
 	return actor;
 }
