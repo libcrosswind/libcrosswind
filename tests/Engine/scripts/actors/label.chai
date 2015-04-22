@@ -5,7 +5,7 @@ class label{
         this.widget := stage.create_actor(name)
         this.widget.set_origin(origin)
 
-        var text_color := vec3(1.0f, 1.0f, 1.0f)
+        var text_color := vec3(0.0f, 0.0f, 0.0f)
         this.widget.add_text("text", text, origin, text_color, 18, "ui_font.ttf")
     }
 
