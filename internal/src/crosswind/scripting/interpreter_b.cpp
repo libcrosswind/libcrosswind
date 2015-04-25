@@ -30,8 +30,10 @@ void cw::scripting::interpreter::bind_graphical(){
 	chai->add(chaiscript::fun(&cw::graphical::object::model::change_animation), "change_animation");
 //	chai->add(chaiscript::fun(&cw::graphical::object::model::set_origin), "set_origin");
 //	chai->add(chaiscript::fun(&cw::graphical::object::model::get_origin), "get_origin");
+	chai->add(chaiscript::fun(&cw::graphical::object::model::set_size), "set_size");
 //	chai->add(chaiscript::fun(&cw::graphical::object::model::get_size), "get_size");
 	chai->add(chaiscript::fun(&cw::graphical::object::text::set_size), "set_size");
+	chai->add(chaiscript::fun(&cw::graphical::object::text::get_size), "get_size");
 
 
 }

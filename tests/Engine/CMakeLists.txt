@@ -1,15 +1,22 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(Engine)
 
+set(TOP_DIR "${PROJECT_SOURCE_DIR}/../..")
+set(INTERNAL_DIR  "${TOP_DIR}/internal")
+set(EXTERNAL_DIR  "${TOP_DIR}/external")
+set(PLATFORM_DIR  "${TOP_DIR}/platform")
+set(RESOURCES_DIR "${TOP_DIR}/resources")
+set(OUTPUT_DIR    "${TOP_DIR}/output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
+
 set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
-                            "${PROJECT_SOURCE_DIR}/../../internal/include"
-                            "${PROJECT_SOURCE_DIR}/../../external/CImg-1.6.0/include"
-                            "${PROJECT_SOURCE_DIR}/../../external/jsoncons/src"
-                            "${PROJECT_SOURCE_DIR}/../../external/bullet3/src"
-                            "${PROJECT_SOURCE_DIR}/../../platform/windows/build/include")
+                            "${INTERNAL_DIR}/include"
+                            "${EXTERNAL_DIR}/CImg-1.6.0/include"
+                            "${EXTERNAL_DIR}/jsoncons/src"
+                            "${EXTERNAL_DIR}/bullet3/src"
+                            "${PLATFORM_DIR}/windows/build/include")
 
 
-LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib)
+LINK_DIRECTORIES(${PLATFORM_DIR}/windows/build/lib)
 
 
 include_directories(${INCLUDE_LIBRARY_PATH})
@@ -27,54 +34,53 @@ SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAG
 
 endif()
 
-set(library ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/composition/actor.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/composition/camera.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/composition/core.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/composition/group.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/composition/scene.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/composition/stage.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/configuration/settings.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/object/mesh.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/object/model.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/object/sprite.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/object/sprite_animation.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/object/text.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/object/vertex.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/opengl/render_batch.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/opengl/renderer.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/opengl/shader_program.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/opengl/sprite_batch.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/opengl/texture.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/opengl/window.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/sdl/font.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/sdl/surface.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/graphical/video.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/platform/application.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/platform/exception.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/platform/filesystem.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/platform/input.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/scripting/interpreter_a.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/scripting/interpreter_b.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/debug/opengl/drawer.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/debug/opengl/shader_program.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/debug/opengl/vertex.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/detail/body.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/detail/character.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/box.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/physics.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/simulation/plane.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/sound/chunk.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/sound/mixer.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/sound/music.cpp
-            ${PROJECT_SOURCE_DIR}/../../internal/src/crosswind/engine.cpp)
+set(library ${INTERNAL_DIR}/src/crosswind/composition/actor.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/camera.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/core.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/group.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/scene.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/stage.cpp
+            ${INTERNAL_DIR}/src/crosswind/configuration/settings.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/mesh.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/model.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/sprite.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/sprite_animation.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/text.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/vertex.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/render_batch.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/renderer.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/shader_program.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/sprite_batch.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/texture.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/window.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/sdl/font.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/sdl/surface.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/video.cpp
+            ${INTERNAL_DIR}/src/crosswind/platform/application.cpp
+            ${INTERNAL_DIR}/src/crosswind/platform/exception.cpp
+            ${INTERNAL_DIR}/src/crosswind/platform/filesystem.cpp
+            ${INTERNAL_DIR}/src/crosswind/platform/input.cpp
+            ${INTERNAL_DIR}/src/crosswind/scripting/interpreter_a.cpp
+            ${INTERNAL_DIR}/src/crosswind/scripting/interpreter_b.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/drawer.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/shader_program.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/vertex.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/detail/body.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/detail/character.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/box.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/physics.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/plane.cpp
+            ${INTERNAL_DIR}/src/crosswind/sound/chunk.cpp
+            ${INTERNAL_DIR}/src/crosswind/sound/mixer.cpp
+            ${INTERNAL_DIR}/src/crosswind/sound/music.cpp
+            ${INTERNAL_DIR}/src/crosswind/engine.cpp)
 
-set(sources main.cpp)
+set(sources ${library} main.cpp)
 
 
+set(PROJECT_OUTPUT_DIRECTORY "${OUTPUT_DIR}")
 
-set(PROJECT_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/../../output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
-#file(GLOB sources main.cpp)
-add_executable(Engine ${library} ${sources})
+add_executable(Engine ${sources})
 
 set_target_properties(Engine
     PROPERTIES
@@ -106,11 +112,11 @@ target_link_libraries (Engine LINK_PUBLIC mingw32
                                                 ${opengl_libs}
                                                 ${perl_libs})
 
-file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+file(COPY ${RESOURCES_DIR}/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 file(COPY ${PROJECT_SOURCE_DIR}/scripts DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 
-file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libchaiscript_stdlib-5.7.0.dll
+file(COPY ${PLATFORM_DIR}/windows/build/lib/chaiscript/libchaiscript_stdlib-5.7.0.dll
      DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 
-file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libstl_extra.dll
+file(COPY ${PLATFORM_DIR}/windows/build/lib/chaiscript/libstl_extra.dll
      DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
