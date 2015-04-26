@@ -1,2 +1,5 @@
 tests/sonic_the_hedgehog/.idea/*
 tests/Engine/.idea/*
+output/
+temp/
+platform/
