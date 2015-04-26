@@ -1,0 +1,59 @@
+class mouse{
+    attr camera
+
+	def mouse(){
+	}
+
+	def is_down(){
+		return core.input.is_key_down("mouse_left")
+	}
+
+
+	def is_down(actor){
+		this.camera := stage.get_scene("current").get_camera("current")
+	    var coord := this.camera.convert_screen_to_world(core.input.get_mouse_coordinates())
+
+		var x = coord.x
+		var y = coord.y
+	
+    	var l = actor.get_origin().x - actor.get_size().x / 2.0f
+    	var r = actor.get_origin().x + actor.get_size().x / 2.0f
+    	var b = actor.get_origin().y - actor.get_size().y / 2.0f
+    	var t = actor.get_origin().y + actor.get_size().y / 2.0f
+
+        if(x >= l && x <= r && y >= b && y <= t){
+
+			if(this.is_down()){
+            	return true
+            }
+            
+        } else {
+        	return false
+        }
+
+        return false
+	}
+
+	def is_over(actor){
+		this.camera := stage.get_scene("current").get_camera("current")
+	    var coord := this.camera.convert_screen_to_world(core.input.get_mouse_coordinates())
+
+		var x = coord.x
+		var y = coord.y
+
+		var l = actor.get_origin().x - actor.get_size().x / 2.0f
+    	var r = actor.get_origin().x + actor.get_size().x / 2.0f
+    	var b = actor.get_origin().y - actor.get_size().y / 2.0f
+    	var t = actor.get_origin().y + actor.get_size().y / 2.0f
+
+        if(x >= l && x <= r && y >= b && y <= t){
+
+        	return !this.is_down()
+
+        } else {
+        	return false
+        }
+
+        return false
+	}
+}
