@@ -1,23 +1,50 @@
 class table{
+    attr mouse
+
     attr widget
     attr actors
+
+    attr rows
+    attr columns
     attr data
 
+
     def table(origin, size){
+        eval_file("scripts/actors/input.chai")
+        eval_file("scripts/actors/environment.chai")
+        this.mouse := mouse()
+
         this.widget := stage.create_group("table")
         this.actors := Map()
         this.data   := Vector()
+        this.rows   := Vector()
 
         this.widget.set_origin(origin)
         this.widget.set_size(size)
-
-        eval_file("scripts/actors/environment.chai")
 
         this.actors["container"] := control(origin, size, "container", "container.json")
         this.actors["selector"] := control(origin, vec3(0.0f, 0.0f, 0.0f), "selector", "selector.json")
 
         for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+
+        this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
     }
+
+    def select(row){
+         var selector_center := this.actors["selector"].get().get_origin()
+         var selector_size   := this.actors["container"].get().get_size()
+
+         this.actors["selector"].get().set_origin(vec3(selector_center.x, row.get_origin().y, 0.0f))
+    }
+
+    def logic(delta){
+        for_each(this.rows, fun[this](i){
+            if(this.mouse.is_down(i.second.get())){
+                  this.select(i.second.get())
+            }
+        })
+    }
+
 
     def clear(){
 
@@ -54,7 +81,7 @@ class table{
 
             var column_origin := vec3(l_margin + column_center_x + column_x_offset,  t_margin - column_center_y, 0.0f)
 
-            ui_columns[i.get_column_label()] := label(i.get_cell_value(), column_origin, i.get_column_label())
+            ui_columns[i.get_column_label()] := label(i.get_cell_value(), column_origin, column_size, i.get_column_label())
             ui_columns[i.get_column_label()].get().get_text("text").set_size(column_size)
 
             column_x_offset += column_size.x * 2.0f
@@ -71,7 +98,7 @@ class table{
 
                 var row_name := i.get_cell_value() + "_" + to_string(index)
                 var row_field := j.get_fields()[i.get_cell_value()]
-                ui_rows[row_name] := label(row_name, row_origin, row_field)
+                ui_rows[row_name] := label(row_name, row_origin, row_size, row_field)
                 ui_rows[row_name].get().get_text("text").set_size(row_size)
                 ++index
             })
@@ -95,6 +122,8 @@ class table{
                 ++i_count
             }
 
+            //this.rows.push_back(i.second.get()) // fails
+            this.rows.push_back(i)
         })
 
         var i_item := ui_rows[i_key]

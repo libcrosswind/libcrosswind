@@ -1,9 +1,10 @@
 class label{
     attr widget
 
-    def label(name, origin, text){
+    def label(name, origin, size, text){
         this.widget := stage.create_actor(name)
         this.widget.set_origin(origin)
+        this.widget.set_size(size)
 
         var text_color := vec3(0.0f, 0.0f, 0.0f)
         this.widget.add_text("text", text, origin, text_color, 18, "ui_font.ttf")
