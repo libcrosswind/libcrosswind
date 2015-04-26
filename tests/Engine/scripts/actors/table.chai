@@ -8,6 +8,7 @@ class table{
     attr columns
     attr data
 
+    attr selected_item
 
     def table(origin, size){
         eval_file("scripts/actors/input.chai")
@@ -28,6 +29,11 @@ class table{
         for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
 
         this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
+        this.selected_item = ""
+    }
+
+    def get_selected_item(){
+        return this.selected_item
     }
 
     def select(row){
@@ -35,6 +41,7 @@ class table{
          var selector_size   := this.actors["container"].get().get_size()
 
          this.actors["selector"].get().set_origin(vec3(selector_center.x, row.get_origin().y, 0.0f))
+         this.selected_item = row.get_text("text").get_text()
     }
 
     def logic(delta){
@@ -44,7 +51,6 @@ class table{
             }
         })
     }
-
 
     def clear(){
 
@@ -126,6 +132,7 @@ class table{
             this.rows.push_back(i)
         })
 
+
         var i_item := ui_rows[i_key]
 
         var selector_center := this.actors["selector"].get().get_origin()
@@ -134,7 +141,7 @@ class table{
         this.actors["selector"].get().set_origin(vec3(selector_center.x, i_item.get().get_origin().y, 0.0f))
         this.actors["selector"].get().get_model("selector").set_size(vec3(selector_size.x, i_item.get().get_text("text").get_size().y, 0.0f))
 
-
+        this.select(i_item.get())
 
     }
 

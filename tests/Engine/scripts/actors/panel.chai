@@ -1,12 +1,89 @@
 class panel{
+    attr mouse
+    attr groups
+    attr actors
+
     attr widget
+    attr draggable
+    attr dragging
 
     def panel(origin, size){
-        this.widget := stage.create_actor("panel")
+        eval_file("scripts/actors/input.chai")
+        eval_file("scripts/actors/environment.chai")
+
+        this.mouse := mouse()
+
+        this.widget := stage.create_group("panel")
         this.widget.set_origin(origin)
         this.widget.set_size(size)
 
-        this.widget.add_model("panel", origin, size, "panel.json")
+        this.groups := Map()
+        this.actors := Map()
+
+
+        this.draggable = false
+        this.dragging = false
+
+        this.actors["panel"] := control(origin, size, "panel", "panel.json")
+
+        var t_border_size   := vec3(size.x, size.y/20.0f * 1.5f, 0.0f)
+        var b_border_size   := vec3(size.x, size.y/20.0f, 0.0f)
+
+        var h_border_size   := vec3(size.x/20.0f, size.y + t_border_size.y + b_border_size.y, 0.0f)
+
+        var panel_center := origin.y + t_border_size.y / 2.0f - b_border_size.y / 2.0f
+        var r_border_origin := vec3(origin.x + size.x / 2.0f + h_border_size.x / 2.0f, panel_center, 0.0f)
+        var l_border_origin := vec3(origin.x - size.x / 2.0f - h_border_size.x / 2.0f, panel_center, 0.0f)
+        var t_border_origin := vec3(origin.x, origin.y + size.y / 2.0f + t_border_size.y / 2.0f, 0.0f)
+        var b_border_origin := vec3(origin.x, origin.y - size.y / 2.0f - b_border_size.y / 2.0f, 0.0f)
+
+        this.actors["r_border"] := border(r_border_origin, h_border_size)
+        this.actors["l_border"] := border(l_border_origin, h_border_size)
+        this.actors["t_border"] := border(t_border_origin, t_border_size)
+        this.actors["b_border"] := border(b_border_origin, b_border_size)
+
+
+        for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+
+        this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
+    }
+
+    def add_actor(name, actor){
+        this.actors[name] := actor
+        this.widget.add_actor(name, this.actors[name].get())
+    }
+
+    def add_group(name, group){
+        this.groups[name] := group
+        this.widget.add_group(name, this.groups[name].get())
+    }
+
+    def set_draggable(draggable){
+        this.draggable = draggable
+    }
+
+    def logic(delta){
+        if(this.draggable){
+            if(this.dragging){
+                if(this.mouse.is_down()){
+
+                	var m_coord := this.mouse.get_coordinates()
+                    var w_coord := this.widget.get_origin()
+                    var b_coord := this.actors["t_border"].get().get_origin()
+
+                    var x_inc = m_coord.x - b_coord.x
+                    var y_inc = m_coord.y - b_coord.y
+
+                    this.widget.set_origin(vec3(w_coord.x + x_inc, w_coord.y + y_inc, 0.0f))
+                } else {
+                    this.dragging = false
+                }
+            } else {
+                if(this.mouse.is_down(this.actors["t_border"].get())){
+                    this.dragging = true
+                }
+            }
+        }
     }
 
     def get(){

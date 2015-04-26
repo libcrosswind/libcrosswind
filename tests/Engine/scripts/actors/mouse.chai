@@ -4,14 +4,17 @@ class mouse{
 	def mouse(){
 	}
 
+	def get_coordinates(){
+		this.camera := stage.get_scene("current").get_camera("current")
+	    return this.camera.convert_screen_to_world(core.input.get_mouse_coordinates())
+	}
+
 	def is_down(){
 		return core.input.is_key_down("mouse_left")
 	}
 
-
 	def is_down(actor){
-		this.camera := stage.get_scene("current").get_camera("current")
-	    var coord := this.camera.convert_screen_to_world(core.input.get_mouse_coordinates())
+	    var coord := this.get_coordinates()
 
 		var x = coord.x
 		var y = coord.y
@@ -35,8 +38,7 @@ class mouse{
 	}
 
 	def is_over(actor){
-		this.camera := stage.get_scene("current").get_camera("current")
-	    var coord := this.camera.convert_screen_to_world(core.input.get_mouse_coordinates())
+	    var coord := this.get_coordinates()
 
 		var x = coord.x
 		var y = coord.y

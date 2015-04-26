@@ -8,7 +8,7 @@ var init = fun[main_scene](){
 
     eval_file("scripts/actors/environment.chai")
 
-    var browser := file_browser(vec3(0.0f, 0.0f, 0.0f), fun(){ puts("Trigger\n") })
+    var browser := file_browser(vec3(0.0f, 0.0f, 0.0f), fun(file){ print(file) })
 
     main_scene.add_group("file_browser", browser.get())
     main_scene.load_group("file_browser")

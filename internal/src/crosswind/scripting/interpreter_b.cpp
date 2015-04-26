@@ -34,7 +34,7 @@ void cw::scripting::interpreter::bind_graphical(){
 //	chai->add(chaiscript::fun(&cw::graphical::object::model::get_size), "get_size");
 	chai->add(chaiscript::fun(&cw::graphical::object::text::set_size), "set_size");
 	chai->add(chaiscript::fun(&cw::graphical::object::text::get_size), "get_size");
-
+	chai->add(chaiscript::fun(&cw::graphical::object::text::get_text), "get_text");
 
 }
 

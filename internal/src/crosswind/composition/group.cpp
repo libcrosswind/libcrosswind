@@ -7,6 +7,13 @@ cw::composition::group::group(const std::string& c_name): named_component(c_name
 }
 
 void cw::composition::group::set_origin(const glm::vec3& f_origin){
+
+	for (auto &group : group_map) {
+		auto translated_origin = group.second->get_origin() + f_origin - origin;
+		group.second->set_origin(translated_origin);
+	}
+
+
 	for (auto &actor : actor_map) {
 		auto translated_origin = actor.second->get_origin() + f_origin - origin;
 		actor.second->set_origin(translated_origin);
