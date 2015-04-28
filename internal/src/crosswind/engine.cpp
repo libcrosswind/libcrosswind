@@ -40,7 +40,7 @@ void cw::engine::run(){
 
 void cw::engine::update(){
     core->application->update();
-    core->input->update();
+    core->input->update(1.0f/60.0f);
     core->physics->update(1.0f/60.0f);
     stage->update(1.0f/60.0f);
 }

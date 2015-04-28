@@ -45,8 +45,6 @@ class file_browser{
         this.groups["panel"] := panel(origin, size)
         this.groups["panel"].set_draggable(true)
 
-
-
         var table_size  := vec3(size.x * 0.90f, size.y * 0.80f, 0.0f)
         var table_origin    := vec3(origin.x, origin.y + button_size.y / 2.0f, 0.0f)
         var file_table := table(table_origin, table_size)

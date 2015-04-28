@@ -1,0 +1,81 @@
+class text_box{
+    attr actors
+    attr widget
+
+    attr mouse
+    attr keyboard
+    attr trigger
+    attr focus
+
+    attr on_trigger
+    attr delta_count
+
+    def text_box(name, origin, size, text){
+        this.widget := stage.create_group(name)
+        this.actors := Map()
+
+        this.widget.set_origin(origin)
+        this.widget.set_size(size)
+
+        eval_file("scripts/actors/environment.chai")
+        eval_file("scripts/actors/input.chai")
+
+        this.actors["panel"] := control(origin, size, "panel", "panel.json")
+
+        var text_size := vec3(size.x - size.x * 0.20f, size.y - size.y * 0.20f, 0.0f)
+        this.actors["label"] := label("label", origin, text_size, text)
+        this.actors["label"].get().get_text("text").set_size(text_size)
+
+        this.mouse := mouse()
+        this.trigger = false
+        this.focus = false
+        this.delta_count = 0.0f
+
+        this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
+
+        for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+
+
+    }
+
+    def set_text(new_text){
+        this.actors["label"].set_text(new_text)
+    }
+
+    def get_text(){
+        return this.actors["label"].get_text()
+    }
+
+    def logic(delta){
+
+        if(this.mouse.is_down(this.widget)){
+
+            if(!this.trigger){
+                this.trigger = true
+                this.delta_count = 0.0f
+            }
+
+        } else if (this.mouse.is_over(this.widget) && this.trigger){
+            this.trigger = false
+            this.focus = true
+        }
+
+        if(!this.mouse.is_down(this.widget) && this.mouse.is_down()) { // lost focus here
+            this.trigger = false
+            this.focus = false
+        }
+
+        if(this.focus){ // blink
+            this.delta_count += delta
+            if(this.delta_count <= 0.5f){
+
+            }
+        }
+
+    }
+
+    def get(){
+        return this.widget
+    }
+
+}

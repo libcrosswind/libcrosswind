@@ -44,6 +44,9 @@ cw::platform::input::input(){
     key_map["mouse_middle"] = false;
     key_map["mouse_right"] = false;
 
+    delta_count = 0.0f;
+    buffering = false;
+    last_key = "";
 }
 
 bool cw::platform::input::is_key_down(const std::string& key){
@@ -55,15 +58,48 @@ bool cw::platform::input::is_key_down(const std::string& key){
 glm::vec2 cw::platform::input::get_mouse_coordinates(){
 
     return mouse_coordinates;
-    
+
 }
 
-void cw::platform::input::update(){
+void cw::platform::input::add_on_key_down_listener(const std::function<void(const std::string&)>& listener){
+    ok_key_down_listeners += listener;
+}
+
+/*void cw::platform::input::remove_on_key_down_listener(const std::function<void(const std::string&)>& listener){
+    ok_key_down_listeners -= listener;
+}*/
+
+void cw::platform::input::on_key_down(const std::string& key){
+
+    if(delta_count <= 0.50f){
+        if(!buffering){
+            buffering = true;
+            ok_key_down_listeners(key);
+        }
+    } else {
+        buffering = false;
+    }
+
+    if(buffering){
+        if(last_key != key){
+            buffering = false;
+            delta_count = 0.0f;
+        }
+    } else {
+       ok_key_down_listeners(key);
+    }
+
+
+}
+
+void cw::platform::input::update(const float& delta){
 
 	const uint8_t* state = SDL_GetKeyboardState(NULL);
 
 	for(auto& key : key_map){
-		key_map[key.first] = state[SDL_GetScancodeFromName(key.first.c_str())];
+		if((key_map[key.first] = state[SDL_GetScancodeFromName(key.first.c_str())]) == true){
+            on_key_down(key.first);
+        }
 	}
 
     int x, y;
