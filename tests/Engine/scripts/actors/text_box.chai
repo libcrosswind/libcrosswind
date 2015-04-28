@@ -36,6 +36,8 @@ class text_box{
         for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
 
 
+        //this.var
+
     }
 
     def set_text(new_text){
