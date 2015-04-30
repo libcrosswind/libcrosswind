@@ -67,7 +67,7 @@ class text_box{
         if(this.focus){ // blink
             this.delta_count += delta
             if(this.delta_count <= 0.5f){
-
+                this.set_text(this.get_text() + "|")
             }
         }
 
