@@ -68,6 +68,8 @@ class text_box{
             this.delta_count += delta
             if(this.delta_count <= 0.5f){
                 this.set_text(this.get_text() + "|")
+            } else {
+                this.set_text("|")
             }
         }
 
