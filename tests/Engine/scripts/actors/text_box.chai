@@ -70,7 +70,7 @@ class text_box{
                 this.set_text(this.get_text() + "|")
             } else {
                 this.set_text("|")
-                this.delta_count = 0.0f;
+                this.delta_count = 0.0f
             }
         }
 
