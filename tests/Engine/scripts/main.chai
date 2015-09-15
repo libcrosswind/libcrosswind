@@ -1,3 +1,4 @@
+
 var configuration := settings()
 
 configuration.window.title      = "libcrosswind engine 0.2"

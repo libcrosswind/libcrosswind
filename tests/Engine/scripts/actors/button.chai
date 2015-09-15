@@ -7,6 +7,9 @@ class button{
 
     attr on_trigger
 
+    attr label
+    attr button
+
     def button(name, origin, size, text, on_trigger){
         this.widget := stage.create_group(name)
         this.actors := Map()
@@ -17,25 +20,33 @@ class button{
         eval_file("scripts/actors/environment.chai")
         eval_file("scripts/actors/input.chai")
 
-        this.actors["button"] := control(origin, size, "button", "button.json")
-
         var text_size := vec3(size.x - size.x * 0.20f, size.y - size.y * 0.20f, 0.0f)
-        this.actors["label"] := label("label", origin, text_size, text)
-        this.actors["label"].get().get_text("text").set_size(text_size)
+
+        var self_button := control(origin, size, "button", "button.json")
+
+        var self_label := label("label", origin, text_size, text)
+        self_label.get().get_text("text").set_size(text_size)
+
 
         this.mouse := mouse()
         this.trigger = false
         this.on_trigger := on_trigger
 
 
+        this.label := self_label
+        this.button := self_button
+
+
         this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
 
-        for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+        this.widget.add_actor("label", this.label.get())
+        this.widget.add_actor("button", this.button.get())
 
     }
 
     def set_text(new_text){
-        this.actors["label"].set_text(new_text)
+
+        this.label.set_text(new_text)
     }
 
     def logic(delta){
@@ -43,17 +54,17 @@ class button{
         if(this.mouse.is_down(this.widget)){
 
             if(!this.trigger){
-                this.actors["button"].get().get_model("button").change_animation("button_on")
+                this.button.get().get_model("button").change_animation("button_on")
                 this.trigger = true
             }
 
         } else if (this.mouse.is_over(this.widget) && this.trigger){
-            this.actors["button"].get().get_model("button").change_animation("button_off")
+            this.button.get().get_model("button").change_animation("button_off")
             this.trigger = false
             on_trigger(this)()
         } else {
             this.trigger = false
-            this.actors["button"].get().get_model("button").change_animation("button_off")
+            this.button.get().get_model("button").change_animation("button_off")
         }
 
     }

@@ -12,7 +12,7 @@ var init = fun[main_scene](){
 
     main_scene.add_group("file_browser", browser.get())
     main_scene.load_group("file_browser")
-    add_global(browser, "f_browser")
+//    add_global(browser, "f_browser")
 }
 
 var deinit = fun[main_scene](){
@@ -20,6 +20,7 @@ var deinit = fun[main_scene](){
 }
 
 var logic  = fun[main_scene](delta){
+
 }
 
 main_scene.construct(init, deinit, logic)

@@ -14,15 +14,11 @@ class file_data{
 
 class file_browser{
 
-    attr actors
-    attr groups
-
     attr widget
+    attr panel_
 
     def file_browser(origin, on_file_choosen){
         this.widget := stage.create_group("file_browser")
-        this.actors := Map()
-        this.groups := Map()
 
         var window_size := core.video.window.get_size()
         var size := vec3(window_size.x/3.0f, window_size.y/3.0f, 0.0f)
@@ -42,8 +38,10 @@ class file_browser{
 
         var button_size := vec3(size.x * 0.20f, size.y * 0.10f, 0.0f)
         var button_origin := vec3(origin.x + size.x * 0.45f - button_size.x / 2.0f, origin.y - size.y / 2.0f + button_size.y / 2.0f, 0.0f)
-        this.groups["panel"] := panel(origin, size)
-        this.groups["panel"].set_draggable(true)
+
+
+        this.panel_ := panel(origin, size)
+        this.panel_.set_draggable(true)
 
         var table_size  := vec3(size.x * 0.90f, size.y * 0.80f, 0.0f)
         var table_origin    := vec3(origin.x, origin.y + button_size.y / 2.0f, 0.0f)
@@ -71,11 +69,11 @@ class file_browser{
                                       on_file_choosen(file_table.get_selected_item())
                                   })
 
-        this.groups["panel"].add_group("table", file_table)
-        this.groups["panel"].add_group("load_button", load_button)
 
-        for_each(this.groups, fun[this](i) { this.widget.add_group(i.first, i.second.get()) })
-        for_each(this.actors, fun[this](i) { this.widget.add_actor(i.first, i.second.get()) })
+        this.panel_.add_group("table", file_table)
+        this.panel_.add_group("load_button", load_button)
+
+        this.widget.add_group("panel", this.panel_.get())
 
     }
 

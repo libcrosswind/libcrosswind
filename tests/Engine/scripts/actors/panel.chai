@@ -24,6 +24,7 @@ class panel{
         this.draggable = false
         this.dragging = false
 
+
         this.actors["panel"] := control(origin, size, "panel", "panel.json")
 
         var t_border_size   := vec3(size.x, size.y/20.0f * 1.5f, 0.0f)
