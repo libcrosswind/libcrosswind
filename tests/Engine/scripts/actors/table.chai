@@ -69,7 +69,7 @@ class table{
     def add_all(columns){
         eval_file("scripts/actors/environment.chai")
 
-        this.clear()
+        //this.clear()
 
         var ui_columns := Map()
         var ui_rows    := Map()
@@ -142,10 +142,10 @@ class table{
         var selector_size   := this.container.get().get_size()
 
 
-//        this.selector.get().set_origin(vec3(selector_center.x, ui_rows[i_key].get().get_origin().y, 0.0f))
-//        this.selector.get().get_model("selector").set_size(vec3(selector_size.x, ui_rows[i_key].get().get_text("text").get_size().y, 0.0f))
+        this.selector.get().set_origin(vec3(selector_center.x, ui_rows[i_key].get().get_origin().y, 0.0f))
+        this.selector.get().get_model("selector").set_size(vec3(selector_size.x, ui_rows[i_key].get().get_text("text").get_size().y, 0.0f))
 
-//        this.select(i_item.get())
+        this.select(ui_rows[i_key].get())
 
     }
 
