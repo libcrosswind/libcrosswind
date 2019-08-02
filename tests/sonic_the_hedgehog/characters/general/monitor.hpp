@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
-#include <crosswind/interface/core.hpp>
-#include <crosswind/interface/composition/actor.hpp>
+#include "crosswind/composition/core.hpp"
+#include "crosswind/composition/actor.hpp"
 
 namespace game{
 namespace items{
@@ -15,7 +15,7 @@ namespace items{
 }// namespace items
 }// namespace game
 
-class game::items::monitor: public cw::interface::composition::actor{
+class game::items::monitor: public cw::composition::actor{
 public:
 	monitor(){
 

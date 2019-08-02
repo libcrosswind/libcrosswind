@@ -3,8 +3,7 @@
 #include "crosswind/composition/scene.hpp"
 #include "crosswind/composition/core.hpp"
 #include "crosswind/composition/camera.hpp"
-#include "crosswind/composition/group.hpp"
-#include "crosswind/composition/actor.hpp"
+#include "crosswind/composition/actor/actor.hpp"
 #include "crosswind/simulation/physics.hpp"
 
 cw::composition::scene::scene(const std::string& c_name): named_component(c_name){
@@ -29,45 +28,6 @@ std::shared_ptr<cw::composition::camera> cw::composition::scene::get_camera(cons
 	} else {
 		throw std::runtime_error("Could not find: " + camera_name);
 	}
-
-}
-
-void cw::composition::scene::add_group(const std::string& group_name, std::shared_ptr<group> group){
-
-	group->set_name(group_name);
-	group_map[group_name] = group;
-
-}
-
-auto cw::composition::scene::get_group(const std::string& group_name){
-
-	if(group_map.find(group_name) != group_map.end()){
-		return group_map[group_name];
-	} else {
-		throw std::runtime_error("Could not find: " + group_name);
-	}
-
-}
-
-void cw::composition::scene::remove_group(const std::string& group_name){
-
-	if(group_map.find(group_name) != group_map.end()){
-		group_map.erase(group_name);
-	} else {
-		throw std::runtime_error(group_name + " does not exist or was already removed");
-	}
-
-}
-
-void cw::composition::scene::load_group(const std::string& group_name){
-
-	get_group(group_name)->init();
-
-}
-
-void cw::composition::scene::unload_group(const std::string& group_name){
-
-	get_group(group_name)->deinit();
 
 }
 
@@ -113,12 +73,6 @@ void cw::composition::scene::unload_actor(const std::string& actor_name){
 auto& cw::composition::scene::get_camera_map(){
 
 	return camera_map;
-
-}
-
-std::map<std::string, std::shared_ptr<cw::composition::group> >& cw::composition::scene::get_group_map(){
-
-	return group_map;
 
 }
 
@@ -201,10 +155,6 @@ void cw::composition::scene::update(const float& delta){
 	for(auto& camera_mapping : camera_map){
 		camera_mapping.second->update(delta);
     }
-
-	for(auto& group_mapping : group_map){
-		group_mapping.second->update(delta);
-	}
 
 	for(auto& actor_mapping : actor_map){
 		actor_mapping.second->update(delta);

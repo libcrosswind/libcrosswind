@@ -36,6 +36,7 @@ public:
 public:
 	std::function<void()> init;
 	std::function<void()> deinit;
+	
 protected:
 	std::function<void(const float&)> logic;
 

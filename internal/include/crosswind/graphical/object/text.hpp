@@ -6,6 +6,9 @@
 
 #include "glm/glm.hpp"
 
+#include "graphical/object/renderable.hpp"
+
+
 // forward declarations
 namespace cw{
 namespace graphical{
@@ -32,7 +35,7 @@ namespace cw{
 namespace graphical{
 namespace object{
 
-class text{
+class text : public renderable{
 public:
 	text(const std::string& c_text = "text",
 		 const glm::vec3& c_origin = glm::vec3(0.0f, 0.0f, 0.0f),
@@ -57,7 +60,7 @@ public:
 
 	void set_render_sprite(std::shared_ptr<sprite> sprite);
 
-	std::shared_ptr<object::sprite> get_render_sprite();
+	virtual std::shared_ptr<object::sprite> get_render_sprite() override;
 
 	std::shared_ptr<cw::graphical::sdl::surface> render(std::shared_ptr<sdl::font> font);
 

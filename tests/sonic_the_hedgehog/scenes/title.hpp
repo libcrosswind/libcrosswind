@@ -1,18 +1,21 @@
 #pragma once
 #include <memory>
-#include <glm/glm.hpp>
-#include <crosswind/interface/core.hpp>
-#include <crosswind/interface/composition/scene.hpp>
-#include <crosswind/implementation/composition/camera.hpp>
-#include <characters/title/sega_logo.hpp>
-#include <characters/title/team_logo.hpp>
-#include <characters/title/title_background.hpp>
+#include "glm/glm.hpp"
+#include "crosswind/composition/core.hpp"
+#include "crosswind/composition/scene.hpp"
+#include "crosswind/composition/camera.hpp"
+
+#include "characters/title/sega_logo.hpp"
+#include "characters/title/team_logo.hpp"
+#include "characters/title/title_background.hpp"
+
 namespace game{
     namespace scenes{
         class title;
     }// namespace zones
 }// namespace game
-class game::scenes::title : public cw::interface::composition::scene{
+
+class game::scenes::title : public cw::composition::scene{
 public:
     title(){
     }

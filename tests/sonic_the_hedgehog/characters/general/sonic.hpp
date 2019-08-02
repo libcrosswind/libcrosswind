@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
-#include <crosswind/interface/core.hpp>
-#include <crosswind/interface/composition/actor.hpp>
+#include "crosswind/composition/core.hpp"
+#include "crosswind/composition/actor.hpp"
 
 namespace game{
 namespace characters{
@@ -15,7 +15,7 @@ namespace characters{
 }// namespace characters
 }// namespace game
 
-class game::characters::sonic: public cw::interface::composition::actor{
+class game::characters::sonic: public cw::composition::actor{
 public:
 	sonic(){
 

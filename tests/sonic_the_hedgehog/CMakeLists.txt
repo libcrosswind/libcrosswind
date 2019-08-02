@@ -25,9 +25,52 @@ add_compile_options(-std=gnu++1y -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS)
 
 endif()
 
+set(library ${INTERNAL_DIR}/src/crosswind/composition/actor.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/animated_actor.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/text_actor.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/camera.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/core.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/scene.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/stage.cpp
+            ${INTERNAL_DIR}/src/crosswind/configuration/settings.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/mesh.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/model.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/sprite.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/sprite_animation.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/text.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/object/vertex.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/render_batch.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/renderer.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/shader_program.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/sprite_batch.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/texture.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/opengl/window.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/sdl/font.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/sdl/surface.cpp
+            ${INTERNAL_DIR}/src/crosswind/graphical/video.cpp
+            ${INTERNAL_DIR}/src/crosswind/platform/application.cpp
+            ${INTERNAL_DIR}/src/crosswind/platform/exception.cpp
+            ${INTERNAL_DIR}/src/crosswind/platform/filesystem.cpp
+            ${INTERNAL_DIR}/src/crosswind/platform/input.cpp
+            ${INTERNAL_DIR}/src/crosswind/scripting/interpreter_a.cpp
+            ${INTERNAL_DIR}/src/crosswind/scripting/interpreter_b.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/drawer.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/shader_program.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/vertex.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/detail/body.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/detail/character.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/box.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/physics.cpp
+            ${INTERNAL_DIR}/src/crosswind/simulation/plane.cpp
+            ${INTERNAL_DIR}/src/crosswind/sound/chunk.cpp
+            ${INTERNAL_DIR}/src/crosswind/sound/mixer.cpp
+            ${INTERNAL_DIR}/src/crosswind/sound/music.cpp
+            ${INTERNAL_DIR}/src/crosswind/engine.cpp)
+
+set(sources ${library} main.cpp)
 
 set(PROJECT_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/../../output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
-file(GLOB sources main.cpp)
+
 add_executable(sonic_the_hedgehog ${sources})
 
 set_target_properties(sonic_the_hedgehog

@@ -15,7 +15,6 @@ namespace composition{
 	class core;
 	class scene;
 	class camera;
-	class group;
 	class actor;
 
 }// namespace composition
@@ -35,8 +34,6 @@ public:
 	std::shared_ptr<scene> create_scene(const std::string& f_name);
 
 	std::shared_ptr<camera> create_camera(const glm::i32vec2& f_size);
-
-	std::shared_ptr<group> create_group(const std::string& f_name);
 
 	std::shared_ptr<actor> create_actor(const std::string& f_name);
 

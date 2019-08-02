@@ -26,7 +26,7 @@ mkdir -p build
 
 pushd build
 
-cmake -Dglew-cmake_BUILD_SHARED=OFF -DONLY_LIBS=ON -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -G "Unix Makefiles" ..
+$CMAKE_BIN_PATH/cmake -Dglew-cmake_BUILD_SHARED=OFF -DONLY_LIBS=ON -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -G "Unix Makefiles" ..
 
 make all install
 

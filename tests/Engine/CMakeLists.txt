@@ -35,9 +35,10 @@ SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAG
 endif()
 
 set(library ${INTERNAL_DIR}/src/crosswind/composition/actor.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/animated_actor.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/text_actor.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/camera.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/core.cpp
-            ${INTERNAL_DIR}/src/crosswind/composition/group.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/scene.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/stage.cpp
             ${INTERNAL_DIR}/src/crosswind/configuration/settings.cpp

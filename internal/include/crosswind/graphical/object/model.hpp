@@ -6,6 +6,8 @@
 
 #include "glm/glm.hpp"
 
+#include "graphical/object/renderable.hpp"
+
 // forward declarations
 namespace cw{
 namespace graphical{
@@ -23,7 +25,7 @@ namespace cw{
 namespace graphical{
 namespace object{
 
-class model{
+class model : public renderable{
 public:
 	model();
 
@@ -33,7 +35,7 @@ public:
 
 	void set_render_sprite(std::shared_ptr<sprite> sprite);
 
-	std::shared_ptr<sprite> get_render_sprite();
+	virtual std::shared_ptr<object::sprite> get_render_sprite() override;
 
 	void set_animations(const std::map<std::string, std::shared_ptr<sprite_animation> >& new_animations);
 
@@ -54,7 +56,7 @@ private:
 	glm::vec3 size;
 	float delta_count;
 
-	std::shared_ptr<sprite> render_sprite;
+	std::shared_ptr<object::sprite> render_sprite;
 	std::map<std::string, std::shared_ptr<sprite_animation> > animations;
 
 };// class model

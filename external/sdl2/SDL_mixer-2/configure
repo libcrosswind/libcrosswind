@@ -781,9 +781,8 @@ PLAYWAVE_OBJECTS
 VERSION_OBJECTS
 OBJECTS
 ac_aux_dir
-SMPEG_LIBS
-SMPEG_CFLAGS
-SMPEG_CONFIG
+OPUSFILE_LIBS
+OPUSFILE_CFLAGS
 LIBMIKMOD_CONFIG
 MODPLUG_LIBS
 MODPLUG_CFLAGS
@@ -913,12 +912,12 @@ enable_music_ogg_shared
 enable_music_flac
 enable_music_flac_shared
 enable_music_mp3
-enable_music_mp3_smpeg
-enable_music_mp3_smpeg_shared
-with_smpeg_prefix
-with_smpeg_exec_prefix
-enable_smpegtest
 enable_music_mp3_mad_gpl
+enable_music_mp3_mad_gpl_dithering
+enable_music_mp3_mpg123
+enable_music_mp3_mpg123_shared
+enable_music_opus
+enable_music_opus_shared
 '
       ac_precious_vars='build_alias
 host_alias
@@ -933,7 +932,9 @@ PKG_CONFIG
 SDL_CFLAGS
 SDL_LIBS
 MODPLUG_CFLAGS
-MODPLUG_LIBS'
+MODPLUG_LIBS
+OPUSFILE_CFLAGS
+OPUSFILE_LIBS'
 
 
 # Initialize some variables set by options.
@@ -1582,13 +1583,17 @@ Optional Features:
   --enable-music-flac-shared
                           dynamically load FLAC library [[default=yes]]
   --enable-music-mp3      enable MP3 music [[default=yes]]
-  --enable-music-mp3-smpeg
-                          enable MP3 music via smpeg [[default=yes]]
-  --enable-music-mp3-smpeg-shared
-                          dynamically load smpeg library [[default=yes]]
-  --disable-smpegtest     Do not try to compile and run a test SMPEG program
   --enable-music-mp3-mad-gpl
                           enable MP3 music via libmad GPL code [[default=no]]
+  --enable-music-mp3-mad-gpl-dithering
+                          enable MP3 music via libmad GPL code [[default=yes]]
+  --enable-music-mp3-mpg123
+                          enable MP3 music via libmpg123 [[default=yes]]
+  --enable-music-mp3-mpg123-shared
+                          dynamically load libmpg123 library [[default=yes]]
+  --enable-music-opus     enable Opus music [[default=yes]]
+  --enable-music-opus-shared
+                          dynamically load opusfile library [[default=yes]]
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -1598,9 +1603,6 @@ Optional Packages:
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-sdl-prefix=PFX   Prefix where SDL is installed (optional)
   --with-sdl-exec-prefix=PFX Exec prefix where SDL is installed (optional)
-  --with-smpeg-prefix=PFX Prefix where SMPEG is installed (optional)
-  --with-smpeg-exec-prefix=PFX
-                          Exec prefix where SMPEG is installed (optional)
 
 Some influential environment variables:
   CC          C compiler command
@@ -1618,6 +1620,10 @@ Some influential environment variables:
               C compiler flags for MODPLUG, overriding pkg-config
   MODPLUG_LIBS
               linker flags for MODPLUG, overriding pkg-config
+  OPUSFILE_CFLAGS
+              C compiler flags for OPUSFILE, overriding pkg-config
+  OPUSFILE_LIBS
+              linker flags for OPUSFILE, overriding pkg-config
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -2439,9 +2445,9 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 #
 MAJOR_VERSION=2
 MINOR_VERSION=0
-MICRO_VERSION=0
-INTERFACE_AGE=0
-BINARY_AGE=0
+MICRO_VERSION=4
+INTERFACE_AGE=2
+BINARY_AGE=4
 VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION
 
 
@@ -3921,13 +3927,13 @@ if ${lt_cv_nm_interface+:} false; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:3924: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:3930: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:3927: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:3933: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:3930: output\"" >&5)
+  (eval echo "\"\$as_me:3936: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -5138,7 +5144,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5141 "configure"' > conftest.$ac_ext
+  echo '#line 5147 "configure"' > conftest.$ac_ext
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -5210,7 +5216,10 @@ s390*-*linux*|s390*-*tpf*|sparc*-*linux*)
 	  x86_64-*linux*)
 	    LD="${LD-ld} -m elf_x86_64"
 	    ;;
-	  ppc*-*linux*|powerpc*-*linux*)
+	  powerpc64le-*linux*)
+	    LD="${LD-ld} -m elf64lppc"
+	    ;;
+	  powerpc64-*linux*)
 	    LD="${LD-ld} -m elf64ppc"
 	    ;;
 	  s390*-*linux*|s390*-*tpf*)
@@ -6965,11 +6974,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6968: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6977: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:6972: \$? = $ac_status" >&5
+   echo "$as_me:6981: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7304,11 +7313,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7307: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7316: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7311: \$? = $ac_status" >&5
+   echo "$as_me:7320: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7409,11 +7418,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7412: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7421: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7416: \$? = $ac_status" >&5
+   echo "$as_me:7425: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -7464,11 +7473,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7467: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7476: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7471: \$? = $ac_status" >&5
+   echo "$as_me:7480: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9833,7 +9842,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 9836 "configure"
+#line 9845 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -9929,7 +9938,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 9932 "configure"
+#line 9941 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11065,7 +11074,7 @@ case "$host" in
     *mingw32ce*)
         #VERSION_SOURCES="$srcdir/version.rc"
         EXE=".exe"
-	;;
+    ;;
     *-*-cygwin* | *-*-mingw32*)
         VERSION_SOURCES="$srcdir/version.rc"
         EXE=".exe"
@@ -11080,20 +11089,12 @@ case "$host" in
         fi
         ;;
     *)
-        SOURCES=""
         EXE=""
         ;;
 esac
 
 # Standard C sources
-SOURCES="$SOURCES \
-$srcdir/effect_position.c \
-$srcdir/effect_stereoreverse.c \
-$srcdir/effects_internal.c \
-$srcdir/load_aiff.c \
-$srcdir/load_voc.c \
-$srcdir/mixer.c \
-$srcdir/music.c"
+SOURCES=`ls $srcdir/*.c | fgrep -v playwave.c | fgrep -v playmus.c`
 
 base_libdir=`echo \${libdir} | sed 's/.*\/\(.*\)/\1/; q'`
 
@@ -11157,7 +11158,7 @@ find_lib()
     done
 }
 
-SDL_VERSION=2.0.0
+SDL_VERSION=2.0.7
 
 
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
@@ -11716,8 +11717,7 @@ done
         enable_music_cmd=no
     fi
     if test "x$enable_music_cmd" != xno; then
-        SOURCES="$SOURCES $srcdir/music_cmd.c"
-        EXTRA_CFLAGS="$EXTRA_CFLAGS -DCMD_MUSIC"
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_CMD"
     fi
 fi
 
@@ -11729,8 +11729,7 @@ else
 fi
 
 if test x$enable_music_wave = xyes; then
-    SOURCES="$SOURCES $srcdir/wavestream.c"
-    EXTRA_CFLAGS="$EXTRA_CFLAGS -DWAV_MUSIC"
+    EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_WAV"
 fi
 
 # Check whether --enable-music-mod was given.
@@ -11823,9 +11822,9 @@ if test "x$ac_cv_header_libmodplug_modplug_h" = xyes; then :
 fi
 
 
-            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for have_libmodplug_lib=yes in -lmodplug" >&5
-$as_echo_n "checking for have_libmodplug_lib=yes in -lmodplug... " >&6; }
-if ${ac_cv_lib_modplug_have_libmodplug_lib_yes+:} false; then :
+            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ModPlug_Load in -lmodplug" >&5
+$as_echo_n "checking for ModPlug_Load in -lmodplug... " >&6; }
+if ${ac_cv_lib_modplug_ModPlug_Load+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
@@ -11839,33 +11838,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char have_libmodplug_lib=yes ();
+char ModPlug_Load ();
 int
 main ()
 {
-return have_libmodplug_lib=yes ();
+return ModPlug_Load ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_modplug_have_libmodplug_lib_yes=yes
+  ac_cv_lib_modplug_ModPlug_Load=yes
 else
-  ac_cv_lib_modplug_have_libmodplug_lib_yes=no
+  ac_cv_lib_modplug_ModPlug_Load=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_modplug_have_libmodplug_lib_yes" >&5
-$as_echo "$ac_cv_lib_modplug_have_libmodplug_lib_yes" >&6; }
-if test "x$ac_cv_lib_modplug_have_libmodplug_lib_yes" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBMODPLUG 1
-_ACEOF
-
-  LIBS="-lmodplug $LIBS"
-
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_modplug_ModPlug_Load" >&5
+$as_echo "$ac_cv_lib_modplug_ModPlug_Load" >&6; }
+if test "x$ac_cv_lib_modplug_ModPlug_Load" = xyes; then :
+  have_libmodplug_lib=yes;MODPLUG_LIBS="-lmodplug"
 fi
 
 
@@ -11876,9 +11870,9 @@ if test "x$ac_cv_header_libmodplug_modplug_h" = xyes; then :
 fi
 
 
-            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for have_libmodplug_lib=yes in -lmodplug" >&5
-$as_echo_n "checking for have_libmodplug_lib=yes in -lmodplug... " >&6; }
-if ${ac_cv_lib_modplug_have_libmodplug_lib_yes+:} false; then :
+            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ModPlug_Load in -lmodplug" >&5
+$as_echo_n "checking for ModPlug_Load in -lmodplug... " >&6; }
+if ${ac_cv_lib_modplug_ModPlug_Load+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
@@ -11892,33 +11886,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char have_libmodplug_lib=yes ();
+char ModPlug_Load ();
 int
 main ()
 {
-return have_libmodplug_lib=yes ();
+return ModPlug_Load ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_modplug_have_libmodplug_lib_yes=yes
+  ac_cv_lib_modplug_ModPlug_Load=yes
 else
-  ac_cv_lib_modplug_have_libmodplug_lib_yes=no
+  ac_cv_lib_modplug_ModPlug_Load=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_modplug_have_libmodplug_lib_yes" >&5
-$as_echo "$ac_cv_lib_modplug_have_libmodplug_lib_yes" >&6; }
-if test "x$ac_cv_lib_modplug_have_libmodplug_lib_yes" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBMODPLUG 1
-_ACEOF
-
-  LIBS="-lmodplug $LIBS"
-
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_modplug_ModPlug_Load" >&5
+$as_echo "$ac_cv_lib_modplug_ModPlug_Load" >&6; }
+if test "x$ac_cv_lib_modplug_ModPlug_Load" = xyes; then :
+  have_libmodplug_lib=yes;MODPLUG_LIBS="-lmodplug"
 fi
 
 
@@ -11948,13 +11937,12 @@ fi
                 fi
                 ;;
         esac
-        SOURCES="$SOURCES $srcdir/*_modplug.c"
-        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMODPLUG_MUSIC $MODPLUG_CFLAGS"
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MOD_MODPLUG $MODPLUG_CFLAGS"
         if test x$enable_music_mod_modplug_shared = xyes && test x$modplug_lib != x; then
             echo "-- dynamic libmodplug -> $modplug_lib"
             EXTRA_CFLAGS="$EXTRA_CFLAGS -DMODPLUG_DYNAMIC=\\\"$modplug_lib\\\""
         else
-	        EXTRA_LDFLAGS="$EXTRA_LDFLAGS $MODPLUG_LIBS"
+            EXTRA_LDFLAGS="$EXTRA_LDFLAGS $MODPLUG_LIBS"
         fi
     else
         { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** Unable to find ModPlug library (http://modplug-xmms.sourceforge.net/)" >&5
@@ -11982,6 +11970,8 @@ if test x$enable_music_mod = xyes -a x$enable_music_mod_mikmod = xyes; then
     libmikmod_min=1
     libmikmod_rev=10
     libmikmod_ver="$libmikmod_maj.$libmikmod_min.$libmikmod_rev"
+    CFLAGS_SAVED="$CFLAGS"
+    LIBS_SAVED="$LIBS"
     # Extract the first word of "libmikmod-config", so it can be a program name with args.
 set dummy libmikmod-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -12024,10 +12014,7 @@ fi
 
 
     if test "$LIBMIKMOD_CONFIG" != "no" ; then
-
-        CFLAGS_SAVED="$CFLAGS"
-        LIBS_SAVED="$LIBS"
-        CFLAGS="$CFLAGS -DLIBMIKMOD_MUSIC `$LIBMIKMOD_CONFIG --cflags`"
+        CFLAGS="$CFLAGS `$LIBMIKMOD_CONFIG --cflags`"
         LIBS="$LIBS `$LIBMIKMOD_CONFIG --libs`"
         have_libmikmod=yes
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libmikmod - version >= $libmikmod_ver" >&5
@@ -12057,7 +12044,7 @@ _ACEOF
 if ac_fn_c_try_run "$LINENO"; then :
 
 else
-  have_libmikmod=no; CFLAGS="$CFLAGS_SAVED"; LIBS="$LIBS_SAVED"
+  have_libmikmod=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
@@ -12080,11 +12067,10 @@ fi
                 fi
                 ;;
         esac
-        SOURCES="$SOURCES $srcdir/*_mod.c"
-        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMOD_MUSIC `$LIBMIKMOD_CONFIG --cflags`"
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MOD_MIKMOD `$LIBMIKMOD_CONFIG --cflags`"
         if test x$enable_music_mod_mikmod_shared = xyes && test x$mikmod_lib != x; then
             echo "-- dynamic libmikmod -> $mikmod_lib"
-            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMOD_DYNAMIC=\\\"$mikmod_lib\\\""
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMIKMOD_DYNAMIC=\\\"$mikmod_lib\\\""
         else
             EXTRA_LDFLAGS="$EXTRA_LDFLAGS `$LIBMIKMOD_CONFIG --libs`"
         fi
@@ -12092,10 +12078,12 @@ fi
         { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** Unable to find MikMod library (http://mikmod.raphnet.net/)" >&5
 $as_echo "$as_me: WARNING: *** Unable to find MikMod library (http://mikmod.raphnet.net/)" >&2;}
     fi
+    LIBS="$LIBS_SAVED"
+    CFLAGS="$CFLAGS_SAVED"
 fi
 
 if test x$have_libmodplug != xyes -a x$have_libmikmod != xyes ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: MOD support disabled" >&5
+    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: MOD support disabled" >&5
 $as_echo "$as_me: WARNING: MOD support disabled" >&2;}
 fi
 
@@ -12107,7 +12095,7 @@ else
 fi
 
 if test x$enable_music_midi = xyes; then
-    EXTRA_CFLAGS="$EXTRA_CFLAGS -DMID_MUSIC"
+    EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MID"
     # Check whether --enable-music-midi-timidity was given.
 if test "${enable_music_midi_timidity+set}" = set; then :
   enableval=$enable_music_midi_timidity;
@@ -12116,7 +12104,7 @@ else
 fi
 
     if test x$enable_music_midi_timidity = xyes; then
-        EXTRA_CFLAGS="$EXTRA_CFLAGS -DUSE_TIMIDITY_MIDI -I\$(srcdir)/timidity"
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MID_TIMIDITY -I\$(srcdir)/timidity"
         SOURCES="$SOURCES $srcdir/timidity/*.c"
     fi
     # Check whether --enable-music-midi-native was given.
@@ -12146,10 +12134,10 @@ fi
                 ;;
         esac
         if test x$use_music_midi_native = xyes; then
-            EXTRA_CFLAGS="$EXTRA_CFLAGS -DUSE_NATIVE_MIDI -I\$(srcdir)/native_midi"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MID_NATIVE -I\$(srcdir)/native_midi"
             SOURCES="$SOURCES $srcdir/native_midi/*.c"
         elif test x$use_music_midi_native = xyes_cpp; then
-            EXTRA_CFLAGS="$EXTRA_CFLAGS -DUSE_NATIVE_MIDI -I\$(srcdir)/native_midi"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MID_NATIVE -I\$(srcdir)/native_midi"
             SOURCES="$SOURCES $srcdir/native_midi/*.c"
             SOURCES_CXX="$SOURCES_CXX $srcdir/native_midi/*.cpp"
         fi
@@ -12231,10 +12219,9 @@ fi
                     fi
                     ;;
             esac
-            SOURCES="$SOURCES $srcdir/dynamic_fluidsynth.c $srcdir/fluidsynth.c"
-            EXTRA_CFLAGS="$EXTRA_CFLAGS -DUSE_FLUIDSYNTH_MIDI"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MID_FLUIDSYNTH"
             if test x$enable_music_midi_fluidsynth_shared = xyes && test x$fluidsynth_lib != x; then
-                echo "-- dynamic libfluidsyth -> $fluidsynth_lib"
+                echo "-- dynamic libfluidsynth -> $fluidsynth_lib"
                 EXTRA_CFLAGS="$EXTRA_CFLAGS -DFLUIDSYNTH_DYNAMIC=\\\"$fluidsynth_lib\\\""
             else
                 EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lfluidsynth"
@@ -12251,7 +12238,7 @@ fi
 if test x$enable_music_midi_timidity != xyes -a \
         x$use_music_midi_native != xyes -a x$use_music_midi_native != xyes_cpp -a \
         x$have_fluidsynth != xyes; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: MIDI support disabled" >&5
+    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: MIDI support disabled" >&5
 $as_echo "$as_me: WARNING: MIDI support disabled" >&2;}
 fi
 
@@ -12277,6 +12264,7 @@ else
 fi
 
 if test x$enable_music_ogg = xyes; then
+    LIBS_SAVED="$LIBS"
     if test x$enable_music_ogg_tremor = xyes; then
         ac_fn_c_check_header_mongrel "$LINENO" "tremor/ivorbisfile.h" "ac_cv_header_tremor_ivorbisfile_h" "$ac_includes_default"
 if test "x$ac_cv_header_tremor_ivorbisfile_h" = xyes; then :
@@ -12284,14 +12272,13 @@ if test "x$ac_cv_header_tremor_ivorbisfile_h" = xyes; then :
 fi
 
 
-        as_ac_Lib=`$as_echo "ac_cv_lib_vorbisidec -logg''_ov_open_callbacks" | $as_tr_sh`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ov_open_callbacks in -lvorbisidec -logg" >&5
-$as_echo_n "checking for ov_open_callbacks in -lvorbisidec -logg... " >&6; }
-if eval \${$as_ac_Lib+:} false; then :
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ov_open_callbacks in -lvorbisidec" >&5
+$as_echo_n "checking for ov_open_callbacks in -lvorbisidec... " >&6; }
+if ${ac_cv_lib_vorbisidec_ov_open_callbacks+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lvorbisidec -logg  $LIBS"
+LIBS="-lvorbisidec -logg $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -12311,18 +12298,17 @@ return ov_open_callbacks ();
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  eval "$as_ac_Lib=yes"
+  ac_cv_lib_vorbisidec_ov_open_callbacks=yes
 else
-  eval "$as_ac_Lib=no"
+  ac_cv_lib_vorbisidec_ov_open_callbacks=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-eval ac_res=\$$as_ac_Lib
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_Lib"\" = x"yes"; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_vorbisidec_ov_open_callbacks" >&5
+$as_echo "$ac_cv_lib_vorbisidec_ov_open_callbacks" >&6; }
+if test "x$ac_cv_lib_vorbisidec_ov_open_callbacks" = xyes; then :
   have_tremor_lib=yes
 fi
 
@@ -12341,8 +12327,7 @@ fi
                     fi
                     ;;
             esac
-            SOURCES="$SOURCES $srcdir/*_ogg.c"
-            EXTRA_CFLAGS="$EXTRA_CFLAGS -DOGG_MUSIC -DOGG_USE_TREMOR"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_OGG -DOGG_USE_TREMOR"
             if test x$enable_music_ogg_shared = xyes && test x$ogg_lib != x; then
                 echo "-- dynamic libvorbisidec -> $ogg_lib"
                 EXTRA_CFLAGS="$EXTRA_CFLAGS -DOGG_DYNAMIC=\\\"$ogg_lib\\\""
@@ -12362,14 +12347,13 @@ if test "x$ac_cv_header_vorbis_vorbisfile_h" = xyes; then :
 fi
 
 
-        as_ac_Lib=`$as_echo "ac_cv_lib_vorbisfile -lvorbis -logg -lm''_ov_open_callbacks" | $as_tr_sh`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ov_open_callbacks in -lvorbisfile -lvorbis -logg -lm" >&5
-$as_echo_n "checking for ov_open_callbacks in -lvorbisfile -lvorbis -logg -lm... " >&6; }
-if eval \${$as_ac_Lib+:} false; then :
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ov_open_callbacks in -lvorbisfile" >&5
+$as_echo_n "checking for ov_open_callbacks in -lvorbisfile... " >&6; }
+if ${ac_cv_lib_vorbisfile_ov_open_callbacks+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lvorbisfile -lvorbis -logg -lm  $LIBS"
+LIBS="-lvorbisfile -lvorbis -logg -lm $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -12389,18 +12373,17 @@ return ov_open_callbacks ();
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  eval "$as_ac_Lib=yes"
+  ac_cv_lib_vorbisfile_ov_open_callbacks=yes
 else
-  eval "$as_ac_Lib=no"
+  ac_cv_lib_vorbisfile_ov_open_callbacks=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-eval ac_res=\$$as_ac_Lib
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_Lib"\" = x"yes"; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_vorbisfile_ov_open_callbacks" >&5
+$as_echo "$ac_cv_lib_vorbisfile_ov_open_callbacks" >&6; }
+if test "x$ac_cv_lib_vorbisfile_ov_open_callbacks" = xyes; then :
   have_ogg_lib=yes
 fi
 
@@ -12419,8 +12402,7 @@ fi
                     fi
                     ;;
             esac
-            SOURCES="$SOURCES $srcdir/*_ogg.c"
-            EXTRA_CFLAGS="$EXTRA_CFLAGS -DOGG_MUSIC"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_OGG"
             if test x$enable_music_ogg_shared = xyes && test x$ogg_lib != x; then
                 echo "-- dynamic libvorbisfile -> $ogg_lib"
                 EXTRA_CFLAGS="$EXTRA_CFLAGS -DOGG_DYNAMIC=\\\"$ogg_lib\\\""
@@ -12434,6 +12416,7 @@ $as_echo "$as_me: WARNING: *** Unable to find Ogg Vorbis library (http://www.xip
 $as_echo "$as_me: WARNING: Ogg Vorbis support disabled" >&2;}
         fi
     fi
+    LIBS="$LIBS_SAVED"
 fi
 
 libflac_ver=8
@@ -12555,8 +12538,7 @@ fi
                     fi
                     ;;
             esac
-            SOURCES="$SOURCES $srcdir/*_flac.c"
-            EXTRA_CFLAGS="$EXTRA_CFLAGS -DFLAC_MUSIC"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_FLAC"
             if test x$enable_music_flac_shared = xyes && test x$flac_lib != x; then
                 echo "-- dynamic libFLAC -> $flac_lib"
                 EXTRA_CFLAGS="$EXTRA_CFLAGS -DFLAC_DYNAMIC=\\\"$flac_lib\\\""
@@ -12580,293 +12562,18 @@ else
 fi
 
 
-# Check whether --enable-music-mp3-smpeg was given.
-if test "${enable_music_mp3_smpeg+set}" = set; then :
-  enableval=$enable_music_mp3_smpeg;
-else
-  enable_music_mp3_smpeg=yes
-fi
-
-# Check whether --enable-music-mp3-smpeg-shared was given.
-if test "${enable_music_mp3_smpeg_shared+set}" = set; then :
-  enableval=$enable_music_mp3_smpeg_shared;
-else
-  enable_music_mp3_smpeg_shared=yes
-fi
-
-if test x$enable_music_mp3 = xyes -a x$enable_music_mp3_smpeg = xyes; then
-    SMPEG_VERSION=2.0.0
-
-# Check whether --with-smpeg-prefix was given.
-if test "${with_smpeg_prefix+set}" = set; then :
-  withval=$with_smpeg_prefix; smpeg_prefix="$withval"
-else
-  smpeg_prefix=""
-fi
-
-
-# Check whether --with-smpeg-exec-prefix was given.
-if test "${with_smpeg_exec_prefix+set}" = set; then :
-  withval=$with_smpeg_exec_prefix; smpeg_exec_prefix="$withval"
-else
-  smpeg_exec_prefix=""
-fi
-
-# Check whether --enable-smpegtest was given.
-if test "${enable_smpegtest+set}" = set; then :
-  enableval=$enable_smpegtest;
-else
-  enable_smpegtest=yes
-fi
-
-
-  if test x$smpeg_exec_prefix != x ; then
-     smpeg_args="$smpeg_args --exec-prefix=$smpeg_exec_prefix"
-     if test x${SMPEG_CONFIG+set} != xset ; then
-        SMPEG_CONFIG=$smpeg_exec_prefix/bin/smpeg2-config
-     fi
-  fi
-  if test x$smpeg_prefix != x ; then
-     smpeg_args="$smpeg_args --prefix=$smpeg_prefix"
-     if test x${SMPEG_CONFIG+set} != xset ; then
-        SMPEG_CONFIG=$smpeg_prefix/bin/smpeg2-config
-     fi
-  fi
-
-  # Extract the first word of "smpeg2-config", so it can be a program name with args.
-set dummy smpeg2-config; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_SMPEG_CONFIG+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  case $SMPEG_CONFIG in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_SMPEG_CONFIG="$SMPEG_CONFIG" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_SMPEG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  test -z "$ac_cv_path_SMPEG_CONFIG" && ac_cv_path_SMPEG_CONFIG="no"
-  ;;
-esac
-fi
-SMPEG_CONFIG=$ac_cv_path_SMPEG_CONFIG
-if test -n "$SMPEG_CONFIG"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $SMPEG_CONFIG" >&5
-$as_echo "$SMPEG_CONFIG" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-  min_smpeg_version=$SMPEG_VERSION
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for SMPEG - version >= $min_smpeg_version" >&5
-$as_echo_n "checking for SMPEG - version >= $min_smpeg_version... " >&6; }
-  no_smpeg=""
-  if test "$SMPEG_CONFIG" = "no" ; then
-    no_smpeg=yes
-  else
-    SMPEG_CFLAGS=`$SMPEG_CONFIG $smpegconf_args --cflags`
-    SMPEG_LIBS=`$SMPEG_CONFIG $smpegconf_args --libs`
-
-    smpeg_major_version=`$SMPEG_CONFIG $smpeg_args --version | \
-           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)/\1/'`
-    smpeg_minor_version=`$SMPEG_CONFIG $smpeg_args --version | \
-           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)/\2/'`
-    smpeg_micro_version=`$SMPEG_CONFIG $smpeg_config_args --version | \
-           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)/\3/'`
-    if test "x$enable_smpegtest" = "xyes" ; then
-      ac_save_CFLAGS="$CFLAGS"
-      ac_save_LIBS="$LIBS"
-      CFLAGS="$CFLAGS $SMPEG_CFLAGS $SDL_CFLAGS"
-      LIBS="$LIBS $SMPEG_LIBS $SDL_LIBS"
-      rm -f conf.smpegtest
-      if test "$cross_compiling" = yes; then :
-  echo $ac_n "cross compiling; assumed OK... $ac_c"
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "smpeg.h"
-
-char*
-my_strdup (char *str)
-{
-  char *new_str;
-
-  if (str)
-    {
-      new_str = (char *)malloc ((strlen (str) + 1) * sizeof(char));
-      strcpy (new_str, str);
-    }
-  else
-    new_str = NULL;
-
-  return new_str;
-}
-
-int main (int argc, char *argv[])
-{
-  int major, minor, micro;
-  char *tmp_version;
-
-  /* This hangs on some systems (?)
-  system ("touch conf.smpegtest");
-  */
-  { FILE *fp = fopen("conf.smpegtest", "a"); if ( fp ) fclose(fp); }
-
-  /* HP/UX 9 (%@#!) writes to sscanf strings */
-  tmp_version = my_strdup("$min_smpeg_version");
-  if (sscanf(tmp_version, "%d.%d.%d", &major, &minor, &micro) != 3) {
-     printf("%s, bad version string\n", "$min_smpeg_version");
-     exit(1);
-   }
-
-   if (($smpeg_major_version > major) ||
-      (($smpeg_major_version == major) && ($smpeg_minor_version > minor)) ||
-      (($smpeg_major_version == major) && ($smpeg_minor_version == minor) && ($smpeg_micro_version >= micro)))
-    {
-      return 0;
-    }
-  else
-    {
-      printf("\n*** 'smpeg2-config --version' returned %d.%d.%d, but the minimum version\n", $smpeg_major_version, $smpeg_minor_version, $smpeg_micro_version);
-      printf("*** of SMPEG required is %d.%d.%d. If smpeg2-config is correct, then it is\n", major, minor, micro);
-      printf("*** best to upgrade to the required version.\n");
-      printf("*** If smpeg2-config was wrong, set the environment variable SMPEG_CONFIG\n");
-      printf("*** to point to the correct copy of smpeg2-config, and remove the file\n");
-      printf("*** config.cache before re-running configure\n");
-      return 1;
-    }
-}
-
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"; then :
-
-else
-  no_smpeg=yes
-fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext
-fi
-
-       CFLAGS="$ac_save_CFLAGS"
-       LIBS="$ac_save_LIBS"
-     fi
-  fi
-  if test "x$no_smpeg" = x ; then
-     { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-     have_smpeg=yes
-  else
-     { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-     if test "$SMPEG_CONFIG" = "no" ; then
-       echo "*** The smpeg2-config script installed by SMPEG could not be found"
-       echo "*** If SMPEG was installed in PREFIX, make sure PREFIX/bin is in"
-       echo "*** your path, or set the SMPEG_CONFIG environment variable to the"
-       echo "*** full path to smpeg2-config."
-     else
-       if test -f conf.smpegtest ; then
-        :
-       else
-          echo "*** Could not run SMPEG test program, checking why..."
-          CFLAGS="$CFLAGS $SMPEG_CFLAGS $SDL_CFLAGS"
-          LIBS="$LIBS $SMPEG_LIBS $SDL_LIBS"
-          cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#include <stdio.h>
-#include "smpeg.h"
-
-int
-main ()
-{
- return 0;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-   echo "*** The test program compiled, but did not run. This usually means"
-          echo "*** that the run-time linker is not finding SMPEG or finding the wrong"
-          echo "*** version of SMPEG. If it is not finding SMPEG, you'll need to set your"
-          echo "*** LD_LIBRARY_PATH environment variable, or edit /etc/ld.so.conf to point"
-          echo "*** to the installed location  Also, make sure you have run ldconfig if that"
-          echo "*** is required on your system"
-          echo "***"
-          echo "*** If you have an old version installed, it is best to remove it, although"
-          echo "*** you may also be able to get things to work by modifying LD_LIBRARY_PATH"
-else
-   echo "*** The test program failed to compile or link. See the file config.log for the"
-          echo "*** exact error that occured. This usually means SMPEG was incorrectly installed"
-          echo "*** or that you have moved SMPEG since it was installed. In the latter case, you"
-          echo "*** may want to edit the smpeg2-config script: $SMPEG_CONFIG"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-          CFLAGS="$ac_save_CFLAGS"
-          LIBS="$ac_save_LIBS"
-       fi
-     fi
-     SMPEG_CFLAGS=""
-     SMPEG_LIBS=""
-     have_smpeg=no
-  fi
-
-
-  rm -f conf.smpegtest
-
-    if test x$have_smpeg = xyes; then
-        case "$host" in
-            *-*-darwin*)
-                smpeg_lib=`find_lib libsmpeg2.dylib`
-                ;;
-            *-*-cygwin* | *-*-mingw32*)
-                smpeg_lib=`find_lib "smpeg2*.dll"`
-                ;;
-            *)
-                smpeg_lib=`find_lib "libsmpeg2*.so.*"`
-                ;;
-        esac
-        SOURCES="$SOURCES $srcdir/*_mp3.c"
-        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMP3_MUSIC $SMPEG_CFLAGS"
-        if test x$enable_music_mp3_smpeg_shared = xyes && test x$smpeg_lib != x; then
-            echo "-- dynamic libsmpeg -> $smpeg_lib"
-            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMP3_DYNAMIC=\\\"$smpeg_lib\\\""
-        else
-            EXTRA_LDFLAGS="$EXTRA_LDFLAGS $SMPEG_LIBS"
-        fi
-    else
-        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** Unable to find SMPEG library (http://icculus.org/smpeg/)" >&5
-$as_echo "$as_me: WARNING: *** Unable to find SMPEG library (http://icculus.org/smpeg/)" >&2;}
-    fi
-fi
-
 # Check whether --enable-music-mp3-mad-gpl was given.
 if test "${enable_music_mp3_mad_gpl+set}" = set; then :
   enableval=$enable_music_mp3_mad_gpl;
 else
   enable_music_mp3_mad_gpl=no
+fi
+
+# Check whether --enable-music-mp3-mad-gpl-dithering was given.
+if test "${enable_music_mp3_mad_gpl_dithering+set}" = set; then :
+  enableval=$enable_music_mp3_mad_gpl_dithering;
+else
+  enable_music_mp3_mad_gpl_dithering=yes
 fi
 
 if test x$enable_music_mp3 = xyes -a x$enable_music_mp3_mad_gpl = xyes; then
@@ -12896,8 +12603,12 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: $have_libmad" >&5
 $as_echo "$have_libmad" >&6; }
     if test x$have_libmad = xyes; then
-        SOURCES="$SOURCES $srcdir/music_mad.c"
-        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMP3_MAD_MUSIC"
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MP3_MAD"
+        if test x$enable_music_mp3_mad_gpl_dithering = xyes; then
+            { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** Using GPL libmad and MP3 dithering routines, this build of SDL_mixer is now under the GPL" >&5
+$as_echo "$as_me: WARNING: *** Using GPL libmad and MP3 dithering routines, this build of SDL_mixer is now under the GPL" >&2;}
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MP3_MAD_GPL_DITHERING"
+        fi
         EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lmad"
     else
         { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** Unable to find MAD library (http://www.underbit.com/products/mad/)" >&5
@@ -12905,9 +12616,313 @@ $as_echo "$as_me: WARNING: *** Unable to find MAD library (http://www.underbit.c
     fi
 fi
 
-if test x$have_smpeg != xyes -a x$have_libmad != xyes; then
+# Check whether --enable-music-mp3-mpg123 was given.
+if test "${enable_music_mp3_mpg123+set}" = set; then :
+  enableval=$enable_music_mp3_mpg123;
+else
+  enable_music_mp3_mpg123=yes
+fi
+
+# Check whether --enable-music-mp3-mpg123-shared was given.
+if test "${enable_music_mp3_mpg123_shared+set}" = set; then :
+  enableval=$enable_music_mp3_mpg123_shared;
+else
+  enable_music_mp3_mpg123_shared=yes
+fi
+
+if test x$enable_music_mp3_mpg123 = xyes; then
+    ac_fn_c_check_header_mongrel "$LINENO" "mpg123.h" "ac_cv_header_mpg123_h" "$ac_includes_default"
+if test "x$ac_cv_header_mpg123_h" = xyes; then :
+  have_mpg123_hdr=yes
+fi
+
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for mpg123_replace_reader_handle in -lmpg123" >&5
+$as_echo_n "checking for mpg123_replace_reader_handle in -lmpg123... " >&6; }
+if ${ac_cv_lib_mpg123_mpg123_replace_reader_handle+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lmpg123  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char mpg123_replace_reader_handle ();
+int
+main ()
+{
+return mpg123_replace_reader_handle ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_mpg123_mpg123_replace_reader_handle=yes
+else
+  ac_cv_lib_mpg123_mpg123_replace_reader_handle=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mpg123_mpg123_replace_reader_handle" >&5
+$as_echo "$ac_cv_lib_mpg123_mpg123_replace_reader_handle" >&6; }
+if test "x$ac_cv_lib_mpg123_mpg123_replace_reader_handle" = xyes; then :
+  have_mpg123_lib=yes
+fi
+
+    if test x$have_mpg123_hdr = xyes -a x$have_mpg123_lib = xyes; then
+        have_libmpg123=yes
+        case "$host" in
+            *-*-darwin*)
+                mpg123_lib=`find_lib libmpg123.dylib`
+                ;;
+            *-*-cygwin* | *-*-mingw32*)
+                mpg123_lib=`find_lib "libmpg123*.dll"`
+                ;;
+            *)
+                mpg123_lib=`find_lib "libmpg123.so.*"`
+                ;;
+        esac
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_MP3_MPG123"
+        if test x$enable_music_mp3_mpg123_shared = xyes && test x$mpg123_lib != x; then
+            echo "-- dynamic libmpg123 -> $mpg123_lib"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DMPG123_DYNAMIC=\\\"$mpg123_lib\\\""
+        else
+            EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lmpg123"
+        fi
+    else
+        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** Unable to find mpg123 library (https://www.mpg123.de)" >&5
+$as_echo "$as_me: WARNING: *** Unable to find mpg123 library (https://www.mpg123.de)" >&2;}
+        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: mpg123 support disabled" >&5
+$as_echo "$as_me: WARNING: mpg123 support disabled" >&2;}
+    fi
+fi
+
+if test x$have_libmad = xyes -o x$have_libmpg123 = xyes; then
+    :
+else
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: MP3 support disabled" >&5
 $as_echo "$as_me: WARNING: MP3 support disabled" >&2;}
+fi
+
+# Check whether --enable-music-opus was given.
+if test "${enable_music_opus+set}" = set; then :
+  enableval=$enable_music_opus;
+else
+  enable_music_opus=yes
+fi
+
+
+# Check whether --enable-music-opus-shared was given.
+if test "${enable_music_opus_shared+set}" = set; then :
+  enableval=$enable_music_opus_shared;
+else
+  enable_music_opus_shared=yes
+fi
+
+if test x$enable_music_opus = xyes; then
+    LIBS_SAVED="$LIBS"
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for OPUSFILE" >&5
+$as_echo_n "checking for OPUSFILE... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$OPUSFILE_CFLAGS"; then
+        pkg_cv_OPUSFILE_CFLAGS="$OPUSFILE_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"opusfile >= 0.2\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "opusfile >= 0.2") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_OPUSFILE_CFLAGS=`$PKG_CONFIG --cflags "opusfile >= 0.2" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$OPUSFILE_LIBS"; then
+        pkg_cv_OPUSFILE_LIBS="$OPUSFILE_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"opusfile >= 0.2\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "opusfile >= 0.2") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_OPUSFILE_LIBS=`$PKG_CONFIG --libs "opusfile >= 0.2" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        OPUSFILE_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "opusfile >= 0.2"`
+        else
+	        OPUSFILE_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "opusfile >= 0.2"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$OPUSFILE_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                            ac_fn_c_check_header_mongrel "$LINENO" "opus/opusfile.h" "ac_cv_header_opus_opusfile_h" "$ac_includes_default"
+if test "x$ac_cv_header_opus_opusfile_h" = xyes; then :
+  have_opusfile_hdr=yes
+fi
+
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for op_open_callbacks in -lopusfile" >&5
+$as_echo_n "checking for op_open_callbacks in -lopusfile... " >&6; }
+if ${ac_cv_lib_opusfile_op_open_callbacks+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lopusfile -lopus -logg -lm $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char op_open_callbacks ();
+int
+main ()
+{
+return op_open_callbacks ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_opusfile_op_open_callbacks=yes
+else
+  ac_cv_lib_opusfile_op_open_callbacks=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_opusfile_op_open_callbacks" >&5
+$as_echo "$ac_cv_lib_opusfile_op_open_callbacks" >&6; }
+if test "x$ac_cv_lib_opusfile_op_open_callbacks" = xyes; then :
+  have_opusfile_lib=yes;OPUSFILE_LIBS="-lopusfile -lopus"
+fi
+
+
+elif test $pkg_failed = untried; then
+	            ac_fn_c_check_header_mongrel "$LINENO" "opus/opusfile.h" "ac_cv_header_opus_opusfile_h" "$ac_includes_default"
+if test "x$ac_cv_header_opus_opusfile_h" = xyes; then :
+  have_opusfile_hdr=yes
+fi
+
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for op_open_callbacks in -lopusfile" >&5
+$as_echo_n "checking for op_open_callbacks in -lopusfile... " >&6; }
+if ${ac_cv_lib_opusfile_op_open_callbacks+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lopusfile -lopus -logg -lm $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char op_open_callbacks ();
+int
+main ()
+{
+return op_open_callbacks ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_opusfile_op_open_callbacks=yes
+else
+  ac_cv_lib_opusfile_op_open_callbacks=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_opusfile_op_open_callbacks" >&5
+$as_echo "$ac_cv_lib_opusfile_op_open_callbacks" >&6; }
+if test "x$ac_cv_lib_opusfile_op_open_callbacks" = xyes; then :
+  have_opusfile_lib=yes;OPUSFILE_LIBS="-lopusfile -lopus"
+fi
+
+
+else
+	OPUSFILE_CFLAGS=$pkg_cv_OPUSFILE_CFLAGS
+	OPUSFILE_LIBS=$pkg_cv_OPUSFILE_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	            have_opusfile_hdr=yes
+            have_opusfile_lib=yes
+
+fi
+    LIBS="$LIBS_SAVED"
+
+    if test x$have_opusfile_hdr = xyes -a x$have_opusfile_lib = xyes; then
+        have_opusfile=yes
+        case "$host" in
+            *-*-darwin*)
+                opusfile_lib=`find_lib libopusfile.dylib`
+                ;;
+            *-*-cygwin* | *-*-mingw32*)
+                opusfile_lib=`find_lib "libopusfile*.dll"`
+                ;;
+            *)
+                opusfile_lib=`find_lib "libopusfile[0-9]*.so.*"`
+                if test x$opusfile_lib = x; then
+                    opusfile_lib=`find_lib "libopusfile.so.*"`
+                fi
+                ;;
+        esac
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -DMUSIC_OPUS $OPUSFILE_CFLAGS"
+        if test x$enable_music_opus_shared = xyes && test x$opusfile_lib != x; then
+            echo "-- dynamic opusfile -> $opusfile_lib"
+            EXTRA_CFLAGS="$EXTRA_CFLAGS -DOPUS_DYNAMIC=\\\"$opusfile_lib\\\""
+        else
+            EXTRA_LDFLAGS="$EXTRA_LDFLAGS $OPUSFILE_LIBS"
+        fi
+    else
+        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: *** Unable to find opusfile library (http://opus-codec.org/)" >&5
+$as_echo "$as_me: WARNING: *** Unable to find opusfile library (http://opus-codec.org/)" >&2;}
+    fi
 fi
 
 EXTRA_LDFLAGS="$EXTRA_LDFLAGS $LIBM"

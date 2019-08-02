@@ -4,8 +4,7 @@
 #include "crosswind/composition/core.hpp"
 #include "crosswind/composition/scene.hpp"
 #include "crosswind/composition/camera.hpp"
-#include "crosswind/composition/group.hpp"
-#include "crosswind/composition/actor.hpp"
+#include "crosswind/composition/actor/actor.hpp"
 
 cw::composition::stage::stage(std::shared_ptr<cw::composition::core> c_core): core(c_core){
 
@@ -34,12 +33,6 @@ std::shared_ptr<cw::composition::scene> cw::composition::stage::create_scene(con
 
 std::shared_ptr<cw::composition::camera> cw::composition::stage::create_camera(const glm::i32vec2& f_size){
 	return std::make_shared<class camera>(f_size);
-}
-
-std::shared_ptr<cw::composition::group> cw::composition::stage::create_group(const std::string& f_name){
-	auto group = std::make_shared<class group>(f_name);
-	group->core = core;
-	return group;
 }
 
 std::shared_ptr<cw::composition::actor> cw::composition::stage::create_actor(const std::string& f_name){

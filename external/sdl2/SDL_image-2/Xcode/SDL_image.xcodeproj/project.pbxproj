@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		007288A80F0DA79800C302A9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 007288A60F0DA79800C302A9 /* ApplicationServices.framework */; };
+		AA23FC7D20A2A1B90017DFB9 /* IMG_svg.c in Sources */ = {isa = PBXBuildFile; fileRef = AA50AA461F9C7C50003B9C0C /* IMG_svg.c */; };
+		AA50AA471F9C7C50003B9C0C /* IMG_svg.c in Sources */ = {isa = PBXBuildFile; fileRef = AA50AA461F9C7C50003B9C0C /* IMG_svg.c */; };
 		AA579DF2161C07E6005F809B /* IMG_bmp.c in Sources */ = {isa = PBXBuildFile; fileRef = AA579DE2161C07E6005F809B /* IMG_bmp.c */; };
 		AA579DF3161C07E7005F809B /* IMG_bmp.c in Sources */ = {isa = PBXBuildFile; fileRef = AA579DE2161C07E6005F809B /* IMG_bmp.c */; };
 		AA579DF4161C07E7005F809B /* IMG_gif.c in Sources */ = {isa = PBXBuildFile; fileRef = AA579DE3161C07E6005F809B /* IMG_gif.c */; };
@@ -40,7 +42,7 @@
 		AA579E0F161C07E7005F809B /* IMG_xxx.c in Sources */ = {isa = PBXBuildFile; fileRef = AA579DF0161C07E6005F809B /* IMG_xxx.c */; };
 		AA579E10161C07E7005F809B /* IMG.c in Sources */ = {isa = PBXBuildFile; fileRef = AA579DF1161C07E6005F809B /* IMG.c */; };
 		AA579E11161C07E7005F809B /* IMG.c in Sources */ = {isa = PBXBuildFile; fileRef = AA579DF1161C07E6005F809B /* IMG.c */; };
-		AADBAC88175C6AAB004F8ED2 /* webp.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AA9EE77514B27A62008773C0 /* webp.framework */; };
+		AADBAC88175C6AAB004F8ED2 /* webp.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AA9EE77514B27A62008773C0 /* webp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AADBAC89175C6B4C004F8ED2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 007288A60F0DA79800C302A9 /* ApplicationServices.framework */; };
 		AADBAC8A175C6B4F004F8ED2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F85449145A19BC002CA294 /* Foundation.framework */; };
 		BE1FA71A07AF4C44004B6283 /* SDL_image.h in Headers */ = {isa = PBXBuildFile; fileRef = 1014BAEA010A4B677F000001 /* SDL_image.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -75,6 +77,7 @@
 		007288A60F0DA79800C302A9 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		1014BAEA010A4B677F000001 /* SDL_image.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SDL_image.h; path = ../SDL_image.h; sourceTree = SOURCE_ROOT; };
 		61F85449145A19BC002CA294 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AA50AA461F9C7C50003B9C0C /* IMG_svg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = IMG_svg.c; path = ../IMG_svg.c; sourceTree = "<group>"; };
 		AA579DE2161C07E6005F809B /* IMG_bmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = IMG_bmp.c; path = ../IMG_bmp.c; sourceTree = "<group>"; };
 		AA579DE3161C07E6005F809B /* IMG_gif.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = IMG_gif.c; path = ../IMG_gif.c; sourceTree = "<group>"; };
 		AA579DE4161C07E6005F809B /* IMG_ImageIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IMG_ImageIO.m; path = ../IMG_ImageIO.m; sourceTree = "<group>"; };
@@ -166,14 +169,16 @@
 		08FB77ACFE841707C02AAC07 /* Library Source */ = {
 			isa = PBXGroup;
 			children = (
+				AA579DF1161C07E6005F809B /* IMG.c */,
+				AA579DE4161C07E6005F809B /* IMG_ImageIO.m */,
 				AA579DE2161C07E6005F809B /* IMG_bmp.c */,
 				AA579DE3161C07E6005F809B /* IMG_gif.c */,
-				AA579DE4161C07E6005F809B /* IMG_ImageIO.m */,
 				AA579DE5161C07E6005F809B /* IMG_jpg.c */,
 				AA579DE6161C07E6005F809B /* IMG_lbm.c */,
 				AA579DE7161C07E6005F809B /* IMG_pcx.c */,
 				AA579DE8161C07E6005F809B /* IMG_png.c */,
 				AA579DE9161C07E6005F809B /* IMG_pnm.c */,
+				AA50AA461F9C7C50003B9C0C /* IMG_svg.c */,
 				AA579DEA161C07E6005F809B /* IMG_tga.c */,
 				AA579DEB161C07E6005F809B /* IMG_tif.c */,
 				AA579DEC161C07E6005F809B /* IMG_webp.c */,
@@ -181,7 +186,6 @@
 				AA579DEE161C07E6005F809B /* IMG_xpm.c */,
 				AA579DEF161C07E6005F809B /* IMG_xv.c */,
 				AA579DF0161C07E6005F809B /* IMG_xxx.c */,
-				AA579DF1161C07E6005F809B /* IMG.c */,
 			);
 			name = "Library Source";
 			sourceTree = "<group>";
@@ -256,7 +260,6 @@
 				AA9EE77214B27810008773C0 /* Copy Frameworks */,
 				AA9EE77314B2782A008773C0 /* Create Frameworks symlink */,
 				AA9EE77414B27854008773C0 /* Convert SDL includes to SDL Framework includes */,
-				AA5C3FDD17A8C97A00D6C8A1 /* Sign Frameworks */,
 			);
 			buildRules = (
 			);
@@ -311,7 +314,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0630;
 			};
 			buildConfigurationList = 00B7E3B6097EB73D00826121 /* Build configuration list for PBXProject "SDL_image" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -363,20 +366,6 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AA5C3FDD17A8C97A00D6C8A1 /* Sign Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Sign Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"$USER\" = \"slouken\" ]; then\n    CODE_SIGN_IDENTITY=\"Mac Developer: Sam Lantinga (84TP7N5TA4)\" pkg-support/codesign-frameworks.sh || exit 1\nfi";
-		};
 		AA9EE77314B2782A008773C0 /* Create Frameworks symlink */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -412,7 +401,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# clean up the framework, remove headers, extra files\nPRODUCT_NAME=SDL2_image\nmkdir -p build/dmg-tmp\nxcrun CpMac -r $TARGET_BUILD_DIR/$PRODUCT_NAME.framework build/dmg-tmp/\ncp pkg-support/resources/ReadMe.txt build/dmg-tmp\n\n# remove the .DS_Store files if any (we may want to provide one in the future for fancy .dmgs)\nrm -rf build/dmg-tmp/.DS_Store\n\n# create the dmg\nhdiutil create -ov -fs HFS+ -volname $PRODUCT_NAME -srcfolder build/dmg-tmp build/$PRODUCT_NAME.dmg\n\n# clean up\nrm -rf build/dmg-tmp";
+			shellScript = "PRODUCT_NAME=SDL2_image\n\n# Sign framework\nif [ \"$SDL_CODESIGN_IDENTITY\" != \"\" ]; then\n    codesign --force --deep --sign \"$SDL_CODESIGN_IDENTITY\" $TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Versions/A || exit $?\nfi\n\n# clean up the framework, remove headers, extra files\nmkdir -p build/dmg-tmp\ncp -r $TARGET_BUILD_DIR/$PRODUCT_NAME.framework build/dmg-tmp/\ncp pkg-support/resources/ReadMe.txt build/dmg-tmp\n\n# remove the .DS_Store files if any (we may want to provide one in the future for fancy .dmgs)\nrm -rf build/dmg-tmp/.DS_Store\n\n# create the dmg\nhdiutil create -ov -fs HFS+ -volname $PRODUCT_NAME -srcfolder build/dmg-tmp build/$PRODUCT_NAME.dmg\n\n# clean up\nrm -rf build/dmg-tmp\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -437,6 +426,7 @@
 				AA579E0C161C07E7005F809B /* IMG_xv.c in Sources */,
 				AA579E0E161C07E7005F809B /* IMG_xxx.c in Sources */,
 				AA579E10161C07E7005F809B /* IMG.c in Sources */,
+				AA50AA471F9C7C50003B9C0C /* IMG_svg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +450,7 @@
 				AA579E0D161C07E7005F809B /* IMG_xv.c in Sources */,
 				AA579E0F161C07E7005F809B /* IMG_xxx.c in Sources */,
 				AA579E11161C07E7005F809B /* IMG.c in Sources */,
+				AA23FC7D20A2A1B90017DFB9 /* IMG_svg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,7 +468,6 @@
 		007288110F0DA5BA00C302A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED)",
 					"$(HOME)/Library/Frameworks",
@@ -493,6 +483,7 @@
 					LOAD_PCX,
 					LOAD_PNG,
 					LOAD_PNM,
+					LOAD_SVG,
 					LOAD_TGA,
 					LOAD_TIF,
 					LOAD_WEBP,
@@ -507,6 +498,7 @@
 				);
 				HEADER_SEARCH_PATHS_QUOTED = "\"$(SRCROOT)/Frameworks/webp.framework/Headers\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = SDL2_image;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(HEADER_SEARCH_PATHS_QUOTED) $(HOME)/Library/Frameworks/SDL2.framework/Headers /Library/Frameworks/SDL2.framework/Headers";
@@ -516,8 +508,9 @@
 		007288120F0DA5BA00C302A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 3.0.0;
+				DYLIB_CURRENT_VERSION = 3.2.0;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -526,6 +519,7 @@
 				INFOPLIST_FILE = "Info-Framework.plist";
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					webp,
@@ -537,6 +531,7 @@
 		007288130F0DA5BA00C302A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -551,6 +546,7 @@
 					LOAD_PCX,
 					LOAD_PNG,
 					LOAD_PNM,
+					LOAD_SVG,
 					LOAD_TGA,
 					LOAD_TIF,
 					LOAD_WEBP,
@@ -595,7 +591,6 @@
 		007288150F0DA5C400C302A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED)",
@@ -612,6 +607,7 @@
 					LOAD_PCX,
 					LOAD_PNG,
 					LOAD_PNM,
+					LOAD_SVG,
 					LOAD_TGA,
 					LOAD_TIF,
 					LOAD_WEBP,
@@ -637,8 +633,9 @@
 		007288160F0DA5C400C302A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 3.0.0;
+				DYLIB_CURRENT_VERSION = 3.2.0;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -647,6 +644,7 @@
 				INFOPLIST_FILE = "Info-Framework.plist";
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					webp,
@@ -658,6 +656,7 @@
 		007288170F0DA5C400C302A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -670,6 +669,7 @@
 					LOAD_PCX,
 					LOAD_PNG,
 					LOAD_PNM,
+					LOAD_SVG,
 					LOAD_TGA,
 					LOAD_TIF,
 					LOAD_WEBP,

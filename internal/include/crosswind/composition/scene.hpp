@@ -18,7 +18,6 @@ namespace composition{
 	
 	class core;
 	class camera;
-	class group;
 	class actor;
 
 }// namespace composition
@@ -47,19 +46,7 @@ public:
 
 	void unload_actor(const std::string& actor_name);
 
-	void add_group(const std::string& group_name, std::shared_ptr<group> group);
-
-	auto get_group(const std::string& group_name);
-
-	void remove_group(const std::string& group_name);
-
-	void load_group(const std::string& group_name);
-
-	void unload_group(const std::string& group_name);
-
 	auto& get_camera_map();
-
-	std::map<std::string, std::shared_ptr<group> >& get_group_map();
 
 	std::map<std::string, std::shared_ptr<actor> >& get_actor_map();
 
@@ -89,7 +76,6 @@ private:
 	std::map<std::string, int> int_values;
 
 	std::map<std::string, std::shared_ptr<actor> > actor_map;
-	std::map<std::string, std::shared_ptr<group> > group_map;
 	std::map<std::string, std::shared_ptr<camera> > camera_map;
 	std::vector<std::pair<bool, std::function<void()> > > event_queue;
 

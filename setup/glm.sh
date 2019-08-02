@@ -23,7 +23,7 @@ cp -rp $GLM .
 pushd $GLM_DIR_NAME
 
 
-cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -G "Unix Makefiles" .
+$CMAKE_BIN_PATH/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -G "Unix Makefiles" .
 
 make all install
 
