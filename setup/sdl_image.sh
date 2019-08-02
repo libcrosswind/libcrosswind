@@ -34,7 +34,7 @@ function set_up {
 	create_dir $PNG_TEMP
 
 	copy_to $ZLIB_TEMP 			$ZLIB
-	copy_to $JPG_TEMP 			$JPG
+  copy_to $JPG_TEMP 			$JPG
 	copy_to $PNG_TEMP 			$PNG
 	copy_to $SDL_IMAGE_TEMP 	$SDL_IMAGE
 }
@@ -42,8 +42,19 @@ function set_up {
 function build_sdl_image {
 	pushd $ZLIB_TEMP
 	pushd $ZLIB_DIR_NAME
-	make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib clean
+  make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib clean
 	make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib install
+	popd
+	popd
+
+	pushd $PNG_TEMP
+	pushd $PNG_DIR_NAME
+#	./configure --prefix=$INSTALL_DIR/ --with-zlib-prefix=$INSTALL_DIR/
+#	make
+#	make install
+	make -f scripts/makefile.msys clean
+	make -f scripts/makefile.gcc prefix=$INSTALL_DIR DESTDIR=$INSTALL_DIR ZLIBINC=$INSTALL_DIR/include ZLIBLIB=$INSTALL_DIR/lib static
+	make -f scripts/makefile.msys prefix="" DESTDIR=$INSTALL_DIR ZLIBINC=$INSTALL_DIR/include ZLIBLIB=$INSTALL_DIR/lib install-static
 	popd
 	popd
 
@@ -53,13 +64,6 @@ function build_sdl_image {
 	make clean
 	make
 	make install
-	popd
-	popd
-
-	pushd $PNG_TEMP
-	pushd $PNG_DIR_NAME
-	make -f scripts/makefile.msys clean
-	make -f scripts/makefile.msys prefix="" DESTDIR=$INSTALL_DIR ZLIBINC=$INSTALL_DIR/include ZLIBLIB=$INSTALL_DIR/lib install-static
 	popd
 	popd
 
@@ -74,8 +78,14 @@ function build_sdl_image {
 }
 
 ###########################BUILD####################################
+clean_dir $SDL_IMAGE_TEMP
+clean_dir $ZLIB_TEMP
+clean_dir $JPG_TEMP
+clean_dir $PNG_TEMP
+
 set_up
 build_sdl_image
+
 clean_dir $SDL_IMAGE_TEMP
 clean_dir $ZLIB_TEMP
 clean_dir $JPG_TEMP

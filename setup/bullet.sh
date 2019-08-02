@@ -13,7 +13,7 @@ BULLET3_TEMP=$TEMP_DIR/bullet3_build
 INSTALL_DIR=$PWD/../platform/windows/build
 
 ############################SETUP###################################
-rm -rf $TEMP_DIR
+#rm -rf $TEMP_DIR
 
 mkdir -p $TEMP_DIR
 mkdir -p $BULLET3_TEMP
@@ -26,7 +26,7 @@ mkdir -p build
 pushd build
 
 CXXFLAGS="-fpermissive"
-$CMAKE_BIN_PATH/cmake -DUSE_GLUT=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_BULLET2_DEMOS=OFF -DBUILD_EXTRAS=OFF -DBUILD_UNIT_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -G "Unix Makefiles" .. 
+$CMAKE_BIN_PATH/cmake -DUSE_GLUT=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_BULLET2_DEMOS=OFF -DBUILD_EXTRAS=OFF -DBUILD_UNIT_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -G "Unix Makefiles" ..
 
 make all install
 
@@ -35,6 +35,6 @@ popd #build
 popd #$BULLET3_DIR_NAME
 popd #$BULLET3_TEMP
 
-rm -rf $TEMP_DIR
+#rm -rf $TEMP_DIR
 
 popd

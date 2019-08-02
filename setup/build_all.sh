@@ -9,10 +9,10 @@ sh ./sdl2.sh
 sh ./sdl_image.sh
 sh ./sdl_mixer.sh
 sh ./sdl_ttf.sh
-sh ./glew.sh
-sh ./glm.sh
-sh ./bullet.sh
-sh ./chaiscript.sh
+#sh ./glew.sh
+#sh ./glm.sh
+#sh ./bullet.sh
+#sh ./chaiscript.sh
 
 read -p "Press Enter to exit"
 
