@@ -46,10 +46,11 @@ function build_sdl_ttf {
 }
 
 ###########################BUILD####################################
-clean_dir $SDL_TTF_TEMP
 set_up
 build_sdl_ttf
 clean_dir $SDL_TTF_TEMP
+clean_dir $FREETYPE_TEMP
+
 ####################
 
 

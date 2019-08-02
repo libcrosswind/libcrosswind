@@ -40,7 +40,6 @@ function build_sdl {
 
 
 ###########################BUILD####################################
-clean_dir $SDL2_TEMP
 set_up
 build_sdl
 clean_dir $SDL2_TEMP

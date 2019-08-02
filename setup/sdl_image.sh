@@ -74,10 +74,13 @@ function build_sdl_image {
 }
 
 ###########################BUILD####################################
-clean_dir $SDL_IMAGE_TEMP
 set_up
 build_sdl_image
 clean_dir $SDL_IMAGE_TEMP
+clean_dir $ZLIB_TEMP
+clean_dir $JPG_TEMP
+clean_dir $PNG_TEMP
+
 ####################
 
 popd

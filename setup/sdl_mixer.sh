@@ -67,10 +67,12 @@ function build_sdl_mixer {
 }
 
 ###########################BUILD####################################
-clean_dir $SDL_MIXER_TEMP
 set_up
 build_sdl_mixer
 clean_dir $SDL_MIXER_TEMP
+clean_dir $OGG_TEMP
+clean_dir $VORBIS_TEMP
+
 ####################
 
 popd
