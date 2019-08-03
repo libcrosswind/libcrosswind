@@ -13,7 +13,7 @@ GLEW_CMAKE_TEMP=$TEMP_DIR/glew_cmake_build
 INSTALL_DIR=$PWD/../platform/windows/build
 
 ############################SETUP###################################
-rm -rf $TEMP_DIR
+rm -rf $GLEW_CMAKE_TEMP
 
 mkdir -p $TEMP_DIR
 mkdir -p $GLEW_CMAKE_TEMP
@@ -35,6 +35,6 @@ popd # build
 popd # $GLEW_CMAKE_DIR_NAME
 popd # $GLEW_CMAKE_TEMP
 
-rm -rf $TEMP_DIR
+rm -rf $GLEW_CMAKE_TEMP
 
 popd

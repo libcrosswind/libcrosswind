@@ -13,7 +13,7 @@ GLM_TEMP=$TEMP_DIR/glm_build
 INSTALL_DIR=$PWD/../platform/windows/build
 
 ############################SETUP###################################
-rm -rf $TEMP_DIR
+rm -rf $GLM_TEMP
 
 mkdir -p $TEMP_DIR
 mkdir -p $GLM_TEMP
@@ -23,13 +23,13 @@ cp -rp $GLM .
 pushd $GLM_DIR_NAME
 
 
-$CMAKE_BIN_PATH/cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -G "Unix Makefiles" .
+$CMAKE_BIN_PATH/cmake -DGLM_TEST_ENABLE=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -G "Unix Makefiles" .
 
 make all install
 
 popd # $GLM_DIR_NAME
 popd # $GLM_TEMP
 
-rm -rf $TEMP_DIR
+rm -rf $GLM_TEMP
 
 popd

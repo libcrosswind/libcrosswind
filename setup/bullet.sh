@@ -13,7 +13,7 @@ BULLET3_TEMP=$TEMP_DIR/bullet3_build
 INSTALL_DIR=$PWD/../platform/windows/build
 
 ############################SETUP###################################
-#rm -rf $TEMP_DIR
+rm -rf $BULLET3_TEMP
 
 mkdir -p $TEMP_DIR
 mkdir -p $BULLET3_TEMP
@@ -35,6 +35,6 @@ popd #build
 popd #$BULLET3_DIR_NAME
 popd #$BULLET3_TEMP
 
-#rm -rf $TEMP_DIR
+rm -rf $BULLET3_TEMP
 
 popd
