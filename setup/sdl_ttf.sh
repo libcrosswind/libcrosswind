@@ -21,23 +21,27 @@ function set_up {
 	create_dir $SDL_TTF_TEMP
 	create_dir $FREETYPE_TEMP
 
-	copy_to $FREETYPE_TEMP 		$FREETYPE
-	copy_to $SDL_TTF_TEMP   	$SDL_TTF
+#	copy_to $FREETYPE_TEMP 		$FREETYPE
+#	copy_to $SDL_TTF_TEMP   	$SDL_TTF
 }
 
 function build_sdl_ttf {
 	pushd $FREETYPE_TEMP
 	pushd $FREETYPE_DIR_NAME
+
 	sh ./configure  --disable-shared --prefix=$INSTALL_DIR
 	make clean
-	make
 	make install
+
+	cp -fr builds/unix/freetype-config $INSTALL_DIR/bin/freetype-config
+
+
 	popd
 	popd
 
 	pushd $SDL_TTF_TEMP
 	pushd $SDL_TTF_DIR_NAME
-	sh ./configure  --disable-sdltest --disable-shared FREETYPE_CONFIG=$INSTALL_DIR/bin/freetype-config --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include
+	sh ./configure  --disable-sdltest --disable-shared FT2_CONFIG=$INSTALL_DIR/bin/freetype-config --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include
 	make clean
 	make
 	make install
