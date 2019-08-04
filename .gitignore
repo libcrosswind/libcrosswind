@@ -1,4 +1,5 @@
 tests/sonic_the_hedgehog/.idea/*
+tests/sonic_the_hedgehog/build/*
 tests/Engine/.idea/*
 output/
 temp/
