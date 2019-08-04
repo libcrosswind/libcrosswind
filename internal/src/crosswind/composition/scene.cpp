@@ -26,7 +26,7 @@ std::shared_ptr<cw::composition::camera> cw::composition::scene::get_camera(cons
 	if(camera_map.find(camera_name) != camera_map.end()){
 		return camera_map[camera_name];
 	} else {
-		throw std::runtime_error("Could not find: " + camera_name);
+		throw std::runtime_error("Could not find camera: " + camera_name);
 	}
 
 }

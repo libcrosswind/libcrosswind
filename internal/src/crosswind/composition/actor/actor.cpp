@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 
-#include "crosswind/composition/actor.hpp"
+#include "crosswind/composition/actor/actor.hpp"
 #include "crosswind/composition/core.hpp"
 #include "crosswind/platform/filesystem.hpp"
 #include "crosswind/graphical/video.hpp"
@@ -20,6 +20,6 @@ cw::composition::actor::actor(const std::string& c_name): named_component(c_name
 
 }
 
-cw::composition::animated_actor::~animated_actor(){
+cw::composition::actor::~actor(){
 
 }

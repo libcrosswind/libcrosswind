@@ -2,8 +2,11 @@
 
 #include "glm/glm.hpp"
 
-#include "crosswind/interface/core.hpp"
-#include "crosswind/interface/composition/actor.hpp"
+#include "crosswind/composition/core.hpp"
+#include "crosswind/graphical/video.hpp"
+#include "crosswind/graphical/opengl/window.hpp"
+#include "crosswind/graphical/object/model.hpp"
+#include "crosswind/composition/actor/animated_actor.hpp"
 
 namespace game {
 namespace characters {
@@ -15,10 +18,10 @@ namespace title{
 }// namespace characters
 }// namespace game
 
-class game::characters::title::title_background: public cw::composition::actor{
+class game::characters::title::title_background: public cw::composition::animated_actor{
 public:
 
-	title_background(){
+	title_background(): animated_actor("title_background"){
 
 	}
 

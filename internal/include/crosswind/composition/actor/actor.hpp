@@ -11,6 +11,14 @@
 // forward declarations
 namespace cw {
 
+namespace graphical{
+namespace object{
+
+    class renderable;
+
+}// namespace object
+}// namespace graphical
+
 namespace composition {
 	
 	class core;
@@ -30,8 +38,11 @@ public:
 	actor(const std::string& c_name);
 	~actor();
 
+    virtual void update(const float& dt) = 0;
 
 	std::shared_ptr<core> core;
+
+	virtual std::map<std::string, std::shared_ptr<graphical::object::renderable> > get_model_map() = 0;
 
 };// class actor
 

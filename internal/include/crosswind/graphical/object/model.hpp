@@ -6,7 +6,7 @@
 
 #include "glm/glm.hpp"
 
-#include "graphical/object/renderable.hpp"
+#include "crosswind/graphical/object/renderable.hpp"
 
 // forward declarations
 namespace cw{

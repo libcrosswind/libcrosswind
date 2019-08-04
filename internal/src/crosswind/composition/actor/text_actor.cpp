@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 
-#include "crosswind/composition/text_actor.hpp"
+#include "crosswind/composition/actor/text_actor.hpp"
 #include "crosswind/composition/core.hpp"
 #include "crosswind/platform/filesystem.hpp"
 #include "crosswind/graphical/video.hpp"
@@ -45,7 +45,7 @@ void cw::composition::text_actor::set_size(const glm::vec3& f_size){
 void cw::composition::text_actor::set_alpha(const float& f_alpha){
 	alpha = f_alpha;
 	for(auto& model : text_map){
-		auto& frame = model.second->get_render_sprite();
+		auto frame = model.second->get_render_sprite();
 		for(auto& vertex : frame->get_vertices()){
 			vertex.set_alpha(alpha);
 		}
@@ -54,7 +54,7 @@ void cw::composition::text_actor::set_alpha(const float& f_alpha){
 
 void cw::composition::text_actor::update(const float& dt){
 	for(auto& model_mapping : text_map){
-		model_mapping.second->update(dt);
+		//model_mapping.second->update(dt);
 	}
 
 	logic(dt);
@@ -97,6 +97,13 @@ void cw::composition::text_actor::remove_text(const std::string& text_name){
 	}
 }
 
-std::map<std::string, std::shared_ptr<cw::graphical::object::renderable> >& cw::composition::actor::get_model_map(){
-	return text_map;
+std::map<std::string, std::shared_ptr<cw::graphical::object::renderable> > cw::composition::text_actor::get_model_map(){
+
+    std::map<std::string, std::shared_ptr<cw::graphical::object::renderable> > mmap;
+
+    for(auto mapping : this->text_map){
+        mmap[mapping.first] = mapping.second;
+    }
+
+	return mmap;
 }

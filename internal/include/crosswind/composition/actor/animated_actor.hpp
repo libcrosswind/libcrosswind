@@ -44,7 +44,7 @@ public:
 	virtual void set_size(const glm::vec3& f_size) override;
 	virtual void set_alpha(const float& f_alpha) override;
 
-	void update(const float& dt);
+	void update(const float& dt) override;
 
 	void add_model(const std::string& model_name,
 				   const glm::vec3& origin,
@@ -73,7 +73,7 @@ public:
 
 	void remove_character(const std::string& character_name);
 
-	std::map<std::string, std::shared_ptr<graphical::object::renderable> >& get_model_map();
+	std::map<std::string, std::shared_ptr<graphical::object::renderable> > get_model_map() override;
 
 private:
 	std::map<std::string, std::shared_ptr<graphical::object::model> > 		model_map;

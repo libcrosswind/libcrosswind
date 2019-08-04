@@ -27,15 +27,9 @@ class stage{
 public:
 	stage(std::shared_ptr<core> c_core);
 
-	void handle_events();
-
-	void post_event(const std::function<void()>& event);
-
 	std::shared_ptr<scene> create_scene(const std::string& f_name);
 
 	std::shared_ptr<camera> create_camera(const glm::i32vec2& f_size);
-
-	std::shared_ptr<actor> create_actor(const std::string& f_name);
 
 	void add_scene(const std::string& scene_name, std::shared_ptr<scene> scene);
 
@@ -54,7 +48,6 @@ public:
 private:
 	std::shared_ptr<core> core;
 	std::map<std::string, std::shared_ptr<scene> > scene_map;
-	std::vector<std::function<void()> > event_queue;
 
 };// class stage
 

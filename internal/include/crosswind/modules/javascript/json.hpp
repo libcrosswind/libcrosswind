@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <fstream>
 
 #include "jsoncons/json.hpp"
 
@@ -15,14 +16,16 @@ public:
 
     auto& from_file(const std::string& filename){
 
-        data = jsoncons::json::parse_file(filename);
+        std::ifstream is(filename);
+
+        data = jsoncons::json::parse(is);
 
         return *this;
     }
 
     auto& from_string(const std::string& json_string){
 
-        data = jsoncons::json::parse_string(json_string);
+        data = jsoncons::json::parse(json_string);
         return *this;
     }
 

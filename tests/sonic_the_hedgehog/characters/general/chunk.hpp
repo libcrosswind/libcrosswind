@@ -7,7 +7,7 @@
 #include "glm/glm.hpp"
 
 #include "crosswind/composition/core.hpp"
-#include "crosswind/composition/actor.hpp"
+#include "crosswind/composition/actor/animated_actor.hpp"
 
 namespace game{
 namespace characters{
@@ -17,9 +17,9 @@ namespace characters{
 }// namespace characters
 }// namespace game
 
-class game::characters::chunk: public cw::composition::actor{
+class game::characters::chunk: public cw::composition::animated_actor{
 public:
-	chunk(){
+	chunk(): animated_actor("chunk"){
 
 	}
 

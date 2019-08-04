@@ -25,7 +25,7 @@ namespace object{
 
 class renderable{
 public:
-	virtual std::shared_ptr<sprite> get_render_sprite() = 0
+	virtual std::shared_ptr<sprite> get_render_sprite() = 0;
 };// class renderable
 
 }// namespace object

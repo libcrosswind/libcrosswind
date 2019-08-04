@@ -5,7 +5,7 @@
 #include "glm/glm.hpp"
 
 #include "crosswind/composition/core.hpp"
-#include "crosswind/composition/actor.hpp"
+#include "crosswind/composition/actor/animated_actor.hpp"
 
 namespace game{
 namespace characters{
@@ -15,9 +15,9 @@ namespace characters{
 }// namespace characters
 }// namespace game
 
-class game::characters::sonic: public cw::composition::actor{
+class game::characters::sonic: public cw::composition::animated_actor{
 public:
-	sonic(){
+	sonic(): animated_actor("sonic"){
 
 	}
 
@@ -26,13 +26,9 @@ public:
 		this->add_model("sonic", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(40.0f, 42.0f, 0.0f), "sonic.json");
 		this->add_character("sonic", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(26, 24), 0.35f);
 
-		this->conditions["moving"] = false;
-		this->conditions["braking"] = false;
-		this->conditions["rolling"] = false;
-		this->conditions["jumping"] = false;
 		this->set_facing(true);
 
-		this->get_character("sonic")->set_jump_speed(6.5f);
+		//this->get_character("sonic")->set_jump_speed(6.5f);
 
 	}
 
@@ -48,7 +44,7 @@ public:
 		return facing;
 	}
 
-	void calculate_facing(){
+	/*void calculate_facing(){
 		if(this->get_character("sonic")->get_speed().x > 0){
 			this->set_facing(true);
 		} else if(this->get_character("sonic")->get_speed().x < 0){
@@ -242,16 +238,16 @@ public:
 
 			this->get_model("sonic")->get_render_sprite_list()["current"]->set_origin(b_origin);
 
-	}
+	}*/
 
 	virtual void logic(const float& dt){
 
-		calculate_facing();
+		/*calculate_facing();
 		calculate_movement();
 		calculate_friction();
 		calculate_jumping();
 		map_positions();
-		calculate_ground_animations();
+		calculate_ground_animations();*/
 
 	}
 

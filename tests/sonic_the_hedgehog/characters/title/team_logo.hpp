@@ -3,7 +3,9 @@
 #include "glm/glm.hpp"
 
 #include "crosswind/composition/core.hpp"
-#include "crosswind/composition/actor.hpp"
+#include "crosswind/graphical/video.hpp"
+#include "crosswind/graphical/opengl/window.hpp"
+#include "crosswind/composition/actor/animated_actor.hpp"
 
 namespace game {
 namespace characters {
@@ -15,10 +17,10 @@ namespace title{
 }// namespace characters
 }// namespace game
 
-class game::characters::title::team_logo: public cw::composition::actor{
+class game::characters::title::team_logo: public cw::composition::animated_actor{
 public:
 
-	team_logo(){
+	team_logo() : animated_actor("team_logo"){
 
 	}
 

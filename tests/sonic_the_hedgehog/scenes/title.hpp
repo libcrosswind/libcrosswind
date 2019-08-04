@@ -17,15 +17,15 @@ namespace game{
 
 class game::scenes::title : public cw::composition::scene{
 public:
-    title(){
+    title(): scene("title"){
     }
     virtual void init(){
  
-        add_actor("title_background", title_background);
+        /*add_actor("title_background", title_background);
         for(auto& actor: actors){
             actor.second->init();
-        }
-        reset();
+        }*/
+        //reset();
     }
     virtual void deinit(){
     }

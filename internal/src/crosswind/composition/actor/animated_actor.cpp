@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 
-#include "crosswind/composition/animated_actor.hpp"
+#include "crosswind/composition/actor/animated_actor.hpp"
 #include "crosswind/composition/core.hpp"
 #include "crosswind/platform/filesystem.hpp"
 #include "crosswind/graphical/video.hpp"
@@ -179,7 +179,13 @@ void cw::composition::animated_actor::remove_character(const std::string& charac
 
 }
 
-std::map<std::string, std::shared_ptr<cw::graphical::object::renderable> >& 
+std::map<std::string, std::shared_ptr<cw::graphical::object::renderable> >
 cw::composition::animated_actor::get_model_map(){
-	return model_map;
+    std::map<std::string, std::shared_ptr<cw::graphical::object::renderable> > mmap;
+
+    for(auto mapping : this->model_map){
+        mmap[mapping.first] = mapping.second;
+    }
+
+	return mmap;
 }

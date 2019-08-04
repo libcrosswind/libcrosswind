@@ -11,7 +11,7 @@ set(OUTPUT_DIR    "${TOP_DIR}/output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
 set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
                             "${INTERNAL_DIR}/include"
                             "${EXTERNAL_DIR}/CImg-1.6.0/include"
-                            "${EXTERNAL_DIR}/jsoncons/src"
+                            "${EXTERNAL_DIR}/jsoncons/includes"
                             "${EXTERNAL_DIR}/bullet3/src"
                             "${PLATFORM_DIR}/windows/build/include")
 

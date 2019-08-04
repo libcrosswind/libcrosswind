@@ -1,13 +1,20 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(sonic_the_hedgehog)
 
+set(TOP_DIR "${PROJECT_SOURCE_DIR}/../..")
+set(INTERNAL_DIR  "${TOP_DIR}/internal")
+set(EXTERNAL_DIR  "${TOP_DIR}/external")
+set(PLATFORM_DIR  "${TOP_DIR}/platform")
+set(RESOURCES_DIR "${TOP_DIR}/resources")
+set(OUTPUT_DIR    "${TOP_DIR}/output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
+
 
 set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
-                            "${PROJECT_SOURCE_DIR}/../../internal/include"
-                            "${PROJECT_SOURCE_DIR}/../../external/CImg-1.6.0/include"
-                            "${PROJECT_SOURCE_DIR}/../../external/jsoncons/src"
-                            "${PROJECT_SOURCE_DIR}/../../external/bullet3/src"
-                            "${PROJECT_SOURCE_DIR}/../../platform/windows/build/include")
+                            "${INTERNAL_DIR}/include"
+                            "${EXTERNAL_DIR}/CImg-1.6.0/include"
+                            "${EXTERNAL_DIR}/jsoncons/include"
+                            "${EXTERNAL_DIR}/bullet3/src"
+                            "${PLATFORM_DIR}/windows/build/include")
 
 
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib)
@@ -25,9 +32,9 @@ add_compile_options(-std=gnu++1y -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS)
 
 endif()
 
-set(library ${INTERNAL_DIR}/src/crosswind/composition/actor.cpp
-            ${INTERNAL_DIR}/src/crosswind/composition/animated_actor.cpp
-            ${INTERNAL_DIR}/src/crosswind/composition/text_actor.cpp
+set(library ${INTERNAL_DIR}/src/crosswind/composition/actor/actor.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/actor/animated_actor.cpp
+            ${INTERNAL_DIR}/src/crosswind/composition/actor/text_actor.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/camera.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/core.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/scene.cpp
@@ -52,8 +59,6 @@ set(library ${INTERNAL_DIR}/src/crosswind/composition/actor.cpp
             ${INTERNAL_DIR}/src/crosswind/platform/exception.cpp
             ${INTERNAL_DIR}/src/crosswind/platform/filesystem.cpp
             ${INTERNAL_DIR}/src/crosswind/platform/input.cpp
-            ${INTERNAL_DIR}/src/crosswind/scripting/interpreter_a.cpp
-            ${INTERNAL_DIR}/src/crosswind/scripting/interpreter_b.cpp
             ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/drawer.cpp
             ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/shader_program.cpp
             ${INTERNAL_DIR}/src/crosswind/simulation/debug/opengl/vertex.cpp
@@ -80,11 +85,11 @@ set_target_properties(sonic_the_hedgehog
     RUNTIME_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/bin"
 )
 
-set(SDL2_libs        SDL2main SDL2 winmm imm32 version)
+set(SDL2_libs        SDL2main SDL2 winmm imm32 version hid setupapi)
 set(SDL2_image_libs  SDL2_image jpeg png z)
 set(SDL2_ttf_libs    SDL2_ttf freetype)
 set(SDL2_mixer_libs  SDL2_mixer vorbisenc vorbisfile vorbis ogg)
-set(win32_libs       winmm imm32 version)
+set(win32_libs       winmm imm32 version hid setupapi)
 set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
 set(opengl_libs      glu32 opengl32)
 set(opengl_ext_libs  glew)
@@ -102,11 +107,11 @@ target_link_libraries (sonic_the_hedgehog LINK_PUBLIC mingw32
                                                 ${perl_libs})
 
 file(COPY ${PROJECT_SOURCE_DIR}/../../resources/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
-file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libchaiscript_stdlib-5.7.0.dll
-     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+#file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libchaiscript_stdlib-5.7.0.dll
+#     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 
-file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libstl_extra.dll
-     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
+#file(COPY ${PROJECT_SOURCE_DIR}/../../platform/windows/build/lib/chaiscript/libstl_extra.dll
+#     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 
 file(COPY ${PROJECT_SOURCE_DIR}/scripts
      DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
