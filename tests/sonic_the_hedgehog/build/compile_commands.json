@@ -1,0 +1,202 @@
+[
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/composition/core.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/composition/core.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/platform/application.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/platform/application.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/platform/application.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/platform/input.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/platform/input.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/platform/input.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/sound/music.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/sound/music.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/sound/music.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/C_/Source/libcrosswind/internal/src/crosswind/engine.cpp.obj -c C:/Source/libcrosswind/internal/src/crosswind/engine.cpp",
+  "file": "C:/Source/libcrosswind/internal/src/crosswind/engine.cpp"
+},
+{
+  "directory": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/build",
+  "command": "C:/Source/libcrosswind/platform/windows/compilers/x64/TDM-GCC-64/bin/g++.exe   @CMakeFiles/sonic_the_hedgehog.dir/includes_CXX.rsp -g   -std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -o CMakeFiles/sonic_the_hedgehog.dir/main.cpp.obj -c C:/Source/libcrosswind/tests/sonic_the_hedgehog/main.cpp",
+  "file": "C:/Source/libcrosswind/tests/sonic_the_hedgehog/main.cpp"
+}
+]

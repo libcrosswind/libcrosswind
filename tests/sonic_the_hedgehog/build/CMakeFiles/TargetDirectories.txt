@@ -1,0 +1,3 @@
+C:/Source/libcrosswind/tests/sonic_the_hedgehog/build/CMakeFiles/sonic_the_hedgehog.dir
+C:/Source/libcrosswind/tests/sonic_the_hedgehog/build/CMakeFiles/edit_cache.dir
+C:/Source/libcrosswind/tests/sonic_the_hedgehog/build/CMakeFiles/rebuild_cache.dir
