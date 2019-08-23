@@ -1,4 +1,4 @@
-#version 130
+#version 310 es
 //Fragment shader
 
 in vec4 fragment_color; //input color

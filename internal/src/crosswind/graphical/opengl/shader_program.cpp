@@ -125,6 +125,10 @@ void cw::graphical::opengl::shader_program::compile(const std::string& shader_fi
 
     shader_file.close();
 
+    const char* shader_language_version = (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+    std::string shader_string(shader_language_version);
+
     const char* contents_ptr = file_contents.c_str();
     glShaderSource(shader_id, 1, &contents_ptr, nullptr);
 
@@ -144,7 +148,7 @@ void cw::graphical::opengl::shader_program::compile(const std::string& shader_fi
 
         glDeleteShader(shader_id); 
         std::printf("%s\n", &(error_log[0]));
-        throw platform::exception("Faled to compile shader: " + shader_filepath);
+        throw platform::exception("Failed to compile shader: " + shader_filepath);
     }
 
 }

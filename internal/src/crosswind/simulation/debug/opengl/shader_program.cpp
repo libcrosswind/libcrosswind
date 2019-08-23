@@ -135,6 +135,6 @@ void cw::simulation::debug::opengl::shader_program::compile(const std::string& s
 
         glDeleteShader(shader_id); 
         std::printf("%s\n", &(error_log[0]));
-        throw platform::exception("Faled to compile shader: " + shader_filepath);
+        throw platform::exception("Failed to compile shader: " + shader_filepath);
     }
 }

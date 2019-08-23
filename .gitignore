@@ -1,6 +1,8 @@
 tests/sonic_the_hedgehog/.idea/*
 tests/sonic_the_hedgehog/build
+tests/sonic_the_hedgehog/cmake-build-debug
 tests/Engine/.idea/*
 output/
 temp/
 platform/windows/build
+platform/linux/build

@@ -19,7 +19,9 @@ int main(int argc, char **argv) {
 
         auto engine = std::make_shared<cw::engine>(settings);
         engine->core->filesystem->add_directory("assets", true);
-        engine->core->video->set_window_icon(engine->core->filesystem->get_file_path("icon.png"));
+
+        auto file_path = engine->core->filesystem->get_file_path("icon.png");
+        engine->core->video->set_window_icon("assets/engine/graphics/window/icon.png");
 
         auto title_scene = engine->stage->create_scene("title");
         auto camera = engine->stage->create_camera(glm::i32vec2(640, 480));

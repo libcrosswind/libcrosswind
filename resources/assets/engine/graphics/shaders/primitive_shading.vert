@@ -1,4 +1,4 @@
-#version 130
+#version 310 es
 //Vertex shader
 
 //VBO input data.

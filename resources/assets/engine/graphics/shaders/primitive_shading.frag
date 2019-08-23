@@ -1,10 +1,10 @@
-#version 130
+#version 310 es
 //Fragment shader
 
-in vec4 fragment_color;
+in mediump vec4 fragment_color;
 
 //Output to screen
-out vec4 color;
+out mediump vec4 color;
 
 void main() {
     color = fragment_color;
