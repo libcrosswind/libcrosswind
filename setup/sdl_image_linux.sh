@@ -42,6 +42,7 @@ function set_up {
 function build_sdl_image {
 	pushd $ZLIB_TEMP
 	pushd $ZLIB_DIR_NAME
+	sudo chmod -R 777 "$(pwd)"
   make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib clean
 	make -f win32/Makefile.gcc BINARY_PATH=$INSTALL_DIR/bin INCLUDE_PATH=$INSTALL_DIR/include LIBRARY_PATH=$INSTALL_DIR/lib install
 	popd
@@ -52,6 +53,7 @@ function build_sdl_image {
 #	./configure --prefix=$INSTALL_DIR/ --with-zlib-prefix=$INSTALL_DIR/
 #	make
 #	make install
+	sudo chmod -R 777 "$(pwd)"
 	make -f scripts/makefile.msys clean
 	make -f scripts/makefile.gcc prefix=$INSTALL_DIR DESTDIR=$INSTALL_DIR ZLIBINC=$INSTALL_DIR/include ZLIBLIB=$INSTALL_DIR/lib static
 	make -f scripts/makefile.msys prefix="" DESTDIR=$INSTALL_DIR ZLIBINC=$INSTALL_DIR/include ZLIBLIB=$INSTALL_DIR/lib install-static
@@ -60,6 +62,7 @@ function build_sdl_image {
 
 	pushd $JPG_TEMP
 	pushd $JPG_DIR_NAME
+	sudo chmod -R 777 "$(pwd)"
 	sh ./configure  --disable-shared --prefix=$INSTALL_DIR
 	make clean
 	make
@@ -69,6 +72,7 @@ function build_sdl_image {
 
 	pushd $SDL_IMAGE_TEMP
 	pushd $SDL2_IMAGE_DIR_NAME
+	sudo chmod -R 777 "$(pwd)"
 	sh ./configure  --disable-sdltest --disable-shared --prefix=$INSTALL_DIR SDL2_CONFIG=$INSTALL_DIR/bin/sdl2-config LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include
 	make clean
 	make

@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../../../internal/include/crosswind/platform/filesystem.hpp
+vector
+-
+string
+-
+forward_list
+-
+
+/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp
+algorithm
+-
+sys/stat.h
+-
+sys/types.h
+-
+stdexcept
+-
+forward_list
+-
+regex
+-
+crosswind/trivial/filesystem/dirent.h
+-
+dirent.h
+-
+dirent.h
+-
+unistd.h
+-
+crosswind/platform/filesystem.hpp
+/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/crosswind/platform/filesystem.hpp
+

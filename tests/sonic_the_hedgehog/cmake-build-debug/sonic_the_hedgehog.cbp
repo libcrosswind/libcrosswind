@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="sonic_the_hedgehog"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="sonic_the_hedgehog">
+				<Option output="/home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../internal/include"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../external/CImg-1.6.0/include"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../external/jsoncons/include"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../external/bullet3/src"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../platform/linux/build/include"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 sonic_the_hedgehog"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="sonic_the_hedgehog/fast">
+				<Option output="/home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../internal/include"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../external/CImg-1.6.0/include"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../external/jsoncons/include"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../external/bullet3/src"/>
+					<Add directory="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/../../platform/linux/build/include"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 sonic_the_hedgehog/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/main.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

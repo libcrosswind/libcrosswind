@@ -1,0 +1,6 @@
+Name: bullet
+Description: Bullet Continuous Collision Detection and Physics Library
+Requires:
+Version: 2.88
+Libs: -L/home/greentwip/Source/libcrosswind/platform/linux/build/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
+Cflags:  -I/home/greentwip/Source/libcrosswind/platform/linux/build/include/bullet -I/home/greentwip/Source/libcrosswind/platform/linux/build/include

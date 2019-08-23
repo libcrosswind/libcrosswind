@@ -25,7 +25,7 @@ Linux (Ubuntu):
 
 Just the tools to start developing.
 
-sudo apt-get install build-essential
+sudo apt-get install build-essential libglu-dev
 
 
 Current status: 

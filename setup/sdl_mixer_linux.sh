@@ -39,6 +39,8 @@ function set_up {
 function build_sdl_mixer {
 	pushd $OGG_TEMP
 	pushd $OGG_DIR_NAME
+	sudo chmod -R 777 "$(pwd)"
+	autoreconf -vfi
 	sh ./configure  --disable-shared --prefix=$INSTALL_DIR
 	make clean
 	make
@@ -48,6 +50,7 @@ function build_sdl_mixer {
 
 	pushd $VORBIS_TEMP
 	pushd $VORBIS_DIR_NAME
+	sudo chmod -R 777 "$(pwd)"
 	sh ./configure  --disable-shared --prefix=$INSTALL_DIR
 	make clean
 	make
@@ -58,6 +61,7 @@ function build_sdl_mixer {
 
 	pushd $SDL_MIXER_TEMP
 	pushd $SDL_MIXER_DIR_NAME
+	sudo chmod -R 777 "$(pwd)"
 	sh ./configure  --disable-sdltest --disable-shared SMPEG_CONFIG=$INSTALL_DIR/bin/smpeg2-config --prefix=$INSTALL_DIR LDFLAGS=-L$INSTALL_DIR/lib CPPFLAGS=-I$INSTALL_DIR/include
 	make clean
 	make

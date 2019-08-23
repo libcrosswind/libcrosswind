@@ -1,0 +1,3 @@
+/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles/sonic_the_hedgehog.dir
+/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles/edit_cache.dir

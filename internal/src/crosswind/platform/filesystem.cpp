@@ -13,6 +13,8 @@
     #endif
 #else
 #include <dirent.h>
+#include <unistd.h>
+
 #endif
 
 #include "crosswind/platform/filesystem.hpp"

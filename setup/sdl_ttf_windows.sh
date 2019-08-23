@@ -21,8 +21,8 @@ function set_up {
 	create_dir $SDL_TTF_TEMP
 	create_dir $FREETYPE_TEMP
 
-#	copy_to $FREETYPE_TEMP 		$FREETYPE
-#	copy_to $SDL_TTF_TEMP   	$SDL_TTF
+	copy_to $FREETYPE_TEMP 		$FREETYPE
+	copy_to $SDL_TTF_TEMP   	$SDL_TTF
 }
 
 function build_sdl_ttf {

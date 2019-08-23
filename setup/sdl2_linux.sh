@@ -23,6 +23,8 @@ function build_sdl {
 
 	pushd $SDL2_TEMP
 	pushd $SDL2_DIR_NAME
+	sudo chmod -R 777 "$(pwd)"
+	
 	sh ./configure --disable-shared --prefix=$INSTALL_DIR
 	make clean
 	make
