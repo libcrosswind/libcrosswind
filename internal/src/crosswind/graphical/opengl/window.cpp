@@ -31,7 +31,12 @@ window_resource(SDL_CreateWindow,
         throw platform::exception("Could not create gl context " + error);
     }
 
-    if(glewInit() != GLEW_OK){
+    glewExperimental = GL_TRUE;
+
+
+    auto glew_status = glewInit();
+
+    if(glew_status != GLEW_OK){
         throw platform::exception("Could not initialize glew");
     }
 

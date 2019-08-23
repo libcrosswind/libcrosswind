@@ -25,8 +25,7 @@ Linux (Ubuntu):
 
 Just the tools to start developing.
 
-sudo apt-get install build-essential libglu-dev
-
+sudo apt-get install build-essential libglu-dev libharfbuzz-dev 
 
 Current status: 
 

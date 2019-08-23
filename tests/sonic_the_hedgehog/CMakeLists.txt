@@ -119,36 +119,43 @@ endif (WIN32)
 if (UNIX)
     set(SDL2_libs        SDL2main SDL2)
     set(SDL2_image_libs  SDL2_image jpeg png z)
-    set(SDL2_ttf_libs    SDL2_ttf freetype)
+    set(SDL2_ttf_libs    SDL2_ttf freetype harfbuzz)
     set(SDL2_mixer_libs  SDL2_mixer vorbisenc vorbisfile vorbis ogg)
+    set(unix_libs        pthread dl)
     set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
-    set(opengl_libs      glu gl)
+    set(opengl_libs      GLU GL)
     set(opengl_ext_libs  glew)
 endif (UNIX)
 
 
 if (WIN32)
-    target_link_libraries (sonic_the_hedgehog LINK_PUBLIC mingw32
-            ${SDL2_libs}
-            ${SDL2_image_libs}
-            ${SDL2_ttf_libs}
-            ${SDL2_mixer_libs}
-            ${win32_libs}
-            ${bullet3_libbs}
-            ${opengl_ext_libs}
-            ${opengl_libs})
+    target_link_libraries (sonic_the_hedgehog
+                            LINK_PUBLIC
+                            mingw32
+                            ${SDL2_libs}
+                            ${SDL2_image_libs}
+                            ${SDL2_ttf_libs}
+                            ${SDL2_mixer_libs}
+                            ${win32_libs}
+                            ${bullet3_libbs}
+                            ${opengl_ext_libs}
+                            ${opengl_libs})
 endif (WIN32)
 
 if (UNIX)
-    target_link_libraries (sonic_the_hedgehog LINK_PUBLIC
-                                                        ${SDL2_libs}
-                                                        ${SDL2_image_libs}
-                                                        ${SDL2_ttf_libs}
-                                                        ${SDL2_mixer_libs}
-                                                        ${win32_libs}
-                                                        ${bullet3_libbs}
-                                                        ${opengl_ext_libs}
-                                                        ${opengl_libs})
+    target_link_libraries (sonic_the_hedgehog
+                            LINK_PUBLIC
+                            ${SDL2_libs}
+
+                            ${SDL2_ttf_libs}
+
+                            ${SDL2_image_libs}
+
+                            ${SDL2_mixer_libs}
+                            ${unix_libs}
+                            ${bullet3_libbs}
+                            ${opengl_ext_libs}
+                            ${opengl_libs})
 endif (UNIX)
 
 
