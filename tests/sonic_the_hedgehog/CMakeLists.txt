@@ -51,16 +51,14 @@ add_compile_options(-std=gnu++1y -fpermissive -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_
 
 endif()
 
-set(library ${INTERNAL_DIR}/src/crosswind/composition/actor/actor.cpp
-            ${INTERNAL_DIR}/src/crosswind/composition/actor/animated_actor.cpp
-            ${INTERNAL_DIR}/src/crosswind/composition/actor/text_actor.cpp
+set(library
+            ${INTERNAL_DIR}/src/crosswind/composition/graphics/animation_set.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/camera.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/core.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/scene.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/stage.cpp
             ${INTERNAL_DIR}/src/crosswind/configuration/settings.cpp
             ${INTERNAL_DIR}/src/crosswind/graphical/object/mesh.cpp
-            ${INTERNAL_DIR}/src/crosswind/graphical/object/model.cpp
             ${INTERNAL_DIR}/src/crosswind/graphical/object/sprite.cpp
             ${INTERNAL_DIR}/src/crosswind/graphical/object/sprite_animation.cpp
             ${INTERNAL_DIR}/src/crosswind/graphical/object/text.cpp

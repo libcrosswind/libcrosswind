@@ -57,48 +57,22 @@ include CMakeFiles/sonic_the_hedgehog.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/sonic_the_hedgehog.dir/flags.make
 
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp
+CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
+CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp
 
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp > CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.i
+CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp > CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.i
 
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.s
-
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp
-
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp > CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.i
-
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.s
-
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp
-
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp > CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.i
-
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.s
+CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.s
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.i: cmake_force
@@ -111,7 +85,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.i: cmake_force
@@ -124,7 +98,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.i: cmake_force
@@ -137,7 +111,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.i: cmake_force
@@ -150,7 +124,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.i: cmake_force
@@ -163,7 +137,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.i: cmake_force
@@ -174,22 +148,9 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.s
 
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp
-
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp > CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.i
-
-CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.s
-
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.i: cmake_force
@@ -202,7 +163,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.i: cmake_force
@@ -215,7 +176,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.i: cmake_force
@@ -228,7 +189,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/vertex.cpp.i: cmake_force
@@ -241,7 +202,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/render_batch.cpp.i: cmake_force
@@ -254,7 +215,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/renderer.cpp.i: cmake_force
@@ -267,7 +228,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/shader_program.cpp.i: cmake_force
@@ -280,7 +241,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/sprite_batch.cpp.i: cmake_force
@@ -293,7 +254,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/texture.cpp.i: cmake_force
@@ -306,7 +267,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/opengl/window.cpp.i: cmake_force
@@ -319,7 +280,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/font.cpp.i: cmake_force
@@ -332,7 +293,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/sdl/surface.cpp.i: cmake_force
@@ -345,7 +306,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/video.cpp.i: cmake_force
@@ -358,7 +319,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/application.cpp.i: cmake_force
@@ -371,7 +332,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/exception.cpp.i: cmake_force
@@ -384,7 +345,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/filesystem.cpp.i: cmake_force
@@ -397,7 +358,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/platform/input.cpp.i: cmake_force
@@ -410,7 +371,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/drawer.cpp.i: cmake_force
@@ -423,7 +384,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/shader_program.cpp.i: cmake_force
@@ -436,7 +397,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/debug/opengl/vertex.cpp.i: cmake_force
@@ -449,7 +410,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/body.cpp.i: cmake_force
@@ -462,7 +423,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/detail/character.cpp.i: cmake_force
@@ -475,7 +436,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/box.cpp.i: cmake_force
@@ -488,7 +449,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/physics.cpp.i: cmake_force
@@ -501,7 +462,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/simulation/plane.cpp.i: cmake_force
@@ -514,7 +475,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/chunk.cpp.i: cmake_force
@@ -527,7 +488,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/mixer.cpp.i: cmake_force
@@ -540,7 +501,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/sound/music.cpp.i: cmake_force
@@ -553,7 +514,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp.o: /home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp.o -c /home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/engine.cpp.i: cmake_force
@@ -566,7 +527,7 @@ CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/sr
 
 CMakeFiles/sonic_the_hedgehog.dir/main.cpp.o: CMakeFiles/sonic_the_hedgehog.dir/flags.make
 CMakeFiles/sonic_the_hedgehog.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/sonic_the_hedgehog.dir/main.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sonic_the_hedgehog.dir/main.cpp.o -c /home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/main.cpp
 
 CMakeFiles/sonic_the_hedgehog.dir/main.cpp.i: cmake_force
@@ -579,16 +540,13 @@ CMakeFiles/sonic_the_hedgehog.dir/main.cpp.s: cmake_force
 
 # Object files for target sonic_the_hedgehog
 sonic_the_hedgehog_OBJECTS = \
-"CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o" \
-"CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o" \
-"CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o" \
+"CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.o" \
-"CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.o" \
 "CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.o" \
@@ -623,16 +581,13 @@ sonic_the_hedgehog_OBJECTS = \
 # External object files for target sonic_the_hedgehog
 sonic_the_hedgehog_EXTERNAL_OBJECTS =
 
-/home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o
-/home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o
-/home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o
+/home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/stage.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/configuration/settings.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.o
-/home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite_animation.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/text.cpp.o
@@ -665,7 +620,7 @@ sonic_the_hedgehog_EXTERNAL_OBJECTS =
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/main.cpp.o
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/build.make
 /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog: CMakeFiles/sonic_the_hedgehog.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Linking CXX executable /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/greentwip/Source/libcrosswind/tests/sonic_the_hedgehog/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Linking CXX executable /home/greentwip/Source/libcrosswind/output/sonic_the_hedgehog/Debug/bin/sonic_the_hedgehog"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sonic_the_hedgehog.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

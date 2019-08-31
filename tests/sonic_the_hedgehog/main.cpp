@@ -6,8 +6,10 @@
 #include "crosswind/platform/filesystem.hpp"
 #include "crosswind/composition/stage.hpp"
 
-#include "scenes/title.hpp"
-#include "scenes/green_hill_zone.hpp"
+#include "crosswind/composition/scene.hpp"
+
+#include "crosswind/composition/core.hpp"
+#include "crosswind/graphical/video.hpp"
 
 int main(int argc, char **argv) {
 
@@ -18,9 +20,7 @@ int main(int argc, char **argv) {
 
 
         auto engine = std::make_shared<cw::engine>(settings);
-        engine->core->filesystem->add_directory("assets", true);
 
-        auto file_path = engine->core->filesystem->get_file_path("icon.png");
         engine->core->video->set_window_icon("assets/engine/graphics/window/icon.png");
 
         auto title_scene = engine->stage->create_scene("title");

@@ -4,7 +4,6 @@
 #include "crosswind/composition/core.hpp"
 #include "crosswind/composition/scene.hpp"
 #include "crosswind/composition/camera.hpp"
-#include "crosswind/composition/actor/actor.hpp"
 
 cw::composition::stage::stage(std::shared_ptr<cw::composition::core> c_core): core(c_core){
 

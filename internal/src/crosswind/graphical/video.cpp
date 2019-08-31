@@ -8,11 +8,9 @@
 #include "crosswind/graphical/sdl/surface.hpp"
 #include "crosswind/graphical/sdl/font.hpp"
 #include "crosswind/graphical/object/text.hpp"
-#include "crosswind/graphical/object/model.hpp"
 #include "crosswind/graphical/object/sprite.hpp"
 #include "crosswind/graphical/object/sprite_animation.hpp"
 #include "crosswind/platform/exception.hpp"
-#include "crosswind/modules/javascript/json.hpp"
 
 // remove platform/exception
 
@@ -71,10 +69,10 @@ void cw::graphical::video::load_texture(const std::string& name, const std::stri
 
 }
 
-auto cw::graphical::video::load_texture(const std::string& name){
-    
+std::shared_ptr< cw::graphical::opengl::texture > cw::graphical::video::load_texture(const std::string& name){
+
     return texture_map[name];
-    
+
 }
 
 auto cw::graphical::video::load_font(const std::string& font_path, const uint32_t& size){
@@ -149,74 +147,3 @@ std::shared_ptr<cw::graphical::object::text> cw::graphical::video::load_text(con
 	return text;
 
 }
-
-std::shared_ptr<cw::graphical::object::model> cw::graphical::video::load_model(const glm::vec3& origin,
-														  					   const glm::vec3& size,
-																			   const std::string& template_file){
-
-    modules::javascript::json json;
-    json.from_file(template_file);
-
-    auto& raw_json = json.data;
-
-    auto model = std::make_shared<object::model>();
-
-    for (auto t = raw_json["texture"].begin_members(); t != raw_json["texture"].end_members(); ++t)
-    {
-        load_texture(t->name(), t->value().as<std::string>());
-    }
-
-    std::map<std::string, std::shared_ptr<object::sprite> > sprites;
-
-    for (auto s = raw_json["sprites"].begin_members(); s != raw_json["sprites"].end_members(); ++s)
-    {
-        std::string name    = s->name();                        // sprite name
-
-        auto s_props = s->value().begin_members();
-
-        std::string texture = s_props->name();  // mapped texture.
-
-        glm::vec4 uv(s_props->value()[0].as<double>(), // uv coordinates.
-                     s_props->value()[1].as<double>(),
-                     s_props->value()[2].as<double>(),
-                     s_props->value()[3].as<double>());
-
-        sprites[name] = std::make_shared<object::sprite>(origin,
-														 size,
-														 glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-														 uv,
-		                                                 load_texture(texture)->id);
-    }
-
-    std::map<std::string, std::shared_ptr<object::sprite_animation> > animations;
-
-    for (auto a = raw_json["animations"].begin_members(); a != raw_json["animations"].end_members(); ++a)
-    {
-
-        std::vector<std::shared_ptr<object::sprite> > frames;
-
-        for(auto f = a->value()["frames"].begin_elements(); f != a->value()["frames"].end_elements();  ++f){
-            frames.push_back(sprites[f->as<std::string>()]);
-        }
-
-        auto animation = std::make_shared<object::sprite_animation>();
-        animation->duration = a->value()["time"].as<double>();
-        animation->frames = frames;
-
-        animations[a->name()] = animation;
-    }
-
-    model->set_animations(animations);
-
-	auto anim = raw_json["properties"]["default-animation"].as<std::string>();
-    model->change_animation(anim);
-
-	model->set_render_sprite(model->get_animations()["current"]->
-			                 frames[model->get_animations()["current"]->current_frame]);
-
-    model->set_origin(origin);
-    model->set_size(size);
-
-    return model;
-}
- 

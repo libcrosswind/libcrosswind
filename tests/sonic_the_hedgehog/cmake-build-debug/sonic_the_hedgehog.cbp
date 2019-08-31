@@ -96,19 +96,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp">
-			<Option target="sonic_the_hedgehog"/>
-		</Unit>
-		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp">
-			<Option target="sonic_the_hedgehog"/>
-		</Unit>
-		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp">
-			<Option target="sonic_the_hedgehog"/>
-		</Unit>
 		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp">
 			<Option target="sonic_the_hedgehog"/>
 		</Unit>
 		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp">
+			<Option target="sonic_the_hedgehog"/>
+		</Unit>
+		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp">
 			<Option target="sonic_the_hedgehog"/>
 		</Unit>
 		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp">
@@ -124,9 +118,6 @@
 			<Option target="sonic_the_hedgehog"/>
 		</Unit>
 		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp">
-			<Option target="sonic_the_hedgehog"/>
-		</Unit>
-		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp">
 			<Option target="sonic_the_hedgehog"/>
 		</Unit>
 		<Unit filename="/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp">

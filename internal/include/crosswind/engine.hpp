@@ -24,10 +24,10 @@ public:
 
     std::shared_ptr<composition::core>  core;
     std::shared_ptr<composition::stage> stage;
-    
+
 private:
     void update();
-    void render();
+    void draw();
 
 };// class engine
 

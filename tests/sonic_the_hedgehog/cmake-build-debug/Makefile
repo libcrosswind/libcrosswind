@@ -123,87 +123,6 @@ sonic_the_hedgehog/fast:
 	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/build
 .PHONY : sonic_the_hedgehog/fast
 
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.o: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.o
-
-# target to build an object file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.o
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.i: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.i
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.i
-
-# target to preprocess a source file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.i:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.i
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.i
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.s: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.s
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.s
-
-# target to generate assembly for a file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.s:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.s
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.cpp.s
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.o: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.o
-
-# target to build an object file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.o
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.i: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.i
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.i
-
-# target to preprocess a source file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.i:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.i
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.i
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.s: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.s
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.s
-
-# target to generate assembly for a file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.s:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.s
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.cpp.s
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.o: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.o
-
-# target to build an object file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.o
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.i: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.i
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.i
-
-# target to preprocess a source file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.i:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.i
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.i
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.s: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.s
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.s
-
-# target to generate assembly for a file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.s:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.s
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.cpp.s
-
 home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.o: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.cpp.o
 
 .PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.o
@@ -257,6 +176,33 @@ home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.s: ho
 home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.s:
 	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.s
 .PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.cpp.s
+
+home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.o: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o
+
+.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.o
+
+# target to build an object file
+home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o:
+	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o
+.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.o
+
+home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.i: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.i
+
+.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.i
+
+# target to preprocess a source file
+home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.i:
+	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.i
+.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.i
+
+home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.s: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.s
+
+.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.s
+
+# target to generate assembly for a file
+home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.s:
+	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.s
+.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.cpp.s
 
 home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.o: home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.cpp.o
 
@@ -392,33 +338,6 @@ home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.
 home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.s:
 	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.s
 .PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.cpp.s
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.o: home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.o
-
-# target to build an object file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.o
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.i: home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.i
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.i
-
-# target to preprocess a source file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.i:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.i
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.i
-
-home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.s: home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.s
-
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.s
-
-# target to generate assembly for a file
-home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.s:
-	$(MAKE) -f CMakeFiles/sonic_the_hedgehog.dir/build.make CMakeFiles/sonic_the_hedgehog.dir/home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.s
-.PHONY : home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.cpp.s
 
 home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.o: home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.cpp.o
 
@@ -1212,21 +1131,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... sonic_the_hedgehog"
 	@echo "... edit_cache"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.o"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.i"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/actor.s"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.o"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.i"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/animated_actor.s"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.o"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.i"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/actor/text_actor.s"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.o"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.i"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/camera.s"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.o"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.i"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/core.s"
+	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.o"
+	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.i"
+	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/graphics/animation_set.s"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.o"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.i"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/composition/scene.s"
@@ -1242,9 +1155,6 @@ help:
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.o"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.i"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/mesh.s"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.o"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.i"
-	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/model.s"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.o"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.i"
 	@echo "... home/greentwip/Source/libcrosswind/internal/src/crosswind/graphical/object/sprite.s"

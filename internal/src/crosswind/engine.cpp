@@ -5,11 +5,9 @@
 #include "crosswind/composition/stage.hpp"
 #include "crosswind/composition/scene.hpp"
 #include "crosswind/composition/camera.hpp"
-#include "crosswind/composition/actor/actor.hpp"
 #include "crosswind/platform/application.hpp"
 #include "crosswind/platform/input.hpp"
 #include "crosswind/graphical/video.hpp"
-#include "crosswind/graphical/object/model.hpp"
 #include "crosswind/graphical/object/text.hpp"
 #include "crosswind/graphical/opengl/renderer.hpp"
 #include "crosswind/graphical/opengl/window.hpp"
@@ -29,7 +27,7 @@ void cw::engine::run(){
         core->video->window->begin_frame();
 
         update();
-        render();
+        draw();
 
         core->video->window->end_frame();
 
@@ -44,7 +42,7 @@ void cw::engine::update(){
     stage->update(1.0f/60.0f);
 }
 
-void cw::engine::render(){
+void cw::engine::draw(){
     core->video->window->clear();
 
     core->video->renderer->begin();
@@ -70,11 +68,11 @@ void cw::engine::render(){
         render_group(group_mapping.second);
     }*/
 
-    for(auto& actor_mapping: stage->get_scene("current")->get_actor_map()){
+    /*for(auto& actor_mapping: stage->get_scene("current")->get_actor_map()){
         for(auto& model_mapping : actor_mapping.second->get_model_map()){
             core->video->renderer->upload(model_mapping.second->get_render_sprite());
         }
-    }
+    }*/
 
     core->video->renderer->draw();
     core->video->renderer->end();

@@ -5,7 +5,6 @@
 #include "crosswind/composition/core.hpp"
 #include "crosswind/graphical/video.hpp"
 #include "crosswind/graphical/opengl/window.hpp"
-#include "crosswind/composition/actor/animated_actor.hpp"
 
 namespace game {
 namespace characters {
