@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "btBulletDynamicsCommon.h"
+#include "bullet/btBulletDynamicsCommon.h"
 #include "glm/glm.hpp"
 
 

@@ -10,7 +10,7 @@
 #include "crosswind/simulation/physics.hpp"
 
 cw::composition::core::core(const cw::configuration::settings& engine_settings){
-
+    
     application = std::make_shared<platform::application>(engine_settings.application.flags);
     filesystem  = std::make_shared<platform::filesystem>();
 

@@ -75,8 +75,14 @@ public:
 											const std::string& font_path);
 
 
+	glm::i32vec2 get_window_size();
+
+	std::shared_ptr<graphical::object::model> load_model(const glm::vec3& origin,
+														 const glm::vec3& size,
+														 const std::string& template_file);
+	
 	std::shared_ptr< opengl::window   >	window;
-  std::shared_ptr< opengl::renderer >	renderer;
+	std::shared_ptr< opengl::renderer >	renderer;
 
 private:
 	std::map<std::string, std::shared_ptr< opengl::texture > > texture_map;

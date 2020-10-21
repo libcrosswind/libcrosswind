@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{bcbcb57b-b582-4191-b1d5-a29665d15edb}</ProjectGuid>
+    <RootNamespace>libcrosswind</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\internal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\internal\include\crosswind\composition\camera.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\core.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\detail\logic_component.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\detail\named_component.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\detail\spatial_component.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\graphics\animation_set.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\scene.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\stage.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\configuration\settings.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\engine.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\object\mesh.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\object\model.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\object\renderable.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\object\sprite.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\object\sprite_animation.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\object\text.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\object\vertex.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\renderer.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\render_batch.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\shader_program.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\sprite_batch.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\texture.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\window.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\sdl\font.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\sdl\surface.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\video.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\modules\functional\delegate.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\modules\functional\hollow_property.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\modules\functional\resource_property.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\modules\javascript\json.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\platform\application.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\platform\exception.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\platform\filesystem.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\platform\input.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\scripting\interpreter.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\simulation\box.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\simulation\debug\opengl\drawer.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\simulation\debug\opengl\simulation_shader_program.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\simulation\debug\opengl\simulation_vertex.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\simulation\detail\body.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\simulation\detail\character.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\simulation\physics.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\simulation\plane.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\sound\chunk.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\sound\mixer.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\sound\music.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\internal\src\crosswind\composition\camera.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\composition\core.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\composition\graphics\animation_set.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\composition\scene.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\composition\stage.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\configuration\settings.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\engine.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\object\mesh.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\object\model.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\object\sprite.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\object\sprite_animation.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\object\text.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\object\vertex.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\renderer.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\render_batch.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\shader_program.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\sprite_batch.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\texture.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\window.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\sdl\font.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\sdl\surface.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\video.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\platform\application.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\platform\exception.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\platform\filesystem.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\platform\input.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\scripting\interpreter_a.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\scripting\interpreter_b.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\simulation\box.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\simulation\debug\opengl\drawer.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\simulation\debug\opengl\simulation_shader_program.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\simulation\debug\opengl\simulation_vertex.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\simulation\detail\body.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\simulation\detail\character.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\simulation\physics.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\simulation\plane.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\sound\chunk.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\sound\mixer.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\sound\music.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

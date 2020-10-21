@@ -1,0 +1,41 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"monitors"	:"assets/sonic_the_hedgehog/graphics/items/monitors.png"
+	},
+
+	"spritesheets":
+	{
+		"monitors" : {"sprite-size" : [30.00, 30.00] }
+	},
+
+	"sprites":
+	{
+		"monitor_broken"	:{ "monitors"  	: [0.00, 0.50, 0.25, 1.00] },
+		"monitor_static" 	:{ "monitors"	: [0.25, 0.50, 0.50, 1.00] },
+		"monitor_boots" 	:{ "monitors"	: [0.50, 0.50, 0.75, 1.00] },
+		"monitor_stars"     :{ "monitors"	: [0.75, 0.50, 1.00, 1.00] },
+		"monitor_robotnik"  :{ "monitors"	: [0.00, 0.00, 0.25, 0.50] },
+		"monitor_sonic" 	:{ "monitors"	: [0.25, 0.00, 0.50, 0.50] },
+		"monitor_shield"   	:{ "monitors"	: [0.50, 0.00, 0.75, 0.50] },
+		"monitor_ring"      :{ "monitors"	: [0.75, 0.00, 1.00, 0.50] }
+	},
+
+	"animations":
+	{
+   		"monitor_broken"    :{ "time": 0.125,  "frames": ["monitor_broken"] },
+   		"monitor_static"    :{ "time": 0.125,  "frames": ["monitor_static"] },
+   		"monitor_sonic"     :{ "time": 0.750,  "frames": ["monitor_static", "monitor_static", "monitor_sonic", "monitor_sonic", "monitor_sonic", "monitor_sonic"] }
+	},
+
+	"properties":
+	{
+		"default-animation"	: "monitor_sonic"
+	}
+}

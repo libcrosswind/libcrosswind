@@ -5,6 +5,7 @@
 #include "crosswind/sound/chunk.hpp"
 #include "crosswind/platform/exception.hpp"
 
+#include <iostream>
 //remove platform/exception
 
 cw::sound::mixer* cw::sound::mixer::audio_callback::data = nullptr;
@@ -46,8 +47,15 @@ cw::sound::mixer::~mixer() {
 
 void cw::sound::mixer::load_music(const std::string& name, const std::string& path){
 
-	bgm_info[name]   = std::make_pair(-21, false); // channel, playing.
-    bgm_tracks[name] = std::make_shared<music>(path);
+	try {
+		bgm_info[name] = std::make_pair(-21, false); // channel, playing.
+		bgm_tracks[name] = std::make_shared<music>(path);
+	}
+	catch (std::exception& ex) {
+		auto err = Mix_GetError();
+		std::cout << ex.what() << std::endl;
+	}
+	
 
 }
 

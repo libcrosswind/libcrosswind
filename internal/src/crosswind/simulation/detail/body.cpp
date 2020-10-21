@@ -73,7 +73,7 @@ void cw::simulation::detail::body::apply_force(const glm::vec3& new_force){
 }
 
 
-void cw::simulation::detail::body::set_activation_policy(auto policy){
+void cw::simulation::detail::body::set_activation_policy(int policy){
 	physic_body->setActivationState(policy);
 }
 

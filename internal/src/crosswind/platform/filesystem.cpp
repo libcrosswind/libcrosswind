@@ -5,44 +5,22 @@
 #include <forward_list>
 #include <regex>
 
-#if defined (WIN32) //TODO implement std::filesystem whenever the commitee releases it.
-    #if _MSC_VER >= 1600
-        #include <crosswind/trivial/filesystem/dirent.h>
-    #elif __MINGW32__
-        #include <dirent.h>
-    #endif
-#else
-#include <dirent.h>
-#include <unistd.h>
-
-#endif
+#include <filesystem>
 
 #include "crosswind/platform/filesystem.hpp"
 
-#define MAXPATHLEN 512
-
 std::string cw::platform::filesystem::get_cwd(){
 
-    char temp[MAXPATHLEN];
-    return ( getcwd(temp, MAXPATHLEN) ? std::string( temp ) : std::string("") );
-
+    return std::filesystem::current_path().string();
 }
-
-#undef MAXPATHLEN
 
 std::vector<std::string> cw::platform::filesystem::get_folder_content(const std::string& folder){
 
     std::vector<std::string> content;
 
     if(is_dir(folder)){
-        if (DIR *dp = opendir(folder.c_str()))
-        {
-            while (struct dirent *ep = readdir(dp)) {
-                content.push_back(ep->d_name);
-            }
-
-            closedir(dp);
-        }
+        for (auto& p : std::filesystem::directory_iterator(folder))
+            content.push_back(p.path().string());
 
     } else {
         throw std::runtime_error(folder + std::string(": Not a directory."));

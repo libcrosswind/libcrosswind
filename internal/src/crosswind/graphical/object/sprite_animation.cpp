@@ -17,10 +17,33 @@ void cw::graphical::object::sprite_animation::set_origin(const glm::vec3& new_or
 
 }
 
-void cw::graphical::object::sprite_animation::set_size(const glm::vec3& new_size){
+void cw::graphical::object::sprite_animation::set_size(const glm::vec3& new_size) {
 
-    for(auto& frame : frames){
+    for (auto& frame : frames) {
         frame->set_size(new_size);
     }
-    
+
+}
+
+void cw::graphical::object::sprite_animation::flip(bool default_x) {
+
+    if (x_orientation) {
+        if (!default_x) {
+            for (int i = 0; i < frames.size(); i++) {
+                frames[i]->flip();
+            }
+
+            x_orientation = default_x;
+        }
+
+    } else {
+
+        if (default_x) {
+            for (int i = 0; i < frames.size(); i++) {
+                frames[i]->flip();
+            }
+
+            x_orientation = default_x;
+        }
+    }
 }

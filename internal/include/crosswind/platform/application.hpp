@@ -22,11 +22,11 @@ public:
 	void exit();
 
 private:
-	auto was_init(auto flags);
+	auto was_init(Uint32 flags);
 	
-	void init_subsystem(auto flags);
+	void init_subsystem(Uint32 flags);
 
-	void quit_subsystem(auto flags);
+	void quit_subsystem(Uint32 flags);
 
     bool running;
 

@@ -27,11 +27,11 @@ class stage{
 public:
 	stage(std::shared_ptr<core> c_core);
 
-	std::shared_ptr<scene> create_scene(const std::string& f_name);
+	void init_scene(std::shared_ptr<scene> scene);
 
 	std::shared_ptr<camera> create_camera(const glm::i32vec2& f_size);
 
-	void add_scene(const std::string& scene_name, std::shared_ptr<scene> scene);
+	void add_scene(std::shared_ptr<scene> scene);
 
 	std::shared_ptr<scene> get_scene(const std::string& scene_name);
 

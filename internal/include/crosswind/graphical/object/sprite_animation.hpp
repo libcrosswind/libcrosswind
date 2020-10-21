@@ -30,6 +30,10 @@ public:
 
     void set_size(const glm::vec3& new_size);
 
+    void flip(bool default_x);
+
+    bool x_orientation;
+
     float duration;
     unsigned int current_frame;
     std::vector<std::shared_ptr<sprite> > frames;

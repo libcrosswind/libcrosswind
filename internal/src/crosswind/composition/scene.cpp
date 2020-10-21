@@ -18,6 +18,11 @@ void cw::composition::scene::add_camera(const std::string& camera_name, std::sha
 
 }
 
+void cw::composition::scene::set_camera(const std::string& camera_name) {
+	camera_map["current"] = camera_map[camera_name];
+}
+
+
 std::shared_ptr<cw::composition::camera> cw::composition::scene::get_camera(const std::string& camera_name){
 
 	if(camera_map.find(camera_name) != camera_map.end()){
@@ -25,7 +30,6 @@ std::shared_ptr<cw::composition::camera> cw::composition::scene::get_camera(cons
 	} else {
 		throw std::runtime_error("Could not find camera: " + camera_name);
 	}
-
 }
 
 auto& cw::composition::scene::get_camera_map(){
@@ -41,5 +45,4 @@ void cw::composition::scene::update(const float& delta){
     }
 
 	logic(delta);
-
 }

@@ -50,6 +50,8 @@ void cw::engine::draw(){
     core->video->renderer->set_uniform_matrix("projection_matrix",
             stage->get_scene("current")->get_camera("current")->get_camera_matrix());
 
+    stage->get_scene("current")->draw(this->core->video->renderer);
+
     /*std::function<void(std::shared_ptr<cw::composition::group>)> render_group = [this, &render_group](auto group){
         for(auto& actor_mapping : group->get_actor_map()){
             for(auto& model_mapping : actor_mapping.second->get_model_map()){

@@ -30,7 +30,7 @@ public:
     }
 
     bool has(const std::string& member) {
-        return data.has_member(member);
+        return data.contains(member);
     }
 
 

@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "btBulletDynamicsCommon.h"
+#include "bullet/btBulletDynamicsCommon.h"
 #include "glm/glm.hpp"
 
 namespace cw{
@@ -28,7 +28,7 @@ public:
 
 	void apply_force(const glm::vec3& new_force);
 
-	void set_activation_policy(auto policy);
+	void set_activation_policy(int policy);
 
 	void set_linear_factor(const glm::vec3& position, const glm::vec3& rotation);
 

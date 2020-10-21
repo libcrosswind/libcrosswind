@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <stdexcept>
 
 #include "chaiscript/chaiscript.hpp"
@@ -121,4 +121,4 @@ void cw::scripting::interpreter::bind_composition(){
 	chai->add(chaiscript::fun(&cw::composition::actor::add_model), "add_model");
 	chai->add(chaiscript::fun(&cw::composition::actor::get_model), "get_model");
 
-}
+}*/

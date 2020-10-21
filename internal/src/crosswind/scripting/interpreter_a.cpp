@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <stdexcept>
 
 #include "chaiscript/chaiscript.hpp"
@@ -194,3 +194,4 @@ void cw::scripting::interpreter::bind_sound(){
 //	chai->add(chaiscript::fun(&cw::sound::mixer::play_effect), "play_effect");
 
 }
+*/

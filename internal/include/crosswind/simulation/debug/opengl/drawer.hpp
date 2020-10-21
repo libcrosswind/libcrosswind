@@ -4,10 +4,10 @@
 #include <cstdint>
 #include <vector>
 
-#include "LinearMath/btIDebugDraw.h"
+#include "bullet/LinearMath/btIDebugDraw.h"
 #include "glm/glm.hpp"
 
-#include "crosswind/simulation/debug/opengl/vertex.hpp"
+#include "crosswind/simulation/debug/opengl/simulation_vertex.hpp"
 
 // forward declarations
 namespace cw{
@@ -15,7 +15,7 @@ namespace simulation{
 namespace debug{
 namespace opengl{	
 
-	class shader_program;
+	class simulation_shader_program;
 
 }// namespace opengl
 }// namespace debug
@@ -35,7 +35,7 @@ public:
 
 	void update(const glm::mat4& f_perspective, const glm::vec3& f_scale);
 
-	void upload_vertex_array(const std::vector<vertex>& vertex_array);
+	void upload_vertex_array(const std::vector<simulation_vertex>& vertex_array);
 
 	virtual void drawLine(const btVector3& from,const btVector3& to,const btVector3& fromColor, const btVector3& toColor);
 
@@ -64,7 +64,7 @@ public:
 	virtual int getDebugMode() const;
 
 private:
-    std::shared_ptr<shader_program> shader_program;
+    std::shared_ptr<simulation_shader_program> shader_program;
 	glm::mat4 perspective;
 	glm::vec3 scale;
 	int debug_mode;

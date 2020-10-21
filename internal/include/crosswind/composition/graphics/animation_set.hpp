@@ -8,6 +8,9 @@
 
 #include "crosswind/graphical/object/renderable.hpp"
 
+#include "crosswind/graphical/object/sprite.hpp"
+#include "crosswind/graphical/object/sprite_animation.hpp"
+
 // forward declarations
 namespace cw{
 namespace composition{
@@ -45,20 +48,20 @@ public:
 
 	void change_animation(const std::string& new_animation);
 
-	void set_animations(const std::map<std::string, std::shared_ptr<sprite_animation> >& new_animations);
+	void set_animations(const std::map<std::string, std::shared_ptr<cw::graphical::object::sprite_animation> >& new_animations);
 
 	void update(const float& delta);
 
 private:
-	void set_render_sprite(std::shared_ptr<sprite> sprite);
+	void set_render_sprite(std::shared_ptr<cw::graphical::object::sprite> sprite);
 
 private:
 	glm::vec3 origin;
 	glm::vec3 size;
 	float delta_count;
 
-	std::shared_ptr<object::sprite> render_sprite;
-	std::map<std::string, std::shared_ptr<sprite_animation> > animations;
+	std::shared_ptr<cw::graphical::object::sprite> render_sprite;
+	std::map<std::string, std::shared_ptr<cw::graphical::object::sprite_animation> > animations;
 
 };// class model
 

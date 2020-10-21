@@ -2,6 +2,15 @@
 
 #include <functional>
 
+namespace cw {
+	namespace graphical {
+		namespace opengl {
+			class renderer;
+		}
+	}
+}
+
+
 namespace cw{
 namespace composition{
 namespace detail{
@@ -9,36 +18,15 @@ namespace detail{
 class logic_component{
 public:
 	logic_component(){
-		init = [this](){
-
-		};
-
-		deinit = [this](){
-
-		};
-
-		logic = [this](const float& delta){
-
-		};
 	}
-
-
-	virtual void construct(const std::function<void()>& f_init,
-						   const std::function<void()>& f_deinit,
-						   const std::function<void(const float&)>& f_logic){
-		init = f_init;
-		deinit = f_deinit;
-		logic = f_logic;
-
-	}
-
 
 public:
-	std::function<void()> init;
-	std::function<void()> deinit;
-	
+	virtual void draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer) = 0;
+
 protected:
-	std::function<void(const float&)> logic;
+	virtual void init() = 0;
+	virtual void deinit() = 0;
+	virtual void logic(const float&) = 0;
 
 };// class logic_component
 

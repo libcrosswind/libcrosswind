@@ -20,20 +20,20 @@ delta_count(0.0f){
 
 	auto& raw_json = json.data;
 
-	for (auto t = raw_json["texture"].begin_members(); t != raw_json["texture"].end_members(); ++t)
+	for (auto t = raw_json["texture"].object_range().begin(); t != raw_json["texture"].object_range().end(); ++t)
 	{
-			core->video->load_texture(t->name(), t->value().as<std::string>());
+			core->video->load_texture(t->key(), t->value().as<std::string>());
 	}
 
 	std::map<std::string, std::shared_ptr<graphical::object::sprite> > sprites;
 
-	for (auto s = raw_json["sprites"].begin_members(); s != raw_json["sprites"].end_members(); ++s)
+	for (auto s = raw_json["sprites"].object_range().begin(); s != raw_json["sprites"].object_range().end(); ++s)
 	{
-			std::string name    = s->name();                        // sprite name
+			std::string name    = s->key();                        // sprite name
 
-			auto s_props = s->value().begin_members();
+			auto s_props = s->value().object_range().begin();
 
-			std::string texture = s_props->name();  // mapped texture.
+			std::string texture = s_props->key();  // mapped texture.
 
 			glm::vec4 uv(s_props->value()[0].as<double>(), // uv coordinates.
 									 s_props->value()[1].as<double>(),
@@ -49,20 +49,20 @@ delta_count(0.0f){
 
 	std::map<std::string, std::shared_ptr<graphical::object::sprite_animation> > animations;
 
-	for (auto a = raw_json["animations"].begin_members(); a != raw_json["animations"].end_members(); ++a)
+	for (auto a = raw_json["animations"].object_range().begin(); a != raw_json["animations"].object_range().end(); ++a)
 	{
 
 			std::vector<std::shared_ptr<graphical::object::sprite> > frames;
 
-			for(auto f = a->value()["frames"].begin_elements(); f != a->value()["frames"].end_elements();  ++f){
-					frames.push_back(sprites[f->as<std::string>()]);
+			for(auto f = a->value()["frames"].object_range().begin(); f != a->value()["frames"].object_range().end();  ++f){
+					frames.push_back(sprites[f->value().as<std::string>()]);
 			}
 
 			auto animation = std::make_shared<graphical::object::sprite_animation>();
-			animation->duration = a->value()["time"].as<double>();
+			animation->duration = a->value()["time"].as<float>();
 			animation->frames = frames;
 
-			animations[a->name()] = animation;
+			animations[a->key()] = animation;
 	}
 
 	this->set_animations(animations);

@@ -4,12 +4,12 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "crosswind/simulation/debug/opengl/drawer.hpp"
-#include "crosswind/simulation/debug/opengl/shader_program.hpp"
+#include "crosswind/simulation/debug/opengl/simulation_shader_program.hpp"
 
 cw::simulation::debug::opengl::drawer::drawer():
 debug_mode(btIDebugDraw::DBG_DrawWireframe){
 
-		shader_program = std::make_shared<class shader_program>();
+		shader_program = std::make_shared<class simulation_shader_program>();
 		std::string vertex_shader   = "assets/engine/graphics/shaders/primitive_shading.vert";
 		std::string fragment_shader = "assets/engine/graphics/shaders/primitive_shading.frag";
 
@@ -25,11 +25,11 @@ cw::simulation::debug::opengl::drawer::~drawer(){
 	glDeleteBuffers(1, &vbo_id);
 }
 
-void cw::simulation::debug::opengl::drawer::upload_vertex_array(const std::vector<vertex>& vertex_array){
+void cw::simulation::debug::opengl::drawer::upload_vertex_array(const std::vector<simulation_vertex>& vertex_array){
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
 	glBufferData(GL_ARRAY_BUFFER,
-	sizeof(vertex)*vertex_array.size(),
+	sizeof(simulation_vertex)*vertex_array.size(),
 	vertex_array.data(),
 	GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -71,9 +71,9 @@ void cw::simulation::debug::opengl::drawer::drawLine(const btVector3& f,
 	glm::vec4 c(color.getX(), color.getY(), color.getZ(), 1.0);
 	glm::vec2 u(0.0, 0.0);
 
-	std::vector<vertex> vertex_array;
-	vertex a(n_from, c, u);
-	vertex b(n_to, c, u);
+	std::vector<simulation_vertex> vertex_array;
+	simulation_vertex a(n_from, c, u);
+	simulation_vertex b(n_to, c, u);
 	vertex_array.push_back(a);
 	vertex_array.push_back(b);
 
@@ -88,15 +88,15 @@ void cw::simulation::debug::opengl::drawer::drawLine(const btVector3& f,
 			4,
 			GL_FLOAT,
 			GL_FALSE,
-			sizeof(vertex),
-			(void*)offsetof(vertex, vertex::position));
+			sizeof(simulation_vertex),
+			(void*)offsetof(simulation_vertex, simulation_vertex::position));
 
 	glVertexAttribPointer(1,
 			4,
 			GL_FLOAT,
 			GL_FALSE,
-			sizeof(vertex),
-			(void*)offsetof(vertex, vertex::color));
+			sizeof(simulation_vertex),
+			(void*)offsetof(simulation_vertex, simulation_vertex::color));
 
 	glDrawArrays( GL_POINTS, 0, vertex_array.size() );
 	glDrawArrays( GL_LINES, 0, vertex_array.size() );

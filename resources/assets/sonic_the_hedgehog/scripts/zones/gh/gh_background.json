@@ -1,0 +1,54 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"background" : "assets/sonic_the_hedgehog/graphics/zones/gh/gh_background.png"
+	},
+
+	"spritesheets":
+	{
+		"background" : {"sprite-size" : [256.00, 256.00] }
+	},
+
+	"sprites":
+	{
+		"waterfal_a_1"    : { "background"  : [0.00, 0.80, 0.25, 1.00] },
+		"waterfal_a_2"    : { "background"  : [0.25, 0.80, 0.50, 1.00] },
+		"waterfal_a_3"    : { "background"  : [0.50, 0.80, 0.75, 1.00] },
+		"waterfal_a_4"    : { "background"  : [0.75, 0.80, 1.00, 1.00] },
+
+		"waterfal_b_1"    : { "background"  : [0.00, 0.60, 0.25, 0.80] },
+		"waterfal_b_2"    : { "background"  : [0.25, 0.60, 0.50, 0.80] },
+		"waterfal_b_3"    : { "background"  : [0.50, 0.60, 0.75, 0.80] },
+		"waterfal_b_4"    : { "background"  : [0.75, 0.60, 1.00, 0.80] },
+
+		"waterfal_c_1"    : { "background"  : [0.00, 0.40, 0.25, 0.60] },
+		"waterfal_c_2"    : { "background"  : [0.25, 0.40, 0.50, 0.60] },
+		"waterfal_c_3"    : { "background"  : [0.50, 0.40, 0.75, 0.60] },
+		"waterfal_c_4"    : { "background"  : [0.75, 0.40, 1.00, 0.60] },
+
+		"waterfal_d_1"    : { "background"  : [0.00, 0.20, 0.25, 0.40] },
+		"waterfal_d_2"    : { "background"  : [0.25, 0.20, 0.50, 0.40] },
+		"waterfal_d_3"    : { "background"  : [0.50, 0.20, 0.75, 0.40] },
+		"waterfal_d_4"    : { "background"  : [0.75, 0.20, 1.00, 0.40] }
+		
+	},
+
+	"animations":
+	{
+   		"waterfal_a"  :{ "time": 0.800,  "frames": ["waterfal_a_1", "waterfal_a_2", "waterfal_a_3", "waterfal_a_4"]   },
+   		"waterfal_b"  :{ "time": 0.800,  "frames": ["waterfal_b_1", "waterfal_b_2", "waterfal_b_3", "waterfal_b_4"]   },
+   		"waterfal_c"  :{ "time": 0.800,  "frames": ["waterfal_c_1", "waterfal_c_2", "waterfal_c_3", "waterfal_c_4"]   },
+   		"waterfal_d"  :{ "time": 0.800,  "frames": ["waterfal_d_1", "waterfal_d_2", "waterfal_d_3", "waterfal_d_4"]   }
+	},
+
+	"properties":
+	{
+		"default-animation"	: "waterfal_a"
+	}
+}

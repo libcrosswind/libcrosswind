@@ -16,7 +16,7 @@ namespace composition{
 
 namespace cw{
 
-class engine{
+class engine : std::enable_shared_from_this<engine> {
 public:
     engine(const configuration::settings& c_settings);
 

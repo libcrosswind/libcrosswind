@@ -34,6 +34,8 @@ public:
 
 	void add_camera(const std::string& camera_name, std::shared_ptr<camera> camera);
 
+	void set_camera(const std::string& camera_name);
+
 	std::shared_ptr<camera> get_camera(const std::string& camera_name);
 
 	auto& get_camera_map();

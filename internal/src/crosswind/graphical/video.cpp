@@ -12,6 +12,10 @@
 #include "crosswind/graphical/object/sprite_animation.hpp"
 #include "crosswind/platform/exception.hpp"
 
+#include "crosswind/modules/javascript/json.hpp"
+
+#include "crosswind/graphical/object/model.hpp"
+
 // remove platform/exception
 
 cw::graphical::video::video(const std::string& title,
@@ -146,4 +150,117 @@ std::shared_ptr<cw::graphical::object::text> cw::graphical::video::load_text(con
 
 	return text;
 
+}
+
+glm::i32vec2 cw::graphical::video::get_window_size() {
+	return window->get_size();
+}
+
+std::shared_ptr<cw::graphical::object::model> cw::graphical::video::load_model(const glm::vec3& origin,
+																			   const glm::vec3& size,
+																			   const std::string& template_file) {
+
+	modules::javascript::json json;
+	json.from_file(template_file);
+
+	auto& raw_json = json.data;
+
+	auto model = std::make_shared<graphical::object::model>();
+
+	for (auto t = raw_json["textures"].object_range().begin(); t != raw_json["textures"].object_range().end(); ++t)
+	{
+		load_texture(t->key(), t->value().as<std::string>());
+	}
+
+	std::map<std::string, glm::vec3> sprite_sheet_sizes;
+	glm::vec3 final_size;
+
+	for (auto s = raw_json["spritesheets"].object_range().begin(); s != raw_json["spritesheets"].object_range().end(); ++s)
+	{
+		std::string name = s->key();                        // spritesheet name
+
+		auto s_props = s->value().object_range().begin();
+
+		std::string sprite_size_prop = s_props->key();  // property name.
+
+		glm::vec3 sprite_size(s_props->value()[0].as<double>(), // sprite size.
+			s_props->value()[1].as<double>(),
+			0.0f);
+		if (size.x < 0) {
+			sprite_size.x *= glm::abs(size.x / 100.0f);
+		}
+		else {
+			sprite_size.x *= size.x / sprite_size.x;
+		}
+
+		if (size.y < 0) {
+			sprite_size.y *= glm::abs(size.y / 100.0f);
+		}
+		else {
+			sprite_size.y *= size.y / sprite_size.y;
+		}
+
+		/*		    if(size.z < 0){
+						size.z = glm::abs(size.z / 100.0f);
+					}
+		*/
+
+		final_size = sprite_size;
+
+		sprite_sheet_sizes[name] = sprite_size;
+	}
+
+
+	std::map<std::string, std::shared_ptr<graphical::object::sprite> > sprites;
+
+	for (auto s = raw_json["sprites"].object_range().begin(); s != raw_json["sprites"].object_range().end(); ++s)
+	{
+		std::string name = s->key();                        // sprite name
+
+		auto s_props = s->value().object_range().begin();
+
+		std::string texture = s_props->key();  // mapped texture.
+
+
+		glm::vec4 uv(s_props->value()[0].as<double>(), // uv coordinates.
+			s_props->value()[1].as<double>(),
+			s_props->value()[2].as<double>(),
+			s_props->value()[3].as<double>());
+
+		sprites[name] = std::make_shared<graphical::object::sprite>(origin,
+			sprite_sheet_sizes[texture],
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+			uv,
+			load_texture(texture)->id);
+	}
+
+	std::map<std::string, std::shared_ptr<graphical::object::sprite_animation> > animations;
+
+	for (auto a = raw_json["animations"].object_range().begin(); a != raw_json["animations"].object_range().end(); ++a)
+	{
+
+		std::vector<std::shared_ptr<graphical::object::sprite> > frames;
+
+		for (auto f = a->value()["frames"].array_range().begin(); f != a->value()["frames"].array_range().end(); ++f) {
+			frames.push_back(sprites[f->as<std::string>()]);
+		}
+
+		auto animation = std::make_shared<graphical::object::sprite_animation>();
+		animation->duration = a->value()["time"].as<double>();
+		animation->frames = frames;
+
+		animations[a->key()] = animation;
+	}
+
+	model->set_animations(animations);
+
+	model->change_animation(raw_json["properties"]["default-animation"].as<std::string>());
+
+	model->get_render_sprite_list()["current"] =
+		model->get_animations()["current"]->frames[model->get_animations()["current"]->current_frame];
+
+	model->set_origin(origin);
+	model->set_size(final_size);
+
+	return model;
 }

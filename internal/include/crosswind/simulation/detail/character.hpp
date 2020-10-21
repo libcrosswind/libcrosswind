@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "BulletDynamics/Character/btKinematicCharacterController.h"
-#include "BulletCollision/CollisionDispatch/btGhostObject.h"
+#include "bullet/BulletDynamics/Character/btKinematicCharacterController.h"
+#include "bullet/BulletCollision/CollisionDispatch/btGhostObject.h"
 #include "glm/glm.hpp"
 
 namespace cw{

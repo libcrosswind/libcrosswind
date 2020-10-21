@@ -4,6 +4,10 @@
 
 #include "crosswind/configuration/settings.hpp"
 
+namespace cw {
+    class engine;
+}
+
 // forward declarations
 namespace cw{
 namespace platform{
@@ -45,8 +49,9 @@ namespace composition{
 
 class core{
 public:
-	core(const configuration::settings& engine_settings = configuration::settings());
+    core(const configuration::settings& engine_settings = configuration::settings());
 
+    std::shared_ptr< cw::engine            > engine;
     std::shared_ptr< platform::application > application;
     std::shared_ptr< platform::filesystem  > filesystem;
     std::shared_ptr< platform::input       > input;

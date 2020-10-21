@@ -1,0 +1,70 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"SonAni_Wait_intro"	:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Wait_intro.png",
+		"SonAni_LookUp"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_LookUp.png",
+		"SonAni_Duck"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Duck.png",
+		"SonAni_Walk"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Walk.png",
+		"SonAni_Run"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Run.png",
+		"SonAni_Stop"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Stop.png",
+		"SonAni_Roll"		:"assets/sonic_the_hedgehog/graphics/characters/sonic/SonAni_Roll.png"
+	},
+
+	"spritesheets":
+	{
+		"SonAni_Wait_intro" : {"sprite-size" : [32.00, 40.00] },
+		"SonAni_LookUp" 	: {"sprite-size" : [32.00, 40.00] },
+		"SonAni_Duck" 		: {"sprite-size" : [40.00, 32.00] },
+		"SonAni_Walk" 		: {"sprite-size" : [42.00, 42.00] },
+		"SonAni_Run" 		: {"sprite-size" : [32.00, 40.00] },
+		"SonAni_Stop" 		: {"sprite-size" : [40.00, 40.00] },
+		"SonAni_Roll" 		: {"sprite-size" : [32.00, 32.00] }
+	},
+
+	"sprites":
+	{
+		"stand_1"   :{ "SonAni_Wait_intro"  : [0.00, 0.50, 0.25, 1.00] },
+		"look_up_1" :{ "SonAni_LookUp"      : [0.00, 0.00, 1.00, 1.00] },
+		"duck_1"    :{ "SonAni_Duck"        : [0.00, 0.00, 1.00, 1.00] },
+		"walk_1"    :{ "SonAni_Walk"  		: [0.00, 0.50, 0.25, 1.00] },
+		"walk_2"    :{ "SonAni_Walk"  		: [0.25, 0.50, 0.50, 1.00] },
+		"walk_3"    :{ "SonAni_Walk"  		: [0.50, 0.50, 0.75, 1.00] },
+		"walk_4"    :{ "SonAni_Walk"  		: [0.75, 0.50, 1.00, 1.00] },
+		"walk_5"    :{ "SonAni_Walk"  		: [0.00, 0.00, 0.25, 0.50] },
+		"walk_6"    :{ "SonAni_Walk"  		: [0.25, 0.00, 0.50, 0.50] },
+		"run_1"     :{ "SonAni_Run"  		: [0.00, 0.00, 0.25, 1.00] },
+		"run_2"     :{ "SonAni_Run"  		: [0.25, 0.00, 0.50, 1.00] },
+		"run_3"     :{ "SonAni_Run"  		: [0.50, 0.00, 0.75, 1.00] },
+		"run_4"     :{ "SonAni_Run"  		: [0.75, 0.00, 1.00, 1.00] },
+		"stop_1"    :{ "SonAni_Stop"        : [0.00, 0.00, 0.50, 1.00] },
+		"stop_2"    :{ "SonAni_Stop"        : [0.50, 0.00, 1.00, 1.00] },
+		"roll_1"    :{ "SonAni_Roll"  		: [0.00, 0.50, 0.25, 1.00] },
+		"roll_2"    :{ "SonAni_Roll"  		: [0.25, 0.50, 0.50, 1.00] },
+		"roll_3"    :{ "SonAni_Roll"  		: [0.50, 0.50, 0.75, 1.00] },
+		"roll_4"    :{ "SonAni_Roll"  		: [0.75, 0.50, 1.00, 1.00] },
+		"roll_5"    :{ "SonAni_Roll"  		: [0.00, 0.00, 0.25, 0.50] }
+
+	},
+
+	"animations":
+	{
+   		"stand"    :{ "time": 0.125,  "frames": ["stand_1"]   													},
+   		"look_up"  :{ "time": 0.125,  "frames": ["look_up_1"]													},
+   		"duck"     :{ "time": 0.125,  "frames": ["duck_1"]														},
+		"walk"     :{ "time": 0.750,  "frames": ["walk_1", "walk_2", "walk_3", "walk_4", "walk_5", "walk_6"] 	},
+		"run"      :{ "time": 0.500,  "frames": ["run_1", "run_2", "run_3", "run_4"]   							},
+		"stop"     :{ "time": 0.250,  "frames": ["stop_1", "stop_2"]											},
+		"roll_1"   :{ "time": 0.390625,  "frames": ["roll_1", "roll_2", "roll_3", "roll_4", "roll_5"]   		}
+	},
+
+	"properties":
+	{
+		"default-animation"	: "stand"
+	}
+}
