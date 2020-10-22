@@ -38,7 +38,13 @@ void cw::simulation::detail::body::set_origin(const glm::vec3& new_origin){
 	btTransform transform;
 	transform.setOrigin(btVector3(origin.x, origin.y, origin.z));
 
+	//physic_body->setWorldTransform(transform);
 	physic_body->setCenterOfMassTransform(transform);
+	physic_body->getMotionState()->setWorldTransform(transform);
+	physic_body->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+	physic_body->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+	physic_body->clearForces();
+	//physic_body->setCenterOfMassTransform(transform);
 
 }
 
@@ -53,6 +59,7 @@ glm::vec3 cw::simulation::detail::body::get_origin(){
 void cw::simulation::detail::body::set_linear_speed(const glm::vec3& speed){
 	auto spd = speed * scale;
 	spd /= unit_value;
+	physic_body->activate(true);
 	physic_body->setLinearVelocity(btVector3(spd.x, spd.y, spd.z));
 
 }

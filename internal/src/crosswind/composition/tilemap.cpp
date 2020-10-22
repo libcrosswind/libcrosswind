@@ -16,7 +16,7 @@ cw::composition::tilemap::tilemap(std::shared_ptr<cw::composition::core> core, c
     auto tilemap_path = std::filesystem::path(path);
 
 	tson::Tileson parser;
-	map = parser.parse(tilemap_path);
+	map = std::move(parser.parse(tilemap_path));
 
     for (auto& tileset : map->getTilesets()) {
         auto image_path = std::filesystem::path(tileset.getImage());
@@ -31,6 +31,13 @@ cw::composition::tilemap::tilemap(std::shared_ptr<cw::composition::core> core, c
     //You can loop through every container of objects
     for (auto& layer : map->getLayers())
     {
+        if (layer.getType() == tson::LayerType::ObjectGroup) {
+            for (auto& obj : layer.getObjects())
+            {
+                objects.push_back(obj);
+            }
+        }
+
         if (layer.getType() == tson::LayerType::TileLayer)
         {
             for (const auto& [pos, tileObject] : layer.getTileObjects()) {

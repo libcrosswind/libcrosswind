@@ -148,6 +148,7 @@
     <ClInclude Include="..\..\internal\include\crosswind\composition\detail\named_component.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\composition\detail\spatial_component.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\composition\graphics\animation_set.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\physical.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\composition\scene.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\composition\sprite_set.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\composition\stage.hpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="..\..\internal\src\crosswind\composition\camera.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\composition\core.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\composition\graphics\animation_set.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\composition\physical.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\composition\scene.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\composition\sprite_set.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\composition\stage.cpp" />

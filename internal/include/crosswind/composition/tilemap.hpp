@@ -46,9 +46,12 @@ namespace cw {
 
 			virtual void draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer);
 
+		public:
+			std::vector<tson::Object> objects;
+			std::unique_ptr<tson::Map> map;
+
 		private:
 			std::shared_ptr<core> core;
-			std::unique_ptr<tson::Map> map;
 			std::vector<std::shared_ptr<cw::graphical::object::sprite>> sprites;
 			std::map<std::string, std::shared_ptr<cw::graphical::opengl::texture> > textures;
 		};// class tilemap

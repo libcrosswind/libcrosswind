@@ -31,6 +31,9 @@
 #include <crosswind/composition/camera.hpp>
 
 #include <crosswind/composition/sprite_set.hpp>
+#include <crosswind/composition/physical.hpp>
+
+#include <crosswind/simulation/detail/body.hpp>
 
 #include <terra.hpp>
 
@@ -49,6 +52,31 @@ void game::scenes::title::init() {
 	tilemap = 
 		std::make_shared<cw::composition::tilemap>(core, 
 												   "resources/assets/ffvi/tilemaps/Library.json");
+	terra = std::make_shared<game::characters::title::terra>(core,
+		"resources/assets/sonic_the_hedgehog/graphics/characters/jeshejojo/jeshejojo.json");
+
+	for (auto& tile_object : tilemap->objects) {
+		if (tile_object.getName() == "wall") {
+			auto physical = std::make_shared<cw::composition::physical>(core, "wall");
+			auto pos = tile_object.getPosition();
+			auto size = tile_object.getSize();
+
+			auto map_size = tilemap->map->getSize();
+			auto tile_size = tilemap->map->getTilesets().front().getTileSize();
+			auto pos_x = pos.x + size.x / 2.0f - tile_size.x / 2.0f;
+			auto pos_y = pos.y + size.y / 2.0f - tile_size.y / 2.0f;
+			physical->add_rigid_body("wall",
+				glm::vec3(pos_x, 
+						  -pos_y, 0.0f),
+				glm::vec3(size.x, size.y, 10.0f),
+				0.0f);
+
+			auto body = physical->get_rigid_body("wall");
+			//body->set_origin(glm::vec3(0.5f, 0.5f, 0));
+			walls.push_back(physical);
+		}
+		
+	}
 
 	title_model = core->video->load_model(glm::vec3(0.0f, 0.0f, 0.0f),
 										  glm::vec3(225.0f, 225.0f, 0.0f),
@@ -56,8 +84,6 @@ void game::scenes::title::init() {
 	 
 	core->mixer->load_music("battle_bgm", "resources/assets/ffvi/audio/bgm/battle_theme.ogg");
 
-	terra = std::make_shared<game::characters::title::terra>(core,
-		"resources/assets/sonic_the_hedgehog/graphics/characters/jeshejojo/jeshejojo.json");
 
 
 	//core->mixer->load_music("title_bgm", "assets/sonic_the_hedgehog/audio/bgm/sonic/title_bgm.ogg");
