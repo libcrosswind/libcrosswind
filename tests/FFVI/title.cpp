@@ -22,8 +22,15 @@
 #include <crosswind/composition/core.hpp>
 #include <crosswind/graphical/video.hpp>
 
-game::scenes::title::title() : scene("title") {
+#include <crosswind/composition/tilemap.hpp>
 
+#include <crosswind/engine.hpp>
+
+#include <crosswind/composition/stage.hpp>
+
+#include <crosswind/composition/camera.hpp>
+
+game::scenes::title::title() : scene("title") {
 }
 
 void game::scenes::title::init() {
@@ -31,11 +38,13 @@ void game::scenes::title::init() {
 	/*auto main_camera = std::make_shared<cw::composition::camera>(core->video->get_window_size());
 	add_camera("main_camera", main_camera);
 	set_camera("main_camera");*/
+	tilemap = std::make_shared<cw::composition::tilemap>(core,
+		"resources/assets/ffvi/tilemaps/Library.json");
 
 	title_model = core->video->load_model(glm::vec3(0.0f, 0.0f, 0.0f),
 										  glm::vec3(225.0f, 225.0f, 0.0f),
 										  "resources/assets/ffvi/sprites/square_logo.json");
-
+	 
 	core->mixer->load_music("battle_bgm", "resources/assets/ffvi/audio/bgm/battle_theme.ogg");
 	//core->mixer->load_music("title_bgm", "assets/sonic_the_hedgehog/audio/bgm/sonic/title_bgm.ogg");
 
@@ -195,7 +204,6 @@ void game::scenes::title::draw_title() {
 
 		*/
 	}
-
 }
 
 void game::scenes::title::logic(const float& delta) {
@@ -218,5 +226,9 @@ void game::scenes::title::logic(const float& delta) {
 }
 
 void game::scenes::title::draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer) {
-	renderer->upload(title_model->get_sprite());
+	core->engine->stage->get_scene("current")->get_camera("current")->set_position(glm::vec3(312, -224, 0));
+
+	//renderer->upload(title_model->get_sprite());
+
+	tilemap->draw(renderer);
 }

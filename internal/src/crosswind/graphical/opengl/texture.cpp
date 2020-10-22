@@ -5,6 +5,7 @@
 
 cw::graphical::opengl::texture::texture(const glm::vec2& size, unsigned char bpp, void* pixels): id(0){
 
+    this->size = size;
     glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
 

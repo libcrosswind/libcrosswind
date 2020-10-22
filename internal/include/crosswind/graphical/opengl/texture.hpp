@@ -16,6 +16,8 @@ public:
 
 	uint32_t id;
 
+	glm::vec2 size;
+
 };// class texture
 
 }// namespace opengl

@@ -10,8 +10,8 @@ cw::graphical::opengl::renderer::renderer(){
     sprite_batch                = std::make_shared<class sprite_batch>();        
     shader_program              = std::make_shared<class shader_program>();
 
-    std::string vertex_shader   = "assets/engine/graphics/shaders/texture_shading.vert";
-    std::string fragment_shader = "assets/engine/graphics/shaders/texture_shading.frag";
+    std::string vertex_shader   = "resources/assets/engine/graphics/shaders/texture_shading.vert";
+    std::string fragment_shader = "resources/assets/engine/graphics/shaders/texture_shading.frag";
 
     shader_program->compile(vertex_shader, fragment_shader);
     shader_program->add_attribute("vertex_position");

@@ -3,6 +3,12 @@
 #include <functional>
 
 namespace cw {
+	namespace composition {
+		class camera;
+	}
+}
+
+namespace cw {
 	namespace graphical {
 		namespace opengl {
 			class renderer;

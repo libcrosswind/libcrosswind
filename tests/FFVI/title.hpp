@@ -26,6 +26,12 @@ namespace game {
 	}// namespace zones
 }// namespace game
 
+namespace cw {
+	namespace composition {
+		class tilemap;
+	}
+}
+
 class game::scenes::title : public cw::composition::scene {
 public:
 	title();
@@ -87,6 +93,7 @@ public:
 
 private:
 	std::shared_ptr<cw::graphical::object::model> title_model;
+	std::shared_ptr<cw::composition::tilemap> tilemap;
 
 	float time_count;
 	bool sega_sound_ongoing;

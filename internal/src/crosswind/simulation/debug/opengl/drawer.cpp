@@ -10,8 +10,8 @@ cw::simulation::debug::opengl::drawer::drawer():
 debug_mode(btIDebugDraw::DBG_DrawWireframe){
 
 		shader_program = std::make_shared<class simulation_shader_program>();
-		std::string vertex_shader   = "assets/engine/graphics/shaders/primitive_shading.vert";
-		std::string fragment_shader = "assets/engine/graphics/shaders/primitive_shading.frag";
+		std::string vertex_shader   = "resources/assets/engine/graphics/shaders/primitive_shading.vert";
+		std::string fragment_shader = "resources/assets/engine/graphics/shaders/primitive_shading.frag";
 
 		shader_program->compile(vertex_shader, fragment_shader);
 		shader_program->add_attribute("vertex_position");

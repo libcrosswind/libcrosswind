@@ -198,6 +198,9 @@
     <ClInclude Include="..\..\internal\include\crosswind\graphical\object\model.hpp">
       <Filter>Header Files\graphical</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\internal\include\crosswind\composition\tilemap.hpp">
+      <Filter>Header Files\composition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\internal\src\crosswind\engine.cpp">
@@ -316,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="..\..\internal\src\crosswind\graphical\object\model.cpp">
       <Filter>Source Files\graphical</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\internal\src\crosswind\composition\tilemap.cpp">
+      <Filter>Source Files\composition</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

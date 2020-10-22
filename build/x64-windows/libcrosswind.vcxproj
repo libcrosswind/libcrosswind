@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\internal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\internal\include;$(ProjectDir)\..\..\external\tileson\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
@@ -150,6 +150,7 @@
     <ClInclude Include="..\..\internal\include\crosswind\composition\graphics\animation_set.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\composition\scene.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\composition\stage.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\composition\tilemap.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\configuration\settings.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\engine.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\object\mesh.hpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="..\..\internal\src\crosswind\composition\graphics\animation_set.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\composition\scene.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\composition\stage.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\composition\tilemap.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\configuration\settings.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\engine.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\graphical\object\mesh.cpp" />

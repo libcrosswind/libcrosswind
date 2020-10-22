@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
         auto engine = std::make_shared<cw::engine>(settings);
 
         engine->core->engine = engine;
-        engine->core->video->set_window_icon("assets/engine/graphics/window/icon.png");
+        engine->core->video->set_window_icon("resources/assets/engine/graphics/window/icon.png");
 
         auto title_scene = std::make_shared<game::scenes::title>();
         engine->stage->init_scene(title_scene);

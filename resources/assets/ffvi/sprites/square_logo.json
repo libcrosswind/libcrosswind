@@ -1,0 +1,32 @@
+{
+	"attributes":
+	{
+		"format"	: "uv",
+		"time"  	: "seconds"
+	},
+
+	"textures":
+	{
+		"square_logo"	: "resources/assets/ffvi/sprites/square_logo.png"
+	},
+
+	"spritesheets":
+	{
+		"square_logo" : {"sprite-size" : [225.00, 225.00] }
+	},
+
+	"sprites":
+	{
+		"square_logo" :{ "square_logo"  : [0.00, 0.00, 1.00, 1.00] }
+	},
+
+	"animations":
+	{
+   		"square_logo"    :{ "time": 0.125,  "frames": ["square_logo"] }
+	},
+
+	"properties":
+	{
+		"default-animation"	: "square_logo"
+	}
+}
