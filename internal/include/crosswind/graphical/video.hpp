@@ -80,7 +80,9 @@ public:
 	std::shared_ptr<graphical::object::model> load_model(const glm::vec3& origin,
 														 const glm::vec3& size,
 														 const std::string& template_file);
-	
+	void unload_model(const std::string& template_file);
+
+
 	std::shared_ptr< opengl::window   >	window;
 	std::shared_ptr< opengl::renderer >	renderer;
 

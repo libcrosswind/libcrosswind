@@ -32,14 +32,19 @@
 
 game::scenes::title::title() : scene("title") {
 }
+game::scenes::title::~title() {
+	core->video->unload_model("resources/assets/ffvi/sprites/square_logo.json");
+	core->mixer->unload_music("battle_bgm");
+}
 
 void game::scenes::title::init() {
 
 	/*auto main_camera = std::make_shared<cw::composition::camera>(core->video->get_window_size());
 	add_camera("main_camera", main_camera);
 	set_camera("main_camera");*/
-	tilemap = std::make_shared<cw::composition::tilemap>(core,
-		"resources/assets/ffvi/tilemaps/Library.json");
+	tilemap = 
+		std::make_shared<cw::composition::tilemap>(core, 
+												   "resources/assets/ffvi/tilemaps/Library.json");
 
 	title_model = core->video->load_model(glm::vec3(0.0f, 0.0f, 0.0f),
 										  glm::vec3(225.0f, 225.0f, 0.0f),

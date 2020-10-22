@@ -264,3 +264,17 @@ std::shared_ptr<cw::graphical::object::model> cw::graphical::video::load_model(c
 
 	return model;
 }
+
+
+void cw::graphical::video::unload_model(const std::string& template_file) {
+	modules::javascript::json json;
+	json.from_file(template_file);
+
+	auto& raw_json = json.data;
+
+	for (auto t = raw_json["textures"].object_range().begin(); t != raw_json["textures"].object_range().end(); ++t)
+	{
+		remove_texture(t->key());
+	}
+
+}

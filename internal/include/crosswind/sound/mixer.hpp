@@ -35,6 +35,8 @@ public:
 
 	void load_music(const std::string& name, const std::string& path);
 
+	void unload_music(const std::string& name);
+
 	void play_music(const std::string& name, const int& loops = -1);
 
 	bool is_playing_music(const std::string& name);

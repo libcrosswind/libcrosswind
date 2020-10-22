@@ -35,6 +35,7 @@ namespace cw {
 class game::scenes::title : public cw::composition::scene {
 public:
 	title();
+	~title();
 
 	virtual void init();
 

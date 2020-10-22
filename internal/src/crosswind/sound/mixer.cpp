@@ -59,6 +59,25 @@ void cw::sound::mixer::load_music(const std::string& name, const std::string& pa
 
 }
 
+void cw::sound::mixer::unload_music(const std::string& name) {
+
+	try {
+		if (is_playing_music(name)) {
+			stop_music();
+		}
+
+		bgm_info.erase(name);
+		bgm_tracks.erase(name);
+	}
+	catch (std::exception& ex) {
+		auto err = Mix_GetError();
+		std::cout << ex.what() << std::endl;
+	}
+
+
+}
+
+
 void cw::sound::mixer::play_music(const std::string& name, const int& loops){
 
 	if(Mix_PlayingMusic() == 0){ 							// If there is no music playing

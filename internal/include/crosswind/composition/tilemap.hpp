@@ -42,6 +42,7 @@ namespace cw {
 		class tilemap {
 		public:
 			tilemap(std::shared_ptr<core> core, const std::string& path);
+			~tilemap();
 
 			virtual void draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer);
 

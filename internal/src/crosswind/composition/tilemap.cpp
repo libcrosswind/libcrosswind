@@ -20,11 +20,10 @@ cw::composition::tilemap::tilemap(std::shared_ptr<cw::composition::core> core, c
 
     for (auto& tileset : map->getTilesets()) {
         auto image_path = std::filesystem::path(tileset.getImage());
-        auto name = tileset.getName();
         auto path = tilemap_path.parent_path() / image_path;
 
-        core->video->load_texture(name, path.string());
-        auto texture = core->video->load_texture(name);
+        core->video->load_texture(tileset.getImage().string(), path.string());
+        auto texture = core->video->load_texture(tileset.getImage().string());
 
         textures[tileset.getImage().string()] = texture;
     }
@@ -34,9 +33,6 @@ cw::composition::tilemap::tilemap(std::shared_ptr<cw::composition::core> core, c
     {
         if (layer.getType() == tson::LayerType::TileLayer)
         {
-            if (layer.getName() != "BookshelvesC-Foreground") {
-                //continue;
-            }
             for (const auto& [pos, tileObject] : layer.getTileObjects()) {
 
                 for (auto& tileset : map->getTilesets()) {
@@ -90,6 +86,13 @@ cw::composition::tilemap::tilemap(std::shared_ptr<cw::composition::core> core, c
 
             }
         }
+    }
+}
+
+cw::composition::tilemap::~tilemap()
+{
+    for (auto texturekp : textures) {
+        core->video->remove_texture(texturekp.first);
     }
 }
 
