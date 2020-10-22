@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="4" height="2" tilewidth="42" tileheight="42" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="SonAni_Walk_bank.png" tilewidth="42" tileheight="42" tilecount="8" columns="4">
+  <image source="SonAni_Walk_bank.png" width="168" height="84"/>
+ </tileset>
+ <layer id="1" name="ShoeBox Tile Grab" width="4" height="2" opacity="0.9">
+  <data>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="3"/>
+   <tile gid="4"/>
+   <tile gid="5"/>
+   <tile gid="6"/>
+   <tile gid="7"/>
+   <tile gid="7"/>
+  </data>
+ </layer>
+</map>

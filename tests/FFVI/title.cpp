@@ -30,6 +30,10 @@
 
 #include <crosswind/composition/camera.hpp>
 
+#include <crosswind/composition/sprite_set.hpp>
+
+#include <terra.hpp>
+
 game::scenes::title::title() : scene("title") {
 }
 game::scenes::title::~title() {
@@ -51,6 +55,11 @@ void game::scenes::title::init() {
 										  "resources/assets/ffvi/sprites/square_logo.json");
 	 
 	core->mixer->load_music("battle_bgm", "resources/assets/ffvi/audio/bgm/battle_theme.ogg");
+
+	terra = std::make_shared<game::characters::title::terra>(core,
+		"resources/assets/sonic_the_hedgehog/graphics/characters/jeshejojo/jeshejojo.json");
+
+
 	//core->mixer->load_music("title_bgm", "assets/sonic_the_hedgehog/audio/bgm/sonic/title_bgm.ogg");
 
 	//auto sega_logo = std::make_shared<characters::title::sega_logo>();
@@ -200,7 +209,7 @@ void game::scenes::title::draw_title() {
 
 	if (!title_sound_ongoing && time_count >= 1.0f) {
 		title_sound_ongoing = true;
-		core->mixer->play_music("battle_bgm", 0);
+		core->mixer->play_music("battle_bgm", -1);
 	}
 
 	if (time_count >= 3.0f) {
@@ -212,6 +221,8 @@ void game::scenes::title::draw_title() {
 }
 
 void game::scenes::title::logic(const float& delta) {
+
+	terra->logic(delta);
 
 	time_count += delta;
 
@@ -236,4 +247,6 @@ void game::scenes::title::draw(std::shared_ptr<cw::graphical::opengl::renderer> 
 	//renderer->upload(title_model->get_sprite());
 
 	tilemap->draw(renderer);
+
+	terra->draw(renderer);
 }

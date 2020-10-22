@@ -37,7 +37,6 @@ int main(int argc, char** argv) {
         engine->stage->add_scene(title_scene);
         engine->stage->load_scene("title");
 
-        
 
         //auto green_hill_zone = engine->stage->create_scene<game::scenes::green_hill_zone>();
 

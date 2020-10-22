@@ -29,6 +29,7 @@ namespace game {
 namespace cw {
 	namespace composition {
 		class tilemap;
+		class sprite_set;
 	}
 }
 
@@ -95,6 +96,7 @@ public:
 private:
 	std::shared_ptr<cw::graphical::object::model> title_model;
 	std::shared_ptr<cw::composition::tilemap> tilemap;
+	std::shared_ptr<cw::composition::sprite_set> terra;
 
 	float time_count;
 	bool sega_sound_ongoing;

@@ -22,6 +22,9 @@
     <Filter Include="Source Files\scene">
       <UniqueIdentifier>{eefaa558-1c77-4bfd-bb54-293fd5a3f614}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\character">
+      <UniqueIdentifier>{28c80a81-463d-4769-9e5e-ac8e426c78cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FFVI.cpp">
@@ -29,6 +32,9 @@
     </ClCompile>
     <ClCompile Include="title.cpp">
       <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="terra.cpp">
+      <Filter>Source Files\character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +45,9 @@
       <Filter>Header Files\character</Filter>
     </ClInclude>
     <ClInclude Include="team_logo.hpp">
+      <Filter>Header Files\character</Filter>
+    </ClInclude>
+    <ClInclude Include="terra.hpp">
       <Filter>Header Files\character</Filter>
     </ClInclude>
   </ItemGroup>

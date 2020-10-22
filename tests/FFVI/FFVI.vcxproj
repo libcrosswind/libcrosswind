@@ -148,11 +148,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FFVI.cpp" />
+    <ClCompile Include="terra.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sega_logo.hpp" />
     <ClInclude Include="team_logo.hpp" />
+    <ClInclude Include="terra.hpp" />
     <ClInclude Include="title.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
