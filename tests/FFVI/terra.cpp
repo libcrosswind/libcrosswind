@@ -36,8 +36,8 @@ game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> cor
 	this->title = title;
 	this->core = core;
 
-	bbox.Width = 40;
-	bbox.Height = 42;
+	bbox.Width = 16;
+	bbox.Height = 20;
 
 	set_position(glm::ivec2(312, 224));
 
@@ -105,7 +105,7 @@ void game::characters::title::terra::find_collisions() {
 			{
 				if (bbox.centre().y > wall.centre().y)
 				{
-					set_position(glm::vec2(bbox.centre().x, bbox.centre().y +intersection.Height));
+					set_position(glm::vec2(bbox.centre().x, bbox.centre().y + intersection.Height));
 				}
 				else
 				{
