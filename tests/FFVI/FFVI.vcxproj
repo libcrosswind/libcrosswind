@@ -86,6 +86,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -127,11 +130,14 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libcrosswind.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcrosswind.lib;winmm.lib;version.lib;Setupapi.lib;imm32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\build\x64-windows\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)\..\..\resources" "$(TargetDir)resources"  /s /i /y</Command>
+      <Command>xcopy "$(ProjectDir)\..\..\resources" "$(TargetDir)resources"  /s /i /y
+xcopy "$(ProjectDir)\..\..\bin\vorbis.dll" "$(TargetDir)"  /s /i /y
+xcopy "$(ProjectDir)\..\..\bin\vorbisfile.dll" "$(TargetDir)"  /s /i /y
+xcopy "$(ProjectDir)\..\..\bin\ogg.dll" "$(TargetDir)"  /s /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
