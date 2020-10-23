@@ -1,35 +1,29 @@
 # libcrosswind 0.2
 
 [![Join the chat at https://gitter.im/libcrosswind/libcrosswind](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/libcrosswind/libcrosswind?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-A modern C++14 Multipurpose library
+Dead simple C++ 17 game engine
 
-git clone https://github.com/libcrosswind/libcrosswind.git
+vcpkg install sdl2
+vcpkg install sdl2-image[\*]
+vcpkg install sdl2-mixer[\*]
+vcpkg install bullet3
+vcpkg install jsoncons
+vcpkg install chaiscript
 
-git submodule init
-
-git submodule update
 
 Requirements:
 
 Windows:
 
-CMake:
-
-Download and install in libcrosswind\platform\windows\support\cmake
-http://www.cmake.org/download/
-
-
-After installation run libcrosswind\setup\win32\build.bat
+Visual Studio 2019
 
 Linux (Ubuntu):
 
-Just the tools to start developing.
-
-sudo apt-get install build-essential libglu-dev libharfbuzz-dev libasound2-dev
+Pending
 
 Current status: 
 
-- [x] Unstable
-- [ ] Stable
+- [ ] Unstable
+- [x] Stable
 
-Working on the production-ready version, meanwhile you can use the tag 0.2 version.
+See Tests/ffvi for more information on how to use the engine
