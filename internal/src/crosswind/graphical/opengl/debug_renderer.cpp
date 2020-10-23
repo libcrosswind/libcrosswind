@@ -105,7 +105,7 @@ void cw::graphical::opengl::debug_renderer::flush() {
 
 void cw::graphical::opengl::debug_renderer::debug_draw(const glm::vec4& r) {
 	enqueue(glm::ivec3(r.x, r.y, 0), glm::ivec3(r.x + r.z, r.y, 0), glm::vec3(1.0, 0.0, 0.0));
-	enqueue(glm::ivec3(r.x + r.w, r.y, 0), glm::ivec3(r.x + r.w, r.y + r.w, 0), glm::vec3(1.0, 0.0, 0.0));
+	enqueue(glm::ivec3(r.x + r.z, r.y, 0), glm::ivec3(r.x + r.z, r.y + r.w, 0), glm::vec3(1.0, 0.0, 0.0));
 	enqueue(glm::ivec3(r.x + r.z, r.y + r.w, 0), glm::ivec3(r.x, r.y + r.w, 0), glm::vec3(1.0, 0.0, 0.0));
 	enqueue(glm::ivec3(r.x, r.y, 0), glm::ivec3(r.x, r.y + r.w, 0), glm::vec3(1.0, 0.0, 0.0));
 }
