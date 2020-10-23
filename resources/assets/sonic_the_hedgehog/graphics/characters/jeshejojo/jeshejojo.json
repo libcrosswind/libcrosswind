@@ -1,0 +1,41 @@
+{ "compressionlevel":-1,
+ "height":2,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[1, 2, 3, 4, 5, 6, 7, 7],
+         "height":2,
+         "id":1,
+         "name":"ShoeBox Tile Grab",
+         "opacity":0.9,
+         "type":"tilelayer",
+         "visible":true,
+         "width":4,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":2,
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.4.1",
+ "tileheight":42,
+ "tilesets":[
+        {
+         "columns":4,
+         "firstgid":1,
+         "image":"SonAni_Walk_bank.png",
+         "imageheight":84,
+         "imagewidth":168,
+         "margin":0,
+         "name":"SonAni_Walk_bank.png",
+         "spacing":0,
+         "tilecount":8,
+         "tileheight":42,
+         "tilewidth":42
+        }],
+ "tilewidth":42,
+ "type":"map",
+ "version":1.4,
+ "width":4
+}
