@@ -29,9 +29,9 @@ cw::composition::core::core(const cw::configuration::settings& engine_settings){
                                                  engine_settings.audio.channels,
                                                  engine_settings.audio.chunk_size);
 
-    physics     = std::make_shared<simulation::physics>(engine_settings.physics.gravity,
+    /*physics     = std::make_shared<simulation::physics>(engine_settings.physics.gravity,
                                                         engine_settings.physics.scale,
-                                                        engine_settings.physics.unit_value);
+                                                        engine_settings.physics.unit_value);*/
 }
 
   

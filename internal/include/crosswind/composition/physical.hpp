@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 
 #include <string>
 #include <memory>
@@ -75,3 +75,4 @@ namespace cw {
 
 	}// namespace composition
 }// namespace cw
+*/

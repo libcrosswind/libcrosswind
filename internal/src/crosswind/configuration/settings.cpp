@@ -23,11 +23,11 @@ cw::configuration::settings::settings(){
     window.resizable        = false;
     window.resolution       = glm::i32vec2(640, 480);
 
-    physics.gravity         = glm::vec3(0.0f, -10.0f, 0.0f);
+    /*physics.gravity         = glm::vec3(0.0f, -10.0f, 0.0f);
     physics.scale           = glm::vec3(1, 1, 1);
 
     glm::vec3 unit_value(1.0f, 1.0f, 1.0f);
-    physics.unit_value      = unit_value;
+    physics.unit_value      = unit_value;*/
 
 }
 

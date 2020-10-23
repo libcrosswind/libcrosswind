@@ -58,7 +58,7 @@ void game::scenes::title::init() {
 
 	for (auto& tile_object : tilemap->objects) {
 		if (tile_object.getName() == "wall") {
-			auto physical = std::make_shared<cw::composition::physical>(core, "wall");
+			//auto physical = std::make_shared<cw::composition::physical>(core, "wall");
 			auto pos = tile_object.getPosition();
 			auto size = tile_object.getSize();
 
@@ -68,9 +68,9 @@ void game::scenes::title::init() {
 			//auto pos_y = -pos.y + size.y / 2.0f - tile_size.y - tile_size.y / 2.0f;
 			auto pos_y = -pos.y + map_size.y * tile_size.y - size.y + tile_size.y / 2.0f;
 
-			physical->bbox = cw::geometry::rectangle({ pos_x,
-													   pos_y },
-													 { size.x, size.y });
+			cw::geometry::rectangle bbox = cw::geometry::rectangle({ pos_x,
+											 pos_y },
+											{ size.x, size.y });
 
 			/*physical->add_rigid_body("wall",
 				glm::vec3(pos_x, 
@@ -80,7 +80,7 @@ void game::scenes::title::init() {
 
 			auto body = physical->get_rigid_body("wall");*/
 			//body->set_origin(glm::vec3(0.5f, 0.5f, 0));
-			walls.push_back(physical);
+			walls.push_back(bbox);
 		}
 		
 	}
@@ -287,7 +287,7 @@ void game::scenes::title::draw(std::shared_ptr<cw::graphical::opengl::renderer> 
 	tilemap->draw(renderer);
 
 	for (auto& wall : walls) {
-		auto bbox = wall->bbox;
+		auto bbox = wall;
 		renderer->debug_renderer->debug_draw(glm::vec4(bbox.X, bbox.Y, bbox.Width, bbox.Height));
 	}
 

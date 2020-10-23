@@ -36,13 +36,14 @@ namespace sound{
 }// namespace sound
 }// namespace cw
 
-namespace cw{
+/*namespace cw{
 namespace simulation{
 
     class physics;
 
 }// namespace simulation
 }// namespace cw
+*/
 
 namespace cw{
 namespace composition{
@@ -57,7 +58,7 @@ public:
     std::shared_ptr< platform::input       > input;
     std::shared_ptr< graphical::video 	   > video;
     std::shared_ptr< sound::mixer          > mixer;
-    std::shared_ptr< simulation::physics   > physics;
+    //std::shared_ptr< simulation::physics   > physics;
 
 };// class core
 

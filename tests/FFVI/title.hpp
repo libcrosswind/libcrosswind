@@ -9,6 +9,8 @@
 #include <crosswind/composition/camera.hpp>
 #include <crosswind/composition/core.hpp>
 
+#include <crosswind/geometry/rectangle.hpp>
+
 #include <crosswind/graphical/object/sprite.hpp>
 #include <crosswind/graphical/object/model.hpp>
 
@@ -30,7 +32,7 @@ namespace cw {
 	namespace composition {
 		class tilemap;
 		class sprite_set;
-		class physical;
+		//class physical;
 	}
 }
 
@@ -94,7 +96,7 @@ public:
 	virtual void logic(const float& delta);
 	virtual void draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer);
 
-	std::vector<std::shared_ptr<cw::composition::physical> > walls;
+	std::vector<cw::geometry::rectangle > walls;
 
 private:
 	std::shared_ptr<cw::graphical::object::model> title_model;

@@ -35,13 +35,13 @@ struct settings{
         bool resizable;
     } window;
 
-    struct{
+    /*struct{
 
         glm::vec3 gravity;
         glm::vec3 scale;
         glm::vec3 unit_value;
 
-    } physics;
+    } physics;*/
 
     settings();
 

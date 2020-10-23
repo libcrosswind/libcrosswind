@@ -1,4 +1,4 @@
-#include <stdexcept>
+/*#include <stdexcept>
 
 #include "crosswind/simulation/physics.hpp"
 #include "crosswind/simulation/detail/character.hpp"
@@ -170,4 +170,4 @@ btPersistentManifold* cw::simulation::physics::get_manifold_by_index(const int& 
 
 	return dispatcher->getManifoldByIndexInternal(index);
 
-} 
+} */

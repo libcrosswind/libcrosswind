@@ -28,8 +28,8 @@ typedef std::map<std::string, actor_collision_map> scene_collision_map;
 game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> core, 
 									  std::shared_ptr<game::scenes::title> title,
 									  const std::string& path) :
-	sprite_set(core, path),
-	physical(core, "terra"){
+	sprite_set(core, path)
+	/*physical(core, "terra")*/{
 	current_sprite = sprites.at(0);
 	animation_time = 0.0f;
 
@@ -86,12 +86,12 @@ void game::characters::title::terra::find_collisions() {
 	can_move_down = true;
 
 	for (auto wall : title->walls) {
-		if (wall->bbox.intersects(bbox)) {
+		if (wall.intersects(bbox)) {
 
-			auto intersection = cw::geometry::rectangle::intersection(bbox, wall->bbox);
+			auto intersection = cw::geometry::rectangle::intersection(bbox, wall);
 			if (intersection.Height > intersection.Width)
 			{
-				if (bbox.centre().x > wall->bbox.centre().x)
+				if (bbox.centre().x > wall.centre().x)
 				{
 					set_position(glm::vec2(bbox.centre().x + intersection.Width, bbox.centre().y));
 				}
@@ -103,7 +103,7 @@ void game::characters::title::terra::find_collisions() {
 			}
 			else
 			{
-				if (bbox.centre().y > wall->bbox.centre().y)
+				if (bbox.centre().y > wall.centre().y)
 				{
 					set_position(glm::vec2(bbox.centre().x, bbox.centre().y +intersection.Height));
 				}

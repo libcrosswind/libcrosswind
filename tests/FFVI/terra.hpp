@@ -28,8 +28,8 @@ namespace cw {
 }
 
 class game::characters::title::terra : 
-	public cw::composition::sprite_set,
-	public cw::composition::physical {
+	public cw::composition::sprite_set
+	/*public cw::composition::physical */{
 	typedef std::map<std::string, std::vector<std::pair<glm::vec3, glm::vec3> > > actor_collision_map;
 	typedef std::map<std::string, actor_collision_map> scene_collision_map;
 

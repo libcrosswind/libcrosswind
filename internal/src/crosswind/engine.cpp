@@ -39,7 +39,7 @@ void cw::engine::run(){
 void cw::engine::update(){
     core->application->update();
     core->input->update(1.0f/60.0f);
-    core->physics->update(1.0f/60.0f);
+    //core->physics->update(1.0f/60.0f);
     stage->update(1.0f/60.0f);
 }
 
@@ -85,6 +85,6 @@ void cw::engine::draw(){
 
     core->video->renderer->debug_renderer->flush();
 
-    core->physics->debug_draw_world(stage->get_scene("current")->get_camera("current")->get_camera_matrix());
+    //core->physics->debug_draw_world(stage->get_scene("current")->get_camera("current")->get_camera_matrix());
     core->video->window->present();
 }
