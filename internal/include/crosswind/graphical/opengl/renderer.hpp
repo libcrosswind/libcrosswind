@@ -20,12 +20,23 @@ namespace cw{
 namespace graphical{
 namespace opengl{
 
+    class debug_renderer;
     class sprite_batch;
     class shader_program;
 
 }// namespace opengl
 }// namespace graphical
 }// namespace cw
+
+namespace cw {
+    namespace simulation {
+        namespace debug {
+            namespace opengl {
+                class simulation_shader_program;
+            }
+        }
+    }
+}
 
 namespace cw{
 namespace graphical{
@@ -34,6 +45,7 @@ namespace opengl{
 class renderer{
 public:
 	renderer();
+    ~renderer();
 
     void begin();
 
@@ -45,11 +57,14 @@ public:
 
     void end();
 
+    std::shared_ptr<debug_renderer> debug_renderer;
+
+
 private:
     std::shared_ptr<sprite_batch> sprite_batch;
     std::shared_ptr<shader_program> shader_program;
 
-};
+ };
 
 }// namespace opengl
 }// namespace graphical

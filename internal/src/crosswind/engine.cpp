@@ -10,6 +10,7 @@
 #include "crosswind/graphical/video.hpp"
 #include "crosswind/graphical/object/text.hpp"
 #include "crosswind/graphical/opengl/renderer.hpp"
+#include "crosswind/graphical/opengl/debug_renderer.hpp"
 #include "crosswind/graphical/opengl/window.hpp"
 #include "crosswind/simulation/physics.hpp"
 
@@ -81,6 +82,8 @@ void cw::engine::draw(){
 
     core->video->renderer->draw();
     core->video->renderer->end();
+
+    core->video->renderer->debug_renderer->flush();
 
     core->physics->debug_draw_world(stage->get_scene("current")->get_camera("current")->get_camera_matrix());
     core->video->window->present();

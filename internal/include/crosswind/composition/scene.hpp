@@ -27,7 +27,7 @@ namespace cw{
 namespace composition{
 
 class scene: public detail::named_component,
-			 public detail::logic_component{
+			 public detail::logic_component {
 	friend class stage;
 public:
 	scene(const std::string& c_name);

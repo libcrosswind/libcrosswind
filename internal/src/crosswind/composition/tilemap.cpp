@@ -74,7 +74,14 @@ cw::composition::tilemap::tilemap(std::shared_ptr<cw::composition::core> core, c
 
                             glm::vec4 uv = glm::vec4(uv_x, uv_y, uv_z, uv_w);
 
-                            glm::vec3 tile_origin = glm::vec3(tile_position.x, tile_position.y * - 1, 0);
+                            auto map_size = map->getSize();
+
+
+                            auto final_position = tile_position;
+
+                            final_position.y = -final_position.y + map_size.y * tile_size.y;
+
+                            glm::vec3 tile_origin = glm::vec3(final_position.x, final_position.y, 0);
 
                             auto sprite = std::make_shared<cw::graphical::object::sprite>(tile_origin,
                                 glm::vec3(tile_size.x, tile_size.y, 0),

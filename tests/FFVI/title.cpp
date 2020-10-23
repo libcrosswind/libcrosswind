@@ -18,6 +18,7 @@
 #include <crosswind/sound/mixer.hpp>
 
 #include <crosswind/graphical/opengl/renderer.hpp>
+#include <crosswind/graphical/opengl/debug_renderer.hpp>
 
 #include <crosswind/composition/core.hpp>
 #include <crosswind/graphical/video.hpp>
@@ -52,7 +53,7 @@ void game::scenes::title::init() {
 	tilemap = 
 		std::make_shared<cw::composition::tilemap>(core, 
 												   "resources/assets/ffvi/tilemaps/Library.json");
-	terra = std::make_shared<game::characters::title::terra>(core,
+	terra = std::make_shared<game::characters::title::terra>(core, shared_from_this(),
 		"resources/assets/sonic_the_hedgehog/graphics/characters/jeshejojo/jeshejojo.json");
 
 	for (auto& tile_object : tilemap->objects) {
@@ -63,15 +64,21 @@ void game::scenes::title::init() {
 
 			auto map_size = tilemap->map->getSize();
 			auto tile_size = tilemap->map->getTilesets().front().getTileSize();
-			auto pos_x = pos.x + size.x / 2.0f - tile_size.x / 2.0f;
-			auto pos_y = pos.y + size.y / 2.0f - tile_size.y / 2.0f;
-			physical->add_rigid_body("wall",
+			auto pos_x = pos.x - tile_size.x / 2.0f;
+			//auto pos_y = -pos.y + size.y / 2.0f - tile_size.y - tile_size.y / 2.0f;
+			auto pos_y = -pos.y + map_size.y * tile_size.y - size.y + tile_size.y / 2.0f;
+
+			physical->bbox = cw::geometry::rectangle({ pos_x,
+													   pos_y },
+													 { size.x, size.y });
+
+			/*physical->add_rigid_body("wall",
 				glm::vec3(pos_x, 
 						  -pos_y, 0.0f),
 				glm::vec3(size.x, size.y, 10.0f),
 				0.0f);
 
-			auto body = physical->get_rigid_body("wall");
+			auto body = physical->get_rigid_body("wall");*/
 			//body->set_origin(glm::vec3(0.5f, 0.5f, 0));
 			walls.push_back(physical);
 		}
@@ -268,11 +275,16 @@ void game::scenes::title::logic(const float& delta) {
 }
 
 void game::scenes::title::draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer) {
-	core->engine->stage->get_scene("current")->get_camera("current")->set_position(glm::vec3(312, -224, 0));
+	core->engine->stage->get_scene("current")->get_camera("current")->set_position(glm::vec3(312, 224, 0));
 
 	//renderer->upload(title_model->get_sprite());
 
 	tilemap->draw(renderer);
+
+	for (auto& wall : walls) {
+		auto bbox = wall->bbox;
+		renderer->debug_renderer->debug_draw(glm::vec4(bbox.X, bbox.Y, bbox.Width, bbox.Height));
+	}
 
 	terra->draw(renderer);
 }

@@ -58,6 +58,9 @@
     <Filter Include="Source Files\platform">
       <UniqueIdentifier>{6f763da9-07e4-43af-af15-0dff5fdf4bf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\geometry">
+      <UniqueIdentifier>{1a7bc4c8-d382-4a88-884b-bee377b30e43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\internal\include\crosswind\engine.hpp">
@@ -207,6 +210,12 @@
     <ClInclude Include="..\..\internal\include\crosswind\composition\physical.hpp">
       <Filter>Header Files\composition</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\internal\include\crosswind\geometry\rectangle.hpp">
+      <Filter>Header Files\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\debug_renderer.hpp">
+      <Filter>Header Files\graphical</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\internal\src\crosswind\engine.cpp">
@@ -334,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="..\..\internal\src\crosswind\composition\physical.cpp">
       <Filter>Source Files\composition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\debug_renderer.cpp">
+      <Filter>Source Files\graphical</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

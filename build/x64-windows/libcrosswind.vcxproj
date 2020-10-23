@@ -155,6 +155,7 @@
     <ClInclude Include="..\..\internal\include\crosswind\composition\tilemap.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\configuration\settings.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\engine.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\geometry\rectangle.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\object\mesh.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\object\model.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\object\renderable.hpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="..\..\internal\include\crosswind\graphical\object\sprite_animation.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\object\text.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\object\vertex.hpp" />
+    <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\debug_renderer.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\renderer.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\render_batch.hpp" />
     <ClInclude Include="..\..\internal\include\crosswind\graphical\opengl\shader_program.hpp" />
@@ -209,6 +211,7 @@
     <ClCompile Include="..\..\internal\src\crosswind\graphical\object\sprite_animation.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\graphical\object\text.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\graphical\object\vertex.cpp" />
+    <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\debug_renderer.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\renderer.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\render_batch.cpp" />
     <ClCompile Include="..\..\internal\src\crosswind\graphical\opengl\shader_program.cpp" />

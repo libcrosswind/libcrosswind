@@ -7,6 +7,8 @@
 
 #include "tileson.hpp"
 
+#include "crosswind/geometry/rectangle.hpp"
+
 // forward declarations
 namespace cw {
 	namespace simulation {
@@ -59,6 +61,9 @@ namespace cw {
 
 		public:
 			std::string name;
+
+			cw::geometry::rectangle bbox;
+
 
 		private:
 			std::shared_ptr<core> core;

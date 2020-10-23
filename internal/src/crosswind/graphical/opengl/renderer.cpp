@@ -2,8 +2,12 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "crosswind/graphical/opengl/renderer.hpp"
+#include "crosswind/graphical/opengl/debug_renderer.hpp"
 #include "crosswind/graphical/opengl/sprite_batch.hpp"
 #include "crosswind/graphical/opengl/shader_program.hpp"
+
+#include "crosswind/simulation/debug/opengl/simulation_shader_program.hpp"
+#include "crosswind/simulation/debug/opengl/simulation_vertex.hpp"
 
 cw::graphical::opengl::renderer::renderer(){
 
@@ -18,8 +22,13 @@ cw::graphical::opengl::renderer::renderer(){
     shader_program->add_attribute("vertex_color");
     shader_program->add_attribute("vertex_uv");
     shader_program->link();
-    
+
+    debug_renderer = std::make_shared<class cw::graphical::opengl::debug_renderer>();
 }
+
+cw::graphical::opengl::renderer::~renderer() {
+
+ }
 
 void cw::graphical::opengl::renderer::begin(){
 
@@ -39,13 +48,15 @@ void cw::graphical::opengl::renderer::set_uniform_matrix(const std::string& unif
     auto uniform_matrix_location = shader_program->get_uniform_location(uniform_matrix_name);
     glUniformMatrix4fv(uniform_matrix_location, 1, GL_FALSE, glm::value_ptr(value));
 
-}
+    debug_renderer->set_uniform_matrix(value);
+ }
 
 void cw::graphical::opengl::renderer::upload(std::shared_ptr<object::sprite> render_sprite){
 
     sprite_batch->upload(render_sprite);
 
 }
+ 
 
 void cw::graphical::opengl::renderer::draw(){
 

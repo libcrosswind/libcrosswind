@@ -34,7 +34,7 @@ namespace cw {
 	}
 }
 
-class game::scenes::title : public cw::composition::scene {
+class game::scenes::title : public cw::composition::scene, public std::enable_shared_from_this<title> {
 public:
 	title();
 	~title();
@@ -94,12 +94,13 @@ public:
 	virtual void logic(const float& delta);
 	virtual void draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer);
 
+	std::vector<std::shared_ptr<cw::composition::physical> > walls;
+
 private:
 	std::shared_ptr<cw::graphical::object::model> title_model;
 	std::shared_ptr<cw::composition::tilemap> tilemap;
 	std::shared_ptr<cw::composition::sprite_set> terra;
 
-	std::vector<std::shared_ptr<cw::composition::physical> > walls;
 
 	float time_count;
 	bool sega_sound_ongoing;
