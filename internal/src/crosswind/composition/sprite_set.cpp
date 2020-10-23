@@ -89,10 +89,10 @@ cw::composition::sprite_set::sprite_set(std::shared_ptr<cw::composition::core> c
 
                             glm::vec4 uv = glm::vec4(uv_x, uv_y, uv_z, uv_w);
 
-                            glm::vec3 tile_origin = glm::vec3(tile_position.x, tile_position.y * -1, 0);
+                            glm::vec3 tile_origin = glm::vec3(tile_position.x, tile_position.y * -1, -1);
 
                             auto sprite = std::make_shared<cw::graphical::object::sprite>(tile_origin,
-                                glm::vec3(tile_size.x, tile_size.y, 0),
+                                glm::vec3(tile_size.x, tile_size.y, 1),
                                 glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
                                 uv,
                                 textures[tileset_name.string()]->id);

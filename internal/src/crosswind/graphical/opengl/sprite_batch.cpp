@@ -30,8 +30,8 @@ void cw::graphical::opengl::sprite_batch::upload(std::shared_ptr<object::sprite>
 
 void cw::graphical::opengl::sprite_batch::create(){
 
-	std::stable_sort(sprite_list.begin(), sprite_list.end(), [](auto a, auto b){
-	    return (a->texture_id < b->texture_id);
+	std::stable_sort(sprite_list.begin(), sprite_list.end(), [](std::shared_ptr< object::sprite > a, std::shared_ptr< object::sprite > b){
+	    return (a->get_origin().z > b->get_origin().z);
 	});
 	create_batch_list();
 

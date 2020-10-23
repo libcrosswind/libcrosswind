@@ -50,11 +50,13 @@ void game::scenes::title::init() {
 	/*auto main_camera = std::make_shared<cw::composition::camera>(core->video->get_window_size());
 	add_camera("main_camera", main_camera);
 	set_camera("main_camera");*/
+
 	tilemap = 
 		std::make_shared<cw::composition::tilemap>(core, 
 												   "resources/assets/ffvi/tilemaps/Library.json");
+
 	terra = std::make_shared<game::characters::title::terra>(core, shared_from_this(),
-		"resources/assets/sonic_the_hedgehog/graphics/characters/jeshejojo/jeshejojo.json");
+		"resources/assets/ffvi/sprites/terra.json");
 
 	for (auto& tile_object : tilemap->objects) {
 		if (tile_object.getName() == "wall") {

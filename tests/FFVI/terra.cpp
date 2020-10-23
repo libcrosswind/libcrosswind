@@ -31,6 +31,15 @@ game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> cor
 	sprite_set(core, path)
 	/*physical(core, "terra")*/{
 	current_sprite = sprites.at(0);
+
+	walking_direction_facing = walking_direction::down;
+
+	sprite_index = 0;
+
+	animations["down"].insert(animations["down"].begin(), sprites.begin(), sprites.begin() + 3);
+	
+	animations["up"].insert(animations["up"].begin(), sprites.begin() + 3, sprites.begin() + 6);
+
 	animation_time = 0.0f;
 
 	this->title = title;
@@ -51,7 +60,7 @@ game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> cor
 void game::characters::title::terra::set_position(const glm::vec2& new_position) {
 
 	for (auto sprite : sprites) {
-		sprite->set_origin(glm::vec3(new_position.x, new_position.y, 0));
+		sprite->set_origin(glm::vec3(new_position.x, new_position.y, -1));
 	}
 
 	auto bbox_new_x = new_position.x - bbox.Width * 0.5f;
@@ -62,6 +71,7 @@ void game::characters::title::terra::set_position(const glm::vec2& new_position)
 
 	position = new_position;
 }
+
 glm::vec2 game::characters::title::terra::get_position() {
 	return position;
 }
@@ -79,11 +89,6 @@ std::string game::characters::title::terra::get_collision_map(const std::string&
 }
 
 void game::characters::title::terra::find_collisions() {
-
-	can_move_left = true;
-	can_move_right = true;
-	can_move_up = true;
-	can_move_down = true;
 
 	for (auto wall : title->walls) {
 		if (wall.intersects(bbox)) {
@@ -184,22 +189,6 @@ void game::characters::title::terra::find_collisions() {
 void game::characters::title::terra::logic(const float& delta) {
 	animation_time += delta;
 
-	if (animation_time >= 0.0625f) {
-		animation_time = 0.0f;
-
-		sprite_index++;
-
-		if (sprite_index == 6) {
-			sprite_index = 0;
-		}
-
-		if (sprite_index >= sprites.size()) {
-			sprite_index = 0;
-		}
-
-		current_sprite = sprites.at(sprite_index);
-	}
-
 	/*auto character = this->get_rigid_body("terra");
 	glm::vec3 b_origin(character->get_origin().x,
 					   character->get_origin().y,
@@ -207,14 +196,14 @@ void game::characters::title::terra::logic(const float& delta) {
 	
 	const float walk_speed = 256 * delta;
 
-	if (core->input->is_key_down("Right") && can_move_right) {
+	if (core->input->is_key_down("Right")) {
 		glm::vec2 origin = get_position();
 
 		auto speed = glm::vec3(origin.x + walk_speed, origin.y, 0);
 
 		set_position(speed);
 	}
-	if (core->input->is_key_down("Left") && can_move_left) {
+	if (core->input->is_key_down("Left")) {
 		glm::vec2 origin = get_position();
 
 		auto speed = glm::vec3(origin.x - walk_speed, origin.y, 0);
@@ -222,7 +211,10 @@ void game::characters::title::terra::logic(const float& delta) {
 		set_position(speed);
 	}
 
-	if (core->input->is_key_down("Up") && can_move_up) {
+	if (core->input->is_key_down("Up")) {
+
+		walking_direction_facing = walking_direction::up;
+
 		glm::vec2 origin = get_position();
 
 		auto speed = glm::vec3(origin.x, origin.y + walk_speed, 0);
@@ -230,7 +222,9 @@ void game::characters::title::terra::logic(const float& delta) {
 		set_position(speed);
 	}
 
-	if (core->input->is_key_down("Down") && can_move_down) {
+	if (core->input->is_key_down("Down")) {
+		walking_direction_facing = walking_direction::down;
+
 		glm::vec2 origin = get_position();
 
 		auto speed = glm::vec3(origin.x, origin.y - walk_speed, 0);
@@ -239,6 +233,26 @@ void game::characters::title::terra::logic(const float& delta) {
 	}
 
 	find_collisions();
+
+	if (animation_time >= 0.0625f) {
+		animation_time = 0.0f;
+
+		sprite_index++;
+
+		if (sprite_index == 3) {
+			sprite_index = 0;
+		}
+
+	}
+
+	if (walking_direction_facing == walking_direction::up) {
+		current_sprite = animations["up"][sprite_index];
+	}
+
+	if (walking_direction_facing == walking_direction::down) {
+		current_sprite = animations["down"][sprite_index];
+	}
+
 }
 
 

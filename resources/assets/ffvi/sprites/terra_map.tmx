@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="6" height="6" tilewidth="42" tileheight="42">
-<tileset firstgid="1" name="sprite000_bank.png" tilewidth="42" tileheight="42">
-	<image source="sprite000_bank.png" width="252" height="252"/>
+<map version="1.0" orientation="orthogonal" width="8" height="6" tilewidth="32" tileheight="48">
+<tileset firstgid="1" name="terra_bank.png" tilewidth="32" tileheight="48">
+	<image source="terra_bank.png" width="256" height="288"/>
 </tileset>
-	<layer name="ShoeBox Tile Grab" width="6" height ="6" >
+	<layer name="ShoeBox Tile Grab" width="8" height ="6" >
 		<data>
 			<tile gid="1"/>
 			<tile gid="2"/>
@@ -41,6 +41,18 @@
 			<tile gid="34"/>
 			<tile gid="35"/>
 			<tile gid="36"/>
+			<tile gid="37"/>
+			<tile gid="38"/>
+			<tile gid="39"/>
+			<tile gid="40"/>
+			<tile gid="41"/>
+			<tile gid="42"/>
+			<tile gid="43"/>
+			<tile gid="44"/>
+			<tile gid="45"/>
+			<tile gid="45"/>
+			<tile gid="45"/>
+			<tile gid="45"/>
 		</data>
 	</layer>
 </map>

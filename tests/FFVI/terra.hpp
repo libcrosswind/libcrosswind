@@ -49,12 +49,6 @@ public:
 	glm::vec2 get_position();
 
 private:
-
-	bool can_move_right;
-	bool can_move_left;
-	bool can_move_up;
-	bool can_move_down;
-
 	glm::vec2 position;
 
 	cw::geometry::rectangle bbox;
@@ -69,5 +63,13 @@ private:
 	std::shared_ptr<cw::composition::core> core;
 	int sprite_index;
 	float animation_time;
+	enum walking_direction {
+		up,
+		down
+	};
+
+	walking_direction walking_direction_facing;
+	std::map<std::string, float> animation_times;
+	std::map<std::string, std::vector<std::shared_ptr<cw::graphical::object::sprite> > > animations;
 	std::shared_ptr<cw::graphical::object::sprite> current_sprite;
 };
