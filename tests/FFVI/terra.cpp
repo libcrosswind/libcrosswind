@@ -48,21 +48,21 @@ game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> cor
 						 0.0f);*/
 }
 
-void game::characters::title::terra::set_position(const glm::ivec2& new_position) {
+void game::characters::title::terra::set_position(const glm::vec2& new_position) {
 
 	for (auto sprite : sprites) {
 		sprite->set_origin(glm::vec3(new_position.x, new_position.y, 0));
 	}
 
-	auto bbox_new_x = new_position.x - bbox.Width / 2;
-	auto bbox_new_y = new_position.y - bbox.Height / 2;
+	auto bbox_new_x = new_position.x - bbox.Width * 0.5f;
+	auto bbox_new_y = new_position.y - bbox.Height * 0.5f;
 
 	bbox.X = bbox_new_x;
 	bbox.Y = bbox_new_y;
 
 	position = new_position;
 }
-glm::ivec2 game::characters::title::terra::get_position() {
+glm::vec2 game::characters::title::terra::get_position() {
 	return position;
 }
 
@@ -205,17 +205,19 @@ void game::characters::title::terra::logic(const float& delta) {
 					   character->get_origin().y,
 					   character->get_origin().z);*/
 	
+	const float walk_speed = 256 * delta;
+
 	if (core->input->is_key_down("Right") && can_move_right) {
 		glm::vec2 origin = get_position();
 
-		auto speed = glm::vec3(origin.x + 8, origin.y, 0);
+		auto speed = glm::vec3(origin.x + walk_speed, origin.y, 0);
 
 		set_position(speed);
 	}
 	if (core->input->is_key_down("Left") && can_move_left) {
 		glm::vec2 origin = get_position();
 
-		auto speed = glm::vec3(origin.x - 8, origin.y, 0);
+		auto speed = glm::vec3(origin.x - walk_speed, origin.y, 0);
 
 		set_position(speed);
 	}
@@ -223,7 +225,7 @@ void game::characters::title::terra::logic(const float& delta) {
 	if (core->input->is_key_down("Up") && can_move_up) {
 		glm::vec2 origin = get_position();
 
-		auto speed = glm::vec3(origin.x, origin.y + 8, 0);
+		auto speed = glm::vec3(origin.x, origin.y + walk_speed, 0);
 
 		set_position(speed);
 	}
@@ -231,7 +233,7 @@ void game::characters::title::terra::logic(const float& delta) {
 	if (core->input->is_key_down("Down") && can_move_down) {
 		glm::vec2 origin = get_position();
 
-		auto speed = glm::vec3(origin.x, origin.y - 8, 0);
+		auto speed = glm::vec3(origin.x, origin.y - walk_speed, 0);
 
 		set_position(speed);
 	}

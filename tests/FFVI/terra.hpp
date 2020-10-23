@@ -45,8 +45,8 @@ public:
 	void logic(const float& dt);
 	void draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer);
 
-	void set_position(const glm::ivec2& new_position);
-	glm::ivec2 get_position();
+	void set_position(const glm::vec2& new_position);
+	glm::vec2 get_position();
 
 private:
 
@@ -55,7 +55,7 @@ private:
 	bool can_move_up;
 	bool can_move_down;
 
-	glm::ivec2 position;
+	glm::vec2 position;
 
 	cw::geometry::rectangle bbox;
 
