@@ -1,4 +1,4 @@
-#include "bullet/btBulletDynamicsCommon.h"
+/*#include "bullet/btBulletDynamicsCommon.h"
 
 #include "crosswind/simulation/plane.hpp"
 
@@ -17,3 +17,5 @@ body(origin, scale){
 	     new btStaticPlaneShape(btVector3(s_size.x/2, s_size.y/2, s_size.z/2),0));
 
 }
+
+*/

@@ -24735,8 +24735,8 @@ tson::Map *tson::Layer::getMap() const
  */
 void tson::Layer::createTileData(const Vector2i &mapSize, bool isInfiniteMap)
 {
-	size_t x = 0;
-	size_t y = 0;
+	int x = 0;
+	int y = 0;
 	if(!isInfiniteMap)
 	{
 		std::for_each(m_data.begin(), m_data.end(), [&](int tileId)

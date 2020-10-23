@@ -79,8 +79,8 @@ void cw::graphical::opengl::debug_renderer::draw_line(const glm::ivec3& f, const
 		sizeof(cw::simulation::debug::opengl::simulation_vertex),
 		(void*)offsetof(cw::simulation::debug::opengl::simulation_vertex, cw::simulation::debug::opengl::simulation_vertex::color));
 
-	glDrawArrays(GL_POINTS, 0, vertex_array.size());
-	glDrawArrays(GL_LINES, 0, vertex_array.size());
+	glDrawArrays(GL_POINTS, 0, (int)vertex_array.size());
+	glDrawArrays(GL_LINES, 0, (int)vertex_array.size());
 
 
 	glDisableVertexAttribArray(0);
@@ -103,7 +103,7 @@ void cw::graphical::opengl::debug_renderer::flush() {
 	render_queue.clear();
 }
 
-void cw::graphical::opengl::debug_renderer::debug_draw(const glm::vec4& r) {
+void cw::graphical::opengl::debug_renderer::debug_draw(const glm::ivec4& r) {
 	enqueue(glm::ivec3(r.x, r.y, 0), glm::ivec3(r.x + r.z, r.y, 0), glm::vec3(1.0, 0.0, 0.0));
 	enqueue(glm::ivec3(r.x + r.z, r.y, 0), glm::ivec3(r.x + r.z, r.y + r.w, 0), glm::vec3(1.0, 0.0, 0.0));
 	enqueue(glm::ivec3(r.x + r.z, r.y + r.w, 0), glm::ivec3(r.x, r.y + r.w, 0), glm::vec3(1.0, 0.0, 0.0));

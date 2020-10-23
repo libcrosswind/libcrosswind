@@ -1,4 +1,4 @@
-#include "crosswind/simulation/detail/body.hpp"
+/*#include "crosswind/simulation/detail/body.hpp"
 
 cw::simulation::detail::body::body(const glm::vec3& c_origin, 
 		 						   const glm::vec3& c_scale, 
@@ -88,3 +88,4 @@ void cw::simulation::detail::body::set_linear_factor(const glm::vec3& position, 
 	physic_body->setLinearFactor(btVector3(position.x, position.y, position.z));
 	physic_body->setAngularFactor(btVector3(rotation.x, rotation.y, rotation.z));
 }
+*/

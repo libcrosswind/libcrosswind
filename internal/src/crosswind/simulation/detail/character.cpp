@@ -1,4 +1,4 @@
-#include "bullet/btBulletDynamicsCommon.h"
+/*#include "bullet/btBulletDynamicsCommon.h"
 
 #include "crosswind/simulation/detail/character.hpp"
 
@@ -82,3 +82,4 @@ bool cw::simulation::detail::character::on_ground(){
 void* cw::simulation::detail::character::get_character_object(){
     return character_object.get();
 }
+*/

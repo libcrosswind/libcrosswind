@@ -52,7 +52,7 @@ namespace cw {
 
                 void draw_line(const glm::ivec3& from, const glm::ivec3& to, const glm::vec3& color);
                 
-                void debug_draw(const glm::vec4& rect);
+                void debug_draw(const glm::ivec4& rect);
 
                 void enqueue(const glm::ivec3& from, const glm::ivec3& to, const glm::vec3& color);
                 void flush();

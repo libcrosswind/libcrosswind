@@ -109,7 +109,7 @@ float cw::graphical::opengl::window::get_brightness(){
 	return brightness;
 }
 
-void cw::graphical::opengl::window::set_position(const glm::vec2& new_position){
+void cw::graphical::opengl::window::set_position(const glm::ivec2& new_position){
     SDL_SetWindowPosition(this->window_resource.ptr(), new_position.x, new_position.y);
 }
 
@@ -118,7 +118,7 @@ glm::i32vec2 cw::graphical::opengl::window::get_position(){
     return position;
 }
 
-void cw::graphical::opengl::window::set_size(const glm::vec2& new_size){
+void cw::graphical::opengl::window::set_size(const glm::ivec2& new_size){
     SDL_SetWindowSize(this->window_resource.ptr(), new_size.x, new_size.y);
 }
 

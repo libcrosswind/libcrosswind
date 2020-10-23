@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 
 #include <memory>
 
@@ -52,3 +52,5 @@ public:
 }// namespace detail
 }// namespace simulation
 }// namespace cw
+
+*/

@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 
 #include "GL/glew.h"
 #include "glm/gtc/type_ptr.hpp"
@@ -98,8 +98,8 @@ void cw::simulation::debug::opengl::drawer::drawLine(const btVector3& f,
 			sizeof(simulation_vertex),
 			(void*)offsetof(simulation_vertex, simulation_vertex::color));
 
-	glDrawArrays( GL_POINTS, 0, vertex_array.size() );
-	glDrawArrays( GL_LINES, 0, vertex_array.size() );
+	glDrawArrays( GL_POINTS, 0, (int)vertex_array.size() );
+	glDrawArrays( GL_LINES, 0, (int)vertex_array.size() );
 
 
 	glDisableVertexAttribArray(0);
@@ -210,3 +210,4 @@ int cw::simulation::debug::opengl::drawer::getDebugMode() const {
 	return debug_mode;
 }
 
+*/

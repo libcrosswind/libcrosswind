@@ -246,7 +246,7 @@ std::shared_ptr<cw::graphical::object::model> cw::graphical::video::load_model(c
 		}
 
 		auto animation = std::make_shared<graphical::object::sprite_animation>();
-		animation->duration = a->value()["time"].as<double>();
+		animation->duration = a->value()["time"].as<float>();
 		animation->frames = frames;
 
 		animations[a->key()] = animation;

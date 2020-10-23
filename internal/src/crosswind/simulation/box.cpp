@@ -1,4 +1,4 @@
-#include "bullet/btBulletDynamicsCommon.h"
+/*#include "bullet/btBulletDynamicsCommon.h"
 
 #include "crosswind/simulation/box.hpp"
 
@@ -20,3 +20,4 @@ body(c_origin, c_scale, c_unit_value){
                  new btBoxShape(btVector3(s_size.x/2, s_size.y/2, s_size.z/2)));
 
 }
+*/

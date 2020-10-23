@@ -42,11 +42,11 @@ public:
 
     float get_brightness();
 
-    void set_position(const glm::vec2& new_position);
+    void set_position(const glm::ivec2& new_position);
 
     glm::i32vec2 get_position();
 
-    void set_size(const glm::vec2& new_size);
+    void set_size(const glm::ivec2& new_size);
 
     glm::i32vec2 get_size();
 

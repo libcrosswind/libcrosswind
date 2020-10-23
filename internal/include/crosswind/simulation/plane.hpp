@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 
 #include "glm/glm.hpp"
 
@@ -17,3 +17,4 @@ public:
 
 }// namespace simulation
 }// namespace cw
+*/

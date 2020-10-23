@@ -29,7 +29,7 @@ public:
 
 private:
     std::map<std::string, bool> key_map;
-    glm::vec2 mouse_coordinates;
+    glm::ivec2 mouse_coordinates;
     functional::delegate<void, const std::string&> ok_key_down_listeners;
     float delta_count;
     bool buffering;

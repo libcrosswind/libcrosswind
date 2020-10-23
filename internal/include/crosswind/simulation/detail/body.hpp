@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 
 #include <memory>
 
@@ -46,3 +46,5 @@ protected:
 }// namespace detail
 }// namespace simulation
 }// namespace cw
+
+*/
