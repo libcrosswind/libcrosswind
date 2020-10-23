@@ -95,9 +95,6 @@ cw::composition::tilemap::tilemap(std::shared_ptr<cw::composition::core> core, c
                     }
                 }
 
-
-                
-
             }
         }
     }

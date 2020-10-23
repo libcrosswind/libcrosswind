@@ -280,7 +280,7 @@ void game::scenes::title::draw(std::shared_ptr<cw::graphical::opengl::renderer> 
 		engine->
 		stage->
 		get_scene("current")->
-		get_camera("current")->set_position(glm::vec3(sin(time_count) * 312, 224, 0));
+		get_camera("current")->set_position(glm::vec3(312, 224, 0));
 
 	//renderer->upload(title_model->get_sprite());
 

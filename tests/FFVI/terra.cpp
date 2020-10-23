@@ -36,18 +36,36 @@ game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> cor
 	this->title = title;
 	this->core = core;
 
-	for (auto sprite : sprites) {
-		sprite->set_origin(glm::vec3(312, 224, 0));
-	}
+	bbox.Width = 40;
+	bbox.Height = 42;
 
+	set_position(glm::ivec2(312, 224));
 
-	bbox = cw::geometry::rectangle(glm::ivec2(312 - 40 * 0.5f, 224 - 42 * 0.5f), glm::ivec2(40, 42));
 
 	/*this->add_rigid_body("terra", 
 						 glm::vec3(312, -224, 0),
 						 glm::vec3(40.0f, 42.0f, 10.0f),
 						 0.0f);*/
 }
+
+void game::characters::title::terra::set_position(const glm::ivec2& new_position) {
+
+	for (auto sprite : sprites) {
+		sprite->set_origin(glm::vec3(new_position.x, new_position.y, 0));
+	}
+
+	auto bbox_new_x = new_position.x - bbox.Width * 0.5f;
+	auto bbox_new_y = new_position.y - bbox.Height * 0.5f;
+
+	bbox.X = bbox_new_x;
+	bbox.Y = bbox_new_y;
+
+	position = new_position;
+}
+glm::ivec2 game::characters::title::terra::get_position() {
+	return position;
+}
+
 
 std::string game::characters::title::terra::get_collision_map(const std::string& actor_a) {
 
@@ -69,6 +87,53 @@ void game::characters::title::terra::find_collisions() {
 
 	for (auto wall : title->walls) {
 		if (wall->bbox.intersects(bbox)) {
+
+			auto intersection = cw::geometry::rectangle::intersection(bbox, wall->bbox);
+			if (intersection.Height > intersection.Width)
+			{
+				if (bbox.centre().x > wall->bbox.centre().x)
+				{
+					set_position(glm::vec2(bbox.centre().x + intersection.Width, bbox.centre().y));
+				}
+				else
+				{
+					set_position(glm::vec2(bbox.centre().x - intersection.Width, bbox.centre().y));
+				}
+
+			}
+			else
+			{
+				if (bbox.centre().y > wall->bbox.centre().y)
+				{
+					set_position(glm::vec2(bbox.centre().x, bbox.centre().y +intersection.Height));
+				}
+				else
+				{
+					set_position(glm::vec2(bbox.centre().x, bbox.centre().y - intersection.Height));
+				}
+
+			}
+
+			/*if (intersection.top() - 2 >= wall->bbox.top())
+			{
+				set_position(glm::vec2(bbox.centre().x, bbox.centre().y - 1));
+			}
+
+			if(intersection.bottom() + 2 <= wall->bbox.bottom())
+			{
+				set_position(glm::vec2(bbox.centre().x, bbox.centre().y + 1));
+			}
+			
+			if (intersection.left() - 2 <= wall->bbox.left())
+			{
+				set_position(glm::vec2(bbox.centre().x - 1, bbox.centre().y));
+			}
+
+			if (intersection.right() + 2 >= wall->bbox.left())
+			{
+				set_position(glm::vec2(bbox.centre().x + 1, bbox.centre().y));
+			}*/
+			/*
 			if (wall->bbox.centre().x > bbox.centre().x) {
 				can_move_right = false;
 			}
@@ -83,7 +148,7 @@ void game::characters::title::terra::find_collisions() {
 
 			if (wall->bbox.centre().y < bbox.centre().y) {
 				can_move_down = false;
-			}
+			}*/
 			collisions["terra"] = "wall";
 		}
 	}
@@ -139,60 +204,39 @@ void game::characters::title::terra::logic(const float& delta) {
 	glm::vec3 b_origin(character->get_origin().x,
 					   character->get_origin().y,
 					   character->get_origin().z);*/
-	find_collisions();
-
-
+	
 	if (core->input->is_key_down("Right") && can_move_right) {
-		glm::vec3 origin = glm::vec3(this->current_sprite->get_origin());
+		glm::vec2 origin = get_position();
 
-		auto speed = glm::vec3(origin.x + 8, origin.y, origin.z);
+		auto speed = glm::vec3(origin.x + 8, origin.y, 0);
 
-		for (auto sprite : sprites) {
-			sprite->set_origin(speed);
-		}
-
-		/*core->physics->remove_rigid_body(character);
-		character->set_origin(speed);
-		core->physics->add_rigid_body(character);*/
-
-		bbox.X += 8;
+		set_position(speed);
 	}
 	if (core->input->is_key_down("Left") && can_move_left) {
-		glm::vec3 origin = glm::vec3(this->current_sprite->get_origin());
+		glm::vec2 origin = get_position();
 
-		auto speed = glm::vec3(origin.x - 8, origin.y, origin.z);
+		auto speed = glm::vec3(origin.x - 8, origin.y, 0);
 
-		for (auto sprite : sprites) {
-			sprite->set_origin(speed);
-		}
-
-		bbox.X -= 8;
+		set_position(speed);
 	}
 
 	if (core->input->is_key_down("Up") && can_move_up) {
-		glm::vec3 origin = glm::vec3(this->current_sprite->get_origin());
+		glm::vec2 origin = get_position();
 
-		auto speed = glm::vec3(origin.x, origin.y + 8, origin.z);
+		auto speed = glm::vec3(origin.x, origin.y + 8, 0);
 
-		for (auto sprite : sprites) {
-			sprite->set_origin(speed);
-		}
-
-		bbox.Y += 8;
+		set_position(speed);
 	}
 
 	if (core->input->is_key_down("Down") && can_move_down) {
-		glm::vec3 origin = glm::vec3(this->current_sprite->get_origin());
+		glm::vec2 origin = get_position();
 
-		auto speed = glm::vec3(origin.x, origin.y - 8, origin.z);
+		auto speed = glm::vec3(origin.x, origin.y - 8, 0);
 
-		for (auto sprite : sprites) {
-			sprite->set_origin(speed);
-		}
-
-		bbox.Y -= 8;
+		set_position(speed);
 	}
 
+	find_collisions();
 }
 
 
