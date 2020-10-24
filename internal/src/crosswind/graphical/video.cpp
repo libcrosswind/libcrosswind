@@ -62,14 +62,24 @@ void cw::graphical::video::set_window_icon(const std::string& path){
 
 void cw::graphical::video::load_texture(const std::string& name, const std::string& path){
 
-    if (texture_map.find(name) == texture_map.end()) {
-        auto surface = std::make_unique<sdl::surface>(path);
 
-		texture_map[name] = std::make_shared<opengl::texture>
-                (glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
-                        surface->data.ptr()->format->BytesPerPixel,
-                        surface->data.ptr()->pixels);
-    }
+	try {
+
+		if (texture_map.find(name) == texture_map.end()) {
+			auto surface = std::make_unique<sdl::surface>(path);
+
+			texture_map[name] = std::make_shared<opengl::texture>
+				(glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
+					surface->data.ptr()->format->BytesPerPixel,
+					surface->data.ptr()->pixels);
+		}
+	}
+	catch (std::exception& ex) {
+		auto err = SDL_GetError();
+		std::cout << ex.what() << std::endl;
+	}
+
+
 
 }
 
@@ -106,6 +116,25 @@ void cw::graphical::video::remove_texture(const std::string& texture_name){
 	}
 
 }
+
+std::shared_ptr
+<cw::graphical::object::sprite> cw::graphical::video::load_sprite(const std::string& texture_name, const std::string& texture_path) {
+	
+	load_texture(texture_name, texture_path);
+
+	glm::vec4 uv(0, 0, 1, 1);
+
+	return std::make_shared<graphical::object::sprite>(glm::vec3(0, 0, 0),
+		glm::vec3(load_texture(texture_name)->size.x, load_texture(texture_name)->size.y, 0),
+		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		uv,
+		load_texture(texture_name)->id);
+}
+
+void cw::graphical::video::unload_sprite(const std::string& texture_name) {
+	remove_texture(texture_name);
+}
+
 
 std::shared_ptr<cw::graphical::object::text> cw::graphical::video::load_text(const std::string& text_name,
 																			 const std::string& text_value,

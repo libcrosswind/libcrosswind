@@ -18,18 +18,31 @@
 
 #include "crosswind/platform/input.hpp"
 
+#include "crosswind/engine.hpp"
+
+#include "crosswind/composition/stage.hpp"
+
 #include "crosswind/simulation/physics.hpp"
 
-#include "title.hpp"
+#include "gameplay.hpp"
+#include "battle.hpp"
+
 
 typedef std::map<std::string, std::vector<std::pair<glm::vec3, glm::vec3> > > actor_collision_map;
 typedef std::map<std::string, actor_collision_map> scene_collision_map;
 
-game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> core, 
-									  std::shared_ptr<game::scenes::title> title,
+game::characters::terra::terra(std::shared_ptr<cw::composition::core> core, 
+									  std::shared_ptr<game::scenes::gameplay> gameplay,
 									  const std::string& path) :
-	sprite_set(core, path)
+	
+	base(core, path)
 	/*physical(core, "terra")*/{
+
+	idle_right = true;
+	idle_left = true;
+	idle_up = true;
+	idle_down = true;
+
 	current_sprite = sprites.at(0);
 
 	walking_direction_facing = walking_direction::down;
@@ -39,17 +52,22 @@ game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> cor
 	animations["down"].insert(animations["down"].begin(), sprites.begin(), sprites.begin() + 3);
 	
 	animations["up"].insert(animations["up"].begin(), sprites.begin() + 3, sprites.begin() + 6);
+	
+	animations["left"].insert(animations["left"].begin(), sprites.begin() + 6, sprites.begin() + 9);
+
+	animations["right"].insert(animations["right"].begin(), sprites.begin() + 6, sprites.begin() + 9);
 
 	animation_time = 0.0f;
 
-	this->title = title;
+	this->gameplay = gameplay;
 	this->core = core;
 
-	bbox.Width = 16;
+	bbox.Width = 24;
 	bbox.Height = 20;
 
 	set_position(glm::ivec2(312, 224));
 
+	battle_trigger = false;
 
 	/*this->add_rigid_body("terra", 
 						 glm::vec3(312, -224, 0),
@@ -57,14 +75,16 @@ game::characters::title::terra::terra(std::shared_ptr<cw::composition::core> cor
 						 0.0f);*/
 }
 
-void game::characters::title::terra::set_position(const glm::vec2& new_position) {
+void game::characters::terra::set_position(const glm::vec2& new_position) {
 
 	for (auto sprite : sprites) {
 		sprite->set_origin(glm::vec3(new_position.x, new_position.y, -1));
 	}
 
+	auto sprite_size = current_sprite->get_size();
+
 	auto bbox_new_x = new_position.x - bbox.Width * 0.5f;
-	auto bbox_new_y = new_position.y - bbox.Height * 0.5f;
+	auto bbox_new_y = new_position.y - sprite_size.y * 0.5f;
 
 	bbox.X = bbox_new_x;
 	bbox.Y = bbox_new_y;
@@ -72,49 +92,51 @@ void game::characters::title::terra::set_position(const glm::vec2& new_position)
 	position = new_position;
 }
 
-glm::vec2 game::characters::title::terra::get_position() {
+glm::vec2 game::characters::terra::get_position() {
 	return position;
 }
 
-
-std::string game::characters::title::terra::get_collision_map(const std::string& actor_a) {
+std::string game::characters::terra::get_collision_map(const std::string& actor_a) {
 
 	if (collisions.find(actor_a) != collisions.end()) {
 		return collisions[actor_a];
-	}
-	else {
+	} else {
 		return collisions["undefined"];
 	}
 
 }
 
-void game::characters::title::terra::find_collisions() {
+void game::characters::terra::find_collisions() {
 
-	for (auto wall : title->walls) {
+	if (gameplay == nullptr) {
+		return;
+	}
+
+	for (auto wall : gameplay->walls) {
 		if (wall.intersects(bbox)) {
 
 			auto intersection = cw::geometry::rectangle::intersection(bbox, wall);
 			if (intersection.Height > intersection.Width)
 			{
-				if (bbox.centre().x > wall.centre().x)
+				if (position.x > wall.centre().x)
 				{
-					set_position(glm::vec2(bbox.centre().x + intersection.Width, bbox.centre().y));
+					set_position(glm::vec2(position.x + intersection.Width, position.y));
 				}
 				else
 				{
-					set_position(glm::vec2(bbox.centre().x - intersection.Width, bbox.centre().y));
+					set_position(glm::vec2(position.x - intersection.Width, position.y));
 				}
 
 			}
 			else
 			{
-				if (bbox.centre().y > wall.centre().y)
+				if (position.y > wall.centre().y)
 				{
-					set_position(glm::vec2(bbox.centre().x, bbox.centre().y + intersection.Height));
+					set_position(glm::vec2(position.x, position.y + intersection.Height));
 				}
 				else
 				{
-					set_position(glm::vec2(bbox.centre().x, bbox.centre().y - intersection.Height));
+					set_position(glm::vec2(position.x, position.y - intersection.Height));
 				}
 
 			}
@@ -158,6 +180,45 @@ void game::characters::title::terra::find_collisions() {
 		}
 	}
 
+	for (auto door : gameplay->doors) {
+		if (door.second.intersects(bbox)) {
+			if (door.first == "city") {
+				if (!battle_trigger) {
+					battle_trigger = true;
+
+
+					core->engine->stage->unload_scene("gameplay");
+					this->gameplay = nullptr;
+					std::string battle_back_path =
+						"resources/assets/ffvi/sprites/Battlebacks/001-Plain01.png";
+
+					std::vector<std::shared_ptr<base> > player_party;
+					std::vector<std::shared_ptr<base> > enemy_party;
+
+					player_party.push_back(shared_from_this());
+					enemy_party.push_back(shared_from_this());
+
+					auto battle_scene = 
+						std::make_shared<game::scenes::battle>(battle_back_path, 
+															   player_party,
+															   enemy_party);
+
+					auto camera = core->engine->stage->create_camera(glm::i32vec2(640, 480));
+
+					battle_scene->add_camera("main_camera", camera);
+					battle_scene->set_camera("main_camera");
+
+					core->engine->stage->init_scene(battle_scene);
+					core->engine->stage->add_scene(battle_scene);
+					core->engine->stage->load_scene("battle");
+
+				}
+				
+			}
+		}
+
+	}
+
 	/*int numManifolds = core->physics->get_collision_manifolds_number();
 	for (int i = 0; i < numManifolds; i++)
 	{
@@ -186,7 +247,7 @@ void game::characters::title::terra::find_collisions() {
 	}*/
 }
 
-void game::characters::title::terra::logic(const float& delta) {
+void game::characters::terra::logic(const float& delta) {
 	animation_time += delta;
 
 	/*auto character = this->get_rigid_body("terra");
@@ -194,21 +255,37 @@ void game::characters::title::terra::logic(const float& delta) {
 					   character->get_origin().y,
 					   character->get_origin().z);*/
 	
-	const float walk_speed = 256 * delta;
+	const float walk_speed = floor(256 * delta);
 
 	if (core->input->is_key_down("Right")) {
+		walking_direction_facing = walking_direction::right;
+
 		glm::vec2 origin = get_position();
 
 		auto speed = glm::vec3(origin.x + walk_speed, origin.y, 0);
 
 		set_position(speed);
+
+		idle_right = false;
 	}
+	else {
+		idle_right = true;
+	}
+
+
 	if (core->input->is_key_down("Left")) {
+		walking_direction_facing = walking_direction::left;
+
 		glm::vec2 origin = get_position();
 
 		auto speed = glm::vec3(origin.x - walk_speed, origin.y, 0);
 
 		set_position(speed);
+
+		idle_left = false;
+	}
+	else {
+		idle_left = true;
 	}
 
 	if (core->input->is_key_down("Up")) {
@@ -220,6 +297,10 @@ void game::characters::title::terra::logic(const float& delta) {
 		auto speed = glm::vec3(origin.x, origin.y + walk_speed, 0);
 
 		set_position(speed);
+
+		idle_up = false;
+	} else {
+		idle_up = true;
 	}
 
 	if (core->input->is_key_down("Down")) {
@@ -230,7 +311,12 @@ void game::characters::title::terra::logic(const float& delta) {
 		auto speed = glm::vec3(origin.x, origin.y - walk_speed, 0);
 
 		set_position(speed);
+
+		idle_down = false;
+	} else {
+		idle_down = true;
 	}
+
 
 	find_collisions();
 
@@ -246,18 +332,61 @@ void game::characters::title::terra::logic(const float& delta) {
 	}
 
 	if (walking_direction_facing == walking_direction::up) {
-		current_sprite = animations["up"][sprite_index];
+		if (idle_up) {
+			current_sprite = animations["up"][1];
+		}
+		else {
+			current_sprite = animations["up"][sprite_index];
+		}
 	}
 
 	if (walking_direction_facing == walking_direction::down) {
-		current_sprite = animations["down"][sprite_index];
+		if (idle_down) {
+			current_sprite = animations["down"][1];
+		}
+		else {
+			current_sprite = animations["down"][sprite_index];
+		}
 	}
+
+	if (walking_direction_facing == walking_direction::left) {
+		if (idle_left) {
+			current_sprite = animations["left"][1];
+		}
+		else {
+			current_sprite = animations["left"][sprite_index];
+		}
+
+		for (auto sprite : sprites) {
+			if (sprite->get_flipped()) {
+				sprite->flip();
+			}
+		}
+
+	}
+
+	if (walking_direction_facing == walking_direction::right) {
+		if (idle_right) {
+			current_sprite = animations["right"][1];
+		} else {
+			current_sprite = animations["right"][sprite_index];
+		}
+
+		for (auto sprite : sprites) {
+			if (!sprite->get_flipped()) {
+				sprite->flip();
+			}
+		}
+
+		
+	}
+
 
 }
 
 
 
-void game::characters::title::terra::draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer) {
+void game::characters::terra::draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer) {
 
 	renderer->upload(current_sprite);
 	renderer->debug_renderer->debug_draw(glm::vec4(bbox.X, bbox.Y, bbox.Width, bbox.Height));

@@ -22,7 +22,12 @@ public:
 
     void flip();
 
+    bool get_flipped();
+
     uint32_t texture_id;
+
+private:
+    bool xFlipped;
     
 };// class sprite
 

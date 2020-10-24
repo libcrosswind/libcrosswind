@@ -1,4 +1,5 @@
 #include <filesystem>
+#include <algorithm>
 
 #include "crosswind/composition/tilemap.hpp"
 
@@ -81,7 +82,18 @@ cw::composition::tilemap::tilemap(std::shared_ptr<cw::composition::core> core, c
 
                             final_position.y = -final_position.y + map_size.y * tile_size.y;
 
+                            auto name = layer.getName();
+
                             glm::vec3 tile_origin = glm::vec3(final_position.x, final_position.y, 0);
+
+                            std::transform(name.begin(), name.end(), name.begin(),
+                                [](unsigned char c) { return std::tolower(c); });
+
+                            if (name.find("foreground") != std::string::npos) {
+                                tile_origin.z = -1024;
+                            }
+
+
 
                             auto sprite = std::make_shared<cw::graphical::object::sprite>(tile_origin,
                                 glm::vec3(tile_size.x, tile_size.y, 0),

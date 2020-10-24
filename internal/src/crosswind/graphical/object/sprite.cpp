@@ -45,6 +45,8 @@ texture_id(c_id){
     vertices[5].set_uv(c_uv.z, c_uv.w); // top right
 
     set_origin(origin);
+
+    xFlipped = false;
 }
 
 void cw::graphical::object::sprite::set_origin(const glm::vec3& new_origin){
@@ -73,6 +75,13 @@ void cw::graphical::object::sprite::set_origin(const glm::vec3& new_origin){
     vertices[5].set_position(top_right);
 
 
+    /*vertices[0].set_position(bottom_left);
+    vertices[1].set_position(bottom_right);
+    vertices[2].set_position(top_right);
+
+    vertices[3].set_position(top_right);
+    vertices[4].set_position(top_left);
+    vertices[5].set_position(bottom_left);*/
 }
 
 void cw::graphical::object::sprite::set_size(const glm::vec3& new_size){
@@ -86,6 +95,7 @@ void cw::graphical::object::sprite::set_size(const glm::vec3& new_size){
 
 void cw::graphical::object::sprite::flip(){
 
+    xFlipped = !xFlipped;
     auto tr = vertices[0];  // top right
     auto tl = vertices[1];  // top left
 
@@ -100,3 +110,7 @@ void cw::graphical::object::sprite::flip(){
     vertices[3] = br;       // flip
     vertices[4] = bl;       // flip
 } 
+
+bool cw::graphical::object::sprite::get_flipped() {
+    return xFlipped;
+}

@@ -14,6 +14,7 @@ namespace object{
 
 	class text;
 	class model;
+	class sprite;
 
 }// namespace object
 }// namespace graphical
@@ -67,6 +68,9 @@ public:
 
 	void remove_texture(const std::string& texture_name);
 
+	std::shared_ptr<cw::graphical::object::sprite> load_sprite(const std::string& texture_name, const std::string& texture_path);
+	void unload_sprite(const std::string& texture_name);
+
 	std::shared_ptr<object::text> load_text(const std::string& text_name,
 											const std::string& text_value,
 											const glm::vec3& origin,
@@ -76,6 +80,8 @@ public:
 
 
 	glm::i32vec2 get_window_size();
+
+	
 
 	std::shared_ptr<graphical::object::model> load_model(const glm::vec3& origin,
 														 const glm::vec3& size,

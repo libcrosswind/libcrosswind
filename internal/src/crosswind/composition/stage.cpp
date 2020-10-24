@@ -44,12 +44,14 @@ void cw::composition::stage::remove_scene(const std::string& scene_name){
 void cw::composition::stage::load_scene(const std::string& name){
 
     this->scene_map[name]->init();
+	this->scene_map["current"] = this->scene_map[name];
 }
 
 void cw::composition::stage::unload_scene(const std::string& name){
 
     this->scene_map[name]->deinit();
 
+	remove_scene(name);
 }
 
 void cw::composition::stage::swap_scene(const std::string& previous_scene, const std::string& new_scene){

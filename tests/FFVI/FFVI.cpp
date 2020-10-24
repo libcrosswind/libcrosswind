@@ -11,7 +11,7 @@
 #include "crosswind/composition/core.hpp"
 #include "crosswind/graphical/video.hpp"
 
-#include "title.hpp"
+#include "gameplay.hpp"
 
 int main(int argc, char** argv) {
 
@@ -27,15 +27,16 @@ int main(int argc, char** argv) {
         engine->core->engine = engine;
         engine->core->video->set_window_icon("resources/assets/engine/graphics/window/icon.png");
 
-        auto title_scene = std::make_shared<game::scenes::title>();
-        engine->stage->init_scene(title_scene);
+        auto gameplay_scene = std::make_shared<game::scenes::gameplay>();
+        engine->stage->init_scene(gameplay_scene);
+
         auto camera = engine->stage->create_camera(glm::i32vec2(640, 480));
 
-        title_scene->add_camera("main_camera", camera);
-        title_scene->set_camera("main_camera");
+        gameplay_scene->add_camera("main_camera", camera);
+        gameplay_scene->set_camera("main_camera");
 
-        engine->stage->add_scene(title_scene);
-        engine->stage->load_scene("title");
+        engine->stage->add_scene(gameplay_scene);
+        engine->stage->load_scene("gameplay");
 
 
         //auto green_hill_zone = engine->stage->create_scene<game::scenes::green_hill_zone>();
