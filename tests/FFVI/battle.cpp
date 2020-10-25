@@ -60,20 +60,36 @@ void game::scenes::battle::init() {
 	auto ui_texture = core->video->load_texture(ui_path, ui_path);
 
 	e_window_background = core->video->load_sprite(ui_path, 
-											     glm::vec3(640 / 3 - 6 * 3, 480 / 4 - 5 * 4, 0),
-												 glm::vec4(0.0f, 0.5f, 0.5f, 1.0f));
+											       glm::vec3(640 / 3 - 6 * 3, 480 / 4 - 5 * 4, 0),
+												   glm::vec4(0.0f, 0.5f, 0.5f, 1.0f));
 
 	e_window_foreground = core->video->load_sprite(ui_path, 
-											     glm::vec3(640 / 3, 480 / 4, 0),
-												 glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));
+											       glm::vec3(640 / 3, 480 / 4, 0),
+												   glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));
 
-	e_window_background->set_origin(glm::vec3(-320 + window_background->get_size().x * 0.5f,
-											-240 + window_background->get_size().y * 0.5f + 5 * 2,
-										    0));
+	p_window_background = core->video->load_sprite(ui_path, 
+											       glm::vec3(2 * (640 / 3) - 6 * 3, 480 / 4 - 5 * 4, 0),
+												   glm::vec4(0.0f, 0.5f, 0.5f, 1.0f));
 
-	e_window_foreground->set_origin(glm::vec3(-320 + window_foreground->get_size().x * 0.5f,
-											-240 + window_foreground->get_size().y * 0.5f,
-										    0));
+	p_window_foreground = core->video->load_sprite(ui_path, 
+											       glm::vec3(2 * (640 / 3), 480 / 4, 0),
+												   glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));
+
+	e_window_background->set_origin(glm::vec3(-320 + e_window_background->get_size().x * 0.5f,
+											  -240 + e_window_background->get_size().y * 0.5f + 5 * 2,
+										      0));
+
+	e_window_foreground->set_origin(glm::vec3(-320 + e_window_foreground->get_size().x * 0.5f,
+											  -240 + e_window_foreground->get_size().y * 0.5f,
+										      0));
+
+	p_window_background->set_origin(glm::vec3(320 - p_window_background->get_size().x * 0.5f,
+											  -240 + p_window_background->get_size().y * 0.5f + 5 * 2,
+										      0));
+
+	p_window_foreground->set_origin(glm::vec3(320 - p_window_foreground->get_size().x * 0.5f,
+											  -240 + p_window_foreground->get_size().y * 0.5f,
+										      0));
 
 	core->mixer->load_music("battle_bgm", "resources/assets/ffvi/audio/bgm/battle_theme.ogg");
 	core->mixer->play_music("battle_bgm", -1);
@@ -108,5 +124,8 @@ void game::scenes::battle::draw(std::shared_ptr<cw::graphical::opengl::renderer>
 
 	renderer->upload(e_window_background);
 	renderer->upload(e_window_foreground);
+
+	renderer->upload(p_window_background);
+	renderer->upload(p_window_foreground);
 
 }

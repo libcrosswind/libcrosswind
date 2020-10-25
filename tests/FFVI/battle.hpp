@@ -77,7 +77,10 @@ private:
 	std::vector<std::shared_ptr<game::characters::base> > player_party;
 	std::vector<std::shared_ptr<game::characters::base> > enemy_party;
 
-	std::shared_ptr<cw::graphical::object::sprite> window_background;
-	std::shared_ptr<cw::graphical::object::sprite> window_foreground;
+	std::shared_ptr<cw::graphical::object::sprite> e_window_background;
+	std::shared_ptr<cw::graphical::object::sprite> e_window_foreground;
+
+	std::shared_ptr<cw::graphical::object::sprite> p_window_background;
+	std::shared_ptr<cw::graphical::object::sprite> p_window_foreground;
 
 };// class title
