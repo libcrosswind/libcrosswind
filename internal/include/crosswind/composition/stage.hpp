@@ -27,8 +27,6 @@ class stage{
 public:
 	stage(std::shared_ptr<core> c_core);
 
-	void init_scene(std::shared_ptr<scene> scene);
-
 	std::shared_ptr<camera> create_camera(const glm::i32vec2& f_size);
 
 	void add_scene(std::shared_ptr<scene> scene);

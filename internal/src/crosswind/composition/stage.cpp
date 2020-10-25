@@ -9,10 +9,6 @@ cw::composition::stage::stage(std::shared_ptr<cw::composition::core> c_core): co
 
 }
 
-void cw::composition::stage::init_scene(std::shared_ptr<cw::composition::scene> scene){
-	scene->core = core;
-}
-
 std::shared_ptr<cw::composition::camera> cw::composition::stage::create_camera(const glm::i32vec2& f_size){
 	return std::make_shared<class camera>(f_size);
 }
@@ -43,6 +39,7 @@ void cw::composition::stage::remove_scene(const std::string& scene_name){
 
 void cw::composition::stage::load_scene(const std::string& name){
 
+	this->scene_map[name]->core = core;
     this->scene_map[name]->init();
 	this->scene_map["current"] = this->scene_map[name];
 }

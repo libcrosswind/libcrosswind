@@ -13,8 +13,8 @@ void game::characters::base::set_position(const glm::vec2& new_position) {
 		sprite->set_origin(glm::vec3(new_position.x, new_position.y, -1));
 	}
 
-	auto bbox_new_x = new_position.x - bbox.Width * 0.5f;
-	auto bbox_new_y = new_position.y - bbox.Height * 0.5f;
+	int bbox_new_x = new_position.x - bbox.Width / 2;
+	int bbox_new_y = new_position.y - bbox.Height / 2;
 
 	bbox.X = bbox_new_x;
 	bbox.Y = bbox_new_y;

@@ -60,7 +60,7 @@ public:
 
 	void set_window_icon(const std::string& path);
 
-    void load_texture(const std::string& name, const std::string& path);
+	std::shared_ptr< opengl::texture > load_texture(const std::string& name, const std::string& path);
 
     std::shared_ptr< opengl::texture > load_texture(const std::string& name);
 
@@ -68,8 +68,10 @@ public:
 
 	void remove_texture(const std::string& texture_name);
 
-	std::shared_ptr<cw::graphical::object::sprite> load_sprite(const std::string& texture_name, const std::string& texture_path);
-	void unload_sprite(const std::string& texture_name);
+	std::shared_ptr<cw::graphical::object::sprite> 
+		load_sprite(const std::string& texture_name, 
+					const glm::vec3& size,
+					const glm::vec4& uv = glm::vec4(0, 0, 1, 1));
 
 	std::shared_ptr<object::text> load_text(const std::string& text_name,
 											const std::string& text_value,

@@ -208,7 +208,6 @@ void game::characters::terra::find_collisions() {
 					battle_scene->add_camera("main_camera", camera);
 					battle_scene->set_camera("main_camera");
 
-					core->engine->stage->init_scene(battle_scene);
 					core->engine->stage->add_scene(battle_scene);
 					core->engine->stage->load_scene("battle");
 

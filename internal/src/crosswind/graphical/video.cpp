@@ -60,7 +60,7 @@ void cw::graphical::video::set_window_icon(const std::string& path){
 
 }
 
-void cw::graphical::video::load_texture(const std::string& name, const std::string& path){
+std::shared_ptr< cw::graphical::opengl::texture > cw::graphical::video::load_texture(const std::string& name, const std::string& path){
 
 
 	try {
@@ -72,6 +72,7 @@ void cw::graphical::video::load_texture(const std::string& name, const std::stri
 				(glm::vec2(surface->data.ptr()->w, surface->data.ptr()->h),
 					surface->data.ptr()->format->BytesPerPixel,
 					surface->data.ptr()->pixels);
+			return texture_map[name];
 		}
 	}
 	catch (std::exception& ex) {
@@ -118,23 +119,17 @@ void cw::graphical::video::remove_texture(const std::string& texture_name){
 }
 
 std::shared_ptr
-<cw::graphical::object::sprite> cw::graphical::video::load_sprite(const std::string& texture_name, const std::string& texture_path) {
+<cw::graphical::object::sprite> 
+cw::graphical::video::load_sprite(const std::string& texture_name, 
+								  const glm::vec3& size,
+								  const glm::vec4& uv) {
 	
-	load_texture(texture_name, texture_path);
-
-	glm::vec4 uv(0, 0, 1, 1);
-
 	return std::make_shared<graphical::object::sprite>(glm::vec3(0, 0, 0),
-		glm::vec3(load_texture(texture_name)->size.x, load_texture(texture_name)->size.y, 0),
+		size,
 		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 		uv,
 		load_texture(texture_name)->id);
 }
-
-void cw::graphical::video::unload_sprite(const std::string& texture_name) {
-	remove_texture(texture_name);
-}
-
 
 std::shared_ptr<cw::graphical::object::text> cw::graphical::video::load_text(const std::string& text_name,
 																			 const std::string& text_value,

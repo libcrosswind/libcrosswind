@@ -65,10 +65,19 @@ public:
 	virtual void logic(const float& delta);
 	virtual void draw(std::shared_ptr<cw::graphical::opengl::renderer> renderer);
 
+	enum class battle_status {
+		player_input,
+		player_turn
+	};
+
 private:
 	std::string battle_back_path;
+	std::string ui_path;
 	std::shared_ptr<cw::graphical::object::sprite> battle_back;
 	std::vector<std::shared_ptr<game::characters::base> > player_party;
 	std::vector<std::shared_ptr<game::characters::base> > enemy_party;
+
+	std::shared_ptr<cw::graphical::object::sprite> window_background;
+	std::shared_ptr<cw::graphical::object::sprite> window_foreground;
 
 };// class title

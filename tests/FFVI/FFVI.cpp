@@ -28,7 +28,6 @@ int main(int argc, char** argv) {
         engine->core->video->set_window_icon("resources/assets/engine/graphics/window/icon.png");
 
         auto gameplay_scene = std::make_shared<game::scenes::gameplay>();
-        engine->stage->init_scene(gameplay_scene);
 
         auto camera = engine->stage->create_camera(glm::i32vec2(640, 480));
 
