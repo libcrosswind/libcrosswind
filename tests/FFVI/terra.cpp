@@ -357,8 +357,8 @@ void game::characters::terra::logic(const float& delta) {
 		}
 
 		for (auto sprite : sprites) {
-			if (sprite->get_flipped()) {
-				sprite->flip();
+			if (sprite->get_h_flip()) {
+				sprite->h_flip();
 			}
 		}
 
@@ -372,8 +372,8 @@ void game::characters::terra::logic(const float& delta) {
 		}
 
 		for (auto sprite : sprites) {
-			if (!sprite->get_flipped()) {
-				sprite->flip();
+			if (!sprite->get_h_flip()) {
+				sprite->h_flip();
 			}
 		}
 

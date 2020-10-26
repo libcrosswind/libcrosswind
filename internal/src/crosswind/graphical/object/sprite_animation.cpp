@@ -30,7 +30,7 @@ void cw::graphical::object::sprite_animation::flip(bool default_x) {
     if (x_orientation) {
         if (!default_x) {
             for (int i = 0; i < frames.size(); i++) {
-                frames[i]->flip();
+                frames[i]->h_flip();
             }
 
             x_orientation = default_x;
@@ -40,7 +40,7 @@ void cw::graphical::object::sprite_animation::flip(bool default_x) {
 
         if (default_x) {
             for (int i = 0; i < frames.size(); i++) {
-                frames[i]->flip();
+                frames[i]->h_flip();
             }
 
             x_orientation = default_x;

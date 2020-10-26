@@ -60,37 +60,52 @@ void game::scenes::battle::init() {
 	auto ui_texture = core->video->load_texture(ui_path, ui_path);
 
 	e_window_background = core->video->load_sprite(ui_path, 
-											       glm::vec3(640 / 3 - 6 * 3, 480 / 4 - 5 * 4, 0),
+											       glm::vec3(640 / 3 - 12, 480 / 4 - 12, 0),
 												   glm::vec4(0.0f, 0.5f, 0.5f, 1.0f));
 
-	e_window_foreground = core->video->load_sprite(ui_path, 
+	/*e_window_foreground = core->video->load_sprite(ui_path, 
 											       glm::vec3(640 / 3, 480 / 4, 0),
-												   glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));
+												   glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));*/
 
 	p_window_background = core->video->load_sprite(ui_path, 
-											       glm::vec3(2 * (640 / 3) - 6 * 3, 480 / 4 - 5 * 4, 0),
+											       glm::vec3(2 * (640 / 3), 480 / 4, 0),
 												   glm::vec4(0.0f, 0.5f, 0.5f, 1.0f));
 
-	p_window_foreground = core->video->load_sprite(ui_path, 
+	/*p_window_foreground = core->video->load_sprite(ui_path, 
 											       glm::vec3(2 * (640 / 3), 480 / 4, 0),
-												   glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));
+												   glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));*/
 
-	e_window_background->set_origin(glm::vec3(-320 + e_window_background->get_size().x * 0.5f,
-											  -240 + e_window_background->get_size().y * 0.5f + 5 * 2,
+	window_l = core->video->load_sprite(ui_path, 
+										glm::vec3(6, 64, 0),
+										glm::vec4(0.5f, 0.5f, 0.5f + 0.0234375f, 1.0f));
+
+	window_t = core->video->load_sprite(ui_path, 
+										glm::vec3(64, 6, 0),
+										glm::vec4(0.5f, 1.0f - 0.0234375f, 1.0f, 1.0f));
+
+	window_r = core->video->load_sprite(ui_path, 
+										glm::vec3(6, 64, 0),
+										glm::vec4(1.0f - 0.0234375f, 0.5f, 1.0f, 1.0f));
+
+	window_b = core->video->load_sprite(ui_path, 
+										glm::vec3(64, 6, 0),
+										glm::vec4(0.5f, 0.5f, 1.0f, 0.5f + 0.0234375f));
+
+	e_window_background->set_origin(glm::vec3(-320 + e_window_background->get_size().x * 0.5f + 6,
+											  -240 + e_window_background->get_size().y * 0.5f + 6,
 										      0));
 
-	e_window_foreground->set_origin(glm::vec3(-320 + e_window_foreground->get_size().x * 0.5f,
+	/*e_window_foreground->set_origin(glm::vec3(-320 + e_window_foreground->get_size().x * 0.5f,
 											  -240 + e_window_foreground->get_size().y * 0.5f,
-										      0));
+										      0));*/
 
 	p_window_background->set_origin(glm::vec3(320 - p_window_background->get_size().x * 0.5f,
-											  -240 + p_window_background->get_size().y * 0.5f + 5 * 2,
+											  -240 + p_window_background->get_size().y * 0.5f,
 										      0));
 
-	p_window_foreground->set_origin(glm::vec3(320 - p_window_foreground->get_size().x * 0.5f,
+	/*p_window_foreground->set_origin(glm::vec3(320 - p_window_foreground->get_size().x * 0.5f,
 											  -240 + p_window_foreground->get_size().y * 0.5f,
-										      0));
-
+										      0));*/
 	core->mixer->load_music("battle_bgm", "resources/assets/ffvi/audio/bgm/battle_theme.ogg");
 	core->mixer->play_music("battle_bgm", -1);
 }
@@ -123,9 +138,36 @@ void game::scenes::battle::draw(std::shared_ptr<cw::graphical::opengl::renderer>
 	}
 
 	renderer->upload(e_window_background);
-	renderer->upload(e_window_foreground);
+	//renderer->upload(e_window_foreground);
 
 	renderer->upload(p_window_background);
-	renderer->upload(p_window_foreground);
+	//renderer->upload(p_window_foreground);
+
+	window_l->set_size(glm::vec3(6, 480 / 4, 0));
+	window_l->set_origin(glm::vec3(-320 + window_l->get_size().x * 0.5f, 
+								   -240 + window_l->get_size().y * 0.5f,
+								   -4));
+
+	window_t->set_size(glm::vec3(640 / 3, 6, 0));
+	window_t->set_origin(glm::vec3(-320 + ((640 / 3) - 3) * 0.5f,
+								   -240 + (480 / 4) - window_t->get_size().y * 0.5f,
+								   -4));
+
+	renderer->upload(window_l);
+	renderer->upload(window_t);
+
+	window_r->set_size(glm::vec3(6, 480 / 4, 0));
+	window_r->set_origin(glm::vec3(-320 + e_window_background->get_size().x + 6, 
+								   -240 + window_l->get_size().y * 0.5f,
+								   -4));
+
+	window_b->set_size(glm::vec3(640 / 3, 6, 0));
+	window_b->set_origin(glm::vec3(-320 + ((640 / 3 + 3)) * 0.5f - 3,
+								   -240 + window_b->get_size().y * 0.5f,
+								   -4));
+
+	renderer->upload(window_r);
+	renderer->upload(window_b);
+
 
 }

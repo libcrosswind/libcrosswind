@@ -20,14 +20,23 @@ public:
 
     virtual void set_size(const glm::vec3& new_size) override;
 
-    void flip();
+    glm::vec4 get_color();
+    glm::vec4 get_uv();
 
-    bool get_flipped();
+    void h_flip();
+    void v_flip();
+
+    bool get_h_flip();
+    bool get_v_flip();
 
     uint32_t texture_id;
 
 private:
     bool xFlipped;
+    bool vFlipped;
+
+    glm::vec4 color;
+    glm::vec4 uv;
     
 };// class sprite
 

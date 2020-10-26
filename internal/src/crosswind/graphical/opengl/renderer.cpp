@@ -9,6 +9,8 @@
 #include "crosswind/simulation/debug/opengl/simulation_shader_program.hpp"
 #include "crosswind/simulation/debug/opengl/simulation_vertex.hpp"
 
+#include "crosswind/graphical/object/sprite.hpp"
+
 cw::graphical::opengl::renderer::renderer(){
 
     sprite_batch                = std::make_shared<class sprite_batch>();        
@@ -53,7 +55,18 @@ void cw::graphical::opengl::renderer::set_uniform_matrix(const std::string& unif
 
 void cw::graphical::opengl::renderer::upload(std::shared_ptr<object::sprite> render_sprite){
 
-    sprite_batch->upload(render_sprite);
+    auto origin = render_sprite->get_origin();
+    auto size = render_sprite->get_size();
+    auto color = render_sprite->get_color();
+    auto uv = render_sprite->get_uv();
+    auto texture_id = render_sprite->texture_id;
+
+    std::shared_ptr<object::sprite> sprite_copy = 
+        std::make_shared<object::sprite>(origin, size, color, uv, texture_id);
+
+    sprite_copy->set_vertices(render_sprite->get_vertices());
+
+    sprite_batch->upload(sprite_copy);
 
 }
  

@@ -9,6 +9,9 @@ cw::graphical::object::sprite::sprite(const glm::vec3& c_origin,
 mesh(c_origin, c_size),
 texture_id(c_id){
 
+    this->color = c_color;
+    this->uv = c_uv;
+
     auto px = c_origin.x - c_size.x/2.0f;
     auto py = c_origin.y - c_size.y/2.0f;
     auto pz = c_origin.z - c_size.z/2.0f;
@@ -49,6 +52,13 @@ texture_id(c_id){
     xFlipped = false;
 }
 
+glm::vec4 cw::graphical::object::sprite::get_color() {
+    return this->color;
+}
+
+glm::vec4 cw::graphical::object::sprite::get_uv() {
+    return this->uv;
+}
 void cw::graphical::object::sprite::set_origin(const glm::vec3& new_origin){
     origin = new_origin;
 
@@ -93,24 +103,63 @@ void cw::graphical::object::sprite::set_size(const glm::vec3& new_size){
 }
 
 
-void cw::graphical::object::sprite::flip(){
+void cw::graphical::object::sprite::h_flip() {
 
     xFlipped = !xFlipped;
     auto tr = vertices[0];  // top right
     auto tl = vertices[1];  // top left
 
+    auto br = vertices[4];  // bottom right
+    auto bl = vertices[3];  // bottom left
+
+
     vertices[0] = tl;       // flip
     vertices[1] = tr;       // flip
     vertices[5] = tl;       // flip
 
-    auto br = vertices[4];  // bottom right
-    auto bl = vertices[3];  // bottom left
 
     vertices[2] = br;       // flip
     vertices[3] = br;       // flip
     vertices[4] = bl;       // flip
-} 
+}
 
-bool cw::graphical::object::sprite::get_flipped() {
+bool cw::graphical::object::sprite::get_h_flip() {
     return xFlipped;
+}
+
+void cw::graphical::object::sprite::v_flip() {
+    vFlipped = !vFlipped;
+
+    /*auto px = origin.x - size.x / 2.0f;
+    auto py = origin.y - size.y / 2.0f;
+    auto pz = origin.z - size.z / 2.0f;
+    auto pw = 1.0f;
+
+    auto dx = size.x;
+    auto dy = size.y;
+    auto dz = size.z;
+
+    glm::vec4 top_right(px + dx, py + dy, pz, pw);
+    glm::vec4 top_left(px, py + dy, pz, pw);
+    glm::vec4 bottom_right(px + dx, py, pz, pw);
+    glm::vec4 bottom_left(px, py, pz, pw);*/
+
+    auto tr = vertices[0];  // top right
+    auto tl = vertices[1];  // top left
+
+    auto br = vertices[4];  // bottom right
+    auto bl = vertices[3];  // bottom left
+
+
+    vertices[0] = bl;
+    vertices[1] = br;
+    vertices[2] = tr;
+
+    vertices[3] = tr;
+    vertices[4] = tl;
+    vertices[5] = bl;    
+}
+
+bool cw::graphical::object::sprite::get_v_flip() {
+    return vFlipped;
 }
