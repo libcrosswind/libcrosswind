@@ -29,3 +29,15 @@
 	path = external/chaiscript
 	url = https://github.com/ChaiScript/ChaiScript.git
 	branch = develop
+[submodule "external/sdl2/SDL_image"]
+	path = external/sdl2/SDL_image
+	url = git@github.com:libsdl-org/SDL_image.git
+[submodule "external/sdl2/SDL"]
+	path = external/sdl2/SDL
+	url = git@github.com:libsdl-org/SDL.git
+[submodule "external/sdl2/SDL_mixer"]
+	path = external/sdl2/SDL_mixer
+	url = git@github.com:libsdl-org/SDL_mixer.git
+[submodule "external/sdl2/SDL_ttf"]
+	path = external/sdl2/SDL_ttf
+	url = git@github.com:libsdl-org/SDL_ttf.git

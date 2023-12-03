@@ -1,4 +1,4 @@
-#version 310 es
+#version 330 core
 //Fragment shader
 
 in mediump vec4 fragment_color;

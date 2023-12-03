@@ -32,7 +32,7 @@ std::shared_ptr<cw::composition::camera> cw::composition::scene::get_camera(cons
 	}
 }
 
-auto& cw::composition::scene::get_camera_map(){
+std::map<std::string, std::shared_ptr<cw::composition::camera> > & cw::composition::scene::get_camera_map(){
 
 	return camera_map;
 

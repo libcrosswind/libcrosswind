@@ -2,14 +2,15 @@
 #include "GL/glew.h"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "crosswind/graphical/object/vertex.hpp"
+
 #include "crosswind/graphical/opengl/debug_renderer.hpp"
 
-#include "crosswind/simulation/debug/opengl/simulation_shader_program.hpp"
-#include "crosswind/simulation/debug/opengl/simulation_vertex.hpp"
+#include "crosswind/graphical/opengl/shader_program.hpp"
+
 
 cw::graphical::opengl::debug_renderer::debug_renderer() {
-
-	debug_shader_program = std::make_shared<class cw::simulation::debug::opengl::simulation_shader_program>();
+	debug_shader_program = std::make_shared<class cw::graphical::opengl::shader_program>();
 	std::string debug_vertex_shader = "resources/assets/engine/graphics/shaders/primitive_shading.vert";
 	std::string debug_fragment_shader = "resources/assets/engine/graphics/shaders/primitive_shading.frag";
 
@@ -45,16 +46,16 @@ void cw::graphical::opengl::debug_renderer::draw_line(const glm::ivec3& f, const
 	glm::vec4 color(c.r, c.g, c.b, 1.0);
 	glm::vec2 u(0.0, 0.0);
 
-	std::vector<cw::simulation::debug::opengl::simulation_vertex> vertex_array;
-	cw::simulation::debug::opengl::simulation_vertex a(n_from, color, u);
-	cw::simulation::debug::opengl::simulation_vertex b(n_to, color, u);
+	std::vector<cw::graphical::object::vertex> vertex_array;
+	cw::graphical::object::vertex a(n_from, color, u);
+	cw::graphical::object::vertex b(n_to, color, u);
 	vertex_array.push_back(a);
 	vertex_array.push_back(b);
 
 	//upload_vertex_array(vertex_array);
 	glBindBuffer(GL_ARRAY_BUFFER, debug_vbo_id);
 	glBufferData(GL_ARRAY_BUFFER,
-		sizeof(cw::simulation::debug::opengl::simulation_vertex) * vertex_array.size(),
+		sizeof(cw::graphical::object::vertex) * vertex_array.size(),
 		vertex_array.data(),
 		GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -69,15 +70,15 @@ void cw::graphical::opengl::debug_renderer::draw_line(const glm::ivec3& f, const
 		4,
 		GL_FLOAT,
 		GL_FALSE,
-		sizeof(cw::simulation::debug::opengl::simulation_vertex),
-		(void*)offsetof(cw::simulation::debug::opengl::simulation_vertex, cw::simulation::debug::opengl::simulation_vertex::position));
+		sizeof(cw::graphical::object::vertex),
+		(void*)offsetof(cw::graphical::object::vertex, position));
 
 	glVertexAttribPointer(1,
 		4,
 		GL_FLOAT,
 		GL_FALSE,
-		sizeof(cw::simulation::debug::opengl::simulation_vertex),
-		(void*)offsetof(cw::simulation::debug::opengl::simulation_vertex, cw::simulation::debug::opengl::simulation_vertex::color));
+		sizeof(cw::graphical::object::vertex),
+		(void*)offsetof(cw::graphical::object::vertex, color));
 
 	glDrawArrays(GL_POINTS, 0, (int)vertex_array.size());
 	glDrawArrays(GL_LINES, 0, (int)vertex_array.size());

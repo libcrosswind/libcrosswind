@@ -1,5 +1,5 @@
 #include "GL/glew.h"
-#include "SDL2/SDL.h"
+#include <SDL3/SDL.h>
 
 #include "crosswind/graphical/opengl/window.hpp"
 #include "crosswind/platform/exception.hpp"
@@ -14,8 +14,6 @@ cw::graphical::opengl::window::window(const std::string& window_title,
 window_resource(SDL_CreateWindow,
        			SDL_DestroyWindow,
    				window_title.c_str(),
-       			window_position[0], 
-       			window_position[1], 
        			window_resolution[0], 
        			window_resolution[1],
        			flags){
@@ -24,6 +22,8 @@ window_resource(SDL_CreateWindow,
     size = window_resolution;
 
     set_fps(window_fps);
+	
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
     context = SDL_GL_CreateContext(this->window_resource.ptr());
     if(context == nullptr){
@@ -43,6 +43,8 @@ window_resource(SDL_CreateWindow,
     printf("OpenGL version: %s \n", glGetString(GL_VERSION));
 
     SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1);
+
+	
 
     //Vsync
     SDL_GL_SetSwapInterval(1);//Vsync may drop one or two frames per second but avoids screen tearing.
@@ -99,14 +101,16 @@ std::string cw::graphical::opengl::window::get_title(){
 
 void cw::graphical::opengl::window::set_brightness(const float& new_brightness){
 
-	if (SDL_SetWindowBrightness(this->window_resource.ptr(), new_brightness) != 0)
-		throw platform::exception("SDL_SetWindowBrightness");
+//	if (SDL_SetWindowBrightness(this->window_resource.ptr(), new_brightness) != 0)
+//		throw platform::exception("SDL_SetWindowBrightness");
 
 }
 
 float cw::graphical::opengl::window::get_brightness(){
-    brightness = SDL_GetWindowBrightness(this->window_resource.ptr());
-	return brightness;
+//    brightness = SDL_GetWindowBrightness(this->window_resource.ptr());
+	
+	brightness = 1;
+	return 1;
 }
 
 void cw::graphical::opengl::window::set_position(const glm::ivec2& new_position){

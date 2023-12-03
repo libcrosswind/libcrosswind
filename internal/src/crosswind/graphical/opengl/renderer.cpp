@@ -6,8 +6,7 @@
 #include "crosswind/graphical/opengl/sprite_batch.hpp"
 #include "crosswind/graphical/opengl/shader_program.hpp"
 
-#include "crosswind/simulation/debug/opengl/simulation_shader_program.hpp"
-#include "crosswind/simulation/debug/opengl/simulation_vertex.hpp"
+#include "crosswind/graphical/object/vertex.hpp"
 
 #include "crosswind/graphical/object/sprite.hpp"
 

@@ -30,16 +30,6 @@ namespace cw {
 }// namespace cw
 
 namespace cw {
-    namespace simulation {
-        namespace debug {
-            namespace opengl {
-                class simulation_shader_program;
-            }
-        }
-    }
-}
-
-namespace cw {
     namespace graphical {
         namespace opengl {
 
@@ -60,7 +50,7 @@ namespace cw {
             private:
                 std::vector<std::tuple<glm::ivec3, glm::ivec3, glm::vec3> > render_queue;
                 glm::mat4 perspective;
-                std::shared_ptr<cw::simulation::debug::opengl::simulation_shader_program> debug_shader_program;
+                std::shared_ptr<cw::graphical::opengl::shader_program> debug_shader_program;
 
                 uint32_t debug_vbo_id;
             };

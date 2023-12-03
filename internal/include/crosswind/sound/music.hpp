@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "SDL2/SDL_mixer.h"
+#include <SDL_mixer.h>
 #include "crosswind/modules/functional/resource_property.hpp"
 
 // verify Mix_Music forward declaration

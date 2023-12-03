@@ -38,7 +38,7 @@ public:
 
 	std::shared_ptr<camera> get_camera(const std::string& camera_name);
 
-	auto& get_camera_map();
+	std::map<std::string, std::shared_ptr<cw::composition::camera> >& get_camera_map();
 
 	void update(const float& delta);
 

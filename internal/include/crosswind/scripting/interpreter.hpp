@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-// forward declarations
+ forward declarations
 namespace chaiscript{
 
 	class ChaiScript;

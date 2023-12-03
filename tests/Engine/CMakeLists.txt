@@ -8,32 +8,6 @@ set(PLATFORM_DIR  "${TOP_DIR}/platform")
 set(RESOURCES_DIR "${TOP_DIR}/resources")
 set(OUTPUT_DIR    "${TOP_DIR}/output/${CMAKE_PROJECT_NAME}/${CMAKE_BUILD_TYPE}")
 
-set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
-                            "${INTERNAL_DIR}/include"
-                            "${EXTERNAL_DIR}/CImg-1.6.0/include"
-                            "${EXTERNAL_DIR}/jsoncons/includes"
-                            "${EXTERNAL_DIR}/bullet3/src"
-                            "${PLATFORM_DIR}/windows/build/include")
-
-
-LINK_DIRECTORIES(${PLATFORM_DIR}/windows/build/lib)
-
-
-include_directories(${INCLUDE_LIBRARY_PATH})
-
-if( CMAKE_BUILD_TYPE STREQUAL "Debug")
-
-add_compile_options(-std=gnu++1y -g -Og -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS)
-
-else( CMAKE_BUILD_TYPE STREQUAL "Release")
-
-add_compile_options(-std=gnu++1y -O3 -DGLEW_STATIC -DCHAISCRIPT_NO_THREADS -DNDEBUG)
-#SET( GCC_COVERAGE_LINK_FLAGS    "-mwindows -Wl --large-address-aware --no-keep-memory")
-SET( GCC_COVERAGE_LINK_FLAGS    "-mwindows")
-SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
-
-endif()
-
 set(library ${INTERNAL_DIR}/src/crosswind/composition/actor.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/animated_actor.cpp
             ${INTERNAL_DIR}/src/crosswind/composition/text_actor.cpp
@@ -78,12 +52,11 @@ set(library ${INTERNAL_DIR}/src/crosswind/composition/actor.cpp
 
 set(sources ${library} main.cpp)
 
-
 set(PROJECT_OUTPUT_DIRECTORY "${OUTPUT_DIR}")
 
-add_executable(Engine ${sources})
+add_executable(${PROJECT_NAME} ${sources})
 
-set_target_properties(Engine
+set_target_properties(${PROJECT_NAME}
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${PROJECT_OUTPUT_DIRECTORY}/lib"
@@ -99,25 +72,24 @@ set(win32_libs       winmm imm32 version)
 set(bullet3_libbs    BulletDynamics BulletCollision LinearMath)
 set(opengl_libs      glu32 opengl32)
 set(opengl_ext_libs  glew)
-set(perl_libs )
 
 
-target_link_libraries (Engine LINK_PUBLIC mingw32
-                                                ${SDL2_libs}
-                                                ${SDL2_image_libs}
-                                                ${SDL2_ttf_libs}
-                                                ${SDL2_mixer_libs}
-                                                ${win32_libs}
-                                                ${bullet3_libbs}
-                                                ${opengl_ext_libs}
-                                                ${opengl_libs}
-                                                ${perl_libs})
+add_subdirectory(${EXTERNAL_DIR}/bullet3)
+add_subdirectory(${EXTERNAL_DIR}/chaiscript)
+add_subdirectory(${EXTERNAL_DIR}/glew_cmake)
+add_subdirectory(${EXTERNAL_DIR}/glm)
+add_subdirectory(${EXTERNAL_DIR}/jsoncons)
+add_subdirectory(${EXTERNAL_DIR}/sdl2/SDL)
+add_subdirectory(${EXTERNAL_DIR}/sdl2/SDL_image)
+add_subdirectory(${EXTERNAL_DIR}/sdl2/SDL_mixer)
+add_subdirectory(${EXTERNAL_DIR}/sdl2/SDL_ttf)
+
+set(INCLUDE_LIBRARY_PATH    "${PROJECT_SOURCE_DIR}"
+                            "${INTERNAL_DIR}/include"
+                            "${EXTERNAL_DIR}/jsoncons/includes"
+                            "${EXTERNAL_DIR}/bullet3/src")
+
+target_link_libraries(${PROJECT_NAME} PRIVATE bullet3 chaiscript glew glm jsoncons SDL SDL_image SDL_mixer SDL_ttf)
 
 file(COPY ${RESOURCES_DIR}/assets DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
 file(COPY ${PROJECT_SOURCE_DIR}/scripts DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
-
-file(COPY ${PLATFORM_DIR}/windows/build/lib/chaiscript/libchaiscript_stdlib-5.7.0.dll
-     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)
-
-file(COPY ${PLATFORM_DIR}/windows/build/lib/chaiscript/libstl_extra.dll
-     DESTINATION  ${PROJECT_OUTPUT_DIRECTORY}/bin)

@@ -64,28 +64,25 @@ void cw::graphical::opengl::sprite_batch::create_vertex_array(){
 	glEnableVertexAttribArray(2);
 
 	glVertexAttribPointer(0,
-                          4,
-                          GL_FLOAT,
-                          GL_FALSE,
-                          sizeof(object::vertex),
-                          (void*)offsetof(object::vertex,
-	                                      object::vertex::position));
+						  4,
+						  GL_FLOAT,
+						  GL_FALSE,
+						  sizeof(object::vertex),
+						  (void*)offsetof(object::vertex, position));
 
-    glVertexAttribPointer(1,
-                          4,
-                          GL_FLOAT,
-                          GL_FALSE,
-                          sizeof(object::vertex),
-                          (void*)offsetof(object::vertex,
-	                                      object::vertex::color));
+	glVertexAttribPointer(1,
+						  4,
+						  GL_FLOAT,
+						  GL_FALSE,
+						  sizeof(object::vertex),
+						  (void*)offsetof(object::vertex, color));
 
-    glVertexAttribPointer(2,
-                          2,
-                          GL_FLOAT,
-                          GL_FALSE,
-                          sizeof(object::vertex),
-                          (void*)offsetof(object::vertex,
-	                                      object::vertex::uv));
+	glVertexAttribPointer(2,
+						  2,
+						  GL_FLOAT,
+						  GL_FALSE,
+						  sizeof(object::vertex),
+						  (void*)offsetof(object::vertex, uv));
 
     glBindVertexArray(0);
 

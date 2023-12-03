@@ -15,8 +15,15 @@ cw::graphical::opengl::texture::texture(const glm::vec2& size, unsigned char bpp
         mode = GL_RGBA;
     }
 
+	
+	int format = GL_BGR;
+	
+	if(bpp == 4) {
+		format = GL_BGRA;
+	}
 
-    glTexImage2D(GL_TEXTURE_2D, 0, mode, size.x, size.y, 0, mode, GL_UNSIGNED_BYTE, pixels);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, mode, size.x, size.y, 0, format, GL_UNSIGNED_BYTE, pixels);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

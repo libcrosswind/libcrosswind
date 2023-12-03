@@ -1,8 +1,8 @@
 #include <cstdint>
 
-#include "SDL2/SDL_keyboard.h"
-#include "SDL2/SDL_mouse.h"
-#include "SDL2/SDL_events.h"
+#include <SDL3/SDL_keyboard.h>
+#include <SDL3/SDL_mouse.h>
+#include <SDL3/SDL_events.h>
 
 #include "crosswind/platform/input.hpp"
 
@@ -336,7 +336,7 @@ void cw::platform::input::update(const float& delta){
         }
 	}
 
-    int x, y;
+    float x, y;
 
     auto mouse_flags = SDL_GetMouseState(&x, &y);
 

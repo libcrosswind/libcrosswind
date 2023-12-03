@@ -19,7 +19,7 @@ void cw::platform::application::update() {
 
     while(SDL_PollEvent(&event)){
             //User requests quit
-            if(event.type == SDL_QUIT){
+            if(event.type == SDL_EVENT_QUIT){
                     running = false;
             }
     }

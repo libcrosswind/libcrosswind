@@ -28,16 +28,6 @@ namespace opengl{
 }// namespace graphical
 }// namespace cw
 
-namespace cw {
-    namespace simulation {
-        namespace debug {
-            namespace opengl {
-                class simulation_shader_program;
-            }
-        }
-    }
-}
-
 namespace cw{
 namespace graphical{
 namespace opengl{

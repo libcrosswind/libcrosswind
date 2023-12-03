@@ -1,4 +1,4 @@
-#include "SDL2/SDL_mixer.h"
+#include <SDL_mixer.h>
 
 #include "crosswind/sound/mixer.hpp"
 #include "crosswind/sound/music.hpp"
@@ -29,8 +29,14 @@ void cw::sound::mixer::audio_callback::channel_ended(int channel) {
 }
 
 cw::sound::mixer::mixer(int frequency, uint16_t format, int channels, int chunk_size) {
-
-	if (Mix_OpenAudio(frequency, format, channels, chunk_size) < 0)
+	
+	SDL_AudioSpec spec;
+	
+	spec.format = format;
+	spec.channels = channels;
+	spec.freq = frequency;
+	
+	if (Mix_OpenAudio(0, &spec) < 0)
 	 throw platform::exception("SDL_mixer could not initialize! SDL_mixer Error: %s\n");//, Mix_GetError());
 
 
