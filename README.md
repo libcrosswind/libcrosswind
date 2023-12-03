@@ -1,3 +1,3 @@
-# libcrosswind 0.2
+# libcrosswind 0.3
 
  cmake .. -DSDL3MIXER_VENDORED=TRUE -DSDL3IMAGE_VENDORED=TRUE -DSDL3TTF_VENDORED=TRUE
