@@ -1,0 +1,76 @@
+class button{
+    attr actors
+    attr widget
+
+    attr mouse
+    attr trigger
+
+    attr on_trigger
+
+    attr label
+    attr button
+
+    def button(name, origin, size, text, on_trigger){
+        this.widget := stage.create_group(name)
+        this.actors := Map()
+
+        this.widget.set_origin(origin)
+        this.widget.set_size(size)
+
+        eval_file("scripts/actors/environment.chai")
+        eval_file("scripts/actors/input.chai")
+
+        var text_size := vec3(size.x - size.x * 0.20f, size.y - size.y * 0.20f, 0.0f)
+
+        var self_button := control(origin, size, "button", "button.json")
+
+        var self_label := label("label", origin, text_size, text)
+        self_label.get().get_text("text").set_size(text_size)
+
+
+        this.mouse := mouse()
+        this.trigger = false
+        this.on_trigger := on_trigger
+
+
+        this.label := self_label
+        this.button := self_button
+
+
+        this.widget.construct(fun(){}, fun(){}, fun[this](delta){ this.logic(delta) })
+
+        this.widget.add_actor("label", this.label.get())
+        this.widget.add_actor("button", this.button.get())
+
+    }
+
+    def set_text(new_text){
+
+        this.label.set_text(new_text)
+    }
+
+    def logic(delta){
+
+        if(this.mouse.is_down(this.widget)){
+
+            if(!this.trigger){
+                this.button.get().get_model("button").change_animation("button_on")
+                this.trigger = true
+            }
+
+        } else if (this.mouse.is_over(this.widget) && this.trigger){
+            this.button.get().get_model("button").change_animation("button_off")
+            this.trigger = false
+            on_trigger(this)()
+        } else {
+            this.trigger = false
+            this.button.get().get_model("button").change_animation("button_off")
+        }
+
+    }
+
+    def get(){
+        return this.widget
+    }
+
+}

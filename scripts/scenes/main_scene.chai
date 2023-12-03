@@ -1,0 +1,29 @@
+var main_scene := stage.create_scene("main_scene")
+
+var init = fun[main_scene](){
+    var window_size := core.video.window.get_size()
+
+    var main_camera := stage.create_camera(window_size)
+    main_scene.add_camera("main_camera", main_camera)
+
+    eval_file("scripts/actors/environment.chai")
+
+    var browser := file_browser(vec3(0.0f, 0.0f, 0.0f), fun(file){ print(file) })
+
+    main_scene.add_group("file_browser", browser.get())
+    main_scene.load_group("file_browser")
+//    add_global(browser, "f_browser")
+}
+
+var deinit = fun[main_scene](){
+
+}
+
+var logic  = fun[main_scene](delta){
+
+}
+
+main_scene.construct(init, deinit, logic)
+
+stage.add_scene("main_scene", main_scene)
+stage.load_scene("main_scene")

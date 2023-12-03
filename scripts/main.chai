@@ -1,0 +1,22 @@
+
+var configuration := settings()
+
+configuration.window.title      = "libcrosswind engine 0.2"
+//configuration.window.resolution := i32vec2(1024, 768) // does not replace the value
+//configuration.window.resolution = i32vec2(1024, 768) // exits the application
+
+configuration.window.resolution.x = 1024
+configuration.window.resolution.y = 768
+
+configuration.window.resizable  = true
+var nucleus := engine(configuration)
+
+add_global(nucleus.core, "core")
+add_global(nucleus.stage, "stage")
+
+core.filesystem.add_directory("assets", true)
+core.video.set_window_icon(core.filesystem.get_file_path("icon.png"))
+
+eval_file("scripts/scenes/main_scene.chai")
+
+nucleus.run()

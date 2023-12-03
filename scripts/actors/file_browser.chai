@@ -1,0 +1,80 @@
+class file_data{
+    attr fields
+
+    def file_data(file_name, file_type){
+        this.fields := Map()
+        this.fields["file_name"] := file_name
+        this.fields["file_type"] := file_type
+    }
+
+    def get_fields(){
+        return this.fields
+    }
+}
+
+class file_browser{
+
+    attr widget
+    attr panel_
+
+    def file_browser(origin, on_file_choosen){
+        this.widget := stage.create_group("file_browser")
+
+        var window_size := core.video.window.get_size()
+        var size := vec3(window_size.x/3.0f, window_size.y/3.0f, 0.0f)
+        this.widget.construct(fun[this, origin, size, on_file_choosen](){this.init(origin, size, on_file_choosen)},
+                              fun(){},
+                              fun(delta){
+                              })
+    }
+
+    def get(){
+        return this.widget
+    }
+
+    def init(origin, size, on_file_choosen){
+        this.widget.set_origin(origin)
+        this.widget.set_size(size)
+
+        var button_size := vec3(size.x * 0.20f, size.y * 0.10f, 0.0f)
+        var button_origin := vec3(origin.x + size.x * 0.45f - button_size.x / 2.0f, origin.y - size.y / 2.0f + button_size.y / 2.0f, 0.0f)
+
+
+        this.panel_ := panel(origin, size)
+        this.panel_.set_draggable(true)
+
+        var table_size  := vec3(size.x * 0.90f, size.y * 0.80f, 0.0f)
+        var table_origin    := vec3(origin.x, origin.y + button_size.y / 2.0f, 0.0f)
+        var file_table := table(table_origin, table_size)
+
+        var columns := Vector()
+
+        columns.push_back(column("File", "file_name"))
+        columns.push_back(column("Type", "file_type"))
+
+        var data := Vector()
+
+        data.push_back(file_data("sample.png", "png"))
+        data.push_back(file_data("sample2.png", "png"))
+        data.push_back(file_data("sample3.png", "png"))
+
+        file_table.set_data(data)
+        file_table.add_all(columns)
+
+        var load_button := button("load_button",
+                                  button_origin,
+                                  button_size,
+                                  "load",
+                                  fun[file_table, on_file_choosen](){
+                                      on_file_choosen(file_table.get_selected_item())
+                                  })
+
+
+        this.panel_.add_group("table", file_table)
+        this.panel_.add_group("load_button", load_button)
+
+        this.widget.add_group("panel", this.panel_.get())
+
+    }
+
+};
